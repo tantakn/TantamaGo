@@ -1,5 +1,5 @@
 # TantamaGo
-Forked from TamaGo.
+TantamaGo was forked from TamaGo.
 
 # TamaGo
 TamaGo is a Go (Weiqi, Baduk) engine implemented in Python.
