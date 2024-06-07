@@ -1,3 +1,6 @@
+# TantamaGo
+Forked from TamaGo.
+
 # TamaGo
 TamaGo is a Go (Weiqi, Baduk) engine implemented in Python.
 TamaGo has following features,
@@ -11,12 +14,13 @@ TamaGo runs on Python 3.6 or higher.
 
 中文文檔請看[這裡](doc/cn/README.md)。
 
+- [TantamaGo](#tantamago)
 - [TamaGo](#tamago)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [How to execute GTP engine](#how-to-execute-gtp-engine)
-  - [Examples of TamaGo execution as GTP engine.](#examples-of-tamago-execution-as-gtp-engine)
-  - [Trained neural network parameters file.](#trained-neural-network-parameters-file)
+    - [Examples of TamaGo execution as GTP engine.](#examples-of-tamago-execution-as-gtp-engine)
+    - [Trained neural network parameters file.](#trained-neural-network-parameters-file)
 - [How to execute supervised learning](#how-to-execute-supervised-learning)
 - [How to execute reinforcement learning](#how-to-execute-reinforcement-learning)
 - [GoGui analyze commands](#gogui-analyze-commands)
