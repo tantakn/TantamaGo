@@ -1,9 +1,6 @@
-
-
-# 240607
-# **/__pycache__
-# **/*.*~
-# **/*.npz
-# **/*.bin
-# **/*.ckpt
-# archive/*
+**/__pycache__
+**/*.*~
+**/*.npz
+**/*.bin
+**/*.ckpt
+archive/*
