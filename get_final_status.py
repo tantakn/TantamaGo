@@ -28,7 +28,7 @@ def get_gnugo_judgment(filename: str, is_japanese_rule: bool) -> str:
     ]
 
     gnugo_command = [
-        "gnugo",
+        "C:\programs\gnugo\gungo.exe",
         "--mode",
         "gtp",
         "--level",
