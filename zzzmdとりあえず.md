@@ -120,3 +120,6 @@ Prisoner(White) : 0
 
 =
 ```
+
+# 240704
+source env/bin/activate の後ろに .csh　がつくらしい
