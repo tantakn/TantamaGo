@@ -2,8 +2,6 @@ import os, shutil
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-import click
-
 
 # @click.command()
 # @click.option('--name', '-n', default='World')
@@ -69,7 +67,20 @@ import click
 
 # print(file_index_list)
 # print(file_indice)
+# import glob
+# search_dir = "foo"
+# ttt = [dir_path for dir_path in glob.glob(os.path.join(search_dir, "*"))]
+# print(ttt)
+
+
+
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 import glob
-search_dir = "foo"
-ttt = [dir_path for dir_path in glob.glob(os.path.join(search_dir, "*"))]
-print(ttt)
+
+# ./data/text2.txt, ./data/text3.txt, ./data/text1.txt, ./data/text4.txt があったとして。
+
+data_set = sorted(glob.glob(os.path.join("./", "SgfFile", "GoQuest_9x9_49893games", "sgf", "*.sgf")))
+
+print(len(data_set))
