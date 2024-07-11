@@ -4,4 +4,4 @@
 **/*.bin
 **/*.ckpt
 archive/*
-/SgfFile/
+/SgfFile/**/*.sgf
