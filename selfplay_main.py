@@ -44,7 +44,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, \
     file_index_list = list(range(1, num_data + 1))
     split_size = math.ceil(num_data / process)
     file_indice = [file_index_list[i:i+split_size] \
-        for i in range(0, len(file_index_list), split_size)]
+        for i in range(0, len(file_index_list), split_size)] # 多分並行処理のために分けてる
     kifu_dir_index_list = [int(os.path.split(dir_path)[-1]) \
         for dir_path in glob.glob(os.path.join(save_dir, "*"))]
     kifu_dir_index_list.append(0)
