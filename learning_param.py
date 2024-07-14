@@ -16,7 +16,7 @@ MOMENTUM=0.9
 # L2正則化の重み
 WEIGHT_DECAY = 1e-4
 
-EPOCHS = 2
+EPOCHS = 1
 # EPOCHS = 15
 
 # 学習率を変更するエポック数と変更後の学習率
@@ -36,7 +36,7 @@ LEARNING_SCHEDULE = {
 # }
 
 # npzファイル1つに格納するデータの個数
-DATA_SET_SIZE = BATCH_SIZE * 1000
+DATA_SET_SIZE = BATCH_SIZE * 4000
 # DATA_SET_SIZE = BATCH_SIZE * 4000
 
 # Policyのlossに対するValueのlossの重み比率

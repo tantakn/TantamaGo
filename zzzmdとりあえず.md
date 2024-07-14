@@ -183,3 +183,9 @@ NUM_SELF_PLAY_WORKERS = 4
 NUM_SELF_PLAY_GAMES = 10000
 ```
 をやってできた f"sl_data_{i}.npz" の rep(i, 10) 以外消してtrain.pyしたら自分よりちょっと弱いAIできた。
+
+# 20240714
+
+igo/TantamaGo/model/sl-model202407144.bin
+
+が自分より少し弱い

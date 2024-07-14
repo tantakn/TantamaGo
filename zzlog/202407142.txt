@@ -1,0 +1,34 @@
+python train.py
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz']
+Testing data set  : ['data/sl_data_4.npz', 'data/sl_data_5.npz']
+epoch 0, data-0 : loss = 2.254029, time = 105.441428 seconds.
+        policy loss : 2.239921
+        value loss  : 0.705391
+epoch 0, data-1 : loss = 1.806521, time = 101.153740 seconds.
+        policy loss : 1.792644
+        value loss  : 0.693847
+epoch 0, data-2 : loss = 1.737542, time = 101.206265 seconds.
+        policy loss : 1.723755
+        value loss  : 0.689330
+epoch 0, data-3 : loss = 1.673447, time = 101.422004 seconds.
+        policy loss : 1.659855
+        value loss  : 0.679598
+Test 0 : loss = 1.665556, time = 53.726114 seconds.
+        policy loss : 1.652050
+        value loss  : 0.675274
+epoch 1, data-0 : loss = 1.629665, time = 101.160189 seconds.
+        policy loss : 1.616223
+        value loss  : 0.672081
+epoch 1, data-1 : loss = 1.606842, time = 101.431297 seconds.
+        policy loss : 1.593492
+        value loss  : 0.667526
+epoch 1, data-2 : loss = 1.604433, time = 101.368979 seconds.
+        policy loss : 1.591209
+        value loss  : 0.661191
+epoch 1, data-3 : loss = 1.572069, time = 101.118406 seconds.
+        policy loss : 1.559058
+        value loss  : 0.650507
+Test 1 : loss = 1.580404, time = 54.181806 seconds.
+        policy loss : 1.567339
+        value loss  : 0.653297
+Epoch 1, learning rate has changed 0.01 -> 0.001

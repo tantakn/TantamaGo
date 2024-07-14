@@ -1,0 +1,100 @@
+(env) (base) u2424004@g03:~/igo/TantamaGo$ python train.py
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+epoch 0, data-0 : loss = 2.261574, time = 106.883607 seconds.
+        policy loss : 2.247457
+        value loss  : 0.705891
+epoch 0, data-1 : loss = 1.797162, time = 99.167976 seconds.
+        policy loss : 1.783321
+        value loss  : 0.692058
+epoch 0, data-2 : loss = 1.720451, time = 100.315298 seconds.
+        policy loss : 1.706835
+        value loss  : 0.680757
+epoch 0, data-3 : loss = 1.670641, time = 100.274971 seconds.
+        policy loss : 1.657287
+        value loss  : 0.667690
+epoch 0, data-4 : loss = 1.629473, time = 99.164231 seconds.
+        policy loss : 1.616575
+        value loss  : 0.644911
+epoch 0, data-5 : loss = 1.595086, time = 100.304978 seconds.
+        policy loss : 1.582379
+        value loss  : 0.635338
+epoch 0, data-6 : loss = 1.551711, time = 100.527447 seconds.
+        policy loss : 1.538913
+        value loss  : 0.639913
+epoch 0, data-7 : loss = 1.536996, time = 100.255503 seconds.
+        policy loss : 1.524174
+        value loss  : 0.641121
+epoch 0, data-8 : loss = 1.526769, time = 98.429344 seconds.
+        policy loss : 1.513968
+        value loss  : 0.640006
+epoch 0, data-9 : loss = 1.521203, time = 100.292907 seconds.
+        policy loss : 1.508477
+        value loss  : 0.636262
+epoch 0, data-10 : loss = 1.511708, time = 76.273244 seconds.
+        policy loss : 1.498985
+        value loss  : 0.636143
+epoch 0, data-11 : loss = 1.541402, time = 100.373832 seconds.
+        policy loss : 1.528680
+        value loss  : 0.636061
+epoch 0, data-12 : loss = 1.513946, time = 100.232196 seconds.
+        policy loss : 1.501444
+        value loss  : 0.625133
+epoch 0, data-13 : loss = 1.489140, time = 100.341500 seconds.
+        policy loss : 1.476669
+        value loss  : 0.623541
+epoch 0, data-14 : loss = 1.493332, time = 100.497475 seconds.
+        policy loss : 1.480836
+        value loss  : 0.624829
+Test 0 : loss = 1.515420, time = 123.593811 seconds.
+        policy loss : 1.502793
+        value loss  : 0.631391
+epoch 1, data-0 : loss = 1.487434, time = 100.463655 seconds.
+        policy loss : 1.474836
+        value loss  : 0.629899
+epoch 1, data-1 : loss = 1.488351, time = 100.493976 seconds.
+        policy loss : 1.475875
+        value loss  : 0.623799
+epoch 1, data-2 : loss = 1.497467, time = 100.471034 seconds.
+        policy loss : 1.485194
+        value loss  : 0.613675
+epoch 1, data-3 : loss = 1.492736, time = 100.525395 seconds.
+        policy loss : 1.480435
+        value loss  : 0.615035
+epoch 1, data-4 : loss = 1.479945, time = 100.204621 seconds.
+        policy loss : 1.467910
+        value loss  : 0.601749
+epoch 1, data-5 : loss = 1.468899, time = 100.384356 seconds.
+        policy loss : 1.456875
+        value loss  : 0.601200
+epoch 1, data-6 : loss = 1.437983, time = 100.228462 seconds.
+        policy loss : 1.425764
+        value loss  : 0.610964
+epoch 1, data-7 : loss = 1.440297, time = 100.261649 seconds.
+        policy loss : 1.427961
+        value loss  : 0.616809
+epoch 1, data-8 : loss = 1.439869, time = 100.227396 seconds.
+        policy loss : 1.427508
+        value loss  : 0.618065
+epoch 1, data-9 : loss = 1.444711, time = 100.477548 seconds.
+        policy loss : 1.432426
+        value loss  : 0.614287
+epoch 1, data-10 : loss = 1.442732, time = 76.179139 seconds.
+        policy loss : 1.430353
+        value loss  : 0.618953
+epoch 1, data-11 : loss = 1.478599, time = 100.479523 seconds.
+        policy loss : 1.466223
+        value loss  : 0.618790
+epoch 1, data-12 : loss = 1.456312, time = 100.515007 seconds.
+        policy loss : 1.444208
+        value loss  : 0.605215
+epoch 1, data-13 : loss = 1.435602, time = 100.223094 seconds.
+        policy loss : 1.423401
+        value loss  : 0.610040
+epoch 1, data-14 : loss = 1.443724, time = 100.114116 seconds.
+        policy loss : 1.431532
+        value loss  : 0.609598
+Test 1 : loss = 1.459551, time = 127.641482 seconds.
+        policy loss : 1.447413
+        value loss  : 0.606861
+Epoch 1, learning rate has changed 0.01 -> 0.001

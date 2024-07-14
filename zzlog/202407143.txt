@@ -1,0 +1,18 @@
+python train.py
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz']
+Testing data set  : ['data/sl_data_4.npz']
+epoch 0, data-0 : loss = 2.215814, time = 102.782939 seconds.
+        policy loss : 2.201691
+        value loss  : 0.706179
+epoch 0, data-1 : loss = 1.793783, time = 101.306294 seconds.
+        policy loss : 1.779948
+        value loss  : 0.691735
+epoch 0, data-2 : loss = 1.725540, time = 101.408859 seconds.
+        policy loss : 1.711931
+        value loss  : 0.680450
+epoch 0, data-3 : loss = 1.662044, time = 101.093893 seconds.
+        policy loss : 1.648755
+        value loss  : 0.664480
+Test 0 : loss = 1.648734, time = 25.682979 seconds.
+        policy loss : 1.635536
+        value loss  : 0.659921
