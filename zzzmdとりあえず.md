@@ -189,3 +189,7 @@ NUM_SELF_PLAY_GAMES = 10000
 igo/TantamaGo/model/sl-model202407144.bin
 
 が自分より少し弱い
+
+# 20240715
+
+gitおかしくなった
