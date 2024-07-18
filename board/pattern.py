@@ -116,7 +116,6 @@ class Pattern:
             self.pat3[self.POS(board_start, y_pos)] = \
                 self.pat3[self.POS(board_start, y_pos)] | 0x0cc3
             
-        print("aaaaa")
 
     def remove_stone(self, pos: int) -> NoReturn:
         """周囲の石のパターンから石を取り除く。
