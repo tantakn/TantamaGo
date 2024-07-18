@@ -54,6 +54,8 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, \
     print(f"Self play visits : {visits}")
 
     # テンプレ改造？ここでsgfを出力してないselfplay_workerでしてる？
+    # submit(selfplay_worker,...（selfplay_workerの引数たち）)らしい
+    # max_workers=process は使用するプロセス数？
     with ProcessPoolExecutor(max_workers=process) as executor: 
         futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), 
             model, file_list, size, visits, use_gpu) for file_list in file_indice]
