@@ -1,4 +1,5 @@
 import os, shutil
+import numpy as np
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -81,6 +82,12 @@ import glob
 
 # ./data/text2.txt, ./data/text3.txt, ./data/text1.txt, ./data/text4.txt があったとして。
 
-data_set = sorted(glob.glob(os.path.join("./", "SgfFile", "GoQuest_9x9_49893games", "sgf", "*.sgf")))
+# data_set = sorted(glob.glob(os.path.join("./", "SgfFile", "GoQuest_9x9_49893games", "sgf", "*.sgf")))
 
-print(len(data_set))
+# print(len(data_set))
+
+
+
+target_index = sorted(np.random.permutation(np.arange(100))[:8]) #?????
+
+print(target_index)
