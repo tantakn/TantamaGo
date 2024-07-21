@@ -106,6 +106,7 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
 
     kifu_list = []
     for kifu_dir in kifu_dir_list:
+        # kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*", "*.sgf"))) # natukazeの棋譜のフォルダ形式に合うようにした
         kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*.sgf")))
     random.shuffle(kifu_list)
 

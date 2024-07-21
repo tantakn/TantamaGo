@@ -1,0 +1,17 @@
+epoch 0, data-0 : loss = 2.507720, time = 37.188514 seconds.
+	policy loss : 2.488864
+	value loss  : 0.942763
+epoch 0, data-1 : loss = 2.034682, time = 37.533415 seconds.
+	policy loss : 2.016864
+	value loss  : 0.890878
+Test 0 : loss = 1.960047, time = 2.077931 seconds.
+	policy loss : 1.942072
+	value loss  : 0.898743
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz']
+Testing data set  : ['data/sl_data_2.npz']
+
+
+
+
+
+python train.py --kifu-dir ./SgfFile/20181218natsukaze_self/20 2>&1 | tee ./zz
