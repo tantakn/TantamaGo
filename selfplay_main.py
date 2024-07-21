@@ -42,11 +42,9 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, \
         model (str): 使用するモデルファイルのパス。デフォルトはmodel/model.bin。
     """
     file_index_list = list(range(1, num_data + 1))
-    split_size = math.ceil(num_data / process)
-    file_indice = [file_index_list[i:i+split_size] \
-        for i in range(0, len(file_index_list), split_size)] # 多分並行処理のために分けてる
-    kifu_dir_index_list = [int(os.path.split(dir_path)[-1]) \
-        for dir_path in glob.glob(os.path.join(save_dir, "*"))]
+    split_size = math.ceil(num_data / process) # 切り上げ
+    file_indice = [file_index_list[i:i+split_size] for i in range(0, len(file_index_list), split_size)] # 多分並行処理のために分けてる
+    kifu_dir_index_list = [int(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join(save_dir, "*"))]
     kifu_dir_index_list.append(0)
     kifu_dir_index = max(kifu_dir_index_list) + 1
 
@@ -55,10 +53,11 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, \
 
     print(f"Self play visits : {visits}")
 
-    with ProcessPoolExecutor(max_workers=process) as executor:
-        futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), \
+    # テンプレ改造？ここでsgfを出力してないselfplay_workerでしてる？
+    with ProcessPoolExecutor(max_workers=process) as executor: 
+        futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), 
             model, file_list, size, visits, use_gpu) for file_list in file_indice]
-        monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, \
+        monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, 
             args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, ), daemon=True)
         monitoring_worker.start()
         for future in futures:

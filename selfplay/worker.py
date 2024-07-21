@@ -18,8 +18,7 @@ from nn.utility import load_network
 from learning_param import SELF_PLAY_VISITS
 
 # pylint: disable=R0913,R0914
-def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], \
-    size: int, visits: int, use_gpu: bool) -> NoReturn:
+def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], size: int, visits: int, use_gpu: bool) -> NoReturn:
     """自己対戦実行ワーカ。
 
     Args:
