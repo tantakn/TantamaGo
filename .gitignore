@@ -5,3 +5,6 @@
 **/*.ckpt
 archive/*
 /SgfFile/**/*.sgf
+/SgfFile/*.sgf
+/SgfFile/
+/SgfFile

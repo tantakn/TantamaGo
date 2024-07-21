@@ -114,7 +114,7 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
         sgf = SGFReader(kifu_path, board_size)
         color = Stone.BLACK
         value_label = sgf.get_value_label()
-        target_index = sorted(np.random.permutation(np.arange(sgf.get_n_moves()))[:8])
+        target_index = sorted(np.random.permutation(np.arange(sgf.get_n_moves()))[:8]) # 総手数以下の数からランダムで８個選んで選んだのをソート
         sym_index_list = np.random.permutation(np.arange(8))
         sym_index = 0
         #target_index = np.random.permutation(np.arange(sgf.get_n_moves()))[:1]

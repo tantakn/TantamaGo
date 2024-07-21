@@ -193,4 +193,3 @@ igo/TantamaGo/model/sl-model202407144.bin
 # 20240715
 
 gitおかしくなった
-
