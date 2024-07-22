@@ -8,7 +8,8 @@ SL_LEARNING_RATE = 0.01
 RL_LEARNING_RATE = 0.01
 
 # ミニバッチサイズ
-BATCH_SIZE = 256
+BATCH_SIZE = 512
+# BATCH_SIZE = 256
 
 # 学習器のモーメンタムパラメータ
 MOMENTUM=0.9

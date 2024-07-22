@@ -1,0 +1,78 @@
+epoch 0, data-0 : loss = 2.101084, time = 46.598776 seconds.
+	policy loss : 2.087012
+	value loss  : 0.703632
+epoch 0, data-1 : loss = 1.716865, time = 45.528862 seconds.
+	policy loss : 1.703140
+	value loss  : 0.686255
+epoch 0, data-2 : loss = 1.622197, time = 45.818449 seconds.
+	policy loss : 1.608814
+	value loss  : 0.669161
+epoch 0, data-3 : loss = 1.580579, time = 45.689962 seconds.
+	policy loss : 1.567616
+	value loss  : 0.648137
+epoch 0, data-4 : loss = 1.566109, time = 46.341725 seconds.
+	policy loss : 1.553412
+	value loss  : 0.634857
+epoch 0, data-5 : loss = 1.551187, time = 46.617841 seconds.
+	policy loss : 1.538554
+	value loss  : 0.631641
+epoch 0, data-6 : loss = 1.523670, time = 46.608962 seconds.
+	policy loss : 1.511350
+	value loss  : 0.616025
+epoch 0, data-7 : loss = 1.483113, time = 46.470598 seconds.
+	policy loss : 1.470643
+	value loss  : 0.623460
+Test 0 : loss = 1.505345, time = 48.248085 seconds.
+	policy loss : 1.492698
+	value loss  : 0.632357
+epoch 1, data-0 : loss = 1.495723, time = 46.970641 seconds.
+	policy loss : 1.483209
+	value loss  : 0.625720
+epoch 1, data-1 : loss = 1.498796, time = 47.198539 seconds.
+	policy loss : 1.486413
+	value loss  : 0.619177
+epoch 1, data-2 : loss = 1.467885, time = 46.679289 seconds.
+	policy loss : 1.455565
+	value loss  : 0.615999
+epoch 1, data-3 : loss = 1.461494, time = 47.062900 seconds.
+	policy loss : 1.449344
+	value loss  : 0.607545
+epoch 1, data-4 : loss = 1.471276, time = 46.227805 seconds.
+	policy loss : 1.459202
+	value loss  : 0.603677
+epoch 1, data-5 : loss = 1.471901, time = 47.121542 seconds.
+	policy loss : 1.459797
+	value loss  : 0.605181
+epoch 1, data-6 : loss = 1.456652, time = 47.496114 seconds.
+	policy loss : 1.444760
+	value loss  : 0.594610
+epoch 1, data-7 : loss = 1.423458, time = 46.895140 seconds.
+	policy loss : 1.411325
+	value loss  : 0.606634
+Test 1 : loss = 1.467641, time = 48.226365 seconds.
+	policy loss : 1.455026
+	value loss  : 0.630737
+🐾generate_supervised_learning_data 2024-07-22 17:20:29.495500🐾
+kifu_num: 49893
+    saved: sl_data_1.npz (0:03:38.819289)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/14751.sgf / 49893kyoku
+    saved: sl_data_2.npz (0:03:33.837398)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/19502.sgf / 49893kyoku
+    saved: sl_data_3.npz (0:03:36.867209)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/24288.sgf / 49893kyoku
+    saved: sl_data_4.npz (0:03:33.362471)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/29079.sgf / 49893kyoku
+    saved: sl_data_5.npz (0:03:36.993352)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/3389.sgf / 49893kyoku
+    saved: sl_data_6.npz (0:03:35.655562)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/38637.sgf / 49893kyoku
+    saved: sl_data_7.npz (0:03:32.229036)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/43514.sgf / 49893kyoku
+    saved: sl_data_8.npz (0:03:32.792645)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/48321.sgf / 49893kyoku
+    saved: sl_data_9.npz (0:03:32.369893)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/8181.sgf / 49893kyoku
+qwer
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz', 'data/sl_data_6.npz', 'data/sl_data_7.npz']
+Testing data set  : ['data/sl_data_8.npz', 'data/sl_data_9.npz']
+Epoch 1, learning rate has changed 0.01 -> 0.001

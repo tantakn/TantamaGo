@@ -44,7 +44,7 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
         kifu_dir (str): SGFファイルを格納しているディレクトリのパス。
         board_size (int, optional): 碁盤のサイズ. Defaults to 9.
     """
-    dt_watch = datetime.datetime.now()
+    dt_watch = datetime.datetime.now()################
     print(f"🐾generate_supervised_learning_data {dt_watch}🐾")############
 
     board = GoBoard(board_size=board_size)
@@ -86,7 +86,7 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
 
             print(f"""\
     saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})
-    from: {kifu_path} / {kifu_num}\
+    from: {kifu_path} / {kifu_num}kyoku\
 """)#####################
             dt_watch = datetime.datetime.now()
 
@@ -110,7 +110,7 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
         kifu_dir_list (List[str]): 棋譜ファイルを保存しているディレクトリパスのリスト。
         board_size (int, optional): 碁盤の大きさ。デフォルトは9。
     """
-    dt_watch = datetime.datetime.now()
+    dt_watch = datetime.datetime.now()#############
     print(f"🐾generate_reinforcement_learning_data {dt_watch}🐾")##################
 
     board = GoBoard(board_size=board_size)
