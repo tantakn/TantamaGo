@@ -9,7 +9,7 @@ RL_LEARNING_RATE = 0.01
 
 # ミニバッチサイズ
 BATCH_SIZE = 512
-# BATCH_SIZE = 256
+# BATCH_SIZE = 256 # default
 
 # 学習器のモーメンタムパラメータ
 MOMENTUM=0.9
@@ -17,28 +17,19 @@ MOMENTUM=0.9
 # L2正則化の重み
 WEIGHT_DECAY = 1e-4
 
-EPOCHS = 2
-# EPOCHS = 15
+EPOCHS = 15 # default
 
 # 学習率を変更するエポック数と変更後の学習率
-LEARNING_SCHEDULE = {
+LEARNING_SCHEDULE = { # default
     "learning_rate": {
-        1: 0.001,
-        2: 0.0001,
-        3: 0.00001,
+        5: 0.001,
+        8: 0.0001,
+        10: 0.00001,
     }
 }
-# LEARNING_SCHEDULE = {
-#     "learning_rate": {
-#         5: 0.001,
-#         8: 0.0001,
-#         10: 0.00001,
-#     }
-# }
 
 # npzファイル1つに格納するデータの個数
 DATA_SET_SIZE = BATCH_SIZE * 4000
-# DATA_SET_SIZE = BATCH_SIZE * 4000
 
 # Policyのlossに対するValueのlossの重み比率
 SL_VALUE_WEIGHT = 0.02

@@ -10,6 +10,7 @@ from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_
 from nn.data_generator import generate_supervised_learning_data, \
     generate_reinforcement_learning_data
 
+dbg_flag = 0b0001#################
 
 @click.command()
 @click.option('--kifu-dir', type=click.STRING, \

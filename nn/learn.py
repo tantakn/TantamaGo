@@ -4,6 +4,8 @@ from typing import NoReturn
 import glob
 import os
 import time
+import datetime###########
+dt_now = datetime.datetime.now()############
 import torch
 from nn.network.dual_net import DualNet
 from nn.loss import calculate_policy_loss, calculate_value_loss, \
@@ -133,6 +135,11 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
         batch_size (int): ミニバッチサイズ。
         epochs (int): 実行する最大エポック数。
     """
+
+    global dbg_flag#########
+    if dbg_flag & 0b0001:#########
+        print(f"🐾train_on_gpu {dt_now}")###########
+
     # 学習データと検証用データの分割
     data_set = sorted(glob.glob(os.path.join(program_dir, "data", "sl_data_*.npz")))
     train_data_set, test_data_set = split_train_test_set(data_set, 0.8)
@@ -228,7 +235,9 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
             current_lr = LEARNING_SCHEDULE["learning_rate"][epoch]
             print(f"Epoch {epoch}, learning rate has changed {previous_lr} -> {current_lr}")
 
-    save_model(dual_net, os.path.join("model", "sl-model.bin"))
+        save_model(dual_net, os.path.join("model", f"sl-model_{epoch}_{dt_now.year}{dt_now.month}{dt_now.day}{dt_now.hour}.bin"))######epoch毎に保存
+
+    # save_model(dual_net, os.path.join("model", "sl-model.bin"))
 
 
 def train_with_gumbel_alphazero_on_cpu(program_dir: str, board_size: int, \
