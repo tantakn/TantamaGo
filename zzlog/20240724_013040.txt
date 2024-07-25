@@ -1,0 +1,23 @@
+🐾train_on_gpu 2024-07-24 01:30:40.263554
+Training data set : []
+Testing data set  : []
+Traceback (most recent call last):
+  File "train.py", line 70, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 63, in train_main
+    batch_size=BATCH_SIZE, epochs=EPOCHS)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 228, in train_on_gpu
+    print_evaluation_information(test_loss, epoch, test_iteration, testing_time)
+  File "/data/student/u2424004/igo/TantamaGo/nn/utility.py", line 72, in print_evaluation_information
+    loss, policy_loss, value_loss = _calculate_losses(loss_data, iteration)
+  File "/data/student/u2424004/igo/TantamaGo/nn/utility.py", line 38, in _calculate_losses
+    return loss["loss"] / iteration, loss["policy"] / iteration, \
+ZeroDivisionError: float division by zero

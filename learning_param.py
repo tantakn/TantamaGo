@@ -8,8 +8,7 @@ SL_LEARNING_RATE = 0.01
 RL_LEARNING_RATE = 0.01
 
 # ミニバッチサイズ
-BATCH_SIZE = 512
-# BATCH_SIZE = 256 # default
+BATCH_SIZE = 256 # default
 
 # 学習器のモーメンタムパラメータ
 MOMENTUM=0.9
@@ -17,7 +16,7 @@ MOMENTUM=0.9
 # L2正則化の重み
 WEIGHT_DECAY = 1e-4
 
-EPOCHS = 15 # default
+EPOCHS = 1 # default
 
 # 学習率を変更するエポック数と変更後の学習率
 LEARNING_SCHEDULE = { # default

@@ -1,0 +1,30 @@
+🐾train_on_gpu 2024-07-25 18:40:24.518390
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz', 'data/sl_data_6.npz', 'data/sl_data_7.npz']
+Testing data set  : ['data/sl_data_8.npz', 'data/sl_data_9.npz']
+epoch 0, data-0 : loss = 2.025579, time = 76.483343 seconds.
+	policy loss : 2.011560
+	value loss  : 0.700991
+epoch 0, data-1 : loss = 1.704191, time = 74.708089 seconds.
+	policy loss : 1.690662
+	value loss  : 0.676481
+epoch 0, data-2 : loss = 1.613109, time = 74.657552 seconds.
+	policy loss : 1.599915
+	value loss  : 0.659697
+epoch 0, data-3 : loss = 1.574667, time = 75.568833 seconds.
+	policy loss : 1.561793
+	value loss  : 0.643726
+epoch 0, data-4 : loss = 1.562677, time = 75.928193 seconds.
+	policy loss : 1.550004
+	value loss  : 0.633671
+epoch 0, data-5 : loss = 1.549299, time = 77.854683 seconds.
+	policy loss : 1.536654
+	value loss  : 0.632238
+epoch 0, data-6 : loss = 1.524178, time = 78.338686 seconds.
+	policy loss : 1.511819
+	value loss  : 0.617963
+epoch 0, data-7 : loss = 1.484537, time = 78.471589 seconds.
+	policy loss : 1.471971
+	value loss  : 0.628312
+Test 0 : loss = 1.503861, time = 51.711389 seconds.
+	policy loss : 1.491041
+	value loss  : 0.641023
