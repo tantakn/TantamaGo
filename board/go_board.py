@@ -128,7 +128,8 @@ class GoBoard: # pylint: disable=R0902
         self.strings.clear()
         self.record.clear()
 
-    def put_stone(self, pos: int, color: Stone) -> NoReturn:
+    # def put_stone(self, pos: int, color: Stone) -> NoReturn:#########
+    def put_stone(self, pos: int, color: Stone) -> None:
         """指定された座標に指定された色の石を石を置く。
 
         Args:
@@ -452,7 +453,8 @@ class GoBoard: # pylint: disable=R0902
                 self_atari_string += '\n'
         print_err(self_atari_string)
 
-    def get_board_size(self) -> NoReturn:
+    # def get_board_size(self) -> NoReturn:#########
+    def get_board_size(self) -> int:
         """碁盤の大きさを取得する。
 
         Returns:

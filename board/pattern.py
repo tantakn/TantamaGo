@@ -126,7 +126,8 @@ class Pattern:
         for i, shift in enumerate(self.update_pos):
             self.pat3[pos + shift] = self.pat3[pos + shift] & pattern_mask[i][0]
 
-    def put_stone(self, pos: int, color: Stone) -> NoReturn:
+    # def put_stone(self, pos: int, color: Stone) -> NoReturn:#######
+    def put_stone(self, pos: int, color: Stone) -> None:
         """周囲の石のパターンの石を追加する。
 
         Args:

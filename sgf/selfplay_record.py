@@ -29,12 +29,14 @@ class SelfPlayRecord:
         self.save_dir = save_dir
         self.file_index = 1
 
-    def clear(self) -> NoReturn:
+    # def clear(self) -> NoReturn:############
+    def clear(self) -> None:
         """レコードの初期化。
         """
         self.record_moves = 0
 
-    def set_index(self, index: int) -> NoReturn:
+    # def set_index(self, index: int) -> NoReturn:#################
+    def set_index(self, index: int) -> None:
         """ファイルのインデックスを設定する。
 
         Args:
@@ -42,7 +44,8 @@ class SelfPlayRecord:
         """
         self.file_index = index
 
-    def save_record(self, root: MCTSNode, pos: int, color: Stone) -> NoReturn:
+    # def save_record(self, root: MCTSNode, pos: int, color: Stone) -> NoReturn:##########
+    def save_record(self, root: MCTSNode, pos: int, color: Stone) -> None:
         """着手とImproved Policyを記録する。
 
         Args:
