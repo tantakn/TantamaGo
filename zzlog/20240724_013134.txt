@@ -1,0 +1,3 @@
+🐾train_on_gpu 2024-07-24 01:31:34.827439
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz', 'data/sl_data_6.npz', 'data/sl_data_7.npz']
+Testing data set  : ['data/sl_data_8.npz', 'data/sl_data_9.npz']

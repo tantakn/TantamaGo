@@ -1,0 +1,55 @@
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz', 'data/sl_data_6.npz', 'data/sl_data_7.npz']
+Testing data set  : ['data/sl_data_8.npz', 'data/sl_data_9.npz']
+epoch 0, data-0 : loss = 2.145265, time = 46.632487 seconds.
+	policy loss : 2.131158
+	value loss  : 0.705377
+epoch 0, data-1 : loss = 1.744391, time = 46.415047 seconds.
+	policy loss : 1.730542
+	value loss  : 0.692448
+epoch 0, data-2 : loss = 1.643418, time = 46.790684 seconds.
+	policy loss : 1.629710
+	value loss  : 0.685384
+epoch 0, data-3 : loss = 1.599674, time = 46.205140 seconds.
+	policy loss : 1.586236
+	value loss  : 0.671931
+epoch 0, data-4 : loss = 1.582079, time = 46.455746 seconds.
+	policy loss : 1.568947
+	value loss  : 0.656577
+epoch 0, data-5 : loss = 1.566325, time = 46.938167 seconds.
+	policy loss : 1.553310
+	value loss  : 0.650775
+epoch 0, data-6 : loss = 1.536728, time = 47.112915 seconds.
+	policy loss : 1.524073
+	value loss  : 0.632776
+epoch 0, data-7 : loss = 1.495084, time = 47.331230 seconds.
+	policy loss : 1.482300
+	value loss  : 0.639195
+Test 0 : loss = 1.510365, time = 48.228977 seconds.
+	policy loss : 1.497393
+	value loss  : 0.648558
+Traceback (most recent call last):
+  File "train.py", line 71, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 64, in train_main
+    batch_size=BATCH_SIZE, epochs=EPOCHS)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 176, in train_on_gpu
+    policy_predict, value_predict = dual_net.forward_for_sl(plane)
+  File "/data/student/u2424004/igo/TantamaGo/nn/network/dual_net.py", line 64, in forward_for_sl
+    policy, value = self.forward(input_plane)
+  File "/data/student/u2424004/igo/TantamaGo/nn/network/dual_net.py", line 50, in forward
+    blocks_out = self.blocks(self.relu(self.bn_layer(self.conv_layer(input_plane))))
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 463, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 460, in _conv_forward
+    self.padding, self.dilation, self.groups)
+RuntimeError: Input type (torch.cuda.HalfTensor) and weight type (torch.FloatTensor) should be the same

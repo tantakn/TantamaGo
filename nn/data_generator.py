@@ -12,6 +12,8 @@ from nn.feature import generate_input_planes, generate_target_data, \
 from sgf.reader import SGFReader
 from learning_param import BATCH_SIZE, DATA_SET_SIZE
 
+import time, datetime#################
+
 
 def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndarray,\
     value_data: np.ndarray, kifu_counter: int) -> NoReturn:
@@ -42,6 +44,9 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
         kifu_dir (str): SGFファイルを格納しているディレクトリのパス。
         board_size (int, optional): 碁盤のサイズ. Defaults to 9.
     """
+    dt_watch = datetime.datetime.now()################
+    print(f"🐾generate_supervised_learning_data {dt_watch}🐾")############
+
     board = GoBoard(board_size=board_size)
 
     input_data = []
@@ -50,6 +55,9 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
 
     kifu_counter = 1
     data_counter = 0
+
+    kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
+    print(f"kifu_num: {kifu_num}")#############
 
     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
         board.clear()
@@ -76,7 +84,14 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
             kifu_counter = 1
             data_counter += 1
 
+            print(f"""\
+    saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})
+    from: {kifu_path} / {kifu_num}kyoku\
+""")#####################
+            dt_watch = datetime.datetime.now()
+
         kifu_counter += 1
+    print("qwer")
 
     # 端数の出力
     n_batches = len(value_data) // BATCH_SIZE
@@ -95,6 +110,9 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
         kifu_dir_list (List[str]): 棋譜ファイルを保存しているディレクトリパスのリスト。
         board_size (int, optional): 碁盤の大きさ。デフォルトは9。
     """
+    dt_watch = datetime.datetime.now()#############
+    print(f"🐾generate_reinforcement_learning_data {dt_watch}🐾")##################
+
     board = GoBoard(board_size=board_size)
 
     input_data = []
@@ -106,6 +124,7 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
 
     kifu_list = []
     for kifu_dir in kifu_dir_list:
+        # kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*", "*.sgf"))) # natukazeの棋譜のフォルダ形式に合うようにした
         kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*.sgf")))
     random.shuffle(kifu_list)
 

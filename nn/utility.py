@@ -2,6 +2,7 @@
 """
 from typing import NoReturn, Dict, List, Tuple
 import time
+import datetime
 import torch
 import numpy as np
 
@@ -54,7 +55,7 @@ def print_learning_process(loss_data: Dict[str, float], epoch: int, index: int, 
     loss, policy_loss, value_loss = _calculate_losses(loss_data, iteration)
     training_time = time.time() - start_time
 
-    print_err(f"epoch {epoch}, data-{index} : loss = {loss:6f}, time = {training_time:3f} seconds.")
+    print_err(f"epoch {epoch}, data-{index} : loss = {loss:6f}, time = {datetime.datetime.now():.3f}({training_time:.1f}) [s].")################
     print_err(f"\tpolicy loss : {policy_loss:6f}")
     print_err(f"\tvalue loss  : {value_loss:6f}")
 

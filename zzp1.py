@@ -87,9 +87,18 @@ import glob
 
 # print(len(data_set))
 
-kifu_dir = "/data"
+# kifu_dir = "/data"
 
-kifu_index_list = [int(os.path.split(dir_path)[-1]) \
-                for dir_path in glob.glob(os.path.join(kifu_dir, "*"))]
+# kifu_index_list = [int(os.path.split(dir_path)[-1]) \
+#                 for dir_path in glob.glob(os.path.join(kifu_dir, "*"))]
 
-print(kifu_index_list)
+# # print(kifu_index_list)
+# kifu_dir = "./SgfFile/20181218natsukaze_self/01"
+# kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
+# print(f"kifu_num: {kifu_num}")#############
+
+import datetime
+import time
+for i in range(1000):
+    time.sleep(10)
+    print(datetime.datetime.now())

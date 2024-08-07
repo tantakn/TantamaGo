@@ -1,0 +1,116 @@
+🐾generate_supervised_learning_data 2024-07-24 01:37:43.030932🐾
+kifu_num: 49893
+    saved: sl_data_1.npz (0:01:49.069503)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/12370.sgf / 49893kyoku
+    saved: sl_data_2.npz (0:01:44.982605)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/14751.sgf / 49893kyoku
+    saved: sl_data_3.npz (0:01:44.892732)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/17134.sgf / 49893kyoku
+    saved: sl_data_4.npz (0:01:44.217338)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/19502.sgf / 49893kyoku
+    saved: sl_data_5.npz (0:01:44.257490)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/21906.sgf / 49893kyoku
+    saved: sl_data_6.npz (0:01:44.040343)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/24288.sgf / 49893kyoku
+    saved: sl_data_7.npz (0:01:44.436977)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/2669.sgf / 49893kyoku
+    saved: sl_data_8.npz (0:01:44.612347)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/29079.sgf / 49893kyoku
+    saved: sl_data_9.npz (0:01:45.073970)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/31493.sgf / 49893kyoku
+    saved: sl_data_10.npz (0:01:44.745331)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/3389.sgf / 49893kyoku
+    saved: sl_data_11.npz (0:01:45.859987)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/36251.sgf / 49893kyoku
+    saved: sl_data_12.npz (0:01:44.190348)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/38637.sgf / 49893kyoku
+    saved: sl_data_13.npz (0:01:43.752362)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/41072.sgf / 49893kyoku
+    saved: sl_data_14.npz (0:01:43.803375)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/43514.sgf / 49893kyoku
+    saved: sl_data_15.npz (0:01:44.705854)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/45891.sgf / 49893kyoku
+    saved: sl_data_16.npz (0:01:44.724453)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/48321.sgf / 49893kyoku
+    saved: sl_data_17.npz (0:01:43.953244)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/5804.sgf / 49893kyoku
+    saved: sl_data_18.npz (0:01:45.511707)
+    from: ./SgfFile/GoQuest_9x9_49893games/sgf/8181.sgf / 49893kyoku
+qwer
+🐾train_on_gpu 2024-07-24 01:37:41.324017
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+epoch 0, data-0 : loss = 2.240780, time = 38.804122 seconds.
+	policy loss : 2.226643
+	value loss  : 0.706832
+epoch 0, data-1 : loss = 1.806998, time = 38.998187 seconds.
+	policy loss : 1.793150
+	value loss  : 0.692387
+epoch 0, data-2 : loss = 1.731275, time = 39.072454 seconds.
+	policy loss : 1.717579
+	value loss  : 0.684787
+epoch 0, data-3 : loss = 1.680049, time = 38.903371 seconds.
+	policy loss : 1.666562
+	value loss  : 0.674347
+epoch 0, data-4 : loss = 1.639137, time = 39.022791 seconds.
+	policy loss : 1.626075
+	value loss  : 0.653054
+epoch 0, data-5 : loss = 1.605240, time = 39.165274 seconds.
+	policy loss : 1.592429
+	value loss  : 0.640527
+epoch 0, data-6 : loss = 1.561631, time = 39.542267 seconds.
+	policy loss : 1.548724
+	value loss  : 0.645367
+epoch 0, data-7 : loss = 1.548127, time = 38.888165 seconds.
+	policy loss : 1.535254
+	value loss  : 0.643673
+epoch 0, data-8 : loss = 1.537523, time = 38.933649 seconds.
+	policy loss : 1.524654
+	value loss  : 0.643458
+epoch 0, data-9 : loss = 1.533345, time = 38.992699 seconds.
+	policy loss : 1.520554
+	value loss  : 0.639514
+epoch 0, data-10 : loss = 1.523546, time = 29.620434 seconds.
+	policy loss : 1.510796
+	value loss  : 0.637460
+epoch 0, data-11 : loss = 1.553015, time = 39.002668 seconds.
+	policy loss : 1.540277
+	value loss  : 0.636893
+epoch 0, data-12 : loss = 1.525681, time = 39.002750 seconds.
+	policy loss : 1.513166
+	value loss  : 0.625775
+epoch 0, data-13 : loss = 1.499920, time = 39.412359 seconds.
+	policy loss : 1.487406
+	value loss  : 0.625705
+epoch 0, data-14 : loss = 1.505212, time = 38.548096 seconds.
+	policy loss : 1.492660
+	value loss  : 0.627610
+Test 0 : loss = 1.539895, time = 74.662367 seconds.
+	policy loss : 1.527341
+	value loss  : 0.627727
+Traceback (most recent call last):
+  File "train.py", line 70, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 63, in train_main
+    batch_size=BATCH_SIZE, epochs=EPOCHS)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 180, in train_on_gpu
+    policy_predict, value_predict = dual_net.forward_for_sl(plane)
+  File "/data/student/u2424004/igo/TantamaGo/nn/network/dual_net.py", line 64, in forward_for_sl
+    policy, value = self.forward(input_plane)
+  File "/data/student/u2424004/igo/TantamaGo/nn/network/dual_net.py", line 50, in forward
+    blocks_out = self.blocks(self.relu(self.bn_layer(self.conv_layer(input_plane))))
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 463, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/data/student/u2424004/env/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 460, in _conv_forward
+    self.padding, self.dilation, self.groups)
+RuntimeError: Input type (torch.cuda.HalfTensor) and weight type (torch.FloatTensor) should be the same
