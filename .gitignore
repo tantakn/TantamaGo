@@ -10,3 +10,5 @@ archive/*
 /SgfFile/*.sgf
 /SgfFile/
 /SgfFile
+
+/venv/

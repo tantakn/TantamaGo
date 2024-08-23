@@ -44,6 +44,15 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, \
     file_index_list = list(range(1, num_data + 1))
     split_size = math.ceil(num_data / process) # 切り上げ
     file_indice = [file_index_list[i:i+split_size] for i in range(0, len(file_index_list), split_size)] # 多分並行処理のために分けてる
+
+    # num_data = 10
+    # process = 4
+    # print(file_index_list)
+    # print(file_indice)
+    # # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    # # [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]
+
+    # 多分、save_dir のフォルダ名（数字）を取得？
     kifu_dir_index_list = [int(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join(save_dir, "*"))]
     kifu_dir_index_list.append(0)
     kifu_dir_index = max(kifu_dir_index_list) + 1
