@@ -199,15 +199,35 @@ import time
 # # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 # # [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]
 
-import os
-print(os.path.join("aaa", "bbb", "ccc"))
-# aaa/bbb/ccc
+# import os
+# print(os.path.join("aaa", "bbb", "ccc"))
+# # aaa/bbb/ccc
 
-print(os.path.basename("aaa/bbb/ccc"))
-# ccc
+# print(os.path.basename("aaa/bbb/ccc"))
+# # ccc
 
-print(os.path.split("aaa/bbb/ccc"))
-# ('aaa/bbb', 'ccc')
+# print(os.path.split("aaa/bbb/ccc"))
+# # ('aaa/bbb', 'ccc')
 
-print([(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join("testdir", "*"))])
-# ディレクトリのパスにあるファイルやフォルダのパスのリスト。指定したディレクトリのパスが絶対パスなら絶対パスで、相対パスなら相対パスで返ってくる。
+# print([(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join("testdir", "*"))])
+# # ディレクトリのパスにあるファイルやフォルダのパスのリスト。指定したディレクトリのパスが絶対パスなら絶対パスで、相対パスなら相対パスで返ってくる。
+
+# lis = [""] * 5
+# print(lis)
+# # ['', '', '', '', '']
+# lis = [0] * 5
+# print(lis)
+# # [0, 0, 0, 0, 0]
+
+
+import click
+
+@click.command()
+@click.option('--name', '-n',type=click.STRING,  default='World', help="名前")
+@click.option('--num',type=click.IntRange(max=3),  default=1, help="繰り返す数")
+def foo(name, num):
+    for i in range(num):
+        print(f'Hello, {name}!')
+
+if __name__ == '__main__':
+    foo()
