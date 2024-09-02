@@ -220,14 +220,187 @@ import time
 # # [0, 0, 0, 0, 0]
 
 
-import click
+# import click
 
-@click.command()
-@click.option('--name', '-n',type=click.STRING,  default='World', help="名前")
-@click.option('--num',type=click.IntRange(max=3),  default=1, help="繰り返す数")
-def foo(name, num):
-    for i in range(num):
-        print(f'Hello, {name}!')
+# @click.command()
+# @click.option('--name', '-n',type=click.STRING,  default='World', help="名前")
+# @click.option('--num',type=click.IntRange(max=3),  default=1, help="繰り返す数")
+# def foo(name, num):
+#     for i in range(num):
+#         print(f'Hello, {name}!')
 
-if __name__ == '__main__':
-    foo()
+# if __name__ == '__main__':
+# #     foo()
+
+# def func(a, b, c):
+#     print(f'出力: a={a}, b={b}, c={c}')
+
+# func(1, 2, 3)
+# #=> 出力: a=1, b=2, c=3
+
+# func(c=3, a=1, b=2)
+# #=> 出力: a=1, b=2, c=3
+
+
+# def func2(a, b, c=3):
+#     print(f'出力: a={a}, b={b}, c={c}')
+
+# func2(1, 2)
+# #=> 出力: a=1, b=2, c=3
+
+# func2(1, 2, 4)
+# #=> 出力: a=1, b=2, c=4
+
+# def func3(a: int, b: str, c: int = 3) -> None:
+#     print(f'出力: a={a}, b={b}, c={c}')
+
+# func3(1, 'qwer')
+# #=> 出力: a=1, b=qwer, c=3
+
+# func3('zxcv', 0.5, '4')
+# #=> 出力: a=zxcv, b=0.5, c=4
+# # これは型ヒントがあってもエラーにならない。
+
+# import os
+
+# a = ['1234', 'qwe', 'asdfg', 'zx']
+# b = ['1234\n', 'qwe\n', 'asdfg\n', 'zx'] 
+
+# with open("./test.txt", mode='w') as f:
+#     f.writelines(a)
+
+# with open("./test.txt", mode='r') as f:
+#     print(f.read())
+
+# #test.txt
+# #1234qweasdfgzx
+
+# with open("./test.txt", mode='w') as f:
+#     f.writelines(b)
+
+# with open("./test.txt", mode='r') as f:
+#     print(f.read())
+
+
+import re
+
+pattern = re.compile(r'\d+')  # 数字にマッチするパターン
+
+# match = pattern.match('123abc')
+# if match:
+#     print("Match found:", match.group())
+# # Match found: 123
+
+# match = pattern.match('abc123')
+# if match:
+#     print("Match found:", match.group())
+# print(match)
+# # None
+
+# search = pattern.search('abc123')
+# if search:
+#     print("Search found:", search.group())
+# # Search found: 123
+
+# search = pattern.search('abc')
+# if search:
+#     print("Search found:", search.group())
+# print(search)
+# # None
+
+# result = pattern.sub('NUMBER', 'abcdef')
+# print("Substitution result:", result)
+# # Substitution result: abcNUMBERdef
+
+# split_result = pattern.split('abcdefghi')
+# print("Split result:", split_result)
+# # Split result: ['abc', 'def', 'ghi']
+
+import re
+
+# (;FF[4]GM[1]SZ[9]
+# AP[TantamaGo]PB[model/sl-model_default.bin-Black]PW[model/sl-model20240711.bin-White]RE[W+88.0]KM[7.0];B[ha]C[82 A9:2.243e-10 B9:2.360e-10 C9:6.112e-02 D9:2.
+
+# with open("./archive/6/1.sgf") as f:
+#     sgf = f.read()
+#     model1 = re.search(r"PB\[(.*)\]PW", sgf)
+#     if model1 is not None:
+#         print(model1.group(1))
+#     else:
+#         print("None")
+
+
+# text = "<<<hoge>>>>>>"
+# pattern = r'<*([^<>]+)>*'
+# print(re.search(pattern, text).group(1))
+# # hoge
+
+
+# text = """
+# # (;FF[4]GM[1]SZ[9]
+# # AP[TantamaGo]PB[model/sl-model_default.bin-Black]PW[model/sl-model20240711.bin-White]RE[W+88.0]KM[7.0];B[ha]C[82 A9:2.243e-10 B9:2.360e-10 C9:6.112e-02 D9:2.
+# """
+
+# pattern = re.compile(r'.*?\[(.*?)\].*?\[(.*?)\]')
+
+# matches = pattern.match(text)
+# print(matches.groups())
+
+
+# pattern = re.compile(r'\[.*?\]')
+
+# matches = pattern.findall(text)
+# for match in matches:
+#     print("Matched:", match)
+
+# text = "<qwer><asd>"
+# ptn = r'<(.*?)>'
+# print(re.search(ptn, text).groups())
+# # ('qwer',)
+# print(re.findall(ptn, text))
+# # ['qwer', 'asd']
+
+# text = "<qwer><asd>"
+# ptn = r'<(.*?)><(.*?)>'
+# print(re.search(ptn, text).groups())
+# # ('qwer',)
+# print(re.findall(ptn, text))
+# # ['qwer', 'asd']
+
+
+
+# text = """
+# qwert
+# sdfgh
+# """
+
+# print(re.search(r"w[\s\S]*g", text).group() if re.search(r"w[\s\S]*g", text) else "None")
+# # wert
+# # sdfg
+# print(re.search(r"w.*g", text, flags=re.DOTALL).group())
+# # wert
+# # sdfg
+# lis = [[0] * 3 for i in range(3)]
+
+# print(lis)
+# #->[[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+# lis[1][2] = 1
+
+# print(lis)
+# #->[[0, 0, 0], [0, 0, 1], [0, 0, 0]]
+
+
+text = """
+(;FF[4]GM[1]SZ[9]
+AP[TantamaGo]PB[model/sl-model_default.bin-Black]PW[model/sl-model20240711.bin-White]RE[W+88.0]KM[7.0];B[ha]C[82 A9:2.243e-10 B9:2.360e-10 C9:6.112e-02 D9:2.
+"""
+
+# # print(re.findall(r"\[(.*?)\]", text))
+# print(re.search(r"FF\[(.*?)\]", text).group(1))
+# print(re.search(r"PB\[(.*?)\]", text).group(1))
+
+print(re.search(r"RE\[.*?\]", text).group(0))
+print(re.search(r"RE\[W\+88\.0\]", text).group(0))
+print(re.search(r"RE\[[BW0][\d.+]*?\]", text).group(0))
+print(re.search(r"RE\[([BW0])[.+\d]*?\]", text).group(1))

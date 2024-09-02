@@ -110,11 +110,12 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int) -> NoReturn:
 
 # pylint: disable=R0913,R0914
 def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool) -> NoReturn:
-    """自己対戦実行ワーカ。
+    """異なるモデルを対戦させる自己対戦実行ワーカ。
 
     Args:
         save_dir (str): 棋譜ファイルを保存するディレクトリパス。
-        model_file_path (str): 使用するニューラルネットワークモデルファイルパス。
+        model_file_path1 (str): 使用するニューラルネットワークモデルファイルパス。
+        model_file_path2 (str): 使用するニューラルネットワークモデルファイルパス2。
         index_list (List[int]): 棋譜ファイル保存時に使用するインデックスリスト。
         size (int): 碁盤の大きさ。
         visits (int): 自己対戦実行時の探索回数。
@@ -147,6 +148,7 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
         is_resign = False
         score = 0.0
         for i in range(max_moves):
+            # index が奇数のときは model_file_path1 が先手、偶数のときは model_file_path2 が先手
             if (i + index) % 2 == 1:
                 mcts = mcts1
             else:
@@ -185,4 +187,18 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
                 winner = Stone.OUT_OF_BOARD
 
         record.set_index(index)
-        record.write_record(winner, board.get_komi(), is_resign, score)
+        # record.write_record(winner, board.get_komi(), is_resign, score)
+
+        tmp_path1 =""
+        tmp_path2 =""
+        if model_file_path1 == model_file_path2:
+            tmp_path1 = model_file_path1 + "_selfVs1"
+            tmp_path2 = model_file_path2 + "_selfVs2"
+
+        if (index) % 2 == 1:
+            record.write_record(winner, board.get_komi(), is_resign, score, black_name=tmp_path1, white_name=tmp_path2)
+
+        else:
+            record.write_record(winner, board.get_komi(), is_resign, score, black_name=tmp_path2, white_name=tmp_path1)
+
+

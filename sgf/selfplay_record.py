@@ -67,7 +67,7 @@ class SelfPlayRecord:
 
         self.record_moves += 1
 
-    def write_record(self, winner: Stone, komi: float, is_resign: bool, score: float) -> NoReturn:
+    def write_record(self, winner: Stone, komi: float, is_resign: bool, score: float, black_name: str = PROGRAM_NAME, white_name: str = PROGRAM_NAME) -> NoReturn:
         """自己対戦のファイルを出力する。
 
         Args:
@@ -75,11 +75,13 @@ class SelfPlayRecord:
             komi (float): 対局実行時のコミ。
             is_resign (bool): 投了による決着か否か。
             score (float): 黒から見た目数。
+            black_name (str): 黒番の名前。
+            white_name (str): 白番の名前。
         """
         sgf_string = f"(;FF[4]GM[1]SZ[{self.coord.board_size}]\n"
         sgf_string += f"AP[{PROGRAM_NAME}]"
-        sgf_string += f"PB[{PROGRAM_NAME}-Black]"
-        sgf_string += f"PW[{PROGRAM_NAME}-White]"
+        sgf_string += f"PB[{black_name}]"
+        sgf_string += f"PW[{white_name}]"
 
         if winner is Stone.BLACK:
             if is_resign:
