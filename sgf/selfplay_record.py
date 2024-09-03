@@ -93,6 +93,7 @@ class SelfPlayRecord:
                 sgf_string += "RE[W+R]"
             else:
                 sgf_string += f"RE[W+{-score:.1f}]"
+                # TODO: RE[W+-0.0] となる場合があって多分これは RE[0] が正しい#####
         else:
             sgf_string += "RE[0]"
 

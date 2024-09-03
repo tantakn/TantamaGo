@@ -2,6 +2,12 @@ import os, shutil
 import numpy as np
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
+import logging
+mylog = logging.getLogger("mylog")
+mylog.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter("🐕️%(asctime)s [🐾%(levelname)s🐾] %(pathname)s %(lineno)d %(funcName)s🐈️ %(message)s🦉", datefmt="%y%m%d_%H%M%S"))
+mylog.addHandler(handler)
 
 
 # @click.command()
@@ -393,14 +399,35 @@ import re
 
 text = """
 (;FF[4]GM[1]SZ[9]
-AP[TantamaGo]PB[model/sl-model_default.bin-Black]PW[model/sl-model20240711.bin-White]RE[W+88.0]KM[7.0];B[ha]C[82 A9:2.243e-10 B9:2.360e-10 C9:6.112e-02 D9:2.
+AP[TantamaGo]PB[model/sl-model_default.bin_selfVs1]PW[model/sl-model_default.bin_selfVs2]RE[W+4.0]KM[7.0];B[hc]C[82 A9:2.259e-10 B9:2.377e-10 C9:2.151e-10 D9:2.210e-10 E9:2.385e-10 F9:2.162e-10 G9:2.132e-10 H9:2.114e-10 J9:2.082e-10 A8:2.375e-10 B8:6.412e-02 C8:2.
 """
 
 # # print(re.findall(r"\[(.*?)\]", text))
 # print(re.search(r"FF\[(.*?)\]", text).group(1))
 # print(re.search(r"PB\[(.*?)\]", text).group(1))
 
-print(re.search(r"RE\[.*?\]", text).group(0))
-print(re.search(r"RE\[W\+88\.0\]", text).group(0))
-print(re.search(r"RE\[[BW0][\d.+]*?\]", text).group(0))
-print(re.search(r"RE\[([BW0])[.+\d]*?\]", text).group(1))
+# print(re.search(r"RE\[.*?\]", text).group(0))
+# print(re.search(r"RE\[W\+88\.0\]", text).group(0))
+# print(re.search(r"RE\[[BW0][\d.+]*?\]", text).group(0))
+# print(re.search(r"RE\[([BW0])[.+\d]*?\]", text).group(1))
+
+
+text2 = """
+(;FF[4]GM[1]SZ[9]
+AP[TantamaGo]PB[TantamaGo-Black]PW[TantamaGo-White]RE[W+R]KM[7.0];B[ee]C[82 A9:7.930e-07 B9:6.038e-07 C9:1.140e-06 D9:3.652e-06 E9:3.371e-06 F9:2.397e-06
+"""
+
+text3 = """
+(;FF[4]GM[1]SZ[9]
+AP[TantamaGo]PB[TantamaGo-Black]PW[TantamaGo-White]RE[W+-0.0]KM[7.0];B[ee]C[82 A9:7.271e-07 B9:5.
+"""
+# "B" or "W" or "0" (<-draw) ==
+# win = re.search(r"RE\[([BW0])[.+\d]*?\]", sgf).group(1)
+win = ""
+try:
+    print(re.search(r"RE\[[BW0]([\-.+\dR]*?)\]", text2).group(1))
+    win = re.search(r"RE\[([BW0])[.+\-\dR]*?\]", text2).group(1) if re.search(r"RE\[[BW0]([\-.+\dR]*?)\]", text3).group(1) is not "+-0.0" else "0"
+except Exception as e:
+    mylog.debug(f"error: {e}")
+
+print(win)
