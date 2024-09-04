@@ -39,7 +39,7 @@ def main(path, num):
             # AP[TantamaGo]PB[model/sl-model_default.bin]PW[model/sl-model20240711.bin]RE[W+88.0]KM[7.0];B[ha]C[82 A9:2.243
 
             # "B" or "W" or "0" (<-draw) ==
-            win = re.search(r"RE\[([BW0])[.+\d]*?\]", sgf).group(1)
+            win = re.search(r"RE\[([BW0])[.+\-\dR]*?\]", sgf).group(1) if re.search(r"RE\[[BW0]([\-.+\dR]*?)\]", sgf).group(1) != "+-0.0" else "0"
 
             is_black_model1 = 1 if re.search(r"PB\[(.*?)\]", sgf).group(1) == model1 else 0
 

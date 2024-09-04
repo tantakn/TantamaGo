@@ -9,6 +9,14 @@ import subprocess
 from typing import NoReturn
 import click
 
+import logging
+mylog = logging.getLogger("mylog")
+mylog.setLevel(logging.WARNING)
+mylog.setLevel(logging.DEBUG)#####
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter("🐕️%(asctime)s [🐾%(levelname)s🐾] %(pathname)s %(lineno)d %(funcName)s🐈️ %(message)s🦉", datefmt="%y%m%d_%H%M%S"))
+mylog.addHandler(handler)
+
 WORKER_THREAD = 4
 
 
@@ -28,7 +36,7 @@ def get_gnugo_judgment(filename: str, is_japanese_rule: bool) -> str:
     ]
 
     gnugo_command = [
-        "C:\programs\gnugo\gungo.exe",
+        "gnugo",
         "--mode",
         "gtp",
         "--level",
@@ -40,8 +48,7 @@ def get_gnugo_judgment(filename: str, is_japanese_rule: bool) -> str:
     else:
         gnugo_command.append("--chinese-rule")
 
-    with subprocess.Popen(gnugo_command, stdin=subprocess.PIPE, \
-        stdout=subprocess.PIPE, encoding='utf-8') as process:
+    with subprocess.Popen(gnugo_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf-8') as process:
 
         process.stdin.write("\n".join(exec_commands))
         process.stdin.flush()
@@ -83,6 +90,11 @@ def adjust_by_gnugo_judgment(filename: str) -> NoReturn:
     current_result_string = "RE[" + current_result + "]"
     adjust_result_string = "RE[" + result + "]"
 
+    if current_result_string != adjust_result_string:
+        mylog.debug(f"Adjust result: {filename} {current_result_string} -> {adjust_result_string}")
+    else:
+        mylog.debug(f"Already adjusted: {filename}")
+
     adjusted_sgf = sgf.replace(current_result_string, adjust_result_string)
 
     with open(filename, encoding="utf-8", mode="w") as out_file:
@@ -106,8 +118,7 @@ def adjust_result(kifu_dir: str) -> NoReturn:
     Args:
         kifu_dir (str): _description_
     """
-    kifu_dir_index_list = [int(os.path.split(dir_path)[-1]) \
-                           for dir_path in glob.glob(os.path.join(kifu_dir, '*'))]
+    kifu_dir_index_list = [int(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join(kifu_dir, '*'))]
     newest_index = max(kifu_dir_index_list)
 
     sgf_file_list = sorted(glob.glob(os.path.join(kifu_dir, str(newest_index), '*')))
