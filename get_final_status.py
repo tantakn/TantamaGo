@@ -36,7 +36,7 @@ def get_gnugo_judgment(filename: str, is_japanese_rule: bool) -> str:
     ]
 
     gnugo_command = [
-        "gnugo",
+        "./gnugo-3.8/interface/gnugo",
         "--mode",
         "gtp",
         "--level",

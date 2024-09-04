@@ -9,6 +9,9 @@
 /SgfFile/
 /backup/
 
+/gnugo-3.8/
+/gnugo-3.8.tar.gz
+
 /venv/
 /env/
 /envGo/
