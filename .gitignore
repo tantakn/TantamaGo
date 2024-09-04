@@ -5,11 +5,9 @@
 **/*.npz
 **/*.bin
 **/*.ckpt
-archive/*
-/SgfFile/**/*.sgf
-/SgfFile/*.sgf
+/archive/
 /SgfFile/
-/SgfFile
+/backup/
 
 /venv/
 /env/

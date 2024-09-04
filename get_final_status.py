@@ -90,10 +90,11 @@ def adjust_by_gnugo_judgment(filename: str) -> NoReturn:
     current_result_string = "RE[" + current_result + "]"
     adjust_result_string = "RE[" + result + "]"
 
-    if current_result_string != adjust_result_string:
+    print(f"\rget_final_status  {filename}", end="")#####
+
+    if current_result_string != adjust_result_string:#####
+        print("")
         mylog.debug(f"Adjust result: {filename} {current_result_string} -> {adjust_result_string}")
-    else:
-        mylog.debug(f"Already adjusted: {filename}")
 
     adjusted_sgf = sgf.replace(current_result_string, adjust_result_string)
 
@@ -135,6 +136,8 @@ def adjust_result(kifu_dir: str) -> NoReturn:
 
     for future in futures:
         future.result()
+
+    print("")#####
 
 
 if __name__ == "__main__":
