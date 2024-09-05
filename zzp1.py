@@ -112,6 +112,11 @@ import re
 # process = subprocess.run()
 
 
-print(os.path.exists("zzlog"))
-print(os.path.isdir("zzlog"))
-print(os.path.isdir("zlog"))
+# print(os.path.exists("zzlog"))
+# print(os.path.isdir("zzlog"))
+# print(os.path.isdir("zlog"))
+
+import psutil
+
+print("cpu: ", psutil.cpu_percent(percpu=True))
+print("mem: ", psutil.virtual_memory().percent)

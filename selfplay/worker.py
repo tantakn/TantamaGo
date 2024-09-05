@@ -17,6 +17,8 @@ from mcts.time_manager import TimeManager, TimeControl
 from nn.utility import load_network
 from learning_param import SELF_PLAY_VISITS
 
+import psutil
+
 
 # pylint: disable=R0913,R0914
 def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], size: int, visits: int, use_gpu: bool) -> NoReturn:
@@ -104,6 +106,9 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int) -> NoReturn:
         msg = f"Generating {current_num_data:5d}/{num_data:5d} games "
         msg += f"({3600 * current_num_data / (current_time - start_time):.4f} games/hour)."
         print(msg)
+
+        print("cpu: ", psutil.cpu_percent(interval=1, percpu=True))
+        print("mem: ", psutil.virtual_memory().percent)
 
 
 
