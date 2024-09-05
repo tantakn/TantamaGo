@@ -140,7 +140,7 @@ def adjust_result(kifu_dir: str) -> NoReturn:
         future.result()
 
     global cnt#####
-    print(f"\ncnt : {cnt}")#####
+    print(f"\nchange : {cnt}")#####
 
 
 if __name__ == "__main__":

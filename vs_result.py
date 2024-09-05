@@ -25,7 +25,7 @@ def main(path, num, save):
         print("error: 棋譜がないです")
         return
 
-    print(path_list)######
+    # print(path_list)######
 
     model1 = ""
     model2 = ""
