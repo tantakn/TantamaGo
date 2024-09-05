@@ -30,8 +30,7 @@ from learning_param import SELF_PLAY_VISITS, NUM_SELF_PLAY_WORKERS, \
     help="ニューラルネットワークのモデルファイルパス。デフォルトはmodelディレクトリ内のrl-model.bin。")
 @click.option('--model2', type=click.STRING, default="None", \
     help="異なるモデルを対局させるときに指定する。")
-def selfplay_main(save_dir: str, process: int, num_data: int, size: int, \
-    use_gpu: bool, visits: int, model: str, model2: str):
+def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu: bool, visits: int, model: str, model2: str):
     """自己対戦を実行する。
 
     Args:
@@ -72,7 +71,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, \
             futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), 
                 model, file_list, size, visits, use_gpu) for file_list in file_indice]
             monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, 
-                args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, ), daemon=True)
+                args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True)
             monitoring_worker.start()
 
             # この .result() は結果を出力するのが目的ではなく、正常終了の確認が目的。
@@ -84,7 +83,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, \
             futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), 
                 model, model2, file_list, size, visits, use_gpu) for file_list in file_indice]
             monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, 
-                args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, ), daemon=True)
+                args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True)
             monitoring_worker.start()
 
             for future in futures:

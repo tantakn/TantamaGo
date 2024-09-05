@@ -17,7 +17,7 @@ from mcts.time_manager import TimeManager, TimeControl
 from nn.utility import load_network
 from learning_param import SELF_PLAY_VISITS
 
-import psutil
+import psutil, subprocess
 
 
 # pylint: disable=R0913,R0914
@@ -92,7 +92,7 @@ def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], 
         record.write_record(winner, board.get_komi(), is_resign, score)
 
 
-def display_selfplay_progress_worker(save_dir: str, num_data: int) -> NoReturn:
+def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool) -> NoReturn:
     """自己対戦の進捗を表示する。
 
     Args:
@@ -107,8 +107,12 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int) -> NoReturn:
         msg += f"({3600 * current_num_data / (current_time - start_time):.4f} games/hour)."
         print(msg)
 
-        print("cpu: ", psutil.cpu_percent(interval=1, percpu=True))
-        print("mem: ", psutil.virtual_memory().percent)
+        print(f"cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
+        print(f"mem: {psutil.virtual_memory().percent}%")
+
+        if use_gpu:
+            result_subprocess = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
+            print(result_subprocess.stdout)
 
 
 
