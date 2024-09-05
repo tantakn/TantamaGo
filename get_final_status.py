@@ -11,13 +11,14 @@ import click
 
 import logging
 mylog = logging.getLogger("mylog")
-mylog.setLevel(logging.WARNING)
-mylog.setLevel(logging.DEBUG)#####
+#mylog.setLevel(logging.DEBUG)#####
 handler = logging.StreamHandler()
 handler.setFormatter(logging.Formatter("🐕️%(asctime)s [🐾%(levelname)s🐾] %(pathname)s %(lineno)d %(funcName)s🐈️ %(message)s🦉", datefmt="%y%m%d_%H%M%S"))
 mylog.addHandler(handler)
 
 WORKER_THREAD = 4
+
+cnt = 0#####
 
 
 def get_gnugo_judgment(filename: str, is_japanese_rule: bool) -> str:
@@ -92,9 +93,10 @@ def adjust_by_gnugo_judgment(filename: str) -> NoReturn:
 
     print(f"\rget_final_status  {filename}", end="")#####
 
+    global cnt#####
     if current_result_string != adjust_result_string:#####
-        print("")
-        mylog.debug(f"Adjust result: {filename} {current_result_string} -> {adjust_result_string}")
+        cnt += 1#####
+        mylog.debug(f"\nAdjust result: {filename} {current_result_string} -> {adjust_result_string}")
 
     adjusted_sgf = sgf.replace(current_result_string, adjust_result_string)
 
@@ -137,7 +139,8 @@ def adjust_result(kifu_dir: str) -> NoReturn:
     for future in futures:
         future.result()
 
-    print("")#####
+    global cnt#####
+    print(f"\ncnt : {cnt}")#####
 
 
 if __name__ == "__main__":

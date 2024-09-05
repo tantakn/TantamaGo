@@ -471,8 +471,7 @@ class GoBoard: # pylint: disable=R0902
         Returns:
             list[int]: 空点は0, 黒石は1, 白石は2のリスト。
         """
-        return [self.board[self.get_symmetrical_coordinate(pos, sym)].value \
-            for pos in self.onboard_pos]
+        return [self.board[self.get_symmetrical_coordinate(pos, sym)].value for pos in self.onboard_pos]
 
     def get_liberty_data(self, sym: int) -> List[int]:
         """ニューラルネットワークの入力用の呼吸点数の情報を取得する。

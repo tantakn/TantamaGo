@@ -105,8 +105,13 @@ import re
 # print(text.split('RE[')[1].split(']')[0])
 
 
-import subprocess
+# import subprocess
 
-# with subprocess.
+# # with subprocess.
 
-process = subprocess.run()
+# process = subprocess.run()
+
+
+print(os.path.exists("zzlog"))
+print(os.path.isdir("zzlog"))
+print(os.path.isdir("zlog"))

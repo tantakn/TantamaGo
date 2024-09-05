@@ -18,8 +18,8 @@ from nn.data_generator import generate_supervised_learning_data, \
     help=f"碁盤の大きさ。最小2, 最大{BOARD_SIZE}")
 @click.option('--use-gpu', type=click.BOOL, default=True, \
     help="学習時にGPUを使用するフラグ。指定がなければGPUを使用するものとする。")
-@click.option('--rl', type=click.BOOL, default=False, help="")
-@click.option('--window-size', type=click.INT, default=300000, help="")
+@click.option('--rl', type=click.BOOL, default=False, help="強化学習実行フラグ。教師あり学習を実行するときにはfalseを指定する。")
+@click.option('--window-size', type=click.INT, default=300000, help="強化学習時のウィンドウサイズ")
 def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 

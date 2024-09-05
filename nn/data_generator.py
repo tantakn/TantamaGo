@@ -7,16 +7,14 @@ from typing import List, NoReturn
 import numpy as np
 from board.go_board import GoBoard
 from board.stone import Stone
-from nn.feature import generate_input_planes, generate_target_data, \
-    generate_rl_target_data
+from nn.feature import generate_input_planes, generate_target_data, generate_rl_target_data
 from sgf.reader import SGFReader
 from learning_param import BATCH_SIZE, DATA_SET_SIZE
 
 import time, datetime#################
 
 
-def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndarray,\
-    value_data: np.ndarray, kifu_counter: int) -> NoReturn:
+def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndarray, value_data: np.ndarray, kifu_counter: int) -> NoReturn:
     """学習データをnpzファイルとして出力する。
 
     Args:
@@ -35,8 +33,7 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
     np.savez_compressed(save_file_path, **save_data)
 
 # pylint: disable=R0914
-def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
-    board_size: int=9) -> NoReturn:
+def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_size: int=9) -> NoReturn:
     """教師あり学習のデータを生成して保存する。
 
     Args:
@@ -61,11 +58,13 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
 
     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
         board.clear()
+        # ここで勝敗とかも取得してる
         sgf = SGFReader(kifu_path, board_size)
         color = Stone.BLACK
         value_label = sgf.get_value_label()
 
         for pos in sgf.get_moves():
+            # 対称形でかさ増し
             for sym in range(8):
                 input_data.append(generate_input_planes(board, color, sym))
                 policy_data.append(generate_target_data(board, pos, sym))
@@ -76,8 +75,7 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
             value_label = 2 - value_label
 
         if len(value_data) >= DATA_SET_SIZE:
-            _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), \
-                input_data, policy_data, value_data, kifu_counter)
+            _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data, policy_data, value_data, kifu_counter)
             input_data = input_data[DATA_SET_SIZE:]
             policy_data = policy_data[DATA_SET_SIZE:]
             value_data = value_data[DATA_SET_SIZE:]
@@ -96,13 +94,10 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, \
     # 端数の出力
     n_batches = len(value_data) // BATCH_SIZE
     if n_batches > 0:
-        _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), \
-            input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], \
-            value_data[0:n_batches*BATCH_SIZE], kifu_counter)
+        _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
 
 
-def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[str], \
-    board_size: int=9) -> NoReturn:
+def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[str], board_size: int=9) -> NoReturn:
     """強化学習で使用するデータを生成し、保存する。
 
     Args:
@@ -150,8 +145,7 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
             value_label = 2 - value_label
 
         if len(value_data) >= DATA_SET_SIZE:
-            _save_data(os.path.join(program_dir, "data", f"rl_data_{data_counter}"), \
-                input_data, policy_data, value_data, kifu_counter)
+            _save_data(os.path.join(program_dir, "data", f"rl_data_{data_counter}"), input_data, policy_data, value_data, kifu_counter)
             input_data = input_data[DATA_SET_SIZE:]
             policy_data = policy_data[DATA_SET_SIZE:]
             value_data = value_data[DATA_SET_SIZE:]
@@ -163,6 +157,4 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
     # 端数の出力
     n_batches = len(value_data) // BATCH_SIZE
     if n_batches > 0:
-        _save_data(os.path.join(program_dir, "data", f"rl_data_{data_counter}"), \
-            input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], \
-            value_data[0:n_batches*BATCH_SIZE], kifu_counter)
+        _save_data(os.path.join(program_dir, "data", f"rl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)

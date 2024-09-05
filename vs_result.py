@@ -5,9 +5,14 @@ import re, glob, click, datetime
 
 
 @click.command()
-@click.option("--path", type=click.STRING, default="./archive", help="棋譜フォルダがあるディレクトリ。デフォルトはarchive。")
+@click.option("--path", type=click.STRING, default="archive", help="棋譜フォルダがあるディレクトリ。デフォルトはarchive。")
 @click.option("--num", type=click.INT, default=-1, help="棋譜フォルダの中の数字")
-def main(path, num):
+@click.option("--save", type=click.STRING, default="zzlog", help="結果のテキストを保存する場所")
+def main(path, num, save):
+    if not os.path.isdir(save):
+        print("error: 保存するディレクトリが存在しません")
+        return
+
     path_list = []
     if num == -1:
         folder_list = sorted(glob.glob(os.path.join("./", path, "*")))
@@ -61,12 +66,15 @@ model2: {model2}, win: ({result.count(0)} + 0.5*{result.count(0.5)})/{len(result
 
     print(text)
 
-    if num == -1:
-        with open(os.path.join("./", path, f"0000result_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"), mode="w") as f:
-            f.write(text)
-    else:
-        with open(os.path.join("./", path, str(num), f"0000result_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"), mode="w") as f:
-            f.write(text)
+
+    with open(os.path.join("./", save, f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}_vs_result_{path}_{num}.txt"), mode="w") as f:
+        f.write(text)
+    # if num == -1:
+    #     with open(os.path.join("./", save, f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}_vs_result.txt"), mode="w") as f:
+    #         f.write(text)
+    # else:
+    #     with open(os.path.join("./", save, str(num), f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}_vs_result.txt"), mode="w") as f:
+    #         f.write(text)
 
 if __name__ == "__main__":
     main()
