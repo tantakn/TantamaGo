@@ -1,0 +1,4 @@
+
+games: 200
+model1: model/sl-model_20240906_193431_e:00.bin, win: (53 + 0.5*2)/200 (26.50%)
+model2: model/sl-model_20240906_193431_e:03.bin, win: (145 + 0.5*2)/200 (72.50%)
