@@ -30,3 +30,5 @@ board_plane = np.identity(3)[board_data].transpose()
 print(board_plane)
 # for i in range (10):
 #     print(f(i))
+
+
