@@ -116,7 +116,27 @@ import re
 # print(os.path.isdir("zzlog"))
 # print(os.path.isdir("zlog"))
 
-import psutil
+# import psutil
 
-print("cpu: ", psutil.cpu_percent(percpu=True))
-print("mem: ", psutil.virtual_memory().percent)
+# print("cpu: ", psutil.cpu_percent(percpu=True))
+# print("mem: ", psutil.virtual_memory().percent)
+
+import numpy as np
+print("qwer")
+
+def f (a):
+    return a + 3
+
+# return [self.board[self.get_symmetrical_coordinate(pos, sym)].value for pos in self.onboard_pos]
+
+board = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8])
+
+board_data = [0] * 9
+board_data = [1,1,1,1,1,1,1,1,1]
+board_data = [1,1,1,1,1,1,1,0,1]
+
+board_plane = np.identity(3)[board_data].transpose()
+
+print(board_plane)
+# for i in range (10):
+#     print(f(i))
