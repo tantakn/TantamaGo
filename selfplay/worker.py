@@ -198,11 +198,11 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
         record.set_index(index)
         # record.write_record(winner, board.get_komi(), is_resign, score)
 
-        tmp_path1 =""
-        tmp_path2 =""
+        tmp_path1 = model_file_path1
+        tmp_path2 = model_file_path2
         if model_file_path1 == model_file_path2:
-            tmp_path1 = model_file_path1 + "_selfVs1"
-            tmp_path2 = model_file_path2 + "_selfVs2"
+            tmp_path1 += "_selfVs1"
+            tmp_path2 += "_selfVs2"
 
         if (index) % 2 == 1:
             record.write_record(winner, board.get_komi(), is_resign, score, black_name=tmp_path1, white_name=tmp_path2)
