@@ -32,10 +32,12 @@ mylog.addHandler(handler)
 # #     print(f(i))
 
 
-import datetime###########
-dt_now = datetime.datetime.now()############
-for epoch in range(3):
-    print(f"sl-model_{dt_now.strftime("%Y%m%d_%H%M%S")}_e:{epoch:0>2}.bin")
+import datetime
 
-print(datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
-print(dt_now.strftime("%Y%m%d_%H%M%S"))
+# 内側の二重引用符が外側の二重引用符と衝突しています。
+print(f"{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}")
+
+# 修正方法としては、内側の二重引用符を単一引用符 (') に変更することができます。
+print(f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}")
+
+
