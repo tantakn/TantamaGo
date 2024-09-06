@@ -4,6 +4,8 @@ from typing import NoReturn
 import glob
 import os
 import time
+import datetime###########
+dt_now = datetime.datetime.now()############
 import torch
 from nn.network.dual_net import DualNet
 from nn.loss import calculate_policy_loss, calculate_value_loss, \
@@ -16,8 +18,6 @@ from learning_param import SL_LEARNING_RATE, RL_LEARNING_RATE, \
     MOMENTUM, WEIGHT_DECAY, SL_VALUE_WEIGHT, RL_VALUE_WEIGHT, \
     LEARNING_SCHEDULE
 
-import datetime###########
-dt_now = datetime.datetime.now()############
 
 
 def train_on_cpu(program_dir: str, board_size: int, batch_size: \
@@ -136,6 +136,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
         epochs (int): 実行する最大エポック数。
     """
 
+
     print(f"🐾train_on_gpu {dt_now}")###########
 
     # 学習データと検証用データの分割
@@ -233,7 +234,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
             current_lr = LEARNING_SCHEDULE["learning_rate"][epoch]
             print(f"Epoch {epoch}, learning rate has changed {previous_lr} -> {current_lr}")
 
-        save_model(dual_net, os.path.join("model", f"sl-model_{dt_now.strftime("%Y%m%d_%H%M%S")}_e:{epoch:0>2}.bin"))######epoch毎に保存
+        save_model(dual_net, os.path.join("model", f"sl-model_{dt_now.year}{dt_now.month:0>2}{dt_now.day:0>2}{dt_now.hour:0>2}_{epoch:0>2}.bin"))######epoch毎に保存
 
     # save_model(dual_net, os.path.join("model", "sl-model.bin"))
 
