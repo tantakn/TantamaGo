@@ -19,6 +19,8 @@ from learning_param import SL_LEARNING_RATE, RL_LEARNING_RATE, \
 import datetime###########
 dt_now = datetime.datetime.now()############
 
+import copy##########
+
 
 def train_on_cpu(program_dir: str, board_size: int, batch_size: \
     int, epochs: int) -> NoReturn: # pylint: disable=R0914,R0915
@@ -233,7 +235,9 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
             current_lr = LEARNING_SCHEDULE["learning_rate"][epoch]
             print(f"Epoch {epoch}, learning rate has changed {previous_lr} -> {current_lr}")
 
-        save_model(dual_net, os.path.join("model", f"sl-model_{dt_now.strftime("%Y%m%d_%H%M%S")}_e:{epoch:0>2}.bin"))######epoch毎に保存
+        # たぶん、save_model すると変更が入るので、ディープコピーを作ってそれを保存する。
+        dual_net_copy = copy.deepcopy(dual_net)######
+        save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_e:{epoch:0>2}.bin"))######epoch毎に保存
 
     # save_model(dual_net, os.path.join("model", "sl-model.bin"))
 

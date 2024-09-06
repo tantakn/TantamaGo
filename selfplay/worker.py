@@ -107,8 +107,8 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool
         msg += f"({3600 * current_num_data / (current_time - start_time):.4f} games/hour)."
         print(msg)
 
-        print(f"cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
-        print(f"mem: {psutil.virtual_memory().percent}%")
+        print(f"🐋cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
+        print(f"🐋mem: {psutil.virtual_memory().percent}%")
 
         if use_gpu:
             result_subprocess = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
