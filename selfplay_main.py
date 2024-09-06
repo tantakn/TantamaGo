@@ -67,11 +67,10 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
         # テンプレ改造？ここでsgfを出力してないselfplay_workerでしてる？
         # submit(selfplay_worker,...（selfplay_workerの引数たち）)らしい
         # max_workers=process は使用するプロセス数？
-        with ProcessPoolExecutor(max_workers=process) as executor: 
-            futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), 
-                model, file_list, size, visits, use_gpu) for file_list in file_indice]
-            monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, 
-                args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True)
+        with ProcessPoolExecutor(max_workers=process) as executor:
+            futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), model, file_list, size, visits, use_gpu) for file_list in file_indice]
+
+            monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True);
             monitoring_worker.start()
 
             # この .result() は結果を出力するのが目的ではなく、正常終了の確認が目的。
@@ -79,11 +78,10 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
             for future in futures:
                 future.result()
     else:
-        with ProcessPoolExecutor(max_workers=process) as executor: 
-            futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), 
-                model, model2, file_list, size, visits, use_gpu) for file_list in file_indice]
-            monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, 
-                args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True)
+        with ProcessPoolExecutor(max_workers=process) as executor:
+            futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), model, model2, file_list, size, visits, use_gpu) for file_list in file_indice]
+
+            monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True);
             monitoring_worker.start()
 
             for future in futures:
