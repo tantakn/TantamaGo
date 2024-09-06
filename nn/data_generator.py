@@ -82,14 +82,14 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_siz
             kifu_counter = 1
             data_counter += 1
 
-            print(f"""\
-    saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})
-    from: {kifu_path} / {kifu_num}kyoku\
-""")#####################
+            print(f"""
+saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})
+from: {kifu_path} / {kifu_num}kyoku""")#####################
             dt_watch = datetime.datetime.now()
 
         kifu_counter += 1
-    print("qwer")
+
+    print("qwer")##########
 
     # 端数の出力
     n_batches = len(value_data) // BATCH_SIZE
