@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "train.py", line 87, in <module>
+    from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, \
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 236
+    save_model(dual_net, os.path.join("model", f"sl-model_{dt_now.strftime("%Y%m%d_%H%M%S")}_e:{epoch:0>2}.bin"))######epoch毎に保存
+                                                                                                              ^
+SyntaxError: invalid syntax
