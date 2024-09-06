@@ -1,0 +1,407 @@
+🐾train_on_gpu 2024-09-06 15:38:16.981883
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+epoch 0, data-0 : loss = 2.209703, time = .3f(37.8) [s].
+	policy loss : 2.195544
+	value loss  : 0.707960
+🐋cpu: 50.1% [0.0, 0.0, 100.0, 0.0, 0.0, 37.6, 0.0, 0.0, 100.0, 100.0, 0.0, 100.0, 100.0, 62.6, 100.0, 100.0]
+🐋mem: 13.9%
+Fri Sep  6 15:39:24 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 41%   49C    P2   137W / 280W |   1268MiB / 24219MiB |     56%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   30C    P8     9W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-1 : loss = 1.793064, time = .3f(38.1) [s].
+	policy loss : 1.779270
+	value loss  : 0.689718
+🐋cpu: 50.0% [0.0, 100.0, 100.0, 100.0, 46.5, 52.5, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0]
+🐋mem: 13.9%
+Fri Sep  6 15:40:26 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 40%   56C    P2   162W / 280W |   1268MiB / 24219MiB |     54%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   30C    P8     8W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-2 : loss = 1.717599, time = .3f(38.5) [s].
+	policy loss : 1.704106
+	value loss  : 0.674677
+epoch 0, data-3 : loss = 1.669575, time = .3f(38.4) [s].
+	policy loss : 1.656267
+	value loss  : 0.665422
+🐋cpu: 50.1% [62.2, 100.0, 0.0, 0.0, 79.2, 0.0, 100.0, 100.0, 38.2, 0.0, 100.0, 100.0, 21.0, 100.0, 0.0, 0.0]
+🐋mem: 13.9%
+Fri Sep  6 15:41:28 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 41%   60C    P2   139W / 280W |   1268MiB / 24219MiB |     53%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   30C    P8     9W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-4 : loss = 1.628829, time = .3f(39.4) [s].
+	policy loss : 1.615932
+	value loss  : 0.644825
+🐋cpu: 51.7% [1.0, 0.0, 46.4, 53.4, 0.0, 100.0, 0.0, 0.0, 99.0, 100.0, 0.0, 100.0, 100.0, 0.0, 100.0, 100.0]
+🐋mem: 14.5%
+Fri Sep  6 15:42:30 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 41%   63C    P2   138W / 280W |   1268MiB / 24219MiB |     52%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   30C    P8     9W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-5 : loss = 1.594957, time = .3f(39.3) [s].
+	policy loss : 1.582241
+	value loss  : 0.635809
+epoch 0, data-6 : loss = 1.553685, time = .3f(39.1) [s].
+	policy loss : 1.540838
+	value loss  : 0.642348
+🐋cpu: 49.6% [10.1, 7.1, 10.9, 0.0, 0.0, 98.0, 98.0, 52.0, 97.0, 98.0, 98.0, 98.0, 98.0, 51.0, 12.9, 10.0]
+🐋mem: 13.9%
+Fri Sep  6 15:43:33 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 42%   65C    P2   152W / 280W |   1268MiB / 24219MiB |     51%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   31C    P8     8W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-7 : loss = 1.540479, time = .3f(38.3) [s].
+	policy loss : 1.527573
+	value loss  : 0.645291
+🐋cpu: 50.1% [100.0, 48.0, 52.4, 0.0, 0.0, 100.0, 100.0, 100.0, 0.0, 0.0, 100.0, 100.0, 100.0, 0.0, 0.0, 0.0]
+🐋mem: 14.1%
+Fri Sep  6 15:44:35 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 44%   67C    P2   151W / 280W |   1268MiB / 24219MiB |     53%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   31C    P8     9W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-8 : loss = 1.529214, time = .3f(39.2) [s].
+	policy loss : 1.516316
+	value loss  : 0.644871
+epoch 0, data-9 : loss = 1.525442, time = .3f(39.3) [s].
+	policy loss : 1.512639
+	value loss  : 0.640157
+🐋cpu: 50.0% [1.0, 0.0, 0.0, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 59.4, 40.4, 100.0, 0.0, 0.0, 0.0]
+🐋mem: 13.1%
+Fri Sep  6 15:45:37 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 45%   67C    P2   151W / 280W |   1268MiB / 24219MiB |     57%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   32C    P8     9W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-10 : loss = 1.517305, time = .3f(29.3) [s].
+	policy loss : 1.504536
+	value loss  : 0.638452
+🐋cpu: 50.0% [0.0, 0.0, 100.0, 47.5, 51.5, 1.0, 100.0, 100.0, 100.0, 100.0, 0.0, 0.0, 100.0, 100.0, 0.0, 0.0]
+🐋mem: 13.9%
+Fri Sep  6 15:46:39 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 45%   68C    P2   168W / 280W |   1268MiB / 24219MiB |     54%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   32C    P8     8W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-11 : loss = 1.545576, time = .3f(39.1) [s].
+	policy loss : 1.532778
+	value loss  : 0.639902
+epoch 0, data-12 : loss = 1.518418, time = .3f(39.1) [s].
+	policy loss : 1.505832
+	value loss  : 0.629271
+🐋cpu: 50.0% [0.0, 100.0, 0.0, 100.0, 46.9, 53.4, 100.0, 0.0, 100.0, 4.0, 100.0, 0.0, 0.0, 100.0, 0.0, 100.0]
+🐋mem: 13.9%
+Fri Sep  6 15:47:42 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 46%   68C    P2   145W / 280W |   1268MiB / 24219MiB |     54%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   32C    P8     9W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-13 : loss = 1.494681, time = .3f(38.7) [s].
+	policy loss : 1.482141
+	value loss  : 0.627021
+🐋cpu: 50.0% [0.0, 100.0, 37.0, 0.0, 0.0, 0.0, 100.0, 0.0, 100.0, 0.0, 63.4, 100.0, 100.0, 100.0, 0.0, 100.0]
+🐋mem: 13.9%
+Fri Sep  6 15:48:44 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 47%   68C    P2   150W / 280W |   1268MiB / 24219MiB |     56%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   32C    P8     8W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1249MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+epoch 0, data-14 : loss = 1.498999, time = .3f(38.1) [s].
+	policy loss : 1.486442
+	value loss  : 0.627861
+🐋cpu: 50.1% [0.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 100.0]
+🐋mem: 13.9%
+Fri Sep  6 15:49:46 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 54%   76C    P2   255W / 280W |   1310MiB / 24219MiB |     92%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   33C    P8     7W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1878      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A   1994778      C   python3                          1291MiB |
+|    1   N/A  N/A      1719      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+Test 0 : loss = 1.525209, time = 74.483681 seconds.
+	policy loss : 1.512419
+	value loss  : 0.639476
+Traceback (most recent call last):
+  File "train.py", line 93, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 86, in train_main
+    train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 180, in train_on_gpu
+    policy_predict, value_predict = dual_net.forward_for_sl(plane)
+  File "/data/student/u2424004/igo/TantamaGo/nn/network/dual_net.py", line 64, in forward_for_sl
+    policy, value = self.forward(input_plane)
+  File "/data/student/u2424004/igo/TantamaGo/nn/network/dual_net.py", line 50, in forward
+    blocks_out = self.blocks(self.relu(self.bn_layer(self.conv_layer(input_plane))))
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 463, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py", line 460, in _conv_forward
+    self.padding, self.dilation, self.groups)
+RuntimeError: Input type (torch.cuda.HalfTensor) and weight type (torch.FloatTensor) should be the same
