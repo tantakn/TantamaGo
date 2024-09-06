@@ -10,6 +10,7 @@ from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_
 from nn.data_generator import generate_supervised_learning_data, \
     generate_reinforcement_learning_data
 
+import threading, time, psutil, subprocess########
 
 @click.command()
 @click.option('--kifu-dir', type=click.STRING, \
@@ -18,8 +19,10 @@ from nn.data_generator import generate_supervised_learning_data, \
     help=f"碁盤の大きさ。最小2, 最大{BOARD_SIZE}")
 @click.option('--use-gpu', type=click.BOOL, default=True, \
     help="学習時にGPUを使用するフラグ。指定がなければGPUを使用するものとする。")
-@click.option('--rl', type=click.BOOL, default=False, help="強化学習実行フラグ。教師あり学習を実行するときにはfalseを指定する。")
-@click.option('--window-size', type=click.INT, default=300000, help="強化学習時のウィンドウサイズ")
+@click.option('--rl', type=click.BOOL, default=False, \
+    help="強化学習実行フラグ。教師あり学習を実行するときにはfalseを指定する。")
+@click.option('--window-size', type=click.INT, default=300000, \
+    help="強化学習時のウィンドウサイズ")
 def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 
@@ -30,12 +33,16 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
         rl (bool): 強化学習実行フラグ。
         window_size (int): 強化学習で使用するウィンドウサイズ。
     """
+
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu), daemon=True);#########
+    monitoring_worker.start()###############
+
+
     program_dir = os.path.dirname(__file__)
     # 学習データの指定がある場合はデータを生成する
     if kifu_dir is not None:
         if rl:
-            kifu_index_list = [int(os.path.split(dir_path)[-1]) \
-                for dir_path in glob.glob(os.path.join(kifu_dir, "*"))]
+            kifu_index_list = [int(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join(kifu_dir, "*"))]
             num_kifu = 0
             kifu_dir_list = []
             for index in sorted(kifu_index_list, reverse=True):
@@ -45,26 +52,40 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
                 if num_kifu >= window_size:
                     break
 
-            generate_reinforcement_learning_data(program_dir=program_dir, \
-                kifu_dir_list=kifu_dir_list, board_size=size)
+            generate_reinforcement_learning_data(program_dir=program_dir, kifu_dir_list=kifu_dir_list, board_size=size)
         else:
-            generate_supervised_learning_data(program_dir=program_dir, \
-                kifu_dir=kifu_dir, board_size=size)
+            generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
 
     if rl:
         if use_gpu:
-            train_with_gumbel_alphazero_on_gpu(program_dir=program_dir, \
-                board_size=size, batch_size=BATCH_SIZE)
+            train_with_gumbel_alphazero_on_gpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
         else:
-            train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, \
-                board_size=size, batch_size=BATCH_SIZE)
+            train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
     else:
         if use_gpu:
-            train_on_gpu(program_dir=program_dir,board_size=size, \
-                batch_size=BATCH_SIZE, epochs=EPOCHS)
+            train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS)
         else:
-            train_on_cpu(program_dir=program_dir,board_size=size, \
-                batch_size=BATCH_SIZE, epochs=EPOCHS)
+            train_on_cpu(program_dir=program_dir,board_size=size, batch_size=BATCH_SIZE, epochs=EPOCHS)
+
+
+
+def display_train_monitoring_worker(use_gpu: bool) -> None:###########
+    """ハードの使用率を表示する。
+
+    Args:
+        use_gpu (bool): GPU使用フラグ。
+    """
+    start_time = time.time()
+    while True:
+        time.sleep(60)
+
+        print(f"🐋cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
+        print(f"🐋mem: {psutil.virtual_memory().percent}%")
+
+        if use_gpu:
+            result_subprocess = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
+            print(result_subprocess.stdout)
+
 
 
 if __name__ == "__main__":
