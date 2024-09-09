@@ -223,21 +223,23 @@ class MCTSTree: # pylint: disable=R0902
 
 
     def expand_node(self, board: GoBoard, color: Stone) -> NoReturn:
-        """ノードを展開する。
+        """ノードを展開する。合法手とディリクレ分布との辞書 を self.node[self.num_nodes] に展開して、++self.num_nodes する。
 
         Args:
             board (GoBoard): 現在の局面情報。
             color (Stone): 現在の手番の色。
+        
+        Returns:
+            int: 実行開始時のself.num_nodes
         """
         node_index = self.num_nodes
 
         # 候補手を取得
         candidates = board.get_all_legal_pos(color)
-        candidates = [candidate for candidate in candidates \
-            if (board.check_self_atari_stone(candidate, color) < 7) \
-                and not board.is_complete_eye(candidate, color)]
+        candidates = [candidate for candidate in candidates if (board.check_self_atari_stone(candidate, color) < 7) and not board.is_complete_eye(candidate, color)]
         candidates.append(PASS)
 
+        # policy：合法手とディリクレ分布との辞書 を MCTSNode の action、children_policy、num_children に格納
         policy = get_tentative_policy(candidates)
         self.node[node_index].expand(policy)
 
@@ -290,8 +292,7 @@ class MCTSTree: # pylint: disable=R0902
         self.batch_queue.clear()
 
 
-    def generate_move_with_sequential_halving(self, board: GoBoard, color: Stone, \
-        time_manager: TimeManager, never_resign: bool) -> int:
+    def generate_move_with_sequential_halving(self, board: GoBoard, color: Stone, time_manager: TimeManager, never_resign: bool) -> int:
         """SHOTで探索して着手生成する。
 
         Args:
@@ -449,7 +450,7 @@ class MCTSTree: # pylint: disable=R0902
 
 
 def get_tentative_policy(candidates: List[int]) -> Dict[int, float]:
-    """ニューラルネットワークの計算が行われるまでに使用するPolicyを取得する。
+    """ニューラルネットワークの計算が行われるまでに使用するPolicyを取得する。たぶん、ディリクレ分布と対応した辞書を返す。
 
     Args:
         candidates (List[int]): パスを含む候補手のリスト。

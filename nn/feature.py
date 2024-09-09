@@ -40,8 +40,7 @@ def generate_input_planes(board: GoBoard, color: Stone, sym: int=0) -> np.ndarra
         history_plane = np.zeros(shape=(1, board_size ** 2))
         pass_plane = np.ones(shape=(1, board_size ** 2))
     else:
-        previous_move_data = [1 if previous_move == board.get_symmetrical_coordinate(pos, sym) \
-            else 0 for pos in board.onboard_pos]
+        previous_move_data = [1 if previous_move == board.get_symmetrical_coordinate(pos, sym) else 0 for pos in board.onboard_pos]
         history_plane = np.array(previous_move_data).reshape(1, board_size**2)
         pass_plane = np.zeros(shape=(1, board_size ** 2))
 

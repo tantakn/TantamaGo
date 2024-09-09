@@ -38,7 +38,7 @@ class MCTSNode: # pylint: disable=R0902, R0904
         self.num_children = 0
 
     def expand(self, policy: Dict[int, float]) -> NoReturn:
-        """ノードを展開し、初期化する。
+        """ノードを展開し、初期化する。たぶん、ノードを展開は policy を action、children_policy、num_children に展開するという意味。
 
         Args:
             policy (Dict[int, float]): 候補手に対応するPolicyのマップ。

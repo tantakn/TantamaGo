@@ -98,5 +98,6 @@ import torch
 
 # print(np.sum(narr))
 
-score = np.random.dirichlet(alpha=np.ones(10))
-print(score)
+# score = np.random.dirichlet(alpha=np.ones(10))
+# print(score)
+

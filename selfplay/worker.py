@@ -163,8 +163,7 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
             else:
                 mcts = mcts2
 
-            pos = mcts.generate_move_with_sequential_halving(board=board, color=color, \
-                time_manager=time_manager, never_resign=never_resign)
+            pos = mcts.generate_move_with_sequential_halving(board=board, color=color, time_manager=time_manager, never_resign=never_resign)
 
             if pos == RESIGN:
                 winner = Stone.get_opponent_color(color)
