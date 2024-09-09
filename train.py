@@ -54,7 +54,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
         window_size (int): 強化学習で使用するウィンドウサイズ。
     """
 
-    print(f"🐾train_main  kifu_dir: {kifu_dir}, size: {size}, use_gpu: {use_gpu}, rl: {rl}, window_size: {window_size}, EPOCHS: {EPOCHS}\n{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}")########
+    print(f"🐾train_main")########
 
     monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu,), daemon=True);#########
     monitoring_worker.start()###############

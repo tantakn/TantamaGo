@@ -91,7 +91,7 @@ def adjust_by_gnugo_judgment(filename: str) -> NoReturn:
     current_result_string = "RE[" + current_result + "]"
     adjust_result_string = "RE[" + result + "]"
 
-    print(f"\rget_final_status  {filename}", end="")#####
+    print(f"\rget_final_status  {filename}", end="", flush=True)#####
 
     global cnt#####
     if current_result_string != adjust_result_string:#####

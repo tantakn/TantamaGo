@@ -1,0 +1,4 @@
+  File "train.py", line 57
+    print(f"🐾train_main  kifu_dir: {kifu_dir}, size: {size}, use_gpu: {use_gpu}, rl: {rl}, window_size: {window_size}, EPOCHS: {EPOCHS}_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}")########
+                                                                                                                                                                                           ^
+SyntaxError: invalid syntax

@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "train.py", line 8, in <module>
+    from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, \
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 11, in <module>
+    from nn.utility import get_torch_device, print_learning_process, \
+  File "/data/student/u2424004/igo/TantamaGo/nn/utility.py", line 58
+    print_err(f"epoch {epoch}, data-{index} : loss = {loss:6f}, time = {datetime.datetime.now().strftime("%d_%H%M%S")}({training_time:.1f}) [s].")################
+                                                                                                                                                ^
+SyntaxError: invalid syntax

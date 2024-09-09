@@ -3,6 +3,8 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 import re, glob, click, datetime
 
+# TODO:--num == -1 で最後のファイルを対象にする。--num == 0 で全てのファイルを対象にする。
+# TODO:3つ目のmodelが見つかったときエラー出すようにする。
 
 @click.command()
 @click.option("--path", type=click.STRING, default="archive", help="棋譜フォルダがあるディレクトリ。デフォルトはarchive。")
@@ -60,8 +62,10 @@ def main(path, num, save):
 
     text = f"""
 games: {len(result)}
-model1: {model1}, win: ({result.count(1)} + 0.5*{result.count(0.5)})/{len(result)} ({result.count(1) / len(result) * 100:.2f}%)
-model2: {model2}, win: ({result.count(0)} + 0.5*{result.count(0.5)})/{len(result)} ({result.count(0) / len(result) * 100:.2f}%)
+model1: {model1}
+    win: ({result.count(1)} + 0.5*{result.count(0.5)})/{len(result)} ({result.count(1) / len(result) * 100:.2f}%)
+model2: {model2}
+    win: ({result.count(0)} + 0.5*{result.count(0.5)})/{len(result)} ({result.count(0) / len(result) * 100:.2f}%)
 """
 
     print(text)

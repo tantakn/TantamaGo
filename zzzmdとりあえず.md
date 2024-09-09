@@ -197,3 +197,148 @@ gitおかしくなった
 # 20240814
 
 branchTest
+
+# 20240909
+```shell
+(env) (base) u2424004@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 8 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-m
+odel_20240906_193431_e:03.bin
+Self play visits : 16
+Generating   107/  200 games (6417.5251 games/hour).
+🐋cpu: 50.4% [0.0, 0.0, 100.0, 100.0, 0.0, 100.0, 99.0, 100.0, 100.0, 100.0, 2.9, 0.0, 100.0, 1.0, 0.0, 2.0]
+🐋mem: 34.4%
+Mon Sep  9 17:54:41 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 40%   39C    P2    59W / 280W |   8603MiB / 24219MiB |     26%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   29C    P8    11W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1722      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1885      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A     18969      C   python3                          1073MiB |
+|    0   N/A  N/A     18970      C   python3                          1073MiB |
+|    0   N/A  N/A     18971      C   python3                          1073MiB |
+|    0   N/A  N/A     18972      C   python3                          1073MiB |
+|    0   N/A  N/A     18973      C   python3                          1073MiB |
+|    0   N/A  N/A     18974      C   python3                          1073MiB |
+|    0   N/A  N/A     18975      C   python3                          1073MiB |
+|    0   N/A  N/A     18976      C   python3                          1073MiB |
+|    1   N/A  N/A      1722      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+Generating   199/  200 games (5863.3893 games/hour).
+123.712792 seconds, 5819.931683 games/hour
+(env) (base) u2424004@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 16 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-
+model_20240906_193431_e:03.bin
+Self play visits : 16
+Generating    87/  200 games (5214.2371 games/hour).
+🐋cpu: 94.3% [100.0, 13.1, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+🐋mem: 61.9%
+Mon Sep  9 17:57:07 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 41%   43C    P2    65W / 280W |  17189MiB / 24219MiB |     39%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 40%   29C    P8    11W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1722      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1885      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A     19379      C   python3                          1073MiB |
+|    0   N/A  N/A     19380      C   python3                          1073MiB |
+|    0   N/A  N/A     19381      C   python3                          1073MiB |
+|    0   N/A  N/A     19382      C   python3                          1073MiB |
+|    0   N/A  N/A     19383      C   python3                          1073MiB |
+|    0   N/A  N/A     19384      C   python3                          1073MiB |
+|    0   N/A  N/A     19385      C   python3                          1073MiB |
+|    0   N/A  N/A     19386      C   python3                          1073MiB |
+|    0   N/A  N/A     19387      C   python3                          1073MiB |
+|    0   N/A  N/A     19388      C   python3                          1073MiB |
+|    0   N/A  N/A     19389      C   python3                          1073MiB |
+|    0   N/A  N/A     19390      C   python3                          1073MiB |
+|    0   N/A  N/A     19391      C   python3                          1073MiB |
+|    0   N/A  N/A     19392      C   python3                          1073MiB |
+|    0   N/A  N/A     19393      C   python3                          1073MiB |
+|    0   N/A  N/A     19394      C   python3                          1073MiB |
+|    1   N/A  N/A      1722      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+Generating   199/  200 games (5862.0509 games/hour).
+123.289611 seconds, 5839.908135 games/hour
+(env) (base) u2424004@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 12 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-
+model_20240906_193431_e:03.bin
+Self play visits : 16
+Generating    90/  200 games (5392.9567 games/hour).
+🐋cpu: 75.0% [100.0, 100.0, 100.0, 98.0, 100.0, 100.0, 100.0, 6.7, 100.0, 3.0, 2.0, 3.0, 100.0, 100.0, 98.0, 100.0]
+🐋mem: 48.2%
+Mon Sep  9 17:59:59 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 41%   42C    P2    59W / 280W |  12897MiB / 24219MiB |     33%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   29C    P8    11W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1722      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1885      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A     19928      C   python3                          1073MiB |
+|    0   N/A  N/A     19929      C   python3                          1073MiB |
+|    0   N/A  N/A     19930      C   python3                          1073MiB |
+|    0   N/A  N/A     19931      C   python3                          1073MiB |
+|    0   N/A  N/A     19932      C   python3                          1073MiB |
+|    0   N/A  N/A     19933      C   python3                          1073MiB |
+|    0   N/A  N/A     19934      C   python3                          1073MiB |
+|    0   N/A  N/A     19935      C   python3                          1073MiB |
+|    0   N/A  N/A     19936      C   python3                          1073MiB |
+|    0   N/A  N/A     19937      C   python3                          1073MiB |
+|    0   N/A  N/A     19938      C   python3                          1073MiB |
+|    0   N/A  N/A     19939      C   python3                          1073MiB |
+|    1   N/A  N/A      1722      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+
+Generating   199/  200 games (5861.3577 games/hour).
+123.629591 seconds, 5823.848435 games/hour
+```
