@@ -17,7 +17,7 @@ from mcts.time_manager import TimeManager, TimeControl
 from nn.utility import load_network
 from learning_param import SELF_PLAY_VISITS
 
-import psutil, subprocess
+import psutil, subprocess, datetime
 
 
 # pylint: disable=R0913,R0914
@@ -107,8 +107,9 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool
         msg += f"({3600 * current_num_data / (current_time - start_time):.4f} games/hour)."
         print(msg)
 
-        print(f"🐋cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
-        print(f"🐋mem: {psutil.virtual_memory().percent}%")
+        print(f"[datetime: {datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
+        print(f"cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
+        print(f"mem: {psutil.virtual_memory().percent}%")
 
         if use_gpu:
             result_subprocess = subprocess.run(['nvidia-smi --query-gpu=name,index,utilization.gpu,memory.used --format=csv'], capture_output=True, text=True, shell=True)
