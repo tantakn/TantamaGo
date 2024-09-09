@@ -151,6 +151,17 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
     dual_net.to(device)
 
+    print("torch.cuda.current_device: ", torch.cuda.current_device())#############
+    print("torch.cuda.device_count: ", torch.cuda.device_count())
+    print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
+    print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
+    print("torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
+    print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
+    print("torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
+
+    if torch.cuda.device_count() > 1:##########
+        dual_net = torch.nn.DataParallel(dual_net)
+
     optimizer = torch.optim.SGD(dual_net.parameters(),
                                 lr=SL_LEARNING_RATE,
                                 momentum=MOMENTUM,
@@ -160,6 +171,10 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
     scaler = torch.cuda.amp.GradScaler()
 
     current_lr = SL_LEARNING_RATE
+
+    # if device == 'cuda':###########
+    #     dual_net = torch.nn.DataParallel(dual_net) # make parallel
+    #     torch.backends.cuda.nn.benchmark = True
 
     for epoch in range(epochs):
         for data_index, train_data_path in enumerate(train_data_set):
@@ -178,7 +193,11 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
-                    policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    if torch.cuda.device_count() > 1:##########
+                        policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                    else:
+                        policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    # policy_predict, value_predict = dual_net.forward_for_sl(plane)
 
                     dual_net.zero_grad()
 
@@ -214,7 +233,11 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
-                    policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    if torch.cuda.device_count() > 1:##########
+                        policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                    else:
+                        policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    # policy_predict, value_predict = dual_net.forward_for_sl(plane)
 
                     policy_loss = calculate_policy_loss(policy_predict, policy)
                     value_loss = calculate_value_loss(value_predict, value)
@@ -225,6 +248,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     test_loss["policy"] += policy_loss.mean().item()
                     test_loss["value"] += value_loss.mean().item()
                     test_iteration += 1
+
 
         print_evaluation_information(test_loss, epoch, test_iteration, testing_time)
 

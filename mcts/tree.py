@@ -231,6 +231,7 @@ class MCTSTree: # pylint: disable=R0902
         """
         node_index = self.num_nodes
 
+        # 候補手を取得
         candidates = board.get_all_legal_pos(color)
         candidates = [candidate for candidate in candidates \
             if (board.check_self_atari_stone(candidate, color) < 7) \
@@ -456,5 +457,20 @@ def get_tentative_policy(candidates: List[int]) -> Dict[int, float]:
     Returns:
         Dict[int, float]: 候補手の座標とPolicyの値のマップ。
     """
+
     score = np.random.dirichlet(alpha=np.ones(len(candidates)))
     return dict(zip(candidates, score))
+
+    """
+    このコードは、候補者のリストに対してディリクレ分布に基づくスコアを生成し、それを辞書として返すものです。
+
+    まず、np.random.dirichlet 関数を使用してディリクレ分布から乱数を生成します。ディリクレ分布は、確率のベクトルを生成するために使用される多変量分布です。この関数には、alpha パラメータが必要です。ここでは、np.ones(len(candidates)) を使用して、候補者の数と同じ長さの1の配列を生成し、それを alpha として渡しています。これにより、各候補者に対して均等な確率が割り当てられます。
+
+    次に、zip 関数を使用して、候補者のリストと生成されたスコアのリストをペアにします。zip 関数は、複数のイテラブルを並行して走査し、それぞれの要素をタプルとして返します。
+
+    最後に、dict コンストラクタを使用して、これらのペアを辞書に変換します。これにより、各候補者がキーとなり、その候補者に対応するスコアが値となる辞書が生成されます。この辞書が関数の戻り値として返されます。
+
+    このコードは、候補者のリストに対してランダムなスコアを割り当てる際に非常に便利です。特に、確率の合計が1になるようにスコアを割り当てる必要がある場合に有効です。
+    """
+
+    # ディリクレ分布の可視化 https://tadaoyamaoka.hatenablog.com/entry/2017/12/09/224900

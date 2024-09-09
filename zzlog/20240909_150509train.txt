@@ -1,0 +1,23 @@
+🐾train_main
+🐾train_on_gpu 2024-09-09 15:05:16.651966
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+2
+Traceback (most recent call last):
+  File "train.py", line 95, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 88, in train_main
+    train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 189, in train_on_gpu
+    policy_predict, value_predict = dual_net.forward_for_sl(plane)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1270, in __getattr__
+    type(self).__name__, name))
+AttributeError: 'DataParallel' object has no attribute 'forward_for_sl'

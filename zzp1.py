@@ -97,5 +97,6 @@ import torch
 # #   [4 8 8 1]]]
 
 # print(np.sum(narr))
-import datetime
-print(datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
+
+score = np.random.dirichlet(alpha=np.ones(10))
+print(score)

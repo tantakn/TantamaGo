@@ -1,0 +1,4 @@
+  File "train.py", line 57
+    print(f"🐾train_main  {datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}")########
+                                                                            ^
+SyntaxError: invalid syntax
