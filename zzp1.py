@@ -81,19 +81,21 @@ import torch
 # print(np.max(nparr))
 # print(np.percentile(nparr, 25))
 
-narr = np.random.randint(0, 10, (2, 3))
-print(narr)
-# [[9 7 5]
-#  [7 9 7]]
+# narr = np.random.randint(0, 10, (2, 3))
+# print(narr)
+# # [[9 7 5]
+# #  [7 9 7]]
 
-narr = np.random.randint(0, 10, (2, 3, 4, 5))
-print(narr)
-# [[[0 2 8 5]
-#   [7 7 6 1]
-#   [3 4 1 0]]
+# narr = np.random.randint(0, 10, (2, 3, 4, 5))
+# print(narr)
+# # [[[0 2 8 5]
+# #   [7 7 6 1]
+# #   [3 4 1 0]]
 
-#  [[2 5 7 9]
-#   [5 9 7 4]
-#   [4 8 8 1]]]
+# #  [[2 5 7 9]
+# #   [5 9 7 4]
+# #   [4 8 8 1]]]
 
-print(np.sum(narr))
+# print(np.sum(narr))
+import datetime
+print(datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
