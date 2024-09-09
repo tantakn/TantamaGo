@@ -35,13 +35,17 @@ class MCTSTree: # pylint: disable=R0902
             batch_size (int, optional): ニューラルネットワークの前向き伝搬処理のミニバッチサイズ。デフォルトはNN_BATCH_SIZE。
         """
         self.node = [MCTSNode() for i in range(tree_size)]
+        """MCTSNode のリスト"""
         self.num_nodes = 0
         self.root = 0
         self.network = network
+        """network (DualNet): 使用するニューラルネットワーク。"""
         self.batch_queue = BatchQueue()
         self.current_root = 0
         self.batch_size = batch_size
+        """batch_size (int, optional): ニューラルネットワークの前向き伝搬処理のミニバッチサイズ。デフォルトはNN_BATCH_SIZE。"""
         self.cgos_mode = cgos_mode
+        """cgos_mode: bool=False"""
 
 
     def search_best_move(self, board: GoBoard, color: Stone, time_manager: TimeManager, \
@@ -222,13 +226,13 @@ class MCTSTree: # pylint: disable=R0902
             self.search_mcts(board, color, next_node_index, path)
 
 
-    def expand_node(self, board: GoBoard, color: Stone) -> NoReturn:
+    def expand_node(self, board: GoBoard, color: Stone) -> int:
         """ノードを展開する。合法手とディリクレ分布との辞書 を self.node[self.num_nodes] に展開して、++self.num_nodes する。
 
         Args:
             board (GoBoard): 現在の局面情報。
             color (Stone): 現在の手番の色。
-        
+
         Returns:
             int: 実行開始時のself.num_nodes
         """
