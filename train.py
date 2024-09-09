@@ -27,7 +27,7 @@ def display_train_monitoring_worker(use_gpu: bool) -> None:###########
         print(f"🐋mem: {psutil.virtual_memory().percent}%")
 
         if use_gpu:
-            result_subprocess = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
+            result_subprocess = subprocess.run(['nvidia-smi --query-gpu=name,index,utilization.gpu,memory.used --format=csv'], capture_output=True, text=True, shell=True)
             print(result_subprocess.stdout)
 
 
