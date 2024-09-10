@@ -1,0 +1,6 @@
+
+games: 200
+model1: model/rl-model_default.bin
+    win: (200 + 0.5*0)/200 (100.00%)
+model2: model/sl-model_20240910_005934_Ep:01.bin
+    win: (0 + 0.5*0)/200 (0.00%)
