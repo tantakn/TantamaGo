@@ -99,7 +99,7 @@ from: {kifu_path} / {kifu_num}kyoku""")#####################
         _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
 
 
-def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[str], board_size: int=9) -> None:
+def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: list[str], board_size: int=9) -> None:
     """強化学習で使用するデータを生成し、保存する。
 
     Args:
