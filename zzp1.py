@@ -190,27 +190,39 @@ import torch
 # # 1 付近から 8 桁の精度で、解を探す
 # print(sp.nsolve(x**2 - x - 6, x, 1, prec=8))
 
-import torch
-
-print(torch.__version__)
-
+import torch.nn.functional as F
 import torch.nn as nn
 
+# 乱数シードの固定
 torch.manual_seed(1)
 
+# 普通は float32 で作る。ドット打つと指定できる。
 x = torch.tensor([[1., 2., 3.]])
 print(x.dtype)
+# torch.float32
 
+# 線形変換たち。初期値はランダム。
 fc1 = nn.Linear(3, 2)
 fc2 = nn.Linear(2, 1)
 
+# 重みとバイアスの確認
 print(fc1.weight)
 print(fc1.bias)
+# tensor([[ 0.2975, -0.2548, -0.1119],
+#         [ 0.2710, -0.5435,  0.3462]], requires_grad=True)
+# Parameter containing:
+# tensor([-0.1188,  0.2937], requires_grad=True)
 
 u1 = fc1(x)
-u2 = fc2(u1)
+z1 = F.relu(u1)
+y = fc2(z1)
 
-import torch.nn.functional as F
+print(y)
+# tensor([[0.1514]], grad_fn=<AddmmBackward0>)
 
-z = F.relu(u2)
-print(z)
+# 目標値
+t = torch.tensor([[1.]])
+
+# 平均二乗誤差
+loss = F.mse_loss(t, y)
+print(loss)
