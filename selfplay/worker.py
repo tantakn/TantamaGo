@@ -56,8 +56,7 @@ def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], 
         is_resign = False
         score = 0.0
         for _ in range(max_moves):
-            pos = mcts.generate_move_with_sequential_halving(board=board, color=color, \
-                time_manager=time_manager, never_resign=never_resign)
+            pos = mcts.generate_move_with_sequential_halving(board=board, color=color, time_manager=time_manager, never_resign=never_resign)
 
             if pos == RESIGN:
                 winner = Stone.get_opponent_color(color)
