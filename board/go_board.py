@@ -1,6 +1,5 @@
 """碁盤のデータ定義と操作処理。
 """
-from typing import List, Tuple, NoReturn
 from collections import deque
 import numpy as np
 
@@ -41,7 +40,7 @@ class GoBoard: # pylint: disable=R0902
             """
             return x_coord + y_coord * self.board_size_with_ob
 
-        def get_neighbor4(pos: int) -> List[int]:
+        def get_neighbor4(pos: int) -> list[int]:
             """指定した座標の上下左右の座標を取得する。
 
             Args:
@@ -52,7 +51,7 @@ class GoBoard: # pylint: disable=R0902
             """
             return [pos - self.board_size_with_ob, pos - 1, pos + 1, pos + self.board_size_with_ob]
 
-        def get_cross4(pos: int) -> List[int]:
+        def get_cross4(pos: int) -> list[int]:
             """指定した座標の斜め方向の座標を取得する。
             """
             return [pos - self.board_size_with_ob - 1, pos - self.board_size_with_ob + 1, \
@@ -106,7 +105,7 @@ class GoBoard: # pylint: disable=R0902
         self.clear()
 
 
-    def clear(self) -> NoReturn:
+    def clear(self) -> None:
         """盤面の初期化
         """
         self.moves = 1
@@ -128,7 +127,6 @@ class GoBoard: # pylint: disable=R0902
         self.strings.clear()
         self.record.clear()
 
-    # def put_stone(self, pos: int, color: Stone) -> NoReturn:#########
     def put_stone(self, pos: int, color: Stone) -> None:
         """指定された座標に指定された色の石を石を置く。
 
@@ -185,7 +183,7 @@ class GoBoard: # pylint: disable=R0902
         self.record.save(self.moves, color, pos, self.positional_hash)
         self.moves += 1
 
-    def put_handicap_stone(self, pos: int, color: Stone) -> NoReturn:
+    def put_handicap_stone(self, pos: int, color: Stone) -> None:
         """指定された座標に指定された色の置き石を置く。
 
         Args:
@@ -398,7 +396,7 @@ class GoBoard: # pylint: disable=R0902
         return False
 
 
-    def get_all_legal_pos(self, color: Stone) -> List[int]:
+    def get_all_legal_pos(self, color: Stone) -> list[int]:
         """全ての合法手の座標を取得する。ただし眼は除く。
 
         Args:
@@ -409,7 +407,7 @@ class GoBoard: # pylint: disable=R0902
         """
         return [pos for pos in self.onboard_pos if self.is_legal(pos, color)]
 
-    def display(self, sym: int=0) -> NoReturn:
+    def display(self, sym: int=0) -> None:
         """盤面を表示する。
         """
         board_string = f"Move : {self.moves}\n"
@@ -436,7 +434,7 @@ class GoBoard: # pylint: disable=R0902
         print_err(board_string)
 
 
-    def display_self_atari(self, color: Stone) -> NoReturn:
+    def display_self_atari(self, color: Stone) -> None:
         """アタリに突っ込んだ時に取られる石の数を表示する。取られない場合は0。デバッグ用。
 
         Args:
@@ -453,7 +451,6 @@ class GoBoard: # pylint: disable=R0902
                 self_atari_string += '\n'
         print_err(self_atari_string)
 
-    # def get_board_size(self) -> NoReturn:#########
     def get_board_size(self) -> int:
         """碁盤の大きさを取得する。
 
@@ -462,7 +459,7 @@ class GoBoard: # pylint: disable=R0902
         """
         return self.board_size
 
-    def get_board_data(self, sym: int) -> List[int]:
+    def get_board_data(self, sym: int) -> list[int]:
         """ニューラルネットワークの入力用の碁盤情報を取得する。
 
         Args:
@@ -473,7 +470,7 @@ class GoBoard: # pylint: disable=R0902
         """
         return [self.board[self.get_symmetrical_coordinate(pos, sym)].value for pos in self.onboard_pos]
 
-    def get_liberty_data(self, sym: int) -> List[int]:
+    def get_liberty_data(self, sym: int) -> list[int]:
         """ニューラルネットワークの入力用の呼吸点数の情報を取得する。
 
         Args:
@@ -504,7 +501,7 @@ class GoBoard: # pylint: disable=R0902
         """
         return self.sym_map[sym][pos]
 
-    def set_komi(self, komi: float) -> NoReturn:
+    def set_komi(self, komi: float) -> None:
         """コミを設定する。
 
         Args:
@@ -531,7 +528,7 @@ class GoBoard: # pylint: disable=R0902
         last_move_color, _, _ = self.record.get(self.moves - 1)
         return Stone.get_opponent_color(last_move_color)
 
-    def get_move_history(self) -> List[Tuple[Stone, int, np.array]]:
+    def get_move_history(self) -> list[tuple[Stone, int, np.array]]:
         """着手の履歴を取得する。
 
         Returns:
@@ -539,7 +536,7 @@ class GoBoard: # pylint: disable=R0902
         """
         return [self.record.get(m) for m in range(1, self.moves)]
 
-    def get_handicap_history(self) -> List[int]:
+    def get_handicap_history(self) -> list[int]:
         """置き石の座標を取得する。
 
         Returns:

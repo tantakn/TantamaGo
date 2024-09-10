@@ -3,7 +3,6 @@
 import glob
 import os
 import random
-from typing import List, NoReturn
 import numpy as np
 from board.go_board import GoBoard
 from board.stone import Stone
@@ -14,7 +13,7 @@ from learning_param import BATCH_SIZE, DATA_SET_SIZE
 import time, datetime#################
 
 
-def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndarray, value_data: np.ndarray, kifu_counter: int) -> NoReturn:
+def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndarray, value_data: np.ndarray, kifu_counter: int) -> None:
     """学習データをnpzファイルとして出力する。
 
     Args:
@@ -33,7 +32,7 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
     np.savez_compressed(save_file_path, **save_data)
 
 # pylint: disable=R0914
-def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_size: int=9) -> NoReturn:
+def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_size: int=9) -> None:
     """教師あり学習のデータを生成して保存する。
 
     Args:
@@ -98,7 +97,7 @@ from: {kifu_path} / {kifu_num}kyoku""")#####################
         _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
 
 
-def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[str], board_size: int=9) -> NoReturn:
+def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: list[str], board_size: int=9) -> None:
     """強化学習で使用するデータを生成し、保存する。
 
     Args:
@@ -120,7 +119,7 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
 
     kifu_list = []
     for kifu_dir in kifu_dir_list:
-        # kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*", "*.sgf"))) # natukazeの棋譜のフォルダ形式に合うようにした
+        # kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*", "*.sgf"))) # natukazeの棋譜のフォルダ形式に合うようにしたもの
         kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*.sgf")))
     random.shuffle(kifu_list)
 
@@ -129,7 +128,8 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
         sgf = SGFReader(kifu_path, board_size)
         color = Stone.BLACK
         value_label = sgf.get_value_label()
-        target_index = sorted(np.random.permutation(np.arange(sgf.get_n_moves()))[:8]) # 総手数以下の数からランダムで８個選んで選んだのをソート
+        target_index = sorted(np.random.permutation(np.arange(sgf.get_n_moves()))[:8])
+        """総手数以下の数からランダムで８個選んで選んだのをソート"""
         sym_index_list = np.random.permutation(np.arange(8))
         sym_index = 0
         #target_index = np.random.permutation(np.arange(sgf.get_n_moves()))[:1]
