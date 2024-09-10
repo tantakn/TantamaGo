@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "train.py", line 10, in <module>
+    from nn.data_generator import generate_supervised_learning_data, \
+  File "/data/student/u2424004/igo/TantamaGo/nn/data_generator.py", line 102, in <module>
+    def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: list[str], board_size: int=9) -> None:
+TypeError: 'type' object is not subscriptable

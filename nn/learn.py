@@ -234,11 +234,11 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
-                    if torch.cuda.device_count() > 1:##########
-                        policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
-                    else:
-                        policy_predict, value_predict = dual_net.forward_for_sl(plane)
-                    # policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    # if torch.cuda.device_count() > 1:##########ここTrueで作ったので対局しようとするとFailed to load model/sl-model_2024のエラー出る
+                    #     policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                    # else:
+                    #     policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    policy_predict, value_predict = dual_net.forward_for_sl(plane)
 
                     policy_loss = calculate_policy_loss(policy_predict, policy)
                     value_loss = calculate_value_loss(value_predict, value)

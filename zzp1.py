@@ -143,49 +143,74 @@ import torch
 # print(b)
 # print(a)
 
-import sympy as sp
+# import sympy as sp
 
 
-# spで宣言
-x = sp.symbols('x')
+# # spで宣言
+# x = sp.symbols('x')
 
-# 微分
-print(sp.diff(x ** 2 * 3 + x, x))
-# 6*x + 1
+# # 微分
+# print(sp.diff(x ** 2 * 3 + x, x))
+# # 6*x + 1
 
-# 関数で式を宣言しても大丈夫
-def f (x):
-    return x ** 2 + 4 * x + 7
-print(sp.diff(f(x), x))
-# 2*x + 4
+# # 関数で式を宣言しても大丈夫
+# def f (x):
+#     return x ** 2 + 4 * x + 7
+# print(sp.diff(f(x), x))
+# # 2*x + 4
 
-# 偏微分
-y = sp.symbols('y')
-print(sp.diff(x ** 3 * y + y, x))
-# 3*x**2*y
+# # 偏微分
+# y = sp.symbols('y')
+# print(sp.diff(x ** 3 * y + y, x))
+# # 3*x**2*y
 
-# 積分
-print(sp.integrate(x ** 2 * 3 + x, x))
-# 6*x + 1
+# # 積分
+# print(sp.integrate(x ** 2 * 3 + x, x))
+# # 6*x + 1
 
-# sin とか有名定数はインポートすれば使える
-from sympy import sin, pi
+# # sin とか有名定数はインポートすれば使える
+# from sympy import sin, pi
 
-# 定積分
-print(sp.integrate(sin(x), (x, 0, pi/2)))
-# 1
+# # 定積分
+# print(sp.integrate(sin(x), (x, 0, pi/2)))
+# # 1
 
-# 式として積分できなくても、evalf()で数値積分できる
-print(sp.integrate(sin(sin(x)), (x, 0, pi)).evalf())
-# 1.78648748195005
+# # 式として積分できなくても、evalf()で数値積分できる
+# print(sp.integrate(sin(sin(x)), (x, 0, pi)).evalf())
+# # 1.78648748195005
 
-# 方程式 x**2 - x - 6 = 0 を解く
-print(sp.solve(x**2 - x - 6, x))
-# [-2, 3]
+# # 方程式 x**2 - x - 6 = 0 を解く
+# print(sp.solve(x**2 - x - 6, x))
+# # [-2, 3]
 
-# 連立方程式も解ける
-print(sp.solve([x + y - 1, x - y - 1], [x, y]))
-# {x: 1, y: 0}
+# # 連立方程式も解ける
+# print(sp.solve([x + y - 1, x - y - 1], [x, y]))
+# # {x: 1, y: 0}
 
-# 1 付近から 8 桁の精度で、解を探す
-print(sp.nsolve(x**2 - x - 6, x, 1, prec=8))
+# # 1 付近から 8 桁の精度で、解を探す
+# print(sp.nsolve(x**2 - x - 6, x, 1, prec=8))
+
+import torch
+
+print(torch.__version__)
+
+import torch.nn as nn
+
+torch.manual_seed(1)
+
+x = torch.tensor([[1., 2., 3.]])
+print(x.dtype)
+
+fc1 = nn.Linear(3, 2)
+fc2 = nn.Linear(2, 1)
+
+print(fc1.weight)
+print(fc1.bias)
+
+u1 = fc1(x)
+u2 = fc2(u1)
+
+import torch.nn.functional as F
+
+z = F.relu(u2)
+print(z)
