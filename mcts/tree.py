@@ -37,11 +37,14 @@ class MCTSTree: # pylint: disable=R0902
         self.node = [MCTSNode() for i in range(tree_size)]
         """MCTSNode のリスト"""
         self.num_nodes = 0
+        """int: ノードの数???どこみても最初に初期化してる"""
         self.root = 0
         self.network = network
         """network (DualNet): 使用するニューラルネットワーク。"""
         self.batch_queue = BatchQueue()
+        """ミニバッチデータを保持するキュー。"""
         self.current_root = 0
+        """???"""
         self.batch_size = batch_size
         """batch_size (int, optional): ニューラルネットワークの前向き伝搬処理のミニバッチサイズ。デフォルトはNN_BATCH_SIZE。"""
         self.cgos_mode = cgos_mode
@@ -256,7 +259,7 @@ class MCTSTree: # pylint: disable=R0902
 
         Args:
             board (GoBoard): 碁盤の情報。
-            use_logit (bool): Policyの出力をlogitにするフラグ
+            use_logit (bool): Policyの出力をlogitにするフラグ。たぶん、Gumbel AlphaZero用？このクラスでは全部True。
         """
         input_planes = torch.Tensor(np.array(self.batch_queue.input_plane))
 
@@ -307,17 +310,17 @@ class MCTSTree: # pylint: disable=R0902
         Returns:
             int: 生成した着手の座標。
         """
-        self.num_nodes = 0
+        self.num_nodes = 0 # ？初期化？
         start_time = time.time()
         self.current_root = self.expand_node(board, color)
         input_plane = generate_input_planes(board, color)
+        """input_plane (numpy.ndarray): ニューラルネットワークの入力データ。"""
         self.batch_queue.push(input_plane, [], self.current_root)
         self.process_mini_batch(board, use_logit=True)
         self.node[self.current_root].set_gumbel_noise()
 
         # 探索を実行
-        self.search_by_sequential_halving(board, color, \
-            time_manager.get_num_visits_threshold(color))
+        self.search_by_sequential_halving(board, color, time_manager.get_num_visits_threshold(color))
 
         # 最善の手を取得
         root = self.node[self.current_root]

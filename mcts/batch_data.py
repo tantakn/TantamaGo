@@ -11,8 +11,11 @@ class BatchQueue:
         """BatchQueueクラスのコンストラクタ。
         """
         self.input_plane = []
+        """(input_plane (np.array): ニューラルネットワークへの入力データ) のリスト。"""
         self.path = []
+        """(path (List[Tuple[int, int]]): ルートから評価ノードへまでの経路) のリスト。"""
         self.node_index = []
+        """(node_index (int): ニューラルネットワークが評価する局面に対応するノードのインデックス) のリスト。"""
 
     def push(self, input_plane: np.array, path: List[Tuple[int, int]], node_index: int):
         """キューにデータをプッシュする。
