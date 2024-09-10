@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "train.py", line 10, in <module>
+    from nn.data_generator import generate_supervised_learning_data, \
+  File "/data/student/u2424004/igo/TantamaGo/nn/data_generator.py", line 7, in <module>
+    from board.go_board import GoBoard
+  File "/data/student/u2424004/igo/TantamaGo/board/go_board.py", line 16, in <module>
+    class GoBoard: # pylint: disable=R0902
+  File "/data/student/u2424004/igo/TantamaGo/board/go_board.py", line 399, in GoBoard
+    def get_all_legal_pos(self, color: Stone) -> list[int]:
+TypeError: 'type' object is not subscriptable
