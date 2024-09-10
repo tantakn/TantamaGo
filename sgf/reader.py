@@ -1,6 +1,5 @@
 """SGF形式のファイル読み込み処理。
 """
-from typing import NoReturn
 from board.coordinate import Coordinate
 from board.constant import PASS, OB_SIZE
 from board.stone import Stone
@@ -284,7 +283,7 @@ class SGFReader: # pylint: disable=R0902
 
         return cursor + tmp_cursor
 
-    def get_moves(self) -> int:
+    def get_moves(self):
         """最初から1つずつ着手を取得する。
 
         Yields:
@@ -363,7 +362,7 @@ class SGFReader: # pylint: disable=R0902
         """
         return self.comment[index]
 
-    def display(self) -> NoReturn:
+    def display(self) -> None:
         """読み込んだSGFファイルの情報を表示する。（デバッグ用）
         """
         message = ""
