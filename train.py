@@ -23,11 +23,12 @@ def display_train_monitoring_worker(use_gpu: bool) -> None:###########
     while True:
         time.sleep(60)
 
-        print(f"🐋cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
-        print(f"🐋mem: {psutil.virtual_memory().percent}%")
+        print(f"monitoring [datetime: {datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
+        print(f"cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
+        print(f"mem: {psutil.virtual_memory().percent}%")
 
         if use_gpu:
-            result_subprocess = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
+            result_subprocess = subprocess.run(['nvidia-smi --query-gpu=name,index,utilization.gpu,memory.used --format=csv'], capture_output=True, text=True, shell=True)
             print(result_subprocess.stdout)
 
 
