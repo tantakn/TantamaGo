@@ -3,7 +3,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 import re, glob, click, datetime
 
-# TODO:--num == -1 で最後のファイルを対象にする。--num == 0 で全てのファイルを対象にする。
+# TODO:--num == 0 で全てのファイルを対象にする。
 # TODO:3つ目のmodelが見つかったときエラー出すようにする。
 
 @click.command()
@@ -16,10 +16,13 @@ def main(path, num, save):
         return
 
     path_list = []
-    if num == -1:
+    if num == 0 and False:##############
         folder_list = sorted(glob.glob(os.path.join("./", path, "*")))
         for folder in folder_list:
             path_list += sorted(glob.glob(os.path.join("./", folder, "*.sgf")))
+    elif num == -1:
+        folder = sorted(glob.glob(os.path.join("./", path, "*")))[-1]
+        path_list = sorted(glob.glob(os.path.join("./", folder, "*.sgf")))
     else:
         path_list = sorted(glob.glob(os.path.join("./", path, str(num), "*.sgf")))
 

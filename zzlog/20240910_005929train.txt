@@ -76,3 +76,2096 @@ TITAN RTX, 1, 0 %, 9 MiB
 epoch 0, data-7 : loss = 1.530010, time = 38.5 [s].
 	policy loss : 1.517074
 	value loss  : 0.646799
+[datetime: 20240910_010545]
+cpu: 50.5% [9.9, 100.0, 40.0, 100.0, 100.0, 100.0, 100.0, 100.0, 60.6, 0.0, 100.0, 0.0, 1.0, 1.0, 0.0, 0.0]
+mem: 14.8%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1268 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_010559]
+epoch 0, data-8 : loss = 1.519958, time = 39.3 [s].
+	policy loss : 1.507071
+	value loss  : 0.644372
+[datetime: 20240910_010642]
+epoch 0, data-9 : loss = 1.516100, time = 38.8 [s].
+	policy loss : 1.503303
+	value loss  : 0.639872
+[datetime: 20240910_010647]
+cpu: 50.1% [0.0, 0.0, 100.0, 100.0, 1.0, 100.0, 0.0, 100.0, 100.0, 60.0, 39.4, 0.0, 100.0, 0.0, 100.0, 0.0]
+mem: 13.7%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1268 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_010714]
+epoch 0, data-10 : loss = 1.507889, time = 29.0 [s].
+	policy loss : 1.495151
+	value loss  : 0.636899
+[datetime: 20240910_010749]
+cpu: 50.0% [0.0, 100.0, 0.0, 0.0, 41.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 59.6, 100.0, 2.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 57 %, 1268 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_010757]
+epoch 0, data-11 : loss = 1.537756, time = 38.4 [s].
+	policy loss : 1.524978
+	value loss  : 0.638874
+[datetime: 20240910_010839]
+epoch 0, data-12 : loss = 1.509887, time = 38.7 [s].
+	policy loss : 1.497392
+	value loss  : 0.624731
+[datetime: 20240910_010851]
+cpu: 49.9% [2.0, 100.0, 100.0, 0.0, 0.0, 46.0, 99.0, 100.0, 99.0, 54.0, 0.0, 100.0, 99.0, 0.0, 0.0, 0.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1268 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_010923]
+epoch 0, data-13 : loss = 1.486019, time = 39.0 [s].
+	policy loss : 1.473530
+	value loss  : 0.624425
+[datetime: 20240910_010953]
+cpu: 50.1% [1.0, 100.0, 99.0, 99.0, 100.0, 99.0, 100.0, 49.0, 100.0, 51.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1268 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011006]
+epoch 0, data-14 : loss = 1.490032, time = 39.1 [s].
+	policy loss : 1.477529
+	value loss  : 0.625188
+[datetime: 20240910_011055]
+cpu: 50.2% [3.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 0.0, 2.0, 1.0, 0.0, 1.0, 0.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011120]
+Test 0 : loss = 1.516243, time = 74.356037 [s].
+	policy loss : 1.503729
+	value loss  : 0.625667
+[datetime: 20240910_011157]
+cpu: 50.2% [2.0, 63.6, 1.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 37.9, 100.0, 0.0, 2.0, 0.0, 0.0, 0.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011203]
+epoch 1, data-0 : loss = 1.483862, time = 38.2 [s].
+	policy loss : 1.471256
+	value loss  : 0.630319
+[datetime: 20240910_011245]
+epoch 1, data-1 : loss = 1.486197, time = 38.3 [s].
+	policy loss : 1.473748
+	value loss  : 0.622430
+[datetime: 20240910_011300]
+cpu: 50.1% [1.0, 37.0, 0.0, 0.0, 100.0, 0.0, 2.0, 100.0, 100.0, 63.0, 100.0, 100.0, 0.0, 100.0, 100.0, 0.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011328]
+epoch 1, data-2 : loss = 1.493803, time = 38.8 [s].
+	policy loss : 1.481503
+	value loss  : 0.615018
+[datetime: 20240910_011402]
+cpu: 50.1% [2.0, 49.0, 51.0, 1.0, 100.0, 0.0, 0.0, 100.0, 100.0, 1.0, 100.0, 100.0, 2.0, 100.0, 100.0, 0.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011411]
+epoch 1, data-3 : loss = 1.489494, time = 39.2 [s].
+	policy loss : 1.477225
+	value loss  : 0.613416
+[datetime: 20240910_011454]
+epoch 1, data-4 : loss = 1.478544, time = 39.2 [s].
+	policy loss : 1.466465
+	value loss  : 0.603954
+[datetime: 20240910_011504]
+cpu: 50.1% [2.0, 48.5, 47.5, 4.0, 100.0, 0.0, 1.0, 100.0, 100.0, 0.0, 100.0, 100.0, 1.0, 100.0, 100.0, 0.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011538]
+epoch 1, data-5 : loss = 1.466919, time = 39.2 [s].
+	policy loss : 1.454869
+	value loss  : 0.602535
+[datetime: 20240910_011606]
+cpu: 50.3% [100.0, 100.0, 51.0, 49.5, 0.0, 0.0, 100.0, 100.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0, 1.0, 2.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011621]
+epoch 1, data-6 : loss = 1.436284, time = 38.8 [s].
+	policy loss : 1.424100
+	value loss  : 0.609174
+[datetime: 20240910_011703]
+epoch 1, data-7 : loss = 1.438776, time = 38.7 [s].
+	policy loss : 1.426462
+	value loss  : 0.615702
+[datetime: 20240910_011708]
+cpu: 50.0% [0.0, 100.0, 99.0, 99.0, 99.0, 46.5, 99.0, 99.0, 99.0, 45.5, 8.1, 1.0, 0.0, 0.0, 0.0, 1.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011746]
+epoch 1, data-8 : loss = 1.437280, time = 38.9 [s].
+	policy loss : 1.424902
+	value loss  : 0.618900
+[datetime: 20240910_011810]
+cpu: 50.1% [0.0, 100.0, 0.0, 1.0, 0.0, 43.9, 100.0, 100.0, 100.0, 34.7, 100.0, 100.0, 100.0, 17.2, 5.0, 0.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011828]
+epoch 1, data-9 : loss = 1.443472, time = 38.1 [s].
+	policy loss : 1.431212
+	value loss  : 0.612987
+[datetime: 20240910_011901]
+epoch 1, data-10 : loss = 1.440840, time = 29.6 [s].
+	policy loss : 1.428530
+	value loss  : 0.615487
+[datetime: 20240910_011913]
+cpu: 50.1% [1.0, 100.0, 100.0, 100.0, 63.6, 0.0, 0.0, 2.0, 100.0, 0.0, 0.0, 0.0, 36.6, 100.0, 100.0, 100.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_011944]
+epoch 1, data-11 : loss = 1.476288, time = 38.1 [s].
+	policy loss : 1.463895
+	value loss  : 0.619663
+[datetime: 20240910_012015]
+cpu: 50.1% [100.0, 100.0, 1.0, 0.0, 63.6, 0.0, 0.0, 1.0, 1.0, 0.0, 100.0, 100.0, 37.0, 100.0, 100.0, 100.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012025]
+epoch 1, data-12 : loss = 1.452658, time = 37.7 [s].
+	policy loss : 1.440580
+	value loss  : 0.603860
+[datetime: 20240910_012108]
+epoch 1, data-13 : loss = 1.433652, time = 38.9 [s].
+	policy loss : 1.421481
+	value loss  : 0.608536
+[datetime: 20240910_012117]
+cpu: 50.1% [0.0, 100.0, 100.0, 1.0, 0.0, 63.3, 0.0, 0.0, 100.0, 0.0, 0.0, 100.0, 100.0, 37.3, 100.0, 100.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012151]
+epoch 1, data-14 : loss = 1.441944, time = 38.5 [s].
+	policy loss : 1.429795
+	value loss  : 0.607465
+[datetime: 20240910_012219]
+cpu: 50.1% [0.0, 0.0, 0.0, 100.0, 100.0, 100.0, 1.0, 2.0, 100.0, 100.0, 100.0, 0.0, 0.0, 0.0, 100.0, 100.0]
+mem: 14.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012305]
+Test 1 : loss = 1.459880, time = 74.098996 [s].
+	policy loss : 1.447484
+	value loss  : 0.619788
+[datetime: 20240910_012321]
+cpu: 50.2% [71.0, 100.0, 100.0, 0.0, 0.0, 0.0, 42.0, 0.0, 30.3, 0.0, 0.0, 100.0, 100.0, 58.6, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012347]
+epoch 2, data-0 : loss = 1.439114, time = 37.9 [s].
+	policy loss : 1.426766
+	value loss  : 0.617400
+[datetime: 20240910_012423]
+cpu: 50.0% [1.0, 100.0, 100.0, 99.0, 0.0, 100.0, 99.0, 48.0, 100.0, 52.0, 0.0, 0.0, 99.0, 0.0, 0.0, 3.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012431]
+epoch 2, data-1 : loss = 1.444320, time = 39.6 [s].
+	policy loss : 1.432176
+	value loss  : 0.607202
+[datetime: 20240910_012515]
+epoch 2, data-2 : loss = 1.455791, time = 39.6 [s].
+	policy loss : 1.443781
+	value loss  : 0.600498
+[datetime: 20240910_012526]
+cpu: 49.8% [100.0, 100.0, 99.0, 0.0, 0.0, 99.0, 39.8, 100.0, 34.3, 2.0, 0.0, 100.0, 100.0, 0.0, 25.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012558]
+epoch 2, data-3 : loss = 1.453158, time = 39.2 [s].
+	policy loss : 1.441150
+	value loss  : 0.600400
+[datetime: 20240910_012628]
+cpu: 50.0% [1.0, 100.0, 0.0, 0.0, 0.0, 100.0, 99.0, 48.5, 100.0, 51.5, 100.0, 99.0, 100.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012642]
+epoch 2, data-4 : loss = 1.443840, time = 39.4 [s].
+	policy loss : 1.431997
+	value loss  : 0.592128
+[datetime: 20240910_012725]
+epoch 2, data-5 : loss = 1.435644, time = 38.6 [s].
+	policy loss : 1.423783
+	value loss  : 0.593044
+[datetime: 20240910_012730]
+cpu: 50.2% [0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0, 63.0, 100.0, 100.0, 100.0, 100.0, 0.0, 0.0, 0.0, 37.6]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012807]
+epoch 2, data-6 : loss = 1.404428, time = 38.3 [s].
+	policy loss : 1.392463
+	value loss  : 0.598283
+[datetime: 20240910_012832]
+cpu: 50.1% [1.0, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0, 46.9, 99.0, 53.4, 100.0, 1.0, 1.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_012850]
+epoch 2, data-7 : loss = 1.409737, time = 38.9 [s].
+	policy loss : 1.397609
+	value loss  : 0.606431
+[datetime: 20240910_012934]
+epoch 2, data-8 : loss = 1.410495, time = 39.6 [s].
+	policy loss : 1.398287
+	value loss  : 0.610406
+[datetime: 20240910_012934]
+cpu: 7.1% [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+mem: 17.1%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013016]
+epoch 2, data-9 : loss = 1.416971, time = 37.6 [s].
+	policy loss : 1.404885
+	value loss  : 0.604276
+[datetime: 20240910_013036]
+cpu: 50.1% [1.0, 100.0, 100.0, 99.0, 2.0, 0.0, 100.0, 100.0, 100.0, 41.4, 0.0, 0.0, 58.0, 99.0, 0.0, 0.0]
+mem: 13.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013047]
+epoch 2, data-10 : loss = 1.415330, time = 28.7 [s].
+	policy loss : 1.403163
+	value loss  : 0.608345
+[datetime: 20240910_013130]
+epoch 2, data-11 : loss = 1.452365, time = 38.8 [s].
+	policy loss : 1.440132
+	value loss  : 0.611674
+[datetime: 20240910_013139]
+cpu: 50.1% [0.0, 100.0, 99.0, 0.0, 2.0, 41.2, 100.0, 100.0, 100.0, 0.0, 0.0, 100.0, 59.2, 100.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 57 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013212]
+epoch 2, data-12 : loss = 1.429810, time = 37.6 [s].
+	policy loss : 1.417916
+	value loss  : 0.594729
+[datetime: 20240910_013241]
+cpu: 50.2% [0.0, 100.0, 100.0, 100.0, 100.0, 42.9, 100.0, 100.0, 100.0, 54.9, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013255]
+epoch 2, data-13 : loss = 1.411258, time = 39.0 [s].
+	policy loss : 1.399205
+	value loss  : 0.602635
+[datetime: 20240910_013338]
+epoch 2, data-14 : loss = 1.420816, time = 39.0 [s].
+	policy loss : 1.408828
+	value loss  : 0.599432
+[datetime: 20240910_013343]
+cpu: 50.1% [1.0, 100.0, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 1.0, 100.0, 0.0, 0.0, 0.0, 2.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 91 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013446]
+cpu: 50.1% [0.0, 100.0, 1.0, 0.0, 0.0, 100.0, 100.0, 100.0, 100.0, 1.0, 100.0, 100.0, 100.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013453]
+Test 2 : loss = 1.469156, time = 74.444430 [s].
+	policy loss : 1.457179
+	value loss  : 0.598888
+[datetime: 20240910_013537]
+epoch 3, data-0 : loss = 1.419058, time = 39.8 [s].
+	policy loss : 1.406832
+	value loss  : 0.611271
+[datetime: 20240910_013548]
+cpu: 49.7% [99.0, 100.0, 1.0, 0.0, 1.0, 99.0, 99.0, 46.0, 53.5, 0.0, 100.0, 99.0, 100.0, 1.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013620]
+epoch 3, data-1 : loss = 1.424967, time = 38.8 [s].
+	policy loss : 1.412947
+	value loss  : 0.601035
+[datetime: 20240910_013650]
+cpu: 50.0% [1.0, 0.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 59.4, 100.0, 0.0, 1.0, 40.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013702]
+epoch 3, data-2 : loss = 1.436750, time = 38.4 [s].
+	policy loss : 1.424876
+	value loss  : 0.593723
+[datetime: 20240910_013745]
+epoch 3, data-3 : loss = 1.434017, time = 38.6 [s].
+	policy loss : 1.422147
+	value loss  : 0.593529
+[datetime: 20240910_013752]
+cpu: 50.1% [1.0, 0.0, 62.6, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 37.6, 0.0, 0.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013828]
+epoch 3, data-4 : loss = 1.426080, time = 38.6 [s].
+	policy loss : 1.414410
+	value loss  : 0.583530
+[datetime: 20240910_013854]
+cpu: 50.0% [2.0, 100.0, 100.0, 0.0, 45.4, 51.9, 3.0, 100.0, 100.0, 0.0, 0.0, 100.0, 0.0, 100.0, 100.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_013911]
+epoch 3, data-5 : loss = 1.418344, time = 38.9 [s].
+	policy loss : 1.406646
+	value loss  : 0.584877
+[datetime: 20240910_013954]
+epoch 3, data-6 : loss = 1.387435, time = 38.8 [s].
+	policy loss : 1.375595
+	value loss  : 0.591991
+[datetime: 20240910_013956]
+cpu: 6.4% [1.0, 41.0, 0.0, 0.0, 79.6, 19.6, 3.0, 0.0, 40.6, 0.0, 40.6, 40.6, 0.0, 40.4, 40.6, 40.4]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 16 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014037]
+epoch 3, data-7 : loss = 1.393797, time = 38.9 [s].
+	policy loss : 1.381795
+	value loss  : 0.600109
+[datetime: 20240910_014059]
+cpu: 50.1% [1.0, 100.0, 0.0, 100.0, 99.0, 46.9, 53.4, 1.0, 100.0, 0.0, 100.0, 0.0, 0.0, 0.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014120]
+epoch 3, data-8 : loss = 1.393924, time = 39.1 [s].
+	policy loss : 1.381837
+	value loss  : 0.604356
+[datetime: 20240910_014201]
+cpu: 50.1% [0.0, 100.0, 0.0, 99.0, 100.0, 49.0, 44.9, 6.1, 100.0, 0.0, 100.0, 0.0, 0.0, 0.0, 100.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014203]
+epoch 3, data-9 : loss = 1.401151, time = 39.1 [s].
+	policy loss : 1.389190
+	value loss  : 0.598048
+[datetime: 20240910_014236]
+epoch 3, data-10 : loss = 1.401158, time = 29.7 [s].
+	policy loss : 1.389114
+	value loss  : 0.602207
+[datetime: 20240910_014303]
+cpu: 49.7% [1.0, 99.0, 1.0, 99.0, 99.0, 45.0, 99.0, 55.9, 99.0, 0.0, 99.0, 0.0, 0.0, 0.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014320]
+epoch 3, data-11 : loss = 1.437465, time = 39.4 [s].
+	policy loss : 1.425344
+	value loss  : 0.606069
+[datetime: 20240910_014403]
+epoch 3, data-12 : loss = 1.415901, time = 39.3 [s].
+	policy loss : 1.404119
+	value loss  : 0.589133
+[datetime: 20240910_014405]
+cpu: 6.4% [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+mem: 18.1%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014446]
+epoch 3, data-13 : loss = 1.396542, time = 38.3 [s].
+	policy loss : 1.384610
+	value loss  : 0.596610
+[datetime: 20240910_014507]
+cpu: 50.1% [1.0, 100.0, 3.0, 63.6, 1.0, 0.0, 1.0, 0.0, 100.0, 2.0, 100.0, 37.6, 100.0, 100.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014528]
+epoch 3, data-14 : loss = 1.407619, time = 38.3 [s].
+	policy loss : 1.395723
+	value loss  : 0.594777
+[datetime: 20240910_014609]
+cpu: 34.2% [3.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 3.0, 2.0, 0.0, 1.0, 0.0, 2.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014643]
+Test 3 : loss = 1.445087, time = 74.529675 [s].
+	policy loss : 1.433089
+	value loss  : 0.599910
+[datetime: 20240910_014712]
+cpu: 50.1% [0.0, 2.0, 100.0, 100.0, 43.4, 100.0, 99.0, 100.0, 100.0, 100.0, 46.6, 12.0, 3.9, 1.0, 1.0, 2.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014726]
+epoch 4, data-0 : loss = 1.405566, time = 39.3 [s].
+	policy loss : 1.393427
+	value loss  : 0.606928
+[datetime: 20240910_014810]
+epoch 4, data-1 : loss = 1.412501, time = 39.0 [s].
+	policy loss : 1.400606
+	value loss  : 0.594757
+[datetime: 20240910_014814]
+cpu: 47.1% [1.0, 0.0, 100.0, 100.0, 100.0, 46.4, 100.0, 99.0, 100.0, 100.0, 53.3, 0.0, 0.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014853]
+epoch 4, data-2 : loss = 1.424793, time = 39.1 [s].
+	policy loss : 1.413015
+	value loss  : 0.588907
+[datetime: 20240910_014916]
+cpu: 50.2% [0.0, 0.0, 2.0, 2.0, 100.0, 100.0, 100.0, 0.0, 100.0, 100.0, 58.6, 100.0, 40.6, 0.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_014935]
+epoch 4, data-3 : loss = 1.421434, time = 38.4 [s].
+	policy loss : 1.409658
+	value loss  : 0.588787
+[datetime: 20240910_015018]
+[datetime: 20240910_015019]
+epoch 4, data-4 : loss = 1.414382, time = 39.6 [s].
+	policy loss : 1.402840
+	value loss  : 0.577142
+cpu: 45.7% [4.8, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 100.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0]
+mem: 15.7%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 7 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015101]
+epoch 4, data-5 : loss = 1.407088, time = 38.1 [s].
+	policy loss : 1.395498
+	value loss  : 0.579497
+[datetime: 20240910_015120]
+cpu: 50.0% [2.0, 99.0, 1.0, 0.0, 99.0, 0.0, 1.0, 48.5, 99.0, 51.9, 99.0, 99.0, 0.0, 99.0, 100.0, 3.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015145]
+epoch 4, data-6 : loss = 1.375988, time = 39.5 [s].
+	policy loss : 1.364244
+	value loss  : 0.587202
+[datetime: 20240910_015223]
+cpu: 50.1% [1.0, 100.0, 100.0, 99.0, 0.0, 1.0, 1.0, 45.9, 100.0, 51.0, 5.1, 0.0, 100.0, 100.0, 99.0, 0.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015229]
+epoch 4, data-7 : loss = 1.382494, time = 39.5 [s].
+	policy loss : 1.370609
+	value loss  : 0.594218
+[datetime: 20240910_015312]
+epoch 4, data-8 : loss = 1.383531, time = 38.8 [s].
+	policy loss : 1.371557
+	value loss  : 0.598739
+[datetime: 20240910_015325]
+cpu: 50.1% [2.0, 55.6, 35.0, 100.0, 1.0, 100.0, 0.0, 100.0, 100.0, 5.0, 100.0, 7.9, 100.0, 1.0, 100.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015355]
+epoch 4, data-9 : loss = 1.391253, time = 38.9 [s].
+	policy loss : 1.379383
+	value loss  : 0.593508
+[datetime: 20240910_015427]
+[datetime: 20240910_015428]
+epoch 4, data-10 : loss = 1.390280, time = 29.7 [s].
+	policy loss : 1.378293
+	value loss  : 0.599350
+cpu: 37.0% [3.9, 0.0, 0.0, 0.0, 1.0, 0.0, 100.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 2.0]
+mem: 15.0%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 3 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015511]
+epoch 4, data-11 : loss = 1.427633, time = 39.6 [s].
+	policy loss : 1.415576
+	value loss  : 0.602806
+[datetime: 20240910_015529]
+cpu: 49.9% [99.0, 99.0, 99.0, 100.0, 99.0, 46.0, 99.0, 100.0, 54.9, 2.0, 0.0, 3.0, 0.0, 2.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015555]
+epoch 4, data-12 : loss = 1.405751, time = 39.4 [s].
+	policy loss : 1.394066
+	value loss  : 0.584229
+[datetime: 20240910_015631]
+cpu: 50.1% [2.0, 99.0, 100.0, 99.0, 99.0, 1.0, 43.9, 100.0, 99.0, 44.6, 4.0, 7.1, 3.0, 99.0, 2.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015638]
+epoch 4, data-13 : loss = 1.386607, time = 39.3 [s].
+	policy loss : 1.374755
+	value loss  : 0.592604
+[datetime: 20240910_015721]
+epoch 4, data-14 : loss = 1.398139, time = 38.0 [s].
+	policy loss : 1.386336
+	value loss  : 0.590155
+[datetime: 20240910_015733]
+cpu: 50.1% [13.0, 1.0, 100.0, 12.1, 100.0, 2.0, 100.0, 100.0, 100.0, 100.0, 11.2, 100.0, 13.0, 100.0, 12.0, 0.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015835]
+Test 4 : loss = 1.422304, time = 74.220407 [s].
+	policy loss : 1.410494
+	value loss  : 0.590502
+[datetime: 20240910_015835]
+cpu: 6.6% [4.8, 0.0, 0.0, 0.0, 0.0, 1.0, 100.0, 1.0, 0.0, 0.0, 2.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+mem: 17.3%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_015919]
+epoch 5, data-0 : loss = 1.396517, time = 39.4 [s].
+	policy loss : 1.384442
+	value loss  : 0.603735
+[datetime: 20240910_015938]
+cpu: 50.2% [2.0, 100.0, 1.0, 99.0, 47.5, 52.5, 100.0, 100.0, 100.0, 1.0, 100.0, 1.0, 1.0, 100.0, 1.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020002]
+epoch 5, data-1 : loss = 1.403183, time = 38.9 [s].
+	policy loss : 1.391358
+	value loss  : 0.591246
+[datetime: 20240910_020040]
+cpu: 50.0% [3.9, 100.0, 99.0, 100.0, 100.0, 47.5, 100.0, 100.0, 99.0, 53.0, 0.0, 1.0, 0.0, 3.0, 1.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020045]
+epoch 5, data-2 : loss = 1.414839, time = 39.0 [s].
+	policy loss : 1.403134
+	value loss  : 0.585232
+[datetime: 20240910_020127]
+epoch 5, data-3 : loss = 1.412670, time = 38.2 [s].
+	policy loss : 1.400964
+	value loss  : 0.585305
+[datetime: 20240910_020142]
+cpu: 50.1% [2.0, 63.4, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 37.0, 0.0, 0.0, 2.0, 1.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020210]
+epoch 5, data-4 : loss = 1.405155, time = 38.3 [s].
+	policy loss : 1.393689
+	value loss  : 0.573329
+[datetime: 20240910_020244]
+cpu: 50.1% [100.0, 36.0, 21.8, 1.0, 100.0, 100.0, 100.0, 100.0, 0.0, 25.3, 100.0, 100.0, 10.0, 18.8, 0.0, 2.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020252]
+epoch 5, data-5 : loss = 1.398638, time = 38.4 [s].
+	policy loss : 1.387107
+	value loss  : 0.576532
+[datetime: 20240910_020335]
+epoch 5, data-6 : loss = 1.367244, time = 39.0 [s].
+	policy loss : 1.355577
+	value loss  : 0.583338
+[datetime: 20240910_020346]
+cpu: 50.1% [2.0, 100.0, 100.0, 100.0, 35.0, 49.0, 100.0, 99.0, 100.0, 16.2, 0.0, 0.0, 2.0, 100.0, 2.0, 1.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020418]
+epoch 5, data-7 : loss = 1.374451, time = 38.9 [s].
+	policy loss : 1.362625
+	value loss  : 0.591304
+[datetime: 20240910_020448]
+cpu: 50.1% [2.0, 99.0, 100.0, 99.0, 47.0, 51.0, 2.0, 99.0, 100.0, 0.0, 1.0, 0.0, 2.0, 99.0, 100.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020501]
+epoch 5, data-8 : loss = 1.375028, time = 38.7 [s].
+	policy loss : 1.363108
+	value loss  : 0.595963
+[datetime: 20240910_020543]
+epoch 5, data-9 : loss = 1.382764, time = 37.8 [s].
+	policy loss : 1.370957
+	value loss  : 0.590343
+[datetime: 20240910_020551]
+cpu: 50.2% [1.0, 100.0, 63.0, 100.0, 100.0, 100.0, 1.0, 100.0, 100.0, 0.0, 37.0, 0.0, 0.0, 1.0, 100.0, 0.0]
+mem: 13.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020615]
+epoch 5, data-10 : loss = 1.382840, time = 28.7 [s].
+	policy loss : 1.370923
+	value loss  : 0.595846
+[datetime: 20240910_020653]
+cpu: 50.1% [2.0, 61.8, 42.4, 100.0, 100.0, 99.0, 99.0, 99.0, 99.0, 62.4, 14.0, 3.0, 5.9, 14.0, 1.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020657]
+epoch 5, data-11 : loss = 1.419110, time = 37.9 [s].
+	policy loss : 1.407122
+	value loss  : 0.599441
+[datetime: 20240910_020739]
+epoch 5, data-12 : loss = 1.398152, time = 37.7 [s].
+	policy loss : 1.386533
+	value loss  : 0.580954
+[datetime: 20240910_020755]
+cpu: 50.1% [2.0, 0.0, 4.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 60.0, 36.4, 0.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020821]
+epoch 5, data-13 : loss = 1.379611, time = 37.8 [s].
+	policy loss : 1.367793
+	value loss  : 0.590903
+[datetime: 20240910_020857]
+cpu: 50.2% [1.0, 1.0, 47.4, 42.7, 100.0, 100.0, 10.9, 100.0, 100.0, 100.0, 1.0, 100.0, 1.0, 1.0, 100.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_020903]
+epoch 5, data-14 : loss = 1.390448, time = 38.3 [s].
+	policy loss : 1.378688
+	value loss  : 0.588000
+[datetime: 20240910_020959]
+cpu: 6.7% [9.9, 0.0, 1.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 2.0, 0.0, 1.0, 1.0, 0.0]
+mem: 17.1%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021018]
+Test 5 : loss = 1.436759, time = 74.117033 [s].
+	policy loss : 1.424761
+	value loss  : 0.599920
+Epoch 5, learning rate has changed 0.01 -> 0.001
+[datetime: 20240910_021100]
+epoch 6, data-0 : loss = 1.348608, time = 37.8 [s].
+	policy loss : 1.336741
+	value loss  : 0.593337
+[datetime: 20240910_021102]
+cpu: 6.8% [0.0, 2.0, 0.0, 2.0, 99.0, 2.0, 2.0, 0.0, 2.9, 0.0, 2.0, 0.0, 1.0, 0.0, 0.0, 2.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021143]
+epoch 6, data-1 : loss = 1.340267, time = 38.9 [s].
+	policy loss : 1.328738
+	value loss  : 0.576416
+[datetime: 20240910_021204]
+cpu: 50.2% [1.0, 100.0, 0.0, 100.0, 46.1, 45.5, 11.0, 0.0, 100.0, 1.0, 100.0, 1.0, 0.0, 100.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021226]
+epoch 6, data-2 : loss = 1.346307, time = 38.9 [s].
+	policy loss : 1.334935
+	value loss  : 0.568633
+[datetime: 20240910_021306]
+cpu: 50.1% [2.0, 100.0, 69.0, 99.0, 76.0, 45.1, 0.0, 1.0, 99.0, 1.0, 5.0, 9.2, 0.0, 100.0, 100.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021309]
+epoch 6, data-3 : loss = 1.339001, time = 38.9 [s].
+	policy loss : 1.327648
+	value loss  : 0.567660
+[datetime: 20240910_021352]
+epoch 6, data-4 : loss = 1.330696, time = 39.0 [s].
+	policy loss : 1.319592
+	value loss  : 0.555239
+[datetime: 20240910_021408]
+cpu: 50.1% [90.1, 100.0, 59.0, 3.0, 7.1, 1.0, 1.0, 0.0, 11.9, 1.0, 35.3, 100.0, 100.0, 100.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021435]
+epoch 6, data-5 : loss = 1.321190, time = 38.6 [s].
+	policy loss : 1.310030
+	value loss  : 0.558023
+[datetime: 20240910_021510]
+cpu: 49.9% [3.0, 100.0, 99.0, 41.4, 99.0, 100.0, 47.5, 7.0, 100.0, 1.0, 1.0, 0.0, 6.0, 0.0, 100.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021518]
+epoch 6, data-6 : loss = 1.287496, time = 39.0 [s].
+	policy loss : 1.276186
+	value loss  : 0.565526
+[datetime: 20240910_021600]
+epoch 6, data-7 : loss = 1.290647, time = 37.9 [s].
+	policy loss : 1.279182
+	value loss  : 0.573263
+[datetime: 20240910_021613]
+cpu: 49.7% [1.0, 0.0, 98.0, 39.4, 98.0, 98.0, 98.0, 59.8, 99.0, 98.0, 0.0, 1.0, 0.0, 1.0, 2.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021643]
+epoch 6, data-8 : loss = 1.288154, time = 39.0 [s].
+	policy loss : 1.276620
+	value loss  : 0.576718
+[datetime: 20240910_021715]
+cpu: 50.1% [11.1, 99.0, 3.9, 1.0, 13.0, 47.5, 99.0, 98.0, 98.0, 56.4, 98.0, 98.0, 98.0, 13.0, 13.0, 7.1]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 52 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021726]
+epoch 6, data-9 : loss = 1.295774, time = 38.4 [s].
+	policy loss : 1.284376
+	value loss  : 0.569892
+[datetime: 20240910_021758]
+epoch 6, data-10 : loss = 1.294593, time = 28.6 [s].
+	policy loss : 1.283046
+	value loss  : 0.577367
+[datetime: 20240910_021817]
+cpu: 49.5% [2.9, 100.0, 100.0, 99.0, 100.0, 64.0, 1.0, 0.0, 100.0, 1.0, 0.0, 1.0, 1.0, 100.0, 36.6, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 52 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021841]
+epoch 6, data-11 : loss = 1.327410, time = 38.6 [s].
+	policy loss : 1.315807
+	value loss  : 0.580116
+[datetime: 20240910_021919]
+cpu: 50.0% [32.3, 99.0, 99.0, 99.0, 100.0, 43.8, 53.1, 6.9, 68.0, 2.0, 0.0, 1.0, 0.0, 1.0, 100.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_021924]
+epoch 6, data-12 : loss = 1.301453, time = 39.3 [s].
+	policy loss : 1.290275
+	value loss  : 0.558907
+[datetime: 20240910_022007]
+epoch 6, data-13 : loss = 1.276969, time = 38.4 [s].
+	policy loss : 1.265546
+	value loss  : 0.571144
+[datetime: 20240910_022021]
+cpu: 50.1% [1.0, 63.7, 100.0, 100.0, 100.0, 100.0, 0.0, 2.0, 100.0, 36.4, 1.0, 0.0, 2.0, 0.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022049]
+epoch 6, data-14 : loss = 1.281719, time = 38.6 [s].
+	policy loss : 1.270389
+	value loss  : 0.566511
+[datetime: 20240910_022123]
+cpu: 50.2% [14.0, 14.3, 100.0, 100.0, 100.0, 93.0, 14.9, 2.0, 100.0, 100.0, 1.0, 12.1, 12.1, 7.1, 100.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022204]
+Test 6 : loss = 1.332266, time = 74.511264 [s].
+	policy loss : 1.320886
+	value loss  : 0.568990
+[datetime: 20240910_022225]
+cpu: 50.0% [0.0, 44.3, 54.9, 99.0, 100.0, 100.0, 0.0, 2.0, 100.0, 2.0, 100.0, 1.0, 1.0, 0.0, 99.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022247]
+epoch 7, data-0 : loss = 1.306769, time = 39.1 [s].
+	policy loss : 1.295102
+	value loss  : 0.583365
+[datetime: 20240910_022328]
+cpu: 50.1% [0.0, 43.9, 46.1, 100.0, 100.0, 99.0, 99.0, 9.9, 99.0, 4.0, 100.0, 4.0, 0.0, 3.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022331]
+epoch 7, data-1 : loss = 1.312020, time = 39.3 [s].
+	policy loss : 1.300649
+	value loss  : 0.568514
+[datetime: 20240910_022414]
+epoch 7, data-2 : loss = 1.323872, time = 39.4 [s].
+	policy loss : 1.312617
+	value loss  : 0.562710
+[datetime: 20240910_022430]
+cpu: 50.1% [1.0, 44.9, 46.6, 8.0, 99.0, 99.0, 99.0, 0.0, 100.0, 2.0, 99.0, 100.0, 0.0, 0.0, 2.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022458]
+epoch 7, data-3 : loss = 1.319156, time = 39.2 [s].
+	policy loss : 1.307907
+	value loss  : 0.562449
+[datetime: 20240910_022532]
+cpu: 50.2% [100.0, 100.0, 50.0, 100.0, 48.0, 6.9, 100.0, 2.0, 3.0, 1.0, 2.0, 0.0, 100.0, 100.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022541]
+epoch 7, data-4 : loss = 1.312593, time = 39.2 [s].
+	policy loss : 1.301581
+	value loss  : 0.550556
+[datetime: 20240910_022624]
+epoch 7, data-5 : loss = 1.305362, time = 39.1 [s].
+	policy loss : 1.294288
+	value loss  : 0.553708
+[datetime: 20240910_022634]
+cpu: 50.1% [2.0, 100.0, 45.4, 100.0, 53.8, 100.0, 100.0, 100.0, 100.0, 0.0, 2.0, 1.0, 100.0, 1.0, 2.0, 0.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022707]
+epoch 7, data-6 : loss = 1.272685, time = 39.0 [s].
+	policy loss : 1.261457
+	value loss  : 0.561448
+[datetime: 20240910_022736]
+cpu: 50.1% [1.0, 100.0, 100.0, 48.0, 51.0, 3.0, 100.0, 3.0, 100.0, 0.0, 0.0, 1.0, 100.0, 100.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022750]
+epoch 7, data-7 : loss = 1.277257, time = 38.8 [s].
+	policy loss : 1.265867
+	value loss  : 0.569477
+[datetime: 20240910_022833]
+epoch 7, data-8 : loss = 1.275756, time = 38.8 [s].
+	policy loss : 1.264281
+	value loss  : 0.573737
+[datetime: 20240910_022839]
+cpu: 49.4% [1.0, 99.0, 99.0, 100.0, 99.0, 99.0, 99.0, 49.5, 99.0, 50.5, 2.9, 1.0, 1.0, 1.0, 2.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022916]
+epoch 7, data-9 : loss = 1.284762, time = 39.1 [s].
+	policy loss : 1.273419
+	value loss  : 0.567176
+[datetime: 20240910_022941]
+cpu: 50.1% [1.0, 2.0, 99.0, 99.0, 44.4, 99.0, 56.6, 100.0, 99.0, 100.0, 1.0, 1.0, 0.0, 1.0, 100.0, 2.0]
+mem: 13.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_022949]
+epoch 7, data-10 : loss = 1.284043, time = 29.7 [s].
+	policy loss : 1.272546
+	value loss  : 0.574843
+[datetime: 20240910_023032]
+epoch 7, data-11 : loss = 1.318735, time = 39.0 [s].
+	policy loss : 1.307188
+	value loss  : 0.577303
+[datetime: 20240910_023043]
+cpu: 50.0% [1.0, 100.0, 100.0, 100.0, 49.0, 100.0, 51.0, 0.0, 100.0, 0.0, 1.0, 1.0, 1.0, 1.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023116]
+epoch 7, data-12 : loss = 1.294486, time = 39.1 [s].
+	policy loss : 1.283359
+	value loss  : 0.556313
+[datetime: 20240910_023145]
+cpu: 50.0% [3.9, 100.0, 100.0, 99.0, 100.0, 99.0, 0.0, 50.0, 99.0, 40.6, 1.0, 11.1, 2.0, 1.0, 100.0, 3.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023200]
+epoch 7, data-13 : loss = 1.272421, time = 39.6 [s].
+	policy loss : 1.261031
+	value loss  : 0.569490
+[datetime: 20240910_023243]
+epoch 7, data-14 : loss = 1.281123, time = 39.4 [s].
+	policy loss : 1.269822
+	value loss  : 0.565021
+[datetime: 20240910_023247]
+cpu: 44.2% [0.0, 0.0, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023349]
+cpu: 50.2% [0.0, 100.0, 100.0, 100.0, 100.0, 3.0, 100.0, 100.0, 100.0, 2.0, 3.0, 0.0, 1.0, 100.0, 1.0, 2.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023357]
+Test 7 : loss = 1.329065, time = 74.136221 [s].
+	policy loss : 1.317726
+	value loss  : 0.566995
+[datetime: 20240910_023440]
+epoch 8, data-0 : loss = 1.298068, time = 38.4 [s].
+	policy loss : 1.286447
+	value loss  : 0.581076
+[datetime: 20240910_023451]
+cpu: 50.2% [3.0, 99.0, 41.0, 99.0, 99.0, 43.1, 100.0, 99.0, 99.0, 12.1, 6.6, 1.0, 2.0, 100.0, 6.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023523]
+epoch 8, data-1 : loss = 1.304149, time = 38.9 [s].
+	policy loss : 1.292822
+	value loss  : 0.566333
+[datetime: 20240910_023554]
+cpu: 49.8% [1.0, 100.0, 100.0, 99.0, 4.0, 47.5, 100.0, 100.0, 100.0, 47.0, 6.0, 0.0, 99.0, 2.0, 1.0, 2.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023606]
+epoch 8, data-2 : loss = 1.315987, time = 39.4 [s].
+	policy loss : 1.304778
+	value loss  : 0.560444
+[datetime: 20240910_023650]
+epoch 8, data-3 : loss = 1.311505, time = 39.6 [s].
+	policy loss : 1.300292
+	value loss  : 0.560634
+[datetime: 20240910_023656]
+cpu: 50.9% [30.5, 85.9, 33.0, 99.0, 11.0, 99.0, 99.0, 99.0, 31.3, 31.7, 99.0, 11.0, 99.0, 12.2, 11.9, 2.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023734]
+epoch 8, data-4 : loss = 1.305757, time = 39.2 [s].
+	policy loss : 1.294785
+	value loss  : 0.548621
+[datetime: 20240910_023758]
+cpu: 50.5% [46.4, 100.0, 49.0, 100.0, 100.0, 100.0, 100.0, 100.0, 15.6, 8.7, 100.0, 1.0, 0.0, 0.0, 0.0, 2.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023817]
+epoch 8, data-5 : loss = 1.298585, time = 39.2 [s].
+	policy loss : 1.287534
+	value loss  : 0.552546
+[datetime: 20240910_023900]
+[datetime: 20240910_023900]
+epoch 8, data-6 : loss = 1.266188, time = 38.8 [s].
+	policy loss : 1.254993
+	value loss  : 0.559743
+cpu: 7.5% [0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 100.0, 3.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0]
+mem: 16.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_023943]
+epoch 8, data-7 : loss = 1.271815, time = 38.6 [s].
+	policy loss : 1.260452
+	value loss  : 0.568153
+[datetime: 20240910_024002]
+cpu: 50.1% [50.5, 99.0, 100.0, 100.0, 49.5, 0.0, 100.0, 0.0, 1.0, 1.0, 2.0, 1.0, 100.0, 100.0, 2.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024027]
+epoch 8, data-8 : loss = 1.270022, time = 39.4 [s].
+	policy loss : 1.258574
+	value loss  : 0.572392
+[datetime: 20240910_024104]
+cpu: 50.2% [99.0, 99.0, 100.0, 100.0, 53.5, 47.0, 99.0, 1.0, 0.0, 0.0, 0.0, 0.0, 2.0, 100.0, 3.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024110]
+epoch 8, data-9 : loss = 1.279735, time = 38.9 [s].
+	policy loss : 1.268428
+	value loss  : 0.565348
+[datetime: 20240910_024142]
+epoch 8, data-10 : loss = 1.279211, time = 29.4 [s].
+	policy loss : 1.267733
+	value loss  : 0.573938
+[datetime: 20240910_024207]
+cpu: 50.1% [0.0, 0.0, 100.0, 100.0, 45.0, 50.5, 99.0, 6.1, 99.0, 99.0, 2.0, 0.0, 2.9, 100.0, 0.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024225]
+epoch 8, data-11 : loss = 1.314506, time = 38.8 [s].
+	policy loss : 1.302981
+	value loss  : 0.576238
+[datetime: 20240910_024308]
+epoch 8, data-12 : loss = 1.291187, time = 39.0 [s].
+	policy loss : 1.280087
+	value loss  : 0.554990
+[datetime: 20240910_024309]
+cpu: 7.1% [7.5, 9.2, 5.7, 1.0, 0.0, 0.0, 0.0, 100.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+mem: 16.9%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024352]
+epoch 8, data-13 : loss = 1.270491, time = 39.0 [s].
+	policy loss : 1.259124
+	value loss  : 0.568334
+[datetime: 20240910_024411]
+cpu: 50.1% [0.0, 3.0, 1.0, 99.0, 40.0, 100.0, 100.0, 1.0, 99.0, 60.0, 99.0, 0.0, 100.0, 0.0, 1.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024434]
+epoch 8, data-14 : loss = 1.280542, time = 38.5 [s].
+	policy loss : 1.269275
+	value loss  : 0.563333
+[datetime: 20240910_024513]
+cpu: 6.4% [4.8, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 4.0, 100.0, 0.0, 0.0, 1.0, 0.0]
+mem: 18.2%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024548]
+Test 8 : loss = 1.326055, time = 74.125582 [s].
+	policy loss : 1.314787
+	value loss  : 0.563432
+Epoch 8, learning rate has changed 0.001 -> 0.0001
+[datetime: 20240910_024615]
+cpu: 50.1% [0.0, 100.0, 100.0, 63.6, 1.0, 0.0, 0.0, 0.0, 100.0, 3.9, 1.0, 37.3, 100.0, 100.0, 100.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024631]
+epoch 9, data-0 : loss = 1.293027, time = 38.3 [s].
+	policy loss : 1.281435
+	value loss  : 0.579600
+[datetime: 20240910_024714]
+epoch 9, data-1 : loss = 1.296211, time = 38.9 [s].
+	policy loss : 1.284926
+	value loss  : 0.564283
+[datetime: 20240910_024717]
+cpu: 21.6% [100.0, 100.0, 100.0, 46.0, 100.0, 54.9, 100.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 100.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024757]
+epoch 9, data-2 : loss = 1.306563, time = 38.9 [s].
+	policy loss : 1.295392
+	value loss  : 0.558572
+[datetime: 20240910_024820]
+cpu: 50.0% [51.0, 50.0, 99.0, 99.0, 58.0, 100.0, 0.0, 0.0, 3.0, 99.0, 0.0, 3.0, 42.6, 1.0, 99.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024841]
+epoch 9, data-3 : loss = 1.300742, time = 39.5 [s].
+	policy loss : 1.289582
+	value loss  : 0.558003
+[datetime: 20240910_024922]
+cpu: 50.2% [45.9, 46.5, 100.0, 99.0, 2.0, 7.1, 1.0, 0.0, 1.0, 100.0, 2.0, 1.0, 99.0, 99.0, 99.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_024924]
+epoch 9, data-4 : loss = 1.293825, time = 39.6 [s].
+	policy loss : 1.282893
+	value loss  : 0.546586
+[datetime: 20240910_025008]
+epoch 9, data-5 : loss = 1.285663, time = 39.1 [s].
+	policy loss : 1.274674
+	value loss  : 0.549428
+[datetime: 20240910_025024]
+cpu: 49.9% [2.0, 100.0, 2.0, 99.0, 100.0, 100.0, 99.0, 52.5, 99.0, 48.5, 99.0, 0.0, 0.0, 2.0, 1.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025051]
+epoch 9, data-6 : loss = 1.252592, time = 39.2 [s].
+	policy loss : 1.241458
+	value loss  : 0.556715
+[datetime: 20240910_025126]
+cpu: 50.1% [1.0, 84.8, 40.0, 99.0, 99.0, 99.0, 31.0, 98.0, 99.0, 16.0, 25.3, 3.0, 4.0, 1.0, 100.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025134]
+epoch 9, data-7 : loss = 1.256903, time = 38.4 [s].
+	policy loss : 1.245581
+	value loss  : 0.566089
+[datetime: 20240910_025217]
+epoch 9, data-8 : loss = 1.253776, time = 39.0 [s].
+	policy loss : 1.242385
+	value loss  : 0.569549
+[datetime: 20240910_025228]
+cpu: 50.1% [48.5, 100.0, 100.0, 53.9, 100.0, 100.0, 8.0, 0.0, 1.0, 12.1, 14.0, 100.0, 15.0, 14.0, 100.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025300]
+epoch 9, data-9 : loss = 1.262520, time = 39.4 [s].
+	policy loss : 1.251285
+	value loss  : 0.561728
+[datetime: 20240910_025330]
+cpu: 50.2% [25.0, 100.0, 99.0, 46.0, 99.0, 100.0, 2.0, 1.0, 31.3, 5.0, 0.0, 100.0, 1.0, 2.0, 100.0, 100.0]
+mem: 13.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025333]
+epoch 9, data-10 : loss = 1.261551, time = 29.6 [s].
+	policy loss : 1.250130
+	value loss  : 0.571043
+[datetime: 20240910_025417]
+epoch 9, data-11 : loss = 1.294330, time = 39.3 [s].
+	policy loss : 1.282860
+	value loss  : 0.573461
+[datetime: 20240910_025433]
+cpu: 50.5% [15.5, 100.0, 100.0, 40.0, 100.0, 100.0, 0.0, 0.0, 60.0, 3.0, 1.0, 100.0, 0.0, 0.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025500]
+epoch 9, data-12 : loss = 1.268412, time = 38.9 [s].
+	policy loss : 1.257389
+	value loss  : 0.551183
+[datetime: 20240910_025535]
+cpu: 50.1% [100.0, 48.5, 100.0, 51.5, 0.0, 100.0, 100.0, 1.0, 2.9, 2.0, 0.0, 100.0, 100.0, 2.0, 1.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025543]
+epoch 9, data-13 : loss = 1.244227, time = 39.2 [s].
+	policy loss : 1.232948
+	value loss  : 0.563941
+[datetime: 20240910_025626]
+epoch 9, data-14 : loss = 1.251042, time = 38.7 [s].
+	policy loss : 1.239846
+	value loss  : 0.559806
+[datetime: 20240910_025637]
+cpu: 50.3% [100.0, 100.0, 100.0, 22.9, 1.0, 1.0, 100.0, 3.0, 3.0, 2.0, 0.0, 84.0, 100.0, 100.0, 1.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025739]
+[datetime: 20240910_025740]
+Test 9 : loss = 1.309645, time = 74.175009 [s].
+	policy loss : 1.298487
+	value loss  : 0.557886
+cpu: 50.3% [10.8, 2.0, 8.0, 93.0, 2.9, 8.0, 8.0, 8.0, 8.1, 8.0, 0.0, 0.0, 8.1, 1.0, 0.0, 3.0]
+mem: 15.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 32 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025823]
+epoch 10, data-0 : loss = 1.281504, time = 38.9 [s].
+	policy loss : 1.269963
+	value loss  : 0.577045
+[datetime: 20240910_025841]
+cpu: 50.0% [2.9, 100.0, 100.0, 100.0, 88.0, 99.0, 15.0, 38.0, 99.0, 37.6, 3.0, 1.0, 2.0, 1.0, 99.0, 23.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025906]
+epoch 10, data-1 : loss = 1.287627, time = 38.5 [s].
+	policy loss : 1.276380
+	value loss  : 0.562342
+[datetime: 20240910_025943]
+cpu: 50.1% [100.0, 51.0, 100.0, 50.0, 100.0, 100.0, 1.0, 0.0, 1.0, 1.0, 0.0, 100.0, 0.0, 1.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_025949]
+epoch 10, data-2 : loss = 1.299751, time = 39.4 [s].
+	policy loss : 1.288608
+	value loss  : 0.557120
+[datetime: 20240910_030033]
+epoch 10, data-3 : loss = 1.294626, time = 39.0 [s].
+	policy loss : 1.283493
+	value loss  : 0.556645
+[datetime: 20240910_030046]
+cpu: 50.1% [38.8, 100.0, 1.0, 100.0, 2.0, 100.0, 3.0, 1.0, 63.0, 2.0, 100.0, 0.0, 100.0, 0.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030116]
+epoch 10, data-4 : loss = 1.288472, time = 39.2 [s].
+	policy loss : 1.277558
+	value loss  : 0.545713
+[datetime: 20240910_030148]
+cpu: 50.0% [2.0, 100.0, 45.9, 48.5, 6.0, 99.0, 0.0, 0.0, 100.0, 0.0, 2.0, 100.0, 99.0, 2.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030159]
+epoch 10, data-5 : loss = 1.280984, time = 38.9 [s].
+	policy loss : 1.270017
+	value loss  : 0.548326
+[datetime: 20240910_030242]
+epoch 10, data-6 : loss = 1.248209, time = 38.5 [s].
+	policy loss : 1.237092
+	value loss  : 0.555852
+[datetime: 20240910_030250]
+cpu: 50.1% [1.0, 100.0, 36.4, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 64.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030324]
+epoch 10, data-7 : loss = 1.253189, time = 37.9 [s].
+	policy loss : 1.241884
+	value loss  : 0.565220
+[datetime: 20240910_030352]
+cpu: 49.9% [0.0, 100.0, 99.0, 100.0, 99.0, 100.0, 100.0, 41.4, 99.0, 58.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030407]
+epoch 10, data-8 : loss = 1.250427, time = 39.3 [s].
+	policy loss : 1.239048
+	value loss  : 0.568958
+[datetime: 20240910_030450]
+epoch 10, data-9 : loss = 1.259657, time = 38.5 [s].
+	policy loss : 1.248434
+	value loss  : 0.561151
+[datetime: 20240910_030454]
+cpu: 50.6% [18.2, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 60.4, 1.0, 100.0, 1.0, 40.0, 0.0, 0.0, 0.0]
+mem: 13.7%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030523]
+epoch 10, data-10 : loss = 1.259039, time = 29.4 [s].
+	policy loss : 1.247628
+	value loss  : 0.570546
+[datetime: 20240910_030557]
+cpu: 50.5% [9.2, 100.0, 40.6, 100.0, 100.0, 100.0, 100.0, 100.0, 60.0, 0.0, 100.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030606]
+epoch 10, data-11 : loss = 1.292617, time = 38.8 [s].
+	policy loss : 1.281159
+	value loss  : 0.572864
+[datetime: 20240910_030649]
+epoch 10, data-12 : loss = 1.267336, time = 38.9 [s].
+	policy loss : 1.256321
+	value loss  : 0.550719
+[datetime: 20240910_030659]
+cpu: 50.2% [3.0, 39.0, 45.5, 100.0, 13.0, 99.0, 100.0, 100.0, 100.0, 1.0, 100.0, 0.0, 100.0, 0.0, 1.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030731]
+epoch 10, data-13 : loss = 1.244444, time = 38.2 [s].
+	policy loss : 1.233168
+	value loss  : 0.563828
+[datetime: 20240910_030801]
+cpu: 50.1% [100.0, 100.0, 100.0, 100.0, 42.0, 57.8, 1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030814]
+epoch 10, data-14 : loss = 1.253359, time = 38.8 [s].
+	policy loss : 1.242164
+	value loss  : 0.559720
+[datetime: 20240910_030903]
+cpu: 50.1% [0.0, 100.0, 100.0, 100.0, 0.0, 100.0, 1.0, 100.0, 100.0, 0.0, 0.0, 1.0, 100.0, 0.0, 100.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_030928]
+Test 10 : loss = 1.308087, time = 74.008665 [s].
+	policy loss : 1.296917
+	value loss  : 0.558500
+Epoch 10, learning rate has changed 0.0001 -> 1e-05
+[datetime: 20240910_031005]
+cpu: 50.1% [2.0, 0.0, 100.0, 0.0, 0.0, 44.9, 49.0, 5.9, 100.0, 99.0, 2.0, 100.0, 100.0, 0.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031011]
+epoch 11, data-0 : loss = 1.281601, time = 39.1 [s].
+	policy loss : 1.270066
+	value loss  : 0.576753
+[datetime: 20240910_031055]
+epoch 11, data-1 : loss = 1.287483, time = 39.2 [s].
+	policy loss : 1.276239
+	value loss  : 0.562180
+[datetime: 20240910_031107]
+cpu: 50.1% [2.0, 0.0, 100.0, 100.0, 0.0, 100.0, 100.0, 47.5, 100.0, 100.0, 45.1, 7.0, 100.0, 1.0, 0.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031137]
+epoch 11, data-2 : loss = 1.299573, time = 38.3 [s].
+	policy loss : 1.288429
+	value loss  : 0.557185
+[datetime: 20240910_031209]
+cpu: 50.1% [0.0, 99.0, 47.5, 100.0, 100.0, 52.5, 99.0, 0.0, 100.0, 0.0, 1.0, 1.0, 0.0, 100.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031220]
+epoch 11, data-3 : loss = 1.294304, time = 39.1 [s].
+	policy loss : 1.283170
+	value loss  : 0.556683
+[datetime: 20240910_031304]
+epoch 11, data-4 : loss = 1.288226, time = 39.4 [s].
+	policy loss : 1.277316
+	value loss  : 0.545483
+[datetime: 20240910_031312]
+cpu: 49.4% [1.0, 100.0, 47.5, 99.0, 99.0, 99.0, 52.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031347]
+epoch 11, data-5 : loss = 1.280582, time = 39.0 [s].
+	policy loss : 1.269600
+	value loss  : 0.549096
+[datetime: 20240910_031414]
+cpu: 50.1% [1.0, 1.0, 100.0, 100.0, 100.0, 48.0, 51.5, 0.0, 100.0, 99.0, 1.0, 0.0, 0.0, 1.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031430]
+epoch 11, data-6 : loss = 1.248069, time = 38.9 [s].
+	policy loss : 1.236955
+	value loss  : 0.555718
+[datetime: 20240910_031513]
+epoch 11, data-7 : loss = 1.252595, time = 39.0 [s].
+	policy loss : 1.241300
+	value loss  : 0.564717
+[datetime: 20240910_031516]
+cpu: 6.4% [0.0, 44.4, 45.0, 45.5, 1.0, 76.8, 23.5, 1.0, 44.4, 0.0, 0.0, 0.0, 44.4, 0.0, 45.5, 45.5]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 22 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031557]
+epoch 11, data-8 : loss = 1.248884, time = 39.5 [s].
+	policy loss : 1.237509
+	value loss  : 0.568758
+[datetime: 20240910_031618]
+cpu: 49.9% [0.0, 100.0, 99.0, 99.0, 0.0, 100.0, 100.0, 44.9, 100.0, 52.4, 0.0, 2.0, 99.0, 0.0, 1.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031641]
+epoch 11, data-9 : loss = 1.258046, time = 39.3 [s].
+	policy loss : 1.246827
+	value loss  : 0.560970
+[datetime: 20240910_031713]
+epoch 11, data-10 : loss = 1.258026, time = 29.7 [s].
+	policy loss : 1.246622
+	value loss  : 0.570192
+[datetime: 20240910_031720]
+cpu: 50.0% [0.0, 1.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 60.0, 39.6, 1.0, 0.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031756]
+epoch 11, data-11 : loss = 1.290086, time = 38.2 [s].
+	policy loss : 1.278633
+	value loss  : 0.572666
+[datetime: 20240910_031823]
+cpu: 50.4% [62.0, 38.0, 55.0, 100.0, 100.0, 7.9, 100.0, 0.0, 38.0, 1.0, 100.0, 0.0, 0.0, 100.0, 1.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_031839]
+epoch 11, data-12 : loss = 1.263931, time = 38.7 [s].
+	policy loss : 1.252924
+	value loss  : 0.550333
+[datetime: 20240910_031922]
+epoch 11, data-13 : loss = 1.240959, time = 39.1 [s].
+	policy loss : 1.229701
+	value loss  : 0.562917
+[datetime: 20240910_031925]
+cpu: 6.3% [1.0, 45.5, 46.0, 45.5, 45.5, 0.0, 45.5, 0.0, 46.0, 18.0, 0.0, 0.0, 0.0, 45.5, 1.0, 82.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 21 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032005]
+epoch 11, data-14 : loss = 1.248491, time = 39.2 [s].
+	policy loss : 1.237301
+	value loss  : 0.559487
+[datetime: 20240910_032027]
+cpu: 6.3% [2.9, 100.0, 71.3, 71.0, 71.0, 71.0, 0.0, 0.0, 71.0, 0.0, 0.0, 0.0, 1.0, 0.0, 71.0, 71.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 49 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032120]
+Test 11 : loss = 1.305418, time = 74.397438 [s].
+	policy loss : 1.294278
+	value loss  : 0.556976
+[datetime: 20240910_032129]
+cpu: 50.0% [0.0, 1.0, 100.0, 0.0, 100.0, 100.0, 1.0, 100.0, 100.0, 60.0, 39.6, 100.0, 0.0, 2.0, 100.0, 0.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 57 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032202]
+epoch 12, data-0 : loss = 1.279104, time = 38.1 [s].
+	policy loss : 1.267573
+	value loss  : 0.576534
+[datetime: 20240910_032231]
+cpu: 50.0% [2.0, 100.0, 100.0, 0.0, 100.0, 46.0, 100.0, 100.0, 100.0, 54.0, 1.0, 100.0, 0.0, 0.0, 0.0, 0.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032245]
+epoch 12, data-1 : loss = 1.285832, time = 39.1 [s].
+	policy loss : 1.274588
+	value loss  : 0.562180
+[datetime: 20240910_032328]
+epoch 12, data-2 : loss = 1.298220, time = 38.8 [s].
+	policy loss : 1.287078
+	value loss  : 0.557106
+[datetime: 20240910_032333]
+cpu: 50.0% [1.0, 48.5, 51.5, 1.0, 100.0, 100.0, 100.0, 0.0, 100.0, 0.0, 100.0, 100.0, 0.0, 0.0, 1.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032412]
+epoch 12, data-3 : loss = 1.293021, time = 39.3 [s].
+	policy loss : 1.281891
+	value loss  : 0.556522
+[datetime: 20240910_032436]
+cpu: 50.2% [0.0, 51.0, 49.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 100.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032455]
+epoch 12, data-4 : loss = 1.286863, time = 39.2 [s].
+	policy loss : 1.275952
+	value loss  : 0.545507
+[datetime: 20240910_032538]
+[datetime: 20240910_032538]
+epoch 12, data-5 : loss = 1.279553, time = 38.9 [s].
+	policy loss : 1.268572
+	value loss  : 0.549040
+cpu: 24.4% [4.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 1.0]
+mem: 16.2%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032620]
+epoch 12, data-6 : loss = 1.246903, time = 37.7 [s].
+	policy loss : 1.235789
+	value loss  : 0.555701
+[datetime: 20240910_032640]
+cpu: 49.8% [1.0, 99.0, 66.3, 0.0, 0.0, 46.0, 54.0, 100.0, 99.0, 0.0, 33.0, 99.0, 100.0, 2.0, 100.0, 1.0]
+mem: 14.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032702]
+epoch 12, data-7 : loss = 1.251743, time = 37.9 [s].
+	policy loss : 1.240450
+	value loss  : 0.564625
+[datetime: 20240910_032742]
+cpu: 50.1% [1.0, 100.0, 46.4, 53.4, 1.0, 100.0, 100.0, 100.0, 100.0, 0.0, 0.0, 100.0, 100.0, 0.0, 0.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032745]
+epoch 12, data-8 : loss = 1.248091, time = 38.4 [s].
+	policy loss : 1.236719
+	value loss  : 0.568617
+[datetime: 20240910_032827]
+epoch 12, data-9 : loss = 1.257531, time = 38.4 [s].
+	policy loss : 1.246315
+	value loss  : 0.560788
+[datetime: 20240910_032844]
+cpu: 50.1% [100.0, 100.0, 49.0, 51.0, 1.0, 0.0, 100.0, 1.0, 1.0, 0.0, 0.0, 100.0, 100.0, 100.0, 0.0, 100.0]
+mem: 13.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_032900]
+epoch 12, data-10 : loss = 1.257493, time = 29.5 [s].
+	policy loss : 1.246092
+	value loss  : 0.570055
+[datetime: 20240910_032943]
+epoch 12, data-11 : loss = 1.290074, time = 38.8 [s].
+	policy loss : 1.278622
+	value loss  : 0.572593
+[datetime: 20240910_032946]
+cpu: 23.2% [0.0, 100.0, 100.0, 100.0, 46.4, 52.4, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 56 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033026]
+epoch 12, data-12 : loss = 1.264074, time = 39.0 [s].
+	policy loss : 1.253070
+	value loss  : 0.550208
+[datetime: 20240910_033049]
+cpu: 49.9% [2.0, 99.0, 0.0, 100.0, 100.0, 47.0, 53.0, 1.0, 100.0, 0.0, 100.0, 0.0, 0.0, 0.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033109]
+epoch 12, data-13 : loss = 1.241398, time = 39.0 [s].
+	policy loss : 1.230142
+	value loss  : 0.562832
+[datetime: 20240910_033151]
+[datetime: 20240910_033151]
+epoch 12, data-14 : loss = 1.249541, time = 37.8 [s].
+	policy loss : 1.238351
+	value loss  : 0.559544
+cpu: 13.1% [0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0]
+mem: 16.4%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033253]
+cpu: 50.2% [1.0, 100.0, 100.0, 23.0, 0.0, 0.0, 100.0, 100.0, 100.0, 1.0, 1.0, 78.0, 100.0, 100.0, 1.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033305]
+Test 12 : loss = 1.305203, time = 74.104600 [s].
+	policy loss : 1.294063
+	value loss  : 0.557001
+[datetime: 20240910_033347]
+epoch 13, data-0 : loss = 1.278722, time = 37.8 [s].
+	policy loss : 1.267192
+	value loss  : 0.576497
+[datetime: 20240910_033355]
+cpu: 50.1% [1.0, 88.9, 100.0, 1.0, 0.0, 36.0, 100.0, 100.0, 100.0, 12.0, 0.0, 100.0, 100.0, 64.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 57 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033430]
+epoch 13, data-1 : loss = 1.285116, time = 38.9 [s].
+	policy loss : 1.273873
+	value loss  : 0.562155
+[datetime: 20240910_033457]
+cpu: 49.7% [100.0, 99.0, 99.0, 99.0, 99.0, 99.0, 99.0, 44.4, 54.9, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033514]
+epoch 13, data-2 : loss = 1.297564, time = 39.8 [s].
+	policy loss : 1.286425
+	value loss  : 0.556973
+[datetime: 20240910_033558]
+epoch 13, data-3 : loss = 1.292439, time = 39.5 [s].
+	policy loss : 1.281311
+	value loss  : 0.556411
+[datetime: 20240910_033600]
+cpu: 6.4% [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+mem: 18.1%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 0 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033641]
+epoch 13, data-4 : loss = 1.286348, time = 38.5 [s].
+	policy loss : 1.275442
+	value loss  : 0.545269
+[datetime: 20240910_033702]
+cpu: 50.2% [12.3, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 1.0, 59.6, 0.0, 0.0, 0.0, 0.0, 40.6, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033724]
+epoch 13, data-5 : loss = 1.278845, time = 39.0 [s].
+	policy loss : 1.267868
+	value loss  : 0.548858
+[datetime: 20240910_033804]
+cpu: 50.0% [63.0, 100.0, 100.0, 100.0, 1.0, 100.0, 1.0, 100.0, 38.0, 0.0, 0.0, 0.0, 100.0, 0.0, 100.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033808]
+epoch 13, data-6 : loss = 1.246600, time = 39.9 [s].
+	policy loss : 1.235488
+	value loss  : 0.555611
+[datetime: 20240910_033851]
+epoch 13, data-7 : loss = 1.251332, time = 38.8 [s].
+	policy loss : 1.240039
+	value loss  : 0.564641
+[datetime: 20240910_033906]
+cpu: 50.2% [99.0, 100.0, 100.0, 0.0, 41.4, 100.0, 0.0, 100.0, 0.0, 1.0, 1.0, 99.0, 38.6, 20.0, 99.0, 1.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_033933]
+epoch 13, data-8 : loss = 1.247819, time = 38.1 [s].
+	policy loss : 1.236446
+	value loss  : 0.568691
+[datetime: 20240910_034008]
+cpu: 50.1% [1.0, 100.0, 100.0, 100.0, 47.0, 53.0, 1.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034016]
+epoch 13, data-9 : loss = 1.257061, time = 38.7 [s].
+	policy loss : 1.245843
+	value loss  : 0.560905
+[datetime: 20240910_034048]
+epoch 13, data-10 : loss = 1.257226, time = 29.4 [s].
+	policy loss : 1.245827
+	value loss  : 0.569938
+[datetime: 20240910_034110]
+cpu: 50.0% [0.0, 100.0, 100.0, 100.0, 99.0, 99.0, 1.0, 49.5, 100.0, 44.2, 7.0, 2.0, 1.0, 0.0, 100.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034132]
+epoch 13, data-11 : loss = 1.289941, time = 39.4 [s].
+	policy loss : 1.278493
+	value loss  : 0.572379
+[datetime: 20240910_034213]
+cpu: 49.9% [100.0, 100.0, 100.0, 99.0, 0.0, 99.0, 100.0, 45.5, 54.5, 0.0, 0.0, 0.0, 99.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034216]
+epoch 13, data-12 : loss = 1.263906, time = 39.7 [s].
+	policy loss : 1.252902
+	value loss  : 0.550198
+[datetime: 20240910_034259]
+epoch 13, data-13 : loss = 1.241544, time = 39.5 [s].
+	policy loss : 1.230289
+	value loss  : 0.562770
+[datetime: 20240910_034315]
+cpu: 50.2% [0.0, 1.0, 100.0, 100.0, 0.0, 100.0, 100.0, 48.0, 100.0, 100.0, 52.0, 0.0, 100.0, 0.0, 1.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034343]
+epoch 13, data-14 : loss = 1.250068, time = 39.5 [s].
+	policy loss : 1.238876
+	value loss  : 0.559571
+[datetime: 20240910_034417]
+cpu: 50.2% [0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034457]
+Test 13 : loss = 1.305104, time = 74.401214 [s].
+	policy loss : 1.293963
+	value loss  : 0.557056
+[datetime: 20240910_034519]
+cpu: 50.2% [0.0, 100.0, 0.0, 100.0, 100.0, 0.0, 100.0, 36.4, 100.0, 0.0, 100.0, 1.0, 0.0, 100.0, 0.0, 63.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034541]
+epoch 14, data-0 : loss = 1.278215, time = 39.1 [s].
+	policy loss : 1.266687
+	value loss  : 0.576439
+[datetime: 20240910_034621]
+cpu: 50.1% [0.0, 2.0, 100.0, 100.0, 100.0, 0.0, 100.0, 0.0, 100.0, 59.6, 1.0, 40.6, 0.0, 100.0, 1.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034624]
+epoch 14, data-1 : loss = 1.284831, time = 38.8 [s].
+	policy loss : 1.273590
+	value loss  : 0.562026
+[datetime: 20240910_034706]
+epoch 14, data-2 : loss = 1.297174, time = 38.3 [s].
+	policy loss : 1.286033
+	value loss  : 0.557079
+[datetime: 20240910_034723]
+cpu: 50.1% [1.0, 63.4, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 36.7, 1.0, 0.0, 0.0, 0.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034749]
+epoch 14, data-3 : loss = 1.291897, time = 38.3 [s].
+	policy loss : 1.280773
+	value loss  : 0.556193
+[datetime: 20240910_034826]
+cpu: 50.1% [0.0, 48.0, 100.0, 99.0, 52.5, 100.0, 100.0, 0.0, 100.0, 0.0, 0.0, 1.0, 100.0, 2.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034831]
+epoch 14, data-4 : loss = 1.285957, time = 38.5 [s].
+	policy loss : 1.275052
+	value loss  : 0.545235
+[datetime: 20240910_034915]
+epoch 14, data-5 : loss = 1.278482, time = 39.0 [s].
+	policy loss : 1.267510
+	value loss  : 0.548634
+[datetime: 20240910_034928]
+cpu: 50.0% [0.0, 47.5, 100.0, 49.0, 4.0, 100.0, 100.0, 0.0, 100.0, 0.0, 0.0, 100.0, 100.0, 1.0, 0.0, 100.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_034958]
+epoch 14, data-6 : loss = 1.246065, time = 38.9 [s].
+	policy loss : 1.234956
+	value loss  : 0.555442
+[datetime: 20240910_035030]
+cpu: 50.1% [42.4, 44.1, 100.0, 8.9, 8.0, 100.0, 99.0, 0.0, 0.0, 100.0, 1.0, 100.0, 100.0, 0.0, 0.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 53 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_035041]
+epoch 14, data-7 : loss = 1.250965, time = 39.5 [s].
+	policy loss : 1.239672
+	value loss  : 0.564621
+[datetime: 20240910_035125]
+epoch 14, data-8 : loss = 1.247589, time = 39.2 [s].
+	policy loss : 1.236215
+	value loss  : 0.568673
+[datetime: 20240910_035132]
+cpu: 49.6% [100.0, 0.0, 99.0, 0.0, 48.0, 99.0, 51.5, 0.0, 0.0, 99.0, 1.0, 100.0, 0.0, 0.0, 100.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 55 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_035208]
+epoch 14, data-9 : loss = 1.256849, time = 39.1 [s].
+	policy loss : 1.245633
+	value loss  : 0.560783
+[datetime: 20240910_035234]
+cpu: 49.7% [99.0, 0.0, 100.0, 0.0, 99.0, 100.0, 48.0, 52.0, 0.0, 100.0, 0.0, 100.0, 1.0, 2.0, 0.0, 100.0]
+mem: 13.6%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_035241]
+epoch 14, data-10 : loss = 1.256989, time = 30.0 [s].
+	policy loss : 1.245590
+	value loss  : 0.569962
+[datetime: 20240910_035325]
+epoch 14, data-11 : loss = 1.289849, time = 39.3 [s].
+	policy loss : 1.278400
+	value loss  : 0.572452
+[datetime: 20240910_035336]
+cpu: 49.9% [100.0, 100.0, 47.0, 44.4, 100.0, 100.0, 100.0, 100.0, 1.0, 0.0, 0.0, 100.0, 8.0, 1.0, 1.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_035408]
+epoch 14, data-12 : loss = 1.264072, time = 38.9 [s].
+	policy loss : 1.253069
+	value loss  : 0.550139
+[datetime: 20240910_035439]
+cpu: 49.5% [2.0, 99.0, 99.0, 99.0, 99.0, 49.0, 99.0, 41.2, 99.0, 11.0, 0.0, 0.0, 0.0, 0.0, 0.0, 99.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 54 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_035451]
+epoch 14, data-13 : loss = 1.241756, time = 39.0 [s].
+	policy loss : 1.230498
+	value loss  : 0.562907
+[datetime: 20240910_035534]
+epoch 14, data-14 : loss = 1.250320, time = 39.2 [s].
+	policy loss : 1.239129
+	value loss  : 0.559532
+[datetime: 20240910_035541]
+cpu: 50.1% [2.0, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_035643]
+cpu: 50.1% [0.0, 1.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+mem: 14.5%
+name, index, utilization.gpu [%], memory.used [MiB]
+TITAN RTX, 0, 92 %, 1310 MiB
+TITAN RTX, 1, 0 %, 9 MiB
+
+[datetime: 20240910_035649]
+Test 14 : loss = 1.304864, time = 74.449496 [s].
+	policy loss : 1.293730
+	value loss  : 0.556724

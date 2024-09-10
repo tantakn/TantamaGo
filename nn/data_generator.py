@@ -62,6 +62,7 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_siz
         sgf = SGFReader(kifu_path, board_size)
         color = Stone.BLACK
         value_label = sgf.get_value_label()
+        """勝ち負け"""
 
         for pos in sgf.get_moves():
             # 対称形でかさ増し
