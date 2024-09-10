@@ -1,0 +1,42 @@
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz']
+Testing data set  : ['data/sl_data_4.npz', 'data/sl_data_5.npz']
+[datetime: 20240910_123641]
+epoch 0, data-0 : loss = 2.212137, time = 39.6 [s].
+	policy loss : 2.198021
+	value loss  : 0.705823
+[datetime: 20240910_123723]
+epoch 0, data-1 : loss = 1.791088, time = 38.5 [s].
+	policy loss : 1.777288
+	value loss  : 0.689980
+[datetime: 20240910_123806]
+epoch 0, data-2 : loss = 1.721857, time = 38.6 [s].
+	policy loss : 1.708264
+	value loss  : 0.679615
+[datetime: 20240910_123848]
+epoch 0, data-3 : loss = 1.657457, time = 37.8 [s].
+	policy loss : 1.644091
+	value loss  : 0.668268
+[datetime: 20240910_123925]
+Test 0 : loss = 1.640902, time = 36.995209 [s].
+	policy loss : 1.627554
+	value loss  : 0.667364
+[datetime: 20240910_124007]
+epoch 1, data-0 : loss = 1.613882, time = 38.0 [s].
+	policy loss : 1.600636
+	value loss  : 0.662283
+[datetime: 20240910_124050]
+epoch 1, data-1 : loss = 1.591332, time = 39.5 [s].
+	policy loss : 1.578228
+	value loss  : 0.655179
+[datetime: 20240910_124133]
+epoch 1, data-2 : loss = 1.588911, time = 38.7 [s].
+	policy loss : 1.575868
+	value loss  : 0.652158
+[datetime: 20240910_124216]
+epoch 1, data-3 : loss = 1.555685, time = 39.1 [s].
+	policy loss : 1.542832
+	value loss  : 0.642660
+[datetime: 20240910_124253]
+Test 1 : loss = 1.571281, time = 37.060079 [s].
+	policy loss : 1.558126
+	value loss  : 0.657735

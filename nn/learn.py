@@ -154,13 +154,15 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
     print("torch.cuda.current_device: ", torch.cuda.current_device())#############
     print("torch.cuda.device_count: ", torch.cuda.device_count())
     print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
-    print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
+    if torch.cuda.device_count() > 1:##########
+        print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
     print("torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
-    print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
+    if torch.cuda.device_count() > 1:##########
+        print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
     print("torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
 
-    if torch.cuda.device_count() > 1:##########
-        dual_net = torch.nn.DataParallel(dual_net)
+    # if torch.cuda.device_count() > 1:##########ここTrueで作ったので対局しようとするとFailed to load model/sl-model_2024のエラー出る
+    #     dual_net = torch.nn.DataParallel(dual_net)
 
     optimizer = torch.optim.SGD(dual_net.parameters(),
                                 lr=SL_LEARNING_RATE,
@@ -193,11 +195,11 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
-                    if torch.cuda.device_count() > 1:##########
-                        policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
-                    else:
-                        policy_predict, value_predict = dual_net.forward_for_sl(plane)
-                    # policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    # if torch.cuda.device_count() > 1:##########ここTrueで作ったので対局しようとするとFailed to load model/sl-model_2024のエラー出る
+                    #     policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                    # else:
+                    #     policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    policy_predict, value_predict = dual_net.forward_for_sl(plane)
 
                     dual_net.zero_grad()
 
