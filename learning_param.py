@@ -16,7 +16,7 @@ MOMENTUM=0.9
 # L2正則化の重み
 WEIGHT_DECAY = 1e-4
 
-EPOCHS = 2
+EPOCHS = 15
 
 # 学習率を変更するエポック数と変更後の学習率
 LEARNING_SCHEDULE = { # default

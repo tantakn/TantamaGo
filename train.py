@@ -47,9 +47,11 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     # 学習データの指定がある場合はデータを生成する
     if kifu_dir is not None:
         if rl:
-            kifu_index_list = [int(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join(kifu_dir, "*"))]
+            kifu_index_list: list[int] = [int(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join(kifu_dir, "*"))]
+            """archive/数字/の数字部分を取得してリストに格納する。"""
             num_kifu = 0
-            kifu_dir_list = []
+            kifu_dir_list: list[str] = []
+            """棋譜のパスのリスト。"""
             for index in sorted(kifu_index_list, reverse=True):
                 kifu_dir_path = os.path.join(kifu_dir, str(index))
                 num_kifu += len(glob.glob(os.path.join(kifu_dir_path, "*.sgf")))
