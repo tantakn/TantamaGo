@@ -10,26 +10,8 @@ from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_
 from nn.data_generator import generate_supervised_learning_data, \
     generate_reinforcement_learning_data
 
-import threading, time, datetime, psutil, subprocess########
-
-
-def display_train_monitoring_worker(use_gpu: bool) -> None:###########
-    """ハードの使用率を表示する。
-
-    Args:
-        use_gpu (bool): GPU使用フラグ。
-    """
-    start_time = time.time()
-    while True:
-        time.sleep(60)
-
-        print(f"monitoring [datetime: {datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
-        print(f"cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
-        print(f"mem: {psutil.virtual_memory().percent}%")
-
-        if use_gpu:
-            result_subprocess = subprocess.run(['nvidia-smi --query-gpu=name,index,utilization.gpu,memory.used,power.draw --format=csv'], capture_output=True, text=True, shell=True)
-            print(result_subprocess.stdout)
+import threading, time, datetime
+from monitoring import display_train_monitoring_worker
 
 
 
