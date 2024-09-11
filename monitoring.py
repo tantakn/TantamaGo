@@ -10,14 +10,45 @@ def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True) -> None:
         repeat (bool): 繰り返し表示フラグ。
     """
 
+    def fire(percentage: float) -> str:
+        if percentage > 99:
+            return "🔥🔥🔥"
+        elif percentage > 50:
+            return "🔥🔥"
+        elif percentage > 10:
+            return "🔥"
+        else:
+            return ""
+    
+    def gpu_fire(text: str) -> str:
+            mem = float(text.split(" %, ")[1].split(" MiB, ")[0])
+            return "🔥" if mem > 30 else ""
+
     def disp(waittime: float) -> None:
-        print(f"monitoring [datetime: {datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
-        print(f"cpu: {psutil.cpu_percent(interval=waittime)}% {psutil.cpu_percent(interval=1, percpu=True)}")
-        print(f"mem: {psutil.virtual_memory().percent}%")
+        text = ""
+
+        text += f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] monitoring"
+
+        cpu_use = psutil.cpu_percent(interval=waittime)
+        text += f"\ncpu: {cpu_use}% {psutil.cpu_percent(interval=waittime, percpu=True)} {fire(cpu_use)}"
+
+        mem_use = psutil.virtual_memory().percent
+        text += f"\nmem: {mem_use}% {fire(mem_use)}"
 
         if use_gpu:
             result_subprocess = subprocess.run(['nvidia-smi --query-gpu=name,index,utilization.gpu,memory.used,power.draw --format=csv'], capture_output=True, text=True, shell=True)
-            print(result_subprocess.stdout)
+
+            gpu_text = result_subprocess.stdout
+            gpu_text = gpu_text.split(", power.draw [W]\n")[1]
+            gpu_text0 = gpu_text.split("\n")[0]
+            gpu_text1 = gpu_text.split("\n")[1]
+
+            text += f"\n{gpu_text0} {gpu_fire(gpu_text0)}"
+            text += f"\n{gpu_text1} {gpu_fire(gpu_text1)}"
+
+        print(text)
+
+
 
     start_time = time.time()
 
