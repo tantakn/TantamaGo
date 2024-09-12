@@ -154,8 +154,9 @@ def load_network(model_file_path: str, use_gpu: bool) -> DualNet:
     network.to(device)
     try:
         network.load_state_dict(torch.load(model_file_path))
-    except: # pylint: disable=W0702
-        print(f"Failed to load {model_file_path}.")
+    except Exception as e: # pylint: disable=W0702
+        print(f"Failed to load_network {model_file_path}.")
+        raise("Failed to load_network.")
     network.eval()
     torch.set_grad_enabled(False)
 
@@ -179,8 +180,9 @@ def load_DualNet_128_12(model_file_path: str, use_gpu: bool) -> DualNet_128_12:
     network.to(device)
     try:
         network.load_state_dict(torch.load(model_file_path))
-    except: # pylint: disable=W0702
-        print(f"Failed to load {model_file_path}.")
+    except Exception as e: # pylint: disable=W0702
+        print(f"Failed to load_DualNet_128_12 {model_file_path}.")
+        raise("Failed to load_DualNet_128_12.")
     network.eval()
     torch.set_grad_enabled(False)
 

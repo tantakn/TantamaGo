@@ -67,8 +67,7 @@ def generate_target_data(board:GoBoard, target_pos: int, sym: int=0) -> np.ndarr
     Returns:
         np.ndarray: Policyのターゲットラベル。
     """
-    target = [1 if target_pos == board.get_symmetrical_coordinate(pos, sym) else 0 \
-        for pos in board.onboard_pos]
+    target = [1 if target_pos == board.get_symmetrical_coordinate(pos, sym) else 0 for pos in board.onboard_pos]
     # パスだけ対称形から外れた末尾に挿入する。
     target.append(1 if target_pos == PASS else 0)
     #target_index = np.where(np.array(target) > 0)

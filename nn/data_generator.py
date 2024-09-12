@@ -57,6 +57,7 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_siz
     kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
     print(f"kifu_num: {kifu_num}")#############
 
+    # 局のループ
     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
         board.clear()
         # ここで勝敗とかも取得してる
@@ -65,6 +66,7 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_siz
         value_label = sgf.get_value_label()
         """勝ち負け"""
 
+        # 手のループ
         for pos in sgf.get_moves():
             # 対称形でかさ増し
             for sym in range(8):
