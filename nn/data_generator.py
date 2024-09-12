@@ -64,6 +64,7 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_siz
     kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
     print(f"kifu_num: {kifu_num}")#############
 
+    # 局のループ
 
     # 局のループ
     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):

@@ -11,6 +11,8 @@ import re, glob, click, datetime
 @click.option("--num", type=click.INT, default=-1, help="棋譜フォルダの中の数字")
 @click.option("--save", type=click.STRING, default="zzlog", help="結果のテキストを保存する場所")
 def main(path, num, save):
+    dt_start = datetime.datetime.now()
+
     if not os.path.isdir(save):
         print("error: 保存するディレクトリが存在しません")
         return
@@ -21,6 +23,7 @@ def main(path, num, save):
         for folder in folder_list:
             path_list += sorted(glob.glob(os.path.join("./", folder, "*.sgf")))
     elif num == -1:
+        # TODO: ゼロ埋めされていないから10以上でバグる
         folder = sorted(glob.glob(os.path.join("./", path, "*")))[-1]
         path_list = sorted(glob.glob(os.path.join("./", folder, "*.sgf")))
     else:
@@ -64,6 +67,7 @@ def main(path, num, save):
 
 
     text = f"""
+[{dt_start.strftime('%Y%m%d_%H%M%S')}] vs_result
 games: {len(result)}
 model1: {model1}
     win: ({result.count(1)} + 0.5*{result.count(0.5)})/{len(result)} ({result.count(1) / len(result) * 100:.2f}%)
@@ -74,7 +78,7 @@ model2: {model2}
     print(text)
 
 
-    with open(os.path.join("./", save, f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}_vs_result_{path}_{num}.txt"), mode="w") as f:
+    with open(os.path.join("./", save, f"{dt_start.strftime('%Y%m%d_%H%M%S')}_vs_result_{path}_{num}.txt"), mode="w") as f:
         f.write(text)
     # if num == -1:
     #     with open(os.path.join("./", save, f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}_vs_result.txt"), mode="w") as f:

@@ -28,6 +28,7 @@ class GoBoard: # pylint: disable=R0902
         """
         self.board_size = board_size
         self.board_size_with_ob = board_size + OB_SIZE * 2
+        """盤外を含めた碁盤の大きさ"""
         self.komi = komi
 
         def pos(x_coord: int, y_coord: int) -> int:
@@ -60,6 +61,7 @@ class GoBoard: # pylint: disable=R0902
                 pos + self.board_size_with_ob - 1, pos + self.board_size_with_ob + 1]
 
         self.board = [Stone.EMPTY] * (self.board_size_with_ob ** 2)
+        """碁盤本体"""
         self.pattern = Pattern(board_size, pos)
         self.strings = StringData(board_size, pos, get_neighbor4)
         self.record = Record()
@@ -75,8 +77,11 @@ class GoBoard: # pylint: disable=R0902
         self.sym_map = [[0 for i in range(self.board_size_with_ob ** 2)] for j in range(8)]
 
         self.POS = pos # pylint: disable=C0103
+        """メゾット。この書き方をする理由は謎"""
         self.get_neighbor4 = get_neighbor4
+        """メゾット。この書き方をする理由は謎"""
         self.get_cross4 = get_cross4
+        """メゾット。この書き方をする理由は謎"""
 
         idx = 0
         for y_coord in range(self.board_start, self.board_end + 1):

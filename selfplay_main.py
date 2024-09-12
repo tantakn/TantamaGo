@@ -28,11 +28,15 @@ import datetime
     help="GPU使用フラグ。デフォルトはTrue。")
 @click.option('--visits', type=click.IntRange(min=2), default=SELF_PLAY_VISITS, \
     help=f"自己対戦時の探索回数。デフォルトは{SELF_PLAY_VISITS}。")
-@click.option('--model', type=click.STRING, default=os.path.join("model", "rl-model_default.bin"), \
-    help="ニューラルネットワークのモデルファイルパス。デフォルトはmodelディレクトリ内のrl-model_default.bin。")
+@click.option('--model', type=click.STRING, default=os.path.join("model", "sl-model_default.bin"), \
+    help="ニューラルネットワークのモデルファイルパス。デフォルトはmodelディレクトリ内のsl-model_default.bin。")
 @click.option('--model2', type=click.STRING, default="None", \
     help="異なるモデルを対局させるときに指定する。")
-def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu: bool, visits: int, model: str, model2: str):
+@click.option('--net', 'network_name1', type=click.STRING, default="DualNet", \
+    help="--model のネットワーク。デフォルトは DualNet。")
+@click.option('--net2', 'network_name2', type=click.STRING, default="DualNet", \
+    help="--model2 のネットワーク。デフォルトは DualNet。")
+def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu: bool, visits: int, model: str, model2: str, network_name1: str, network_name2: str):
     """自己対戦を実行する。
 
     Args:
@@ -44,10 +48,17 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
         visits (int): 自己対戦実行時の探索回数。デフォルトはSELF_PLAY_VISITS。
         model (str): 使用するモデルファイルのパス。デフォルトはmodel/model.bin。
         model2 (str): 使用するモデルファイルのパス。デフォルトはNone。
+        network_name1 (str): 使用するニューラルネットワーク名。デフォルトはDualNet。
+        network_name2 (str): 使用するニューラルネットワーク名。デフォルトはDualNet。
     """
 
-    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu,), daemon=True);#########
-    monitoring_worker.start()###############
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu,), daemon=True);
+    monitoring_worker.start()
+
+    print("🐾model: ", model)#############
+    print("🐾model2: ", model2)###############
+    print("🐾network_name1: ", network_name1)###############
+    print("🐾network_name2: ", network_name2)###############
 
 
     file_index_list = list(range(1, num_data + 1))
@@ -70,12 +81,12 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
 
     print(f"Self play visits : {visits}")
 
-    if model == "None":
+    if model2 == "None":
         # テンプレ改造？ここでsgfを出力してないselfplay_workerでしてる？
         # submit(selfplay_worker,...（selfplay_workerの引数たち）)らしい
         # max_workers=process は使用するプロセス数？
         with ProcessPoolExecutor(max_workers=process) as executor:
-            futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), model, file_list, size, visits, use_gpu) for file_list in file_indice]
+            futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), model, file_list, size, visits, use_gpu, network_name1) for file_list in file_indice]
 
             monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True);
             monitoring_worker.start()
@@ -86,7 +97,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
                 future.result()
     else:
         with ProcessPoolExecutor(max_workers=process) as executor:
-            futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), model, model2, file_list, size, visits, use_gpu) for file_list in file_indice]
+            futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), model, model2, file_list, size, visits, use_gpu, network_name1, network_name2) for file_list in file_indice]
 
             monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True);
             monitoring_worker.start()
