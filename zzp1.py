@@ -234,3 +234,6 @@ loss = F.mse_loss(t, y)
 
 print(loss)
 # tensor(0.7201, grad_fn=<MseLossBackward0>)
+
+
+from sklearn.datasets import load_iris
