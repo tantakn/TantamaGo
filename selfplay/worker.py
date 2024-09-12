@@ -102,17 +102,10 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool
         time.sleep(60)
         current_num_data = len(glob.glob(os.path.join(save_dir, "*.sgf")))
         current_time = time.time()
-        msg = f"Generating {current_num_data:5d}/{num_data:5d} games "
+
+        msg = f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] generating\n{current_num_data:5d}/{num_data:5d} games "
         msg += f"({3600 * current_num_data / (current_time - start_time):.4f} games/hour)."
         print(msg)
-
-        print(f"[datetime: {datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
-        print(f"cpu: {psutil.cpu_percent(interval=1)}% {psutil.cpu_percent(interval=1, percpu=True)}")
-        print(f"mem: {psutil.virtual_memory().percent}%")
-
-        if use_gpu:
-            result_subprocess = subprocess.run(['nvidia-smi --query-gpu=name,index,utilization.gpu,memory.used,power.draw --format=csv'], capture_output=True, text=True, shell=True)
-            print(result_subprocess.stdout)
 
 
 

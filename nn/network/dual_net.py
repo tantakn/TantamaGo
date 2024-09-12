@@ -1,4 +1,3 @@
-
 """Dual Networkの実装。
 """
 from typing import Tuple

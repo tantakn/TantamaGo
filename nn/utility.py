@@ -55,7 +55,7 @@ def print_learning_process(loss_data: Dict[str, float], epoch: int, index: int, 
     loss, policy_loss, value_loss = _calculate_losses(loss_data, iteration)
     training_time = time.time() - start_time
 
-    print_err(f"[datetime: {datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")################
+    print_err(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] learn")################
     print_err(f"epoch {epoch}, data-{index} : loss = {loss:6f}, time = {training_time:.1f} [s].")
     print_err(f"\tpolicy loss : {policy_loss:6f}")
     print_err(f"\tvalue loss  : {value_loss:6f}")
@@ -74,7 +74,7 @@ def print_evaluation_information(loss_data: Dict[str, float], epoch: int, \
     loss, policy_loss, value_loss = _calculate_losses(loss_data, iteration)
     testing_time = time.time() - start_time
 
-    print_err(f"[datetime: {datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")################
+    print_err(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] test")################
     print_err(f"Test {epoch} : loss = {loss:6f}, time = {testing_time:3f} [s].")
     print_err(f"\tpolicy loss : {policy_loss:6f}")
     print_err(f"\tvalue loss  : {value_loss:6f}")

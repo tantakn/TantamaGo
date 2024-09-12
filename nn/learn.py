@@ -150,7 +150,8 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
     dual_net.to(device)
 
-    print("torch.cuda.current_device: ", torch.cuda.current_device())#############
+    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
+    print("torch.cuda.current_device: ", torch.cuda.current_device())
     print("torch.cuda.device_count: ", torch.cuda.device_count())
     print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
     if torch.cuda.device_count() > 1:##########
