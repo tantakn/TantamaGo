@@ -138,6 +138,18 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
     """
 
     print(f"🐾train_on_gpu {dt_now}")###########
+    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
+    print("torch.cuda.current_device: ", torch.cuda.current_device())
+    print("torch.cuda.device_count: ", torch.cuda.device_count())
+    print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
+    if torch.cuda.device_count() > 1:##########
+        print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
+    print("torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
+    if torch.cuda.device_count() > 1:##########
+        print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
+    print("torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
+
+
 
     # 学習データと検証用データの分割
     data_set = sorted(glob.glob(os.path.join(program_dir, "data", "sl_data_*.npz")))
@@ -150,16 +162,6 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
     dual_net.to(device)
 
-    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
-    print("torch.cuda.current_device: ", torch.cuda.current_device())
-    print("torch.cuda.device_count: ", torch.cuda.device_count())
-    print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
-    if torch.cuda.device_count() > 1:##########
-        print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
-    print("torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
-    if torch.cuda.device_count() > 1:##########
-        print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
-    print("torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
 
     # if torch.cuda.device_count() > 1:##########ここTrueで作ったので対局しようとするとFailed to load model/sl-model_2024のエラー出る
     #     dual_net = torch.nn.DataParallel(dual_net)

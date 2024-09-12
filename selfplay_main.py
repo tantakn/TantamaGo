@@ -28,8 +28,8 @@ import datetime
     help="GPU使用フラグ。デフォルトはTrue。")
 @click.option('--visits', type=click.IntRange(min=2), default=SELF_PLAY_VISITS, \
     help=f"自己対戦時の探索回数。デフォルトは{SELF_PLAY_VISITS}。")
-@click.option('--model', type=click.STRING, default=os.path.join("model", "rl-model_default.bin"), \
-    help="ニューラルネットワークのモデルファイルパス。デフォルトはmodelディレクトリ内のrl-model_default.bin。")
+@click.option('--model', type=click.STRING, default=os.path.join("model", "sl-model_default.bin"), \
+    help="ニューラルネットワークのモデルファイルパス。デフォルトはmodelディレクトリ内のsl-model_default.bin。")
 @click.option('--model2', type=click.STRING, default="None", \
     help="異なるモデルを対局させるときに指定する。")
 def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu: bool, visits: int, model: str, model2: str):
@@ -48,6 +48,9 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
 
     monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu,), daemon=True);#########
     monitoring_worker.start()###############
+
+    print("model: ", model)#############
+    print("model2: ", model2)###############
 
 
     file_index_list = list(range(1, num_data + 1))
@@ -70,7 +73,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
 
     print(f"Self play visits : {visits}")
 
-    if model == "None":
+    if model2 == "None":
         # テンプレ改造？ここでsgfを出力してないselfplay_workerでしてる？
         # submit(selfplay_worker,...（selfplay_workerの引数たち）)らしい
         # max_workers=process は使用するプロセス数？

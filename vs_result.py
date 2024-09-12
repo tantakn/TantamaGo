@@ -21,6 +21,7 @@ def main(path, num, save):
         for folder in folder_list:
             path_list += sorted(glob.glob(os.path.join("./", folder, "*.sgf")))
     elif num == -1:
+        # TODO: ゼロ埋めされていないから10以上でバグる
         folder = sorted(glob.glob(os.path.join("./", path, "*")))[-1]
         path_list = sorted(glob.glob(os.path.join("./", folder, "*.sgf")))
     else:

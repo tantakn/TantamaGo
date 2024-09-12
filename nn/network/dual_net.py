@@ -21,8 +21,10 @@ class DualNet(nn.Module): # pylint: disable=R0902
             board_size (int, optional): 碁盤のサイズ。 デフォルト値はBOARD_SIZE。
         """
         super().__init__()
-        filters = 64
-        blocks = 6
+        filters = 128
+        blocks = 12
+        # filters = 64
+        # blocks = 6
 
         self.device = device
 

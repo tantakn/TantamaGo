@@ -1,0 +1,514 @@
+🐾train_main
+🐾train_on_gpu 2024-09-11 21:30:12.859205
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[20240911_213013] monitoring
+cpu: 6.2% [0.0, 0.0, 0.0, 0.0, 0.0, 81.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+mem: 6.9% 
+TITAN RTX, 0, 0 %, 38 MiB, 47.26 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 2.08 W 
+[20240911_213014] device
+torch.cuda.current_device:  0
+torch.cuda.device_count:  2
+torch.cuda.get_device_name(0):  TITAN RTX
+torch.cuda.get_device_name(1):  TITAN RTX
+torch.cuda.get_device_capability(0):  (7, 5)
+torch.cuda.get_device_capability(1):  (7, 5)
+torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+[20240911_213113] monitoring
+cpu: 27.9% [50.5, 29.3, 0.0, 0.0, 0.0, 50.0, 50.0, 51.0, 0.0, 70.0, 50.0, 50.5, 50.5, 0.0, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 86 %, 1568 MiB, 280.86 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 6.03 W 
+[20240911_213138] learn
+epoch 0, data-0 : loss = 2.213957, time = 79.8 [s].
+	policy loss : 2.199923
+	value loss  : 0.701669
+[20240911_213215] monitoring
+cpu: 28.4% [51.5, 51.0, 29.0, 0.0, 0.0, 51.0, 50.5, 51.0, 0.0, 0.0, 70.6, 51.5, 50.5, 0.0, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 271.10 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.28 W 
+[20240911_213301] learn
+epoch 0, data-1 : loss = 1.745175, time = 79.2 [s].
+	policy loss : 1.731360
+	value loss  : 0.690752
+[20240911_213317] monitoring
+cpu: 29.8% [54.1, 54.5, 54.1, 5.7, 0.0, 54.1, 54.1, 54.1, 0.0, 23.0, 0.0, 71.4, 54.5, 1.0, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1568 MiB, 279.68 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.34 W 
+[20240911_213420] monitoring
+cpu: 26.1% [53.3, 52.3, 52.8, 52.3, 1.0, 52.8, 0.0, 53.3, 28.7, 0.0, 0.0, 0.0, 69.2, 0.0, 52.8, 1.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 283.30 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.59 W 
+[20240911_213425] learn
+epoch 0, data-2 : loss = 1.660656, time = 79.7 [s].
+	policy loss : 1.646996
+	value loss  : 0.682996
+[20240911_213522] monitoring
+cpu: 29.5% [48.0, 49.0, 48.5, 48.0, 0.0, 48.0, 0.0, 48.0, 0.0, 34.3, 0.0, 0.0, 66.3, 0.0, 48.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 264.78 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.75 W 
+[20240911_213549] learn
+epoch 0, data-3 : loss = 1.605295, time = 80.0 [s].
+	policy loss : 1.591847
+	value loss  : 0.672430
+[20240911_213624] monitoring
+cpu: 27.1% [50.5, 51.5, 50.5, 50.5, 51.0, 3.8, 0.0, 50.5, 1.0, 31.6, 0.0, 0.0, 0.0, 68.0, 50.5, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 280.18 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.60 W 
+[20240911_213713] learn
+epoch 0, data-4 : loss = 1.559402, time = 80.3 [s].
+	policy loss : 1.546573
+	value loss  : 0.641438
+[20240911_213727] monitoring
+cpu: 28.1% [49.0, 49.5, 49.0, 48.5, 49.0, 30.7, 0.0, 49.0, 0.0, 0.0, 0.0, 0.0, 0.0, 69.7, 49.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 89 %, 1568 MiB, 280.38 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.52 W 
+[20240911_213829] monitoring
+cpu: 27.7% [1.0, 0.0, 48.0, 48.0, 48.0, 49.0, 48.0, 48.0, 69.0, 48.0, 0.0, 0.0, 0.0, 31.0, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1568 MiB, 281.79 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.14 W 
+[20240911_213837] learn
+epoch 0, data-5 : loss = 1.522314, time = 80.1 [s].
+	policy loss : 1.509934
+	value loss  : 0.618986
+[20240911_213931] monitoring
+cpu: 28.1% [49.5, 2.9, 49.5, 0.0, 49.5, 49.5, 49.5, 49.5, 0.0, 69.0, 0.0, 49.5, 0.0, 31.0, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1568 MiB, 282.47 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.27 W 
+[20240911_214002] learn
+epoch 0, data-6 : loss = 1.472123, time = 81.0 [s].
+	policy loss : 1.459804
+	value loss  : 0.615962
+[20240911_214033] monitoring
+cpu: 26.4% [50.0, 50.0, 2.9, 50.0, 0.0, 50.5, 49.5, 50.5, 0.0, 0.0, 68.6, 0.0, 50.0, 30.3, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 259.51 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.73 W 
+[20240911_214126] learn
+epoch 0, data-7 : loss = 1.457393, time = 80.3 [s].
+	policy loss : 1.445148
+	value loss  : 0.612276
+[20240911_214136] monitoring
+cpu: 28.0% [51.0, 51.0, 1.0, 51.0, 0.0, 51.0, 51.0, 51.0, 0.0, 0.0, 69.9, 0.0, 51.0, 28.9, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 282.92 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.22 W 
+[20240911_214238] monitoring
+cpu: 27.1% [46.9, 47.4, 46.9, 1.0, 0.0, 47.4, 46.9, 46.9, 0.0, 0.0, 0.0, 66.3, 47.4, 34.9, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1568 MiB, 281.32 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.48 W 
+[20240911_214251] learn
+epoch 0, data-8 : loss = 1.444791, time = 80.3 [s].
+	policy loss : 1.432606
+	value loss  : 0.609244
+[20240911_214340] monitoring
+cpu: 28.0% [48.5, 50.0, 48.5, 1.0, 0.0, 49.0, 48.5, 49.0, 0.0, 32.7, 0.0, 67.3, 49.0, 0.0, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1568 MiB, 262.12 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.35 W 
+[20240911_214415] learn
+epoch 0, data-9 : loss = 1.440516, time = 80.4 [s].
+	policy loss : 1.428528
+	value loss  : 0.599431
+[20240911_214442] monitoring
+cpu: 27.6% [48.0, 48.5, 48.5, 4.8, 0.0, 48.0, 48.5, 48.5, 0.0, 0.0, 32.7, 67.7, 48.0, 0.0, 3.0, 0.0] 🔥
+mem: 12.7% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 284.19 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.55 W 
+[20240911_214519] learn
+epoch 0, data-10 : loss = 1.428817, time = 61.0 [s].
+	policy loss : 1.416813
+	value loss  : 0.600173
+[20240911_214545] monitoring
+cpu: 27.9% [49.5, 49.5, 49.5, 49.5, 1.0, 0.0, 50.5, 49.5, 0.0, 0.0, 0.0, 0.0, 68.3, 49.5, 32.3, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1568 MiB, 282.98 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.57 W 
+[20240911_214644] learn
+epoch 0, data-11 : loss = 1.458823, time = 80.3 [s].
+	policy loss : 1.446812
+	value loss  : 0.600560
+[20240911_214647] monitoring
+cpu: 17.3% [48.5, 48.5, 48.0, 48.5, 0.0, 48.5, 48.0, 49.0, 0.0, 0.0, 0.0, 0.0, 66.0, 0.0, 0.0, 34.3] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1568 MiB, 263.78 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.98 W 
+[20240911_214749] monitoring
+cpu: 27.8% [0.0, 49.5, 49.0, 49.0, 0.0, 49.0, 49.0, 49.0, 49.0, 0.0, 0.0, 0.0, 67.0, 0.0, 0.0, 32.3] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 277.98 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.53 W 
+[20240911_214808] learn
+epoch 0, data-12 : loss = 1.428540, time = 80.4 [s].
+	policy loss : 1.416928
+	value loss  : 0.580601
+[20240911_214851] monitoring
+cpu: 28.3% [1.0, 49.5, 0.0, 49.5, 0.0, 49.5, 49.5, 49.5, 49.5, 0.0, 49.5, 0.0, 67.3, 0.0, 0.0, 31.6] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 257.77 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.53 W 
+[20240911_214932] learn
+epoch 0, data-13 : loss = 1.401553, time = 80.3 [s].
+	policy loss : 1.389827
+	value loss  : 0.586305
+[20240911_214954] monitoring
+cpu: 27.6% [49.0, 0.0, 0.0, 49.5, 48.5, 49.0, 49.0, 49.0, 0.0, 68.7, 48.5, 31.0, 0.0, 0.0, 0.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 88 %, 1568 MiB, 282.56 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.45 W 
+[20240911_215057] learn
+epoch 0, data-14 : loss = 1.405474, time = 80.9 [s].
+	policy loss : 1.393795
+	value loss  : 0.583926
+[20240911_215056] monitoring
+cpu: 27.8% [21.0, 2.0, 0.0, 21.2, 21.0, 21.0, 21.0, 21.0, 0.0, 84.8, 21.2, 0.0, 14.9, 0.0, 0.0, 1.0] 🔥
+mem: 14.2% 🔥
+TITAN RTX, 0, 87 %, 1568 MiB, 132.64 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 3.14 W 
+[20240911_215158] monitoring
+cpu: 35.7% [67.0, 0.0, 0.0, 67.0, 66.3, 67.3, 66.7, 67.0, 0.0, 100.0, 67.3, 0.0, 0.0, 0.0, 0.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 98 %, 1652 MiB, 130.55 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 3.58 W 
+[20240911_215300] monitoring
+cpu: 35.7% [67.3, 0.0, 67.0, 1.0, 1.0, 67.3, 67.7, 67.3, 0.0, 100.0, 0.0, 67.0, 67.3, 0.0, 0.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 98 %, 1652 MiB, 262.80 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.00 W 
+[20240911_215402] monitoring
+cpu: 35.5% [67.0, 0.0, 67.0, 0.0, 67.0, 0.0, 67.0, 67.0, 0.0, 100.0, 0.0, 67.0, 0.0, 67.0, 0.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 98 %, 1652 MiB, 280.20 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.13 W 
+[20240911_215505] monitoring
+cpu: 35.6% [67.0, 0.0, 67.0, 0.0, 0.0, 0.0, 67.0, 67.0, 1.0, 100.0, 0.0, 66.7, 67.0, 67.0, 0.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 98 %, 1652 MiB, 259.40 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.60 W 
+[20240911_215509] test
+Test 0 : loss = 1.438907, time = 251.499663 [s].
+	policy loss : 1.427190
+	value loss  : 0.585823
+[20240911_215607] monitoring
+cpu: 28.2% [49.5, 49.5, 49.5, 1.0, 30.6, 0.0, 49.0, 49.0, 0.0, 0.0, 0.0, 68.3, 49.5, 49.0, 0.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 87 %, 1666 MiB, 281.49 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.51 W 
+[20240911_215633] learn
+epoch 1, data-0 : loss = 1.398228, time = 80.2 [s].
+	policy loss : 1.386373
+	value loss  : 0.592739
+[20240911_215709] monitoring
+cpu: 26.1% [50.5, 51.0, 51.0, 51.9, 0.0, 0.0, 51.0, 51.0, 1.0, 0.0, 0.0, 29.6, 68.9, 51.0, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1666 MiB, 259.12 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.12 W 
+[20240911_215758] learn
+epoch 1, data-1 : loss = 1.398364, time = 80.4 [s].
+	policy loss : 1.386764
+	value loss  : 0.580044
+[20240911_215811] monitoring
+cpu: 28.3% [48.0, 49.0, 48.0, 48.0, 0.0, 0.0, 48.5, 48.0, 0.0, 33.7, 0.0, 0.0, 66.7, 47.5, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 289.53 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.94 W 
+[20240911_215914] monitoring
+cpu: 27.2% [49.0, 32.3, 49.0, 49.5, 0.0, 0.0, 49.0, 48.5, 0.0, 49.0, 0.0, 0.0, 67.3, 49.5, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 86 %, 1666 MiB, 275.67 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.58 W 
+[20240911_215922] learn
+epoch 1, data-2 : loss = 1.405460, time = 80.5 [s].
+	policy loss : 1.394027
+	value loss  : 0.571650
+[20240911_220016] monitoring
+cpu: 28.3% [46.0, 49.5, 39.8, 49.5, 1.0, 0.0, 49.5, 49.5, 10.0, 0.0, 36.3, 0.0, 68.3, 49.5, 0.0, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 260.26 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.22 W 
+[20240911_220047] learn
+epoch 1, data-3 : loss = 1.397599, time = 80.4 [s].
+	policy loss : 1.386190
+	value loss  : 0.570487
+[20240911_220118] monitoring
+cpu: 27.6% [49.0, 49.5, 49.0, 49.0, 49.5, 31.0, 0.0, 50.0, 0.0, 0.0, 1.0, 0.0, 0.0, 49.5, 68.3, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 86 %, 1666 MiB, 276.72 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.91 W 
+[20240911_220211] learn
+epoch 1, data-4 : loss = 1.386082, time = 80.6 [s].
+	policy loss : 1.374902
+	value loss  : 0.559025
+[20240911_220220] monitoring
+cpu: 28.1% [49.0, 48.5, 49.0, 48.5, 48.0, 31.0, 2.0, 49.0, 0.0, 0.0, 0.0, 0.0, 0.0, 49.0, 69.3, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1666 MiB, 258.60 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.34 W 
+[20240911_220323] monitoring
+cpu: 28.0% [49.0, 48.5, 49.0, 49.0, 49.0, 0.0, 28.3, 49.5, 0.0, 0.0, 0.0, 0.0, 0.0, 49.0, 71.3, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 259.42 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.13 W 
+[20240911_220336] learn
+epoch 1, data-5 : loss = 1.375311, time = 80.6 [s].
+	policy loss : 1.364110
+	value loss  : 0.560066
+[20240911_220425] monitoring
+cpu: 28.3% [49.0, 49.0, 49.0, 49.0, 49.0, 0.0, 29.3, 48.5, 0.0, 0.0, 0.0, 0.0, 0.0, 49.0, 70.3, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 257.17 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.83 W 
+[20240911_220500] learn
+epoch 1, data-6 : loss = 1.340817, time = 80.5 [s].
+	policy loss : 1.329522
+	value loss  : 0.564721
+[20240911_220527] monitoring
+cpu: 27.1% [49.0, 1.0, 49.5, 49.5, 49.0, 0.0, 29.3, 49.0, 0.0, 49.5, 0.0, 0.0, 0.0, 49.5, 70.3, 0.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 282.39 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.88 W 
+[20240911_220625] learn
+epoch 1, data-7 : loss = 1.343258, time = 80.4 [s].
+	policy loss : 1.331824
+	value loss  : 0.571701
+[20240911_220629] monitoring
+cpu: 25.1% [44.6, 0.0, 44.6, 0.0, 45.1, 0.0, 36.4, 44.6, 0.0, 44.6, 0.0, 44.6, 0.0, 44.6, 67.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 259.41 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.84 W 
+[20240911_220732] monitoring
+cpu: 27.8% [48.0, 0.0, 48.0, 0.0, 49.0, 0.0, 48.5, 0.0, 0.0, 48.5, 31.7, 48.5, 0.0, 48.0, 0.0, 69.0] 🔥
+mem: 13.5% 🔥
+TITAN RTX, 0, 87 %, 1666 MiB, 262.15 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.07 W 
+[20240911_220750] learn
+epoch 1, data-8 : loss = 1.340274, time = 81.1 [s].
+	policy loss : 1.328763
+	value loss  : 0.575526
+[20240911_220834] monitoring
+cpu: 27.5% [49.0, 1.0, 49.5, 31.0, 49.5, 0.0, 49.0, 49.5, 0.0, 68.3, 0.0, 49.5, 0.0, 49.0, 0.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 87 %, 1666 MiB, 258.96 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.13 W 
+[20240911_220915] learn
+epoch 1, data-9 : loss = 1.348166, time = 80.9 [s].
+	policy loss : 1.336786
+	value loss  : 0.568999
+[20240911_220936] monitoring
+cpu: 27.6% [49.5, 49.5, 1.0, 0.0, 49.5, 31.3, 50.0, 49.5, 0.0, 0.0, 68.3, 49.5, 0.0, 49.5, 0.0, 0.0] 🔥
+mem: 12.7% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 276.54 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.37 W 
+[20240911_221019] learn
+epoch 1, data-10 : loss = 1.343945, time = 61.1 [s].
+	policy loss : 1.332459
+	value loss  : 0.574300
+[20240911_221038] monitoring
+cpu: 27.4% [48.0, 0.0, 0.0, 0.0, 48.0, 0.0, 48.0, 48.0, 0.0, 48.0, 66.7, 48.5, 0.0, 48.0, 33.3, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 258.70 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.53 W 
+[20240911_221141] monitoring
+cpu: 27.1% [50.5, 0.0, 50.5, 0.0, 0.0, 0.0, 50.5, 50.5, 0.0, 50.0, 0.0, 68.6, 50.5, 50.5, 29.9, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 257.29 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.12 W 
+[20240911_221144] learn
+epoch 1, data-11 : loss = 1.378992, time = 80.5 [s].
+	policy loss : 1.367436
+	value loss  : 0.577803
+[20240911_221243] monitoring
+cpu: 28.1% [51.0, 0.0, 51.5, 0.0, 0.0, 0.0, 51.0, 51.0, 0.0, 51.0, 0.0, 68.3, 51.0, 51.0, 29.9, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 286.40 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.53 W 
+[20240911_221308] learn
+epoch 1, data-12 : loss = 1.355569, time = 80.5 [s].
+	policy loss : 1.344456
+	value loss  : 0.555643
+[20240911_221345] monitoring
+cpu: 27.5% [48.5, 0.0, 49.0, 0.0, 0.0, 0.0, 49.0, 49.0, 0.0, 48.5, 0.0, 67.3, 49.0, 48.5, 33.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 261.50 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.00 W 
+[20240911_221433] learn
+epoch 1, data-13 : loss = 1.335071, time = 80.4 [s].
+	policy loss : 1.323712
+	value loss  : 0.567907
+[20240911_221447] monitoring
+cpu: 27.2% [47.4, 34.3, 47.4, 0.0, 0.0, 47.4, 0.0, 46.9, 0.0, 47.4, 0.0, 66.3, 47.4, 0.0, 47.4, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 88 %, 1666 MiB, 284.01 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.86 W 
+[20240911_221550] monitoring
+cpu: 28.7% [50.0, 32.7, 49.5, 0.0, 0.0, 50.0, 0.0, 49.5, 0.0, 50.0, 0.0, 68.0, 49.5, 0.0, 49.5, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 87 %, 1666 MiB, 278.61 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.48 W 
+[20240911_221557] learn
+epoch 1, data-14 : loss = 1.343504, time = 80.4 [s].
+	policy loss : 1.332215
+	value loss  : 0.564459
+[20240911_221652] monitoring
+cpu: 35.5% [67.3, 0.0, 67.0, 67.3, 0.0, 0.0, 0.0, 67.0, 0.0, 67.0, 0.0, 0.0, 100.0, 67.0, 67.7, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 98 %, 1666 MiB, 284.85 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.71 W 
+[20240911_221755] monitoring
+cpu: 36.0% [68.3, 0.0, 68.6, 68.3, 0.0, 0.0, 0.0, 68.3, 0.0, 67.6, 0.0, 0.0, 100.0, 67.6, 67.6, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 98 %, 1666 MiB, 277.70 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.07 W 
+[20240911_221857] monitoring
+cpu: 36.3% [67.0, 1.0, 67.0, 66.7, 0.0, 0.0, 0.0, 67.7, 0.0, 67.0, 0.0, 0.0, 100.0, 67.0, 67.0, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 98 %, 1666 MiB, 277.43 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 5.18 W 
+[20240911_221959] monitoring
+cpu: 35.9% [67.3, 1.0, 67.0, 67.7, 0.0, 0.0, 0.0, 67.7, 0.0, 67.0, 0.0, 0.0, 100.0, 67.0, 67.7, 0.0] 🔥
+mem: 13.6% 🔥
+TITAN RTX, 0, 98 %, 1666 MiB, 279.53 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.96 W 
+[20240911_222008] test
+Test 1 : loss = 1.379562, time = 251.133317 [s].
+	policy loss : 1.368279
+	value loss  : 0.564154
+
+
+
+
+gdm         2104  0.0  0.0 352052 15192 tty1     Sl+   9月09   0:00 /usr/libexec/gsd-printer
+colord      2140  0.0  0.0 259236 16592 ?        Ssl   9月09   0:00 /usr/libexec/colord
+root        2661  0.0  0.0      0     0 ?        I     9月09   0:02 [kworker/12:0-mm_percpu_wq]
+root        3790  0.0  0.0      0     0 ?        I     9月10   0:00 [kworker/1:0]
+root        4823  0.0  0.0      0     0 ?        I     9月10   0:02 [kworker/0:0-events]
+root        4999  0.0  0.0      0     0 ?        I     9月10   0:01 [kworker/15:2-mm_percpu_wq]
+root        5138  0.0  0.0      0     0 ?        I     9月10   0:01 [kworker/11:0-events]
+root        5263  0.0  0.0      0     0 ?        I     9月11   0:01 [kworker/8:0-mm_percpu_wq]
+root        5472  0.0  0.0      0     0 ?        I     9月11   0:01 [kworker/4:1-events]
+root        6037  0.0  0.0      0     0 ?        I     9月11   0:03 [kworker/3:0-events]
+u2424004    6247  0.0  0.0  18920  9936 ?        Ss    9月11   0:00 /lib/systemd/systemd --user
+u2424004    6255  0.0  0.0 181460  5420 ?        S     9月11   0:00 (sd-pam)
+u2424004    6268  0.0  0.0 521416 25068 ?        SNsl  9月11   0:00 /usr/libexec/tracker-miner-fs
+u2424004    6289  0.0  0.0   7576  4172 ?        Ss    9月11   0:00 /usr/bin/dbus-daemon --session --address=systemd: --nofork 
+u2424004    6294  0.0  0.0 249660  7696 ?        Ssl   9月11   0:00 /usr/libexec/gvfsd
+u2424004    6313  0.0  0.0 382052  8360 ?        Sl    9月11   0:00 /usr/libexec/gvfsd-fuse /run/user/55524/gvfs -f -o big_writ
+u2424004    6324  0.0  0.0 327520 11796 ?        Ssl   9月11   0:00 /usr/libexec/gvfs-udisks2-volume-monitor
+u2424004    6334  0.0  0.0 245520  5620 ?        Ssl   9月11   0:00 /usr/libexec/gvfs-mtp-volume-monitor
+u2424004    6342  0.0  0.0 247928  6504 ?        Ssl   9月11   0:00 /usr/libexec/gvfs-gphoto2-volume-monitor
+u2424004    6347  0.0  0.0 245728  6020 ?        Ssl   9月11   0:00 /usr/libexec/gvfs-goa-volume-monitor
+u2424004    6362  0.0  0.0 559344 37004 ?        Sl    9月11   0:03 /usr/libexec/goa-daemon
+u2424004    6417  0.0  0.0 328592 11680 ?        Sl    9月11   0:00 /usr/libexec/goa-identity-service
+u2424004    6429  0.0  0.0 326576  8968 ?        Ssl   9月11   0:01 /usr/libexec/gvfs-afc-volume-monitor
+u2424004    6639  0.0  0.0   2608   596 ?        S     9月11   0:00 sh /home0/y2024/u2424004/.vscode-server/cli/servers/Stable-
+u2424004    6643  0.1  0.2 1380752 150060 ?      Sl    9月11   1:02 /data/student/u2424004/.vscode-server/cli/servers/Stable-48
+u2424004    9591  0.1  0.1 1510408 71340 ?       Sl    9月11   0:56 /data/student/u2424004/.vscode-server/cli/servers/Stable-48
+u2424004    9980  0.0  0.0  21204  5344 pts/6    Ss    9月11   0:00 /bin/bash --init-file /data/student/u2424004/.vscode-server
+root       10551  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/8:1-events]
+u2424004   10832  0.0  0.0  20772  5080 pts/0    Ss+   9月11   0:00 /bin/bash --init-file /data/student/u2424004/.vscode-server
+u2424004   10927  0.0  0.0  20776  5300 pts/1    Ss+   9月11   0:00 /bin/bash --init-file /data/student/u2424004/.vscode-server
+root       11924  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/13:0-mm_percpu_wq]
+root       15471  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/15:0]
+root       18615  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/4:0]
+root       18846  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/5:1-mm_percpu_wq]
+root       22619  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/6:0-mm_percpu_wq]
+root       25193  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/12:1-mm_percpu_wq]
+root       25386  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/2:0]
+root       25569  0.0  0.0      0     0 ?        I     9月11   0:01 [kworker/3:2-events]
+root       27381  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/7:1-events]
+root       27593  0.0  0.0      0     0 ?        I<    9月11   0:03 [kworker/u33:1-xprtiod]
+root       28142  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/0:1]
+root       28193  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/5:0]
+u2424004   28512  0.0  0.0  20776  5096 pts/9    Ss+   9月11   0:00 /bin/bash --init-file /data/student/u2424004/.vscode-server
+u2424004   28734  0.0  0.0  20776  5328 pts/10   Ss+   9月11   0:00 /bin/bash --init-file /data/student/u2424004/.vscode-server
+u2424004   29497  0.0  0.3 2968576 250676 pts/6  Tl    9月11   0:02 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29551  0.1  4.3 15527960 2845696 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29552  0.1  4.3 15519352 2838152 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29553  0.1  4.3 15519352 2837236 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29554  0.1  4.3 15519352 2837300 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29555  0.1  4.3 15519352 2838468 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29556  0.1  4.3 15519352 2838420 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29557  0.1  4.3 15519352 2838684 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29558  0.1  4.3 15519352 2838716 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29559  0.1  4.3 15519352 2838704 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29560  0.1  4.3 15519352 2837704 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29561  0.1  4.3 15519352 2838592 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+u2424004   29562  0.1  4.3 15513980 2832696 pts/6 Tl   9月11   0:07 python3 selfplay_main.py --process 12 --num-data 200 --mode
+root       29566  0.0  0.0      0     0 ?        S     9月11   0:00 [UVM GPU1 BH]
+root       29567  0.0  0.0      0     0 ?        S     9月11   0:00 [UVM GPU1 KC]
+root       29568  0.0  0.0      0     0 ?        S     9月11   0:00 [UVM GPU2 BH]
+root       29569  0.0  0.0      0     0 ?        S     9月11   0:00 [UVM GPU2 KC]
+root       30496  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/9:1-events]
+root       30544  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/u32:1-events_unbound]
+root       30556  0.0  0.0      0     0 ?        I     9月11   0:00 [kworker/7:2-events]
+root       30642  0.0  0.0      0     0 ?        I    00:00   0:00 [kworker/6:2]
+root       30646  0.0  0.0      0     0 ?        I    00:00   0:00 [kworker/9:0-mm_percpu_wq]
+root       30652  0.0  0.0      0     0 ?        I    00:00   0:00 [kworker/14:2]
+root       30677  0.0  0.0      0     0 ?        I    00:09   0:00 [kworker/10:0-events]
+root       30706  0.0  0.0      0     0 ?        I    00:21   0:00 [kworker/10:2-mm_percpu_wq]
+root       30710  0.0  0.0      0     0 ?        I    00:23   0:00 [kworker/u32:0-rpciod]
+root       30725  0.0  0.0  33132 17684 ?        Ss   00:29   0:00 sshd: u2424004 [priv]
+u2424004   30780  0.1  0.0  36056 12772 ?        S    00:29   0:01 sshd: u2424004@notty
+u2424004   30781  0.0  0.0   2608  1920 ?        Ss   00:29   0:00 sh
+u2424004   30799  0.3  0.0  61420 15560 ?        Sl   00:29   0:02 /home0/y2024/u2424004/.vscode-server/code-4849ca9bdf9666755eb
+u2424004   30848  2.9  0.8 23910512 533756 ?     Sl   00:29   0:16 /data/student/u2424004/.vscode-server/cli/servers/Stable-4849
+u2424004   30855  5.6  0.1 1439052 107696 ?      Sl   00:29   0:32 /data/student/u2424004/.vscode-server/cli/servers/Stable-4849
+u2424004   30931  0.0  0.0 995464 54376 ?        Sl   00:29   0:00 /data/student/u2424004/.vscode-server/cli/servers/Stable-4849
+u2424004   30939  0.0  0.0 992576 49852 ?        Sl   00:29   0:00 /data/student/u2424004/.vscode-server/cli/servers/Stable-4849
+root       30981  0.5  0.0      0     0 ?        I<   00:29   0:02 [kworker/u33:2-xprtiod]
+u2424004   31040  0.0  0.0   2608   604 ?        S    00:29   0:00 /bin/sh
+u2424004   31064  0.7  0.1 1087364 107920 ?      Sl   00:29   0:04 /data/student/u2424004/.vscode-server/cli/servers/Stable-4849
+u2424004   31104  0.0  0.0   2608   600 ?        S    00:30   0:00 /bin/sh
+root       34422  0.0  0.0      0     0 ?        I    00:31   0:00 [kworker/u32:4-events_unbound]
+u2424004   34959  0.0  0.0  17740   520 ?        S    00:38   0:00 sleep 180
+u2424004   34962  0.0  0.0  21288  3292 pts/6    R+   00:39   0:00 ps aux
+(env) (base) u2424004@g18:~/igo/TantamaGo$ nvidia-smi
+Thu Sep 12 00:39:55 2024       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.119.03   Driver Version: 450.119.03   CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           On   | 00000000:03:00.0 Off |                  N/A |
+| 41%   41C    P2    69W / 280W |  13473MiB / 24219MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  TITAN RTX           On   | 00000000:04:00.0 Off |                  N/A |
+| 41%   30C    P8     1W / 280W |      9MiB / 24220MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A      1763      G   /usr/lib/xorg/Xorg                  9MiB |
+|    0   N/A  N/A      1936      G   /usr/bin/gnome-shell                4MiB |
+|    0   N/A  N/A     29551      C   python3                          1121MiB |
+|    0   N/A  N/A     29552      C   python3                          1121MiB |
+|    0   N/A  N/A     29553      C   python3                          1121MiB |
+|    0   N/A  N/A     29554      C   python3                          1121MiB |
+|    0   N/A  N/A     29555      C   python3                          1121MiB |
+|    0   N/A  N/A     29556      C   python3                          1121MiB |
+|    0   N/A  N/A     29557      C   python3                          1121MiB |
+|    0   N/A  N/A     29558      C   python3                          1121MiB |
+|    0   N/A  N/A     29559      C   python3                          1121MiB |
+|    0   N/A  N/A     29560      C   python3                          1121MiB |
+|    0   N/A  N/A     29561      C   python3                          1121MiB |
+|    0   N/A  N/A     29562      C   python3                          1121MiB |
+|    1   N/A  N/A      1763      G   /usr/lib/xorg/Xorg                  4MiB |
++-----------------------------------------------------------------------------+
+(env) (base) u2424004@g18:~/igo/TantamaGo$ 

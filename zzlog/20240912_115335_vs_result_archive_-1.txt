@@ -1,0 +1,6 @@
+
+games: 200
+model1: TantamaGo
+    win: (95 + 0.5*3)/200 (47.50%)
+model2: TantamaGo
+    win: (102 + 0.5*3)/200 (51.00%)
