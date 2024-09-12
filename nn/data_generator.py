@@ -16,7 +16,7 @@ import time, datetime#################
 
 
 def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndarray, value_data: np.ndarray, kifu_counter: int) -> None:
-    """学習データをnpzファイルとして出力する。
+    """学習データをnpzファイルとして出力する。引数のnp配列それぞれの辞書として保存する。
 
     Args:
         save_file_path (str): 保存するファイルパス。
@@ -25,6 +25,8 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
         value_data (np.ndarray): Valueのデータ
         kifu_counter (int): データセットにある棋譜データの個数。
     """
+
+    # 辞書化して保存
     save_data = {
         "input": np.array(input_data[0:DATA_SET_SIZE]),
         "policy": np.array(policy_data[0:DATA_SET_SIZE]),
@@ -48,55 +50,72 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_siz
     board = GoBoard(board_size=board_size)
 
     input_data = []
+    """入力データ。説明変数たち。"""
     policy_data = []
+    """moveのデータ。目的変数（ターゲットデータ）たち。"""
     value_data = []
+    """勝敗のデータ。目的変数？たち。？これが 0 のとき学習しない？"""
 
     kifu_counter = 1
+    """npzファイルに書き込む棋譜データの個数を数えておく。npzにも書き込む。"""
     data_counter = 0
+    """f"data/sl_data_{data_counter}"""
 
     kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
     print(f"kifu_num: {kifu_num}")#############
 
+
+    # 局のループ
     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
         board.clear()
         # ここで勝敗とかも取得してる
         sgf = SGFReader(kifu_path, board_size)
         color = Stone.BLACK
         value_label = sgf.get_value_label()
-        """勝ち負け"""
+        """勝ち負け。黒勝ちは2、白勝ちは0、持碁は1。"""
 
+        # 手のループ
         for pos in sgf.get_moves():
             # 対称形でかさ増し
             for sym in range(8):
                 input_data.append(generate_input_planes(board, color, sym))
                 policy_data.append(generate_target_data(board, pos, sym))
                 value_data.append(value_label)
+
+            # 手を一手進める
             board.put_stone(pos, color)
             color = Stone.get_opponent_color(color)
             # Valueのラベルを入れ替える。
+            # input_data の局面の手番が勝者の場合は 2 にする。
             value_label = 2 - value_label
 
+        # データセットのサイズを超えたら保存
         if len(value_data) >= DATA_SET_SIZE:
+            # データを保存
             _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data, policy_data, value_data, kifu_counter)
+
+            # 保存したデータを削除
             input_data = input_data[DATA_SET_SIZE:]
             policy_data = policy_data[DATA_SET_SIZE:]
             value_data = value_data[DATA_SET_SIZE:]
+
             kifu_counter = 1
             data_counter += 1
 
-            print(f"""
-saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})
-from: {kifu_path} / {kifu_num}kyoku""")#####################
+            print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_npz")#####################
+            print(f"saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})")
+            print(f"from: {kifu_path} / {kifu_num}kyoku")
             dt_watch = datetime.datetime.now()
+
 
         kifu_counter += 1
 
-    print("qwer")##########
 
-    # 端数の出力
+    # 端数の出力。BATCH_SIZE で割り切れる数だけデータを保存する。他は捨てる。
     n_batches = len(value_data) // BATCH_SIZE
     if n_batches > 0:
         _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
+
 
 
 def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[str], board_size: int=9) -> None:
@@ -157,7 +176,7 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
 
         kifu_counter += 1
 
-    # 端数の出力
+    # 端数の出力。BATCH_SIZE で割り切れる数だけデータを保存する。他は捨てる。
     n_batches = len(value_data) // BATCH_SIZE
     if n_batches > 0:
         _save_data(os.path.join(program_dir, "data", f"rl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
