@@ -337,14 +337,18 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_siz
         print(f"data_counter: {data_counter}")#################
         print(f"cnt: {cnt}")#################
 
-        _save_data(os.path.join(program_dir, "backup", "test", f"sl_data_{data_counter}"), input_data, policy_data, value_data, kifu_counter)
-        kifu_counter = 1
-        data_counter += 1
+        if len(value_data) >= DATA_SET_SIZE:
+            _save_data(os.path.join(program_dir, "backup", "test", f"sl_data_{data_counter}"), input_data, policy_data, value_data, kifu_counter)
+            input_data = input_data[DATA_SET_SIZE:]
+            policy_data = policy_data[DATA_SET_SIZE:]
+            value_data = value_data[DATA_SET_SIZE:]
+            kifu_counter = 1
+            data_counter += 1
 
-        print(f"""
+            print(f"""
 saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})
 from: {kifu_path} / {kifu_num}kyoku""")#####################
-        dt_watch = datetime.datetime.now()
+            dt_watch = datetime.datetime.now()
 
         kifu_counter += 1
 
@@ -356,12 +360,12 @@ from: {kifu_path} / {kifu_num}kyoku""")#####################
     if n_batches > 0:
         _save_data(os.path.join(program_dir, "backup", "test", f"sl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
 
-# generate_supervised_learning_data(os.path.dirname(__file__), "archive/2")#################
+generate_supervised_learning_data(os.path.dirname(__file__), "archive/2")#################
 
 
-npz = np.load("backup/test/sl_data_0.npz")
+# npz = np.load("backup/test/sl_data_0.npz")
 
-print(npz["input"].shape)
-print(npz["policy"].shape)
-print(npz["value"].shape)
+# print(npz["input"].shape)
+# print(npz["policy"].shape)
+# print(npz["value"].shape)
 
