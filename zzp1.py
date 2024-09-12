@@ -239,43 +239,30 @@ import torch
 # from sklearn.datasets import load_iris
 
 
-from typing import NoReturn, Dict, List, Tuple
-import time
-import datetime
 import torch
 import numpy as np
 
-from common.print_console import print_err
 from nn.network.dual_net import DualNet
-
-def get_torch_device(use_gpu: bool) -> torch.device:
-    """torch.deviceを取得する。
-
-    Args:
-        use_gpu (bool): GPU使用フラグ。
-
-    Returns:
-        torch.device: デバイス情報。
-    """
-    if use_gpu:
-        torch.cuda.set_device(0)
-        return torch.device("cuda")
-    return torch.device("cpu")
-
-use_gpu = True
 
 model_file_path = "model/sl-model_default.bin"
 model_file_path2 = "model/sl-model_20240912_011228_Ep:14.bin"
 
-device = get_torch_device(use_gpu=False)
+device = torch.device("cpu")
 network = DualNet(device)
-network.to(device)
+network.to(torch.device("cpu"))
 try:
     network.load_state_dict(torch.load(model_file_path))
 except Exception as e: # pylint: disable=W0702
-    print(f"Failed to load2 {model_file_path}. : ", e)
+    print(f"👺Failed to load {model_file_path}. : ", e)
     raise e
 
-# print(network.state_dict())
-print(list(network.parameters()))
+# たぶん、レイヤーの行列の名前のリストが返ってくる
 # print(network.state_dict().keys())
+
+# # たぶん、レイヤーの行列の値が全部返ってくる
+# print(network.state_dict())
+
+# # たぶん、レイヤーの行列の値が全部返ってくる
+# print(list(network.parameters()))
+
+print(network)

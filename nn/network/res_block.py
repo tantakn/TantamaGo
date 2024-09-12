@@ -1,4 +1,3 @@
-
 """Residual Blockの実装。
 """
 import torch
@@ -16,13 +15,17 @@ class ResidualBlock(nn.Module):
             momentum (float, optional): バッチ正則化層のモーメンタムパラメータ. Defaults to 0.01.
         """
         super().__init__()
-        self.conv1 = nn.Conv2d(in_channels=channels, out_channels=channels, \
-            kernel_size=3, padding=1, bias=False)
-        self.conv2 = nn.Conv2d(in_channels=channels, out_channels=channels, \
-            kernel_size=3, padding=1, bias=False)
+
+        self.conv1 = nn.Conv2d(in_channels=channels, out_channels=channels, kernel_size=3, padding=1, bias=False)
+
+        self.conv2 = nn.Conv2d(in_channels=channels, out_channels=channels, kernel_size=3, padding=1, bias=False)
+
         self.bn1 = nn.BatchNorm2d(num_features=channels, eps=2e-5, momentum=momentum)
+
         self.bn2 = nn.BatchNorm2d(num_features=channels, eps=2e-5, momentum=momentum)
+
         self.relu = nn.ReLU()
+
 
     def forward(self, input_plane: torch.Tensor) -> torch.Tensor:
         """前向き伝搬処理を実行する。

@@ -1,4 +1,3 @@
-
 """Dual Networkの実装。
 """
 from typing import Tuple
@@ -27,8 +26,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
 
         self.device = device
 
-        self.conv_layer = nn.Conv2d(in_channels=6, out_channels=filters, \
-            kernel_size=3, padding=1, bias=False)
+        self.conv_layer = nn.Conv2d(in_channels=6, out_channels=filters, kernel_size=3, padding=1, bias=False)
         self.bn_layer = nn.BatchNorm2d(num_features=filters)
         self.relu = nn.ReLU()
         self.blocks = make_common_blocks(blocks, filters)
@@ -91,8 +89,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
         return self.softmax(policy).cpu(), self.softmax(value).cpu()
 
 
-    def inference_with_policy_logits(self, input_plane: torch.Tensor) \
-        -> Tuple[torch.Tensor, torch.Tensor]:
+    def inference_with_policy_logits(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         """前向き伝搬処理を実行する。Gumbel AlphaZero用の探索に使うメソッドのため、
         デバイス間データ転送も内部処理する。
 
