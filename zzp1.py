@@ -191,6 +191,8 @@ import torch
 # print(sp.nsolve(x**2 - x - 6, x, 1, prec=8))
 
 
+
+
 # nn：調整すべきパラメータを持つ関数たち
 import torch.nn as nn
 # F：調整すべきパラメータを持たない関数たち
