@@ -193,47 +193,89 @@ import torch
 
 
 
-# nn：調整すべきパラメータを持つ関数たち
-import torch.nn as nn
-# F：調整すべきパラメータを持たない関数たち
-import torch.nn.functional as F
+# # nn：調整すべきパラメータを持つ関数たち
+# import torch.nn as nn
+# # F：調整すべきパラメータを持たない関数たち
+# import torch.nn.functional as F
 
-# 乱数シードの固定
-torch.manual_seed(1)
+# # 乱数シードの固定
+# torch.manual_seed(1)
 
-# 普通は float32 で作る。ドット打つと指定できる。
-x = torch.tensor([[1., 2., 3.]])
-print(x.dtype)
-# torch.float32
+# # 普通は float32 で作る。ドット打つと指定できる。
+# x = torch.tensor([[1., 2., 3.]])
+# print(x.dtype)
+# # torch.float32
 
-# 線形変換たち。初期値はランダム。
-fc1 = nn.Linear(3, 2)
-fc2 = nn.Linear(2, 1)
+# # 線形変換たち。初期値はランダム。
+# fc1 = nn.Linear(3, 2)
+# fc2 = nn.Linear(2, 1)
 
-# 重みとバイアスの確認
-print(fc1.weight)
-print(fc1.bias)
-# tensor([[ 0.2975, -0.2548, -0.1119],
-#         [ 0.2710, -0.5435,  0.3462]], requires_grad=True)
-# Parameter containing:
-# tensor([-0.1188,  0.2937], requires_grad=True)
+# # 重みとバイアスの確認
+# print(fc1.weight)
+# print(fc1.bias)
+# # tensor([[ 0.2975, -0.2548, -0.1119],
+# #         [ 0.2710, -0.5435,  0.3462]], requires_grad=True)
+# # Parameter containing:
+# # tensor([-0.1188,  0.2937], requires_grad=True)
 
-# 線形変換の実行
-u1 = fc1(x)
-z1 = F.relu(u1)
-y = fc2(z1)
+# # 線形変換の実行
+# u1 = fc1(x)
+# z1 = F.relu(u1)
+# y = fc2(z1)
 
-print(y)
-# tensor([[0.1514]], grad_fn=<AddmmBackward0>)
+# print(y)
+# # tensor([[0.1514]], grad_fn=<AddmmBackward0>)
 
-# 目標値
-t = torch.tensor([[1.]])
+# # 目標値
+# t = torch.tensor([[1.]])
 
-# 平均二乗誤差
-loss = F.mse_loss(t, y)
+# # 平均二乗誤差
+# loss = F.mse_loss(t, y)
 
-print(loss)
-# tensor(0.7201, grad_fn=<MseLossBackward0>)
+# print(loss)
+# # tensor(0.7201, grad_fn=<MseLossBackward0>)
 
 
-from sklearn.datasets import load_iris
+# from sklearn.datasets import load_iris
+
+
+from typing import NoReturn, Dict, List, Tuple
+import time
+import datetime
+import torch
+import numpy as np
+
+from common.print_console import print_err
+from nn.network.dual_net import DualNet
+
+def get_torch_device(use_gpu: bool) -> torch.device:
+    """torch.deviceを取得する。
+
+    Args:
+        use_gpu (bool): GPU使用フラグ。
+
+    Returns:
+        torch.device: デバイス情報。
+    """
+    if use_gpu:
+        torch.cuda.set_device(0)
+        return torch.device("cuda")
+    return torch.device("cpu")
+
+use_gpu = True
+
+model_file_path = "model/sl-model_default.bin"
+model_file_path2 = "model/sl-model_20240912_011228_Ep:14.bin"
+
+device = get_torch_device(use_gpu=False)
+network = DualNet(device)
+network.to(device)
+try:
+    network.load_state_dict(torch.load(model_file_path))
+except Exception as e: # pylint: disable=W0702
+    print(f"Failed to load2 {model_file_path}. : ", e)
+    raise e
+
+# print(network.state_dict())
+print(list(network.parameters()))
+# print(network.state_dict().keys())

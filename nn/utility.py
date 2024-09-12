@@ -160,3 +160,28 @@ def load_network(model_file_path: str, use_gpu: bool) -> DualNet:
     torch.set_grad_enabled(False)
 
     return network
+
+
+from nn.network.dual_net_128_12 import DualNet_128_12
+
+def load_DualNet_128_12(model_file_path: str, use_gpu: bool) -> DualNet_128_12:
+    """ニューラルネットワークをロードして取得する。DualNet_128_12 版。
+
+    Args:
+        model_file_path (str): ニューラルネットワークのパラメータファイルパス。
+        use_gpu (bool): GPU使用フラグ。
+
+    Returns:
+        DualNet: パラメータロード済みのニューラルネットワーク。
+    """
+    device = get_torch_device(use_gpu=use_gpu)
+    network = DualNet_128_12(device)
+    network.to(device)
+    try:
+        network.load_state_dict(torch.load(model_file_path))
+    except: # pylint: disable=W0702
+        print(f"Failed to load {model_file_path}.")
+    network.eval()
+    torch.set_grad_enabled(False)
+
+    return network

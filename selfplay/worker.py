@@ -4,7 +4,7 @@ import glob
 import os
 import random
 import time
-from typing import List, NoReturn
+from typing import List
 import numpy as np
 
 from board.constant import PASS, RESIGN
@@ -14,14 +14,24 @@ from board.stone import Stone
 from sgf.selfplay_record import SelfPlayRecord
 from mcts.tree import MCTSTree
 from mcts.time_manager import TimeManager, TimeControl
-from nn.utility import load_network
+from nn.utility import load_network, load_DualNet_128_12
 from learning_param import SELF_PLAY_VISITS
 
 import psutil, subprocess, datetime
 
+def choose_network(network_name: str, model_file_path: str, use_gpu: bool):
+    if network_name == "DualNet":
+        network = load_network(model_file_path=model_file_path, use_gpu=use_gpu)
+    elif network_name == "DualNet_128_12":
+        network = load_DualNet_128_12(model_file_path=model_file_path, use_gpu=use_gpu)
+    else:
+        print(f"👺network_name: {network_name} is not defined.")
+        raise(f"network_name is not defined.")
+    return network
+
 
 # pylint: disable=R0913,R0914
-def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], size: int, visits: int, use_gpu: bool) -> NoReturn:
+def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str) -> None:
     """自己対戦実行ワーカ。
 
     Args:
@@ -31,11 +41,18 @@ def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], 
         size (int): 碁盤の大きさ。
         visits (int): 自己対戦実行時の探索回数。
         use_gpu (bool): GPU使用フラグ。
+        network_name1 (str): 使用するニューラルネットワーク名。
     """
+
+    # print("🐾selfplay_worker_start")##############
+
     board = GoBoard(board_size=size, komi=7.0, check_superko=True)
     init_board = GoBoard(board_size=size, komi=7.0, check_superko=True)
+    """初期化用"""
     record = SelfPlayRecord(save_dir, board.coordinate)
-    network = load_network(model_file_path=model_file_path, use_gpu=use_gpu)
+
+    network = choose_network(network_name1, model_file_path, use_gpu)
+
     network.training = False
 
     np.random.seed(random.choice(index_list))
@@ -91,7 +108,7 @@ def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], 
         record.write_record(winner, board.get_komi(), is_resign, score)
 
 
-def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool) -> NoReturn:
+def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool) -> None:
     """自己対戦の進捗を表示する。
 
     Args:
@@ -111,7 +128,7 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool
 
 
 # pylint: disable=R0913,R0914
-def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool) -> NoReturn:
+def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str, network_name2: str) -> None:
     """異なるモデルを対戦させる自己対戦実行ワーカ。
 
     Args:
@@ -122,12 +139,18 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
         size (int): 碁盤の大きさ。
         visits (int): 自己対戦実行時の探索回数。
         use_gpu (bool): GPU使用フラグ。
+        network_name1 (str): 使用するニューラルネットワーク名。
+        network_name2 (str): 使用するニューラルネットワーク名2。
     """
+    # print("🐾selfplay_worker_vs_start")##############
+
     board = GoBoard(board_size=size, komi=7.0, check_superko=True)
     init_board = GoBoard(board_size=size, komi=7.0, check_superko=True)
     record = SelfPlayRecord(save_dir, board.coordinate)
-    network1 = load_network(model_file_path=model_file_path1, use_gpu=use_gpu)
-    network2 = load_network(model_file_path=model_file_path2, use_gpu=use_gpu)
+
+    network1 = choose_network(network_name1, model_file_path1, use_gpu)
+    network2 = choose_network(network_name2, model_file_path2, use_gpu)
+
     network1.training = False
     network2.training = False
 

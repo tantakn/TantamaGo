@@ -1,4 +1,3 @@
-
 """Dual Networkの実装。
 """
 from typing import Tuple
@@ -11,7 +10,7 @@ from nn.network.head.policy_head import PolicyHead
 from nn.network.head.value_head import ValueHead
 
 
-class DualNet(nn.Module): # pylint: disable=R0902
+class DualNet_128_12(nn.Module): # pylint: disable=R0902
     """Dual Networkの実装クラス。
     """
     def __init__(self, device: torch.device, board_size: int=BOARD_SIZE):
@@ -22,8 +21,10 @@ class DualNet(nn.Module): # pylint: disable=R0902
             board_size (int, optional): 碁盤のサイズ。 デフォルト値はBOARD_SIZE。
         """
         super().__init__()
-        filters = 64
-        blocks = 6
+        filters = 128
+        blocks = 12
+        # filters = 64
+        # blocks = 6
 
         self.device = device
 
