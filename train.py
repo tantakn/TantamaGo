@@ -54,6 +54,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     # 学習データの指定がある場合はデータを生成する
     if kifu_dir is not None:
         if rl:
+            # rl の kifu_dir は kifu_dir/数字/*.sgf
             kifu_index_list: list[int] = [int(os.path.split(dir_path)[-1]) for dir_path in glob.glob(os.path.join(kifu_dir, "*"))]
             """archive/数字/の数字部分を取得してリストに格納する。"""
             num_kifu = 0
@@ -68,6 +69,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
 
             generate_reinforcement_learning_data(program_dir=program_dir, kifu_dir_list=kifu_dir_list, board_size=size)
         else:
+            # こっちの kifu_dir は kifu_dir/*.sgf
             generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
 
     if rl:

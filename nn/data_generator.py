@@ -35,8 +35,14 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
     }
     np.savez_compressed(save_file_path, **save_data)
 
+
 # pylint: disable=R0914
-def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_size: int=9) -> None:
+@click.command()
+@click.option('--kifu-dir', type=click.STRING, \
+    help="SGFファイルを格納しているディレクトリのパス。")
+@click.option('--board_size', type=click.INT, \
+    help="碁盤のサイズ. Defaults to 9.")
+def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None, board_size: int=9) -> None:
     """教師あり学習のデータを生成して保存する。
 
     Args:
@@ -44,6 +50,9 @@ def generate_supervised_learning_data(program_dir: str, kifu_dir: str, board_siz
         kifu_dir (str): SGFファイルを格納しているディレクトリのパス。
         board_size (int, optional): 碁盤のサイズ. Defaults to 9.
     """
+    assert kifu_dir is not None, "kifu_dir is None."
+    assert program_dir is not None, "program_dir is None."
+
     dt_watch = datetime.datetime.now()################
     print(f"🐾generate_supervised_learning_data {dt_watch}🐾")############
 
@@ -181,3 +190,6 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
     n_batches = len(value_data) // BATCH_SIZE
     if n_batches > 0:
         _save_data(os.path.join(program_dir, "data", f"rl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
+
+if __name__ == "__main__":
+    generate_supervised_learning_data(os.path.dirname(__file__))
