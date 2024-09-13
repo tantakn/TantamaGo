@@ -9,7 +9,7 @@ from nn.loss import calculate_policy_loss, calculate_value_loss, \
     calculate_policy_kld_loss
 from nn.utility import get_torch_device, print_learning_process, \
     print_evaluation_information, save_model, load_data_set, \
-    split_train_test_set
+    split_train_test_set, choose_network
 
 from learning_param import SL_LEARNING_RATE, RL_LEARNING_RATE, \
     MOMENTUM, WEIGHT_DECAY, SL_VALUE_WEIGHT, RL_VALUE_WEIGHT, \
