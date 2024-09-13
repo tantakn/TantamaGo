@@ -27,6 +27,10 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
         kifu_counter (int): データセットにある棋譜データの個数。
     """
 
+    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] save_npz {kifu_counter}")
+    print(save_file_path)
+
+
     # 辞書化して保存
     save_data = {
         "input": np.array(input_data[0:DATA_SET_SIZE]),
@@ -38,11 +42,13 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
 
 
 # pylint: disable=R0914
-@click.command()
-@click.option('--kifu-dir', type=click.STRING, \
-    help="SGFファイルを格納しているディレクトリのパス。")
-@click.option('--board_size', type=click.INT, \
-    help="碁盤のサイズ. Defaults to 9.")
+# @click.command()
+# @click.option('--program-dir', type=click.STRING, \
+#     help="プログラムのホームディレクトリのパス。")
+# @click.option('--kifu-dir', type=click.STRING, \
+#     help="SGFファイルを格納しているディレクトリのパス。")
+# @click.option('--board_size', type=click.INT, \
+#     help="碁盤のサイズ. Defaults to 9.")
 def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None, board_size: int=9) -> None:
     """教師あり学習のデータを生成して保存する。
 
@@ -55,7 +61,7 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
     assert program_dir is not None, "program_dir is None."
 
     dt_watch = datetime.datetime.now()################
-    print(f"🐾generate_supervised_learning_data {dt_watch}🐾")############
+    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_data start")####################
 
     board = GoBoard(board_size=board_size)
 
@@ -74,8 +80,7 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
     kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
     print(f"kifu_num: {kifu_num}")#############
 
-    # 局のループ
-
+    cnt_kifu = 0##############
     # 局のループ
     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
         board.clear()
@@ -85,8 +90,12 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
         value_label = sgf.get_value_label()
         """勝ち負け。黒勝ちは2、白勝ちは0、持碁は1。"""
 
+        cnt_kifu += 1#############
+        cnt_te = 0######################
         # 手のループ
         for pos in sgf.get_moves():
+            cnt_te += 1#######################
+            print(f"\rkifu: {cnt_kifu:0>5}, te: {cnt_te:0>2}", end="")#############
             # 対称形でかさ増し
             for sym in range(8):
                 input_data.append(generate_input_planes(board, color, sym))
@@ -192,5 +201,5 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
     if n_batches > 0:
         _save_data(os.path.join(program_dir, "data", f"rl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
 
-if __name__ == "__main__":
-    generate_supervised_learning_data(os.path.dirname(__file__))
+# if __name__ == "__main__":
+#     generate_supervised_learning_data(os.path.dirname(__file__))
