@@ -10,6 +10,7 @@ from nn.feature import generate_input_planes, generate_target_data, generate_rl_
 from sgf.reader import SGFReader
 from learning_param import BATCH_SIZE, DATA_SET_SIZE
 from typing import List
+import click
 
 
 import time, datetime#################
