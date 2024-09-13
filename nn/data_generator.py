@@ -41,7 +41,7 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
 @click.command()
 @click.option('--kifu-dir', type=click.STRING, \
     help="SGFファイルを格納しているディレクトリのパス。")
-@click.option('--board_size', type=click.INT, \
+@click.option('--board-size', type=click.INT, \
     help="碁盤のサイズ. Defaults to 9.")
 def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None, board_size: int=9) -> None:
     """教師あり学習のデータを生成して保存する。
