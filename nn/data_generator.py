@@ -13,7 +13,7 @@ from typing import List
 import click
 
 
-import time, datetime#################
+import time, datetime################
 
 
 def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndarray, value_data: np.ndarray, kifu_counter: int) -> None:
@@ -27,10 +27,6 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
         kifu_counter (int): データセットにある棋譜データの個数。
     """
 
-    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] save_npz {kifu_counter}")
-    print(save_file_path)
-
-
     # 辞書化して保存
     save_data = {
         "input": np.array(input_data[0:DATA_SET_SIZE]),
@@ -38,18 +34,12 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
         "value": np.array(value_data[0:DATA_SET_SIZE], dtype=np.int32),
         "kifu_count": np.array(kifu_counter)
     }
+
     # killed って出るときはメモリ足りてない
     np.savez_compressed(save_file_path, **save_data)
 
 
 # pylint: disable=R0914
-# @click.command()
-# @click.option('--program-dir', type=click.STRING, \
-#     help="プログラムのホームディレクトリのパス。")
-# @click.option('--kifu-dir', type=click.STRING, \
-#     help="SGFファイルを格納しているディレクトリのパス。")
-# @click.option('--board_size', type=click.INT, \
-#     help="碁盤のサイズ. Defaults to 9.")
 def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None, board_size: int=9) -> None:
     """教師あり学習のデータを生成して保存する。
 
@@ -61,28 +51,39 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
     assert kifu_dir is not None, "kifu_dir is None."
     assert program_dir is not None, "program_dir is None."
 
-    dt_watch = datetime.datetime.now()################
+
     print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_data start")####################
+    print(f"    BATCH_SIZE: {BATCH_SIZE}")
+    print(f"    DATA_SET_SIZE: {DATA_SET_SIZE}")
+    kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
+    print(f"    kifu_num: {kifu_num}")#############
+
+
+    dt_watch = datetime.datetime.now()################
 
     board = GoBoard(board_size=board_size)
 
     input_data = []
     """入力データ。説明変数たち。"""
+
     policy_data = []
     """moveのデータ。目的変数（ターゲットデータ）たち。"""
+
     value_data = []
     """勝敗のデータ。目的変数？たち。？これが 0 のとき学習しない？"""
 
     kifu_counter = 1
     """npzファイルに書き込む棋譜データの個数を数えておく。npzにも書き込む。"""
+
     data_counter = 0
     """f"data/sl_data_{data_counter}"""
 
-    kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
-    print(f"kifu_num: {kifu_num}")#############
+    cnt = 0###############
+    """デバグ用。これまでの棋譜の総数"""
 
     # 局のループ
     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
+        cnt += 1###############
         board.clear()
         # ここで勝敗とかも取得してる
         sgf = SGFReader(kifu_path, board_size)
@@ -118,9 +119,10 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
             kifu_counter = 1
             data_counter += 1
 
+
             print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_npz")#####################
             print(f"    saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})")
-            print(f"    from: {kifu_path} / {kifu_num}kyoku")
+            print(f"    cnt: {cnt} / {kifu_num}kyoku")
             dt_watch = datetime.datetime.now()
 
 
@@ -197,5 +199,14 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
     if n_batches > 0:
         _save_data(os.path.join(program_dir, "data", f"rl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
 
-# if __name__ == "__main__":
-#     generate_supervised_learning_data(os.path.dirname(__file__))
+if __name__ == "__main__":
+    # pylint: disable=R0914
+    @click.command()
+    @click.option('--program-dir', type=click.STRING, \
+        help="プログラムのホームディレクトリのパス。")
+    @click.option('--kifu-dir', type=click.STRING, \
+        help="SGFファイルを格納しているディレクトリのパス。")
+    @click.option('--board_size', type=click.INT, \
+        help="碁盤のサイズ. Defaults to 9.")
+    def tmp_generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None, board_size: int=9) -> None:
+        generate_supervised_learning_data(os.path.dirname(__file__), kifu_dir, board_size)

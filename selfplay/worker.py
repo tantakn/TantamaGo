@@ -14,20 +14,10 @@ from board.stone import Stone
 from sgf.selfplay_record import SelfPlayRecord
 from mcts.tree import MCTSTree
 from mcts.time_manager import TimeManager, TimeControl
-from nn.utility import load_network, load_DualNet_128_12
+from nn.utility import load_network, load_DualNet_128_12, choose_network
 from learning_param import SELF_PLAY_VISITS
 
 import psutil, subprocess, datetime
-
-def choose_network(network_name: str, model_file_path: str, use_gpu: bool):
-    if network_name == "DualNet":
-        network = load_network(model_file_path=model_file_path, use_gpu=use_gpu)
-    elif network_name == "DualNet_128_12":
-        network = load_DualNet_128_12(model_file_path=model_file_path, use_gpu=use_gpu)
-    else:
-        print(f"👺network_name: {network_name} is not defined.")
-        raise(f"network_name is not defined.")
-    return network
 
 
 # pylint: disable=R0913,R0914

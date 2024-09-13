@@ -26,7 +26,9 @@ from monitoring import display_train_monitoring_worker
     help="強化学習実行フラグ。教師あり学習を実行するときにはfalseを指定する。")
 @click.option('--window-size', type=click.INT, default=300000, \
     help="強化学習時のウィンドウサイズ")
-def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int): # pylint: disable=C0103
+@click.option('--net', 'network_name', type=click.STRING, default="DualNet", \
+    help="ネットワーク。デフォルトは DualNet。")
+def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 
     Args:
@@ -45,12 +47,13 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     print(f"    rl: {rl}")
     print(f"    window_size: {window_size}")
 
-
     monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu,), daemon=True);
     monitoring_worker.start()
 
 
     program_dir = os.path.dirname(__file__)
+
+
     # 学習データの指定がある場合はデータを生成する
     if kifu_dir is not None:
         if rl:
@@ -71,6 +74,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
         else:
             # こっちの kifu_dir は kifu_dir/*.sgf
             generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
+
 
     if rl:
         if use_gpu:

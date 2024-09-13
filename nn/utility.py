@@ -187,3 +187,14 @@ def load_DualNet_128_12(model_file_path: str, use_gpu: bool) -> DualNet_128_12:
     torch.set_grad_enabled(False)
 
     return network
+
+
+def choose_network(network_name: str, model_file_path: str, use_gpu: bool):
+    if network_name == "DualNet":
+        network = load_network(model_file_path=model_file_path, use_gpu=use_gpu)
+    elif network_name == "DualNet_128_12":
+        network = load_DualNet_128_12(model_file_path=model_file_path, use_gpu=use_gpu)
+    else:
+        print(f"👺network_name: {network_name} is not defined.")
+        raise(f"network_name is not defined.")
+    return network
