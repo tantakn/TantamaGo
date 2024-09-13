@@ -91,7 +91,7 @@ def save_model(network: torch.nn.Module, path: str) -> NoReturn:
 
 
 def load_data_set(path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """学習データセットを読み込む。
+    """学習データセットを読み込む。シャッフルもする。
 
     Args:
         path (str): データセットのファイルパス。
@@ -100,8 +100,11 @@ def load_data_set(path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         Tuple[np.ndarray, np.ndarray, np.ndarray]: 入力データ、Policy、Value。
     """
     data = np.load(path)
+
+    # それぞれの関係を保ったままシャッフルして返す
     perm = np.random.permutation(len(data["value"]))
-    return data["input"][perm], data["policy"][perm].astype(np.float32), \
+    return data["input"][perm], \
+        data["policy"][perm].astype(np.float32), \
         data["value"][perm].astype(np.int64)
 
 
