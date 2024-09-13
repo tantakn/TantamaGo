@@ -38,6 +38,7 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
         "value": np.array(value_data[0:DATA_SET_SIZE], dtype=np.int32),
         "kifu_count": np.array(kifu_counter)
     }
+    # killed って出るときはメモリ足りてない
     np.savez_compressed(save_file_path, **save_data)
 
 
@@ -80,7 +81,6 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
     kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
     print(f"kifu_num: {kifu_num}")#############
 
-    cnt_kifu = 0##############
     # 局のループ
     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
         board.clear()
@@ -90,12 +90,8 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
         value_label = sgf.get_value_label()
         """勝ち負け。黒勝ちは2、白勝ちは0、持碁は1。"""
 
-        cnt_kifu += 1#############
-        cnt_te = 0######################
         # 手のループ
         for pos in sgf.get_moves():
-            cnt_te += 1#######################
-            print(f"\rkifu: {cnt_kifu:0>5}, te: {cnt_te:0>2}", end="")#############
             # 対称形でかさ増し
             for sym in range(8):
                 input_data.append(generate_input_planes(board, color, sym))
@@ -123,8 +119,8 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
             data_counter += 1
 
             print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_npz")#####################
-            print(f"saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})")
-            print(f"from: {kifu_path} / {kifu_num}kyoku")
+            print(f"    saved: sl_data_{data_counter}.npz ({datetime.datetime.now() - dt_watch})")
+            print(f"    from: {kifu_path} / {kifu_num}kyoku")
             dt_watch = datetime.datetime.now()
 
 
