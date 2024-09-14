@@ -344,8 +344,11 @@ def generate_supervised_learning_data2(program_dir: str, kifu_dir: str, num_work
 
     list_kifu_shuffled = random.sample(list_kifu_main, len(list_kifu_main))
 
+    # それぞれのワーカーに渡すパスのリストのリストの作成。
     list_list_kifu_shuffled = [[]] * num_worker
 
+    # list_kifu_shuffled の先頭から順に num_div ずつに分割すればいい感じになる。
+    # num_div % DATA_SET_SIZE == 0 && num_worker - 1 <= len(list_kifu_shuffled) / num_div <= num_worker
     num_div = -((-len(list_kifu_shuffled) // DATA_SET_SIZE) // num_worker) * DATA_SET_SIZE
 
     for i in range(len(list_list_kifu_shuffled)):

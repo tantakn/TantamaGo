@@ -153,12 +153,15 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
     # 学習データと検証用データの分割
     data_set = sorted(glob.glob(os.path.join(program_dir, "data", "sl_data_*.npz")))
+    """sl_data_*.npz のファイルパスのリスト。"""
     train_data_set, test_data_set = split_train_test_set(data_set, 0.8)
+    """sl_data_*.npz のファイルパスのリストを学習データと検証用データの分割したもの。"""
 
     # 学習処理を行うデバイスの設定
     device = get_torch_device(use_gpu=True)
 
     dual_net = DualNet(device=device, board_size=board_size)
+    """DualNetのインスタンス。多分、ここにニューラルネットワークのパラメタとか入ってる。"""
 
     dual_net.to(device)
 
@@ -173,23 +176,33 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                                 nesterov=True)
 
     scaler = torch.cuda.amp.GradScaler()
+    """勾配消失とかいうのを防ぐやつらしい"""
 
     current_lr = SL_LEARNING_RATE
+    """学習率"""
 
     # if device == 'cuda':###########
     #     dual_net = torch.nn.DataParallel(dual_net) # make parallel
     #     torch.backends.cuda.nn.benchmark = True
 
     for epoch in range(epochs):
+
+        # npz ループ
         for data_index, train_data_path in enumerate(train_data_set):
             plane_data, policy_data, value_data = load_data_set(train_data_path)
+
             train_loss = {
                 "loss": 0.0,
                 "policy": 0.0,
                 "value": 0.0,
             }
+
             iteration = 0
+
+            # モデルを訓練モードにする
             dual_net.train()
+
+            # バッチループ。epoch_time ってあるけど多分バッチの時間を計測してる。
             epoch_time = time.time()
             for i in range(0, len(value_data) - batch_size + 1, batch_size):
                 with torch.cuda.amp.autocast(enabled=True):
@@ -203,14 +216,19 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     #     policy_predict, value_predict = dual_net.forward_for_sl(plane)
                     policy_predict, value_predict = dual_net.forward_for_sl(plane)
 
+                    # モデルの勾配を初期化
+                    # たぶん、ミニバッチ学習で使うためにミニバッチ内の勾配を記録していて、前のミニバッチの勾配が残っているので、それを初期化している。
                     dual_net.zero_grad()
 
+                    # ロスの計算
                     policy_loss = calculate_policy_loss(policy_predict, policy)
                     value_loss = calculate_value_loss(value_predict, value)
 
+                    # 多分、policy_loss のが重要だから、value_loss に微小量の重みをかけてる 
                     loss = (policy_loss + SL_VALUE_WEIGHT * value_loss).mean()
 
                 scaler.scale(loss).backward()
+                # 重みの更新をしてる？
                 scaler.step(optimizer)
                 scaler.update()
 
@@ -256,6 +274,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
         print_evaluation_information(test_loss, epoch, test_iteration, testing_time)
 
+        # 学習率を変更する
         if epoch in LEARNING_SCHEDULE["learning_rate"]:
             previous_lr = current_lr
             for group in optimizer.param_groups:
