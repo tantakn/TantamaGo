@@ -1,0 +1,29 @@
+[20240914_121840] test
+Test 10 : loss = 1.454589, time = 365.062422 [s].
+        policy loss : 1.437923
+        value loss  : 0.833313
+Epoch 10, learning rate has changed 0.0001 -> 1e-05
+
+
+
+[20240914_132024] test
+Test 11 : loss = 1.448150, time = 365.874424 [s].
+        policy loss : 1.431554
+        value loss  : 0.829757
+
+
+[20240914_142208] test
+Test 12 : loss = 1.447503, time = 366.371462 [s].
+        policy loss : 1.430910
+        value loss  : 0.829649
+
+
+[20240914_152403] test
+Test 13 : loss = 1.447404, time = 366.252390 [s].
+        policy loss : 1.430812
+        value loss  : 0.829606
+
+[20240914_162539] test
+Test 14 : loss = 1.447228, time = 365.081832 [s].
+        policy loss : 1.430632
+        value loss  : 0.829831
