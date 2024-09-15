@@ -4,7 +4,7 @@ import glob
 import os
 import time
 import torch
-from nn.network.dual_net import DualNet
+from nn.network.dual_net import DualNet, DualNet_128_12
 from nn.loss import calculate_policy_loss, calculate_value_loss, \
     calculate_policy_kld_loss
 from nn.utility import get_torch_device, print_learning_process, \
@@ -38,7 +38,7 @@ def train_on_cpu(program_dir: str, board_size: int, batch_size: \
 
     # 学習処理を行うデバイスの設定
     device = get_torch_device(use_gpu=False)
-
+    
     dual_net = DualNet(device=device, board_size=board_size)
 
     dual_net.to(device)
@@ -127,7 +127,7 @@ def train_on_cpu(program_dir: str, board_size: int, batch_size: \
 
 
 def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
-    epochs: int) -> None: # pylint: disable=R0914,R0915
+    epochs: int, network_name: str) -> None: # pylint: disable=R0914,R0915
     """教師あり学習を実行し、学習したモデルを保存する。
 
     Args:
@@ -160,8 +160,14 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
     # 学習処理を行うデバイスの設定
     device = get_torch_device(use_gpu=True)
 
-    dual_net = DualNet(device=device, board_size=board_size)
-    """DualNetのインスタンス。多分、ここにニューラルネットワークのパラメタとか入ってる。"""
+    if network_name == "DualNet":
+        dual_net = DualNet(device=device, board_size=board_size)
+        """DualNetのインスタンス。多分、ここにニューラルネットワークのパラメタとか入ってる。"""
+    elif network_name == "DualNet_128_12":
+        dual_net = DualNet_128_12(device=device, board_size=board_size)
+    else:
+        print(f"👺network_name: {network_name} is not defined.")
+        raise(f"network_name is not defined.")
 
     dual_net.to(device)
 
