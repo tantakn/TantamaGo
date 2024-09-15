@@ -46,7 +46,9 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     print(f"    use_gpu: {use_gpu}")
     print(f"    rl: {rl}")
     print(f"    window_size: {window_size}")
+    print(f"    network_name: {network_name}")
 
+    # ハードウェア使用率の監視スレッドを起動
     monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu,), daemon=True);
     monitoring_worker.start()
 

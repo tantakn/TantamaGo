@@ -1,0 +1,15 @@
+🐾train_main
+    EPOCHS: 15
+    kifu_dir: backup/sgf_ippai
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+[20240914_215059] gen_sl_data start
+    BATCH_SIZE: 256
+    DATA_SET_SIZE: 1024000
+[20240914_215059] monitoring
+cpu: 1.9% [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+mem: 7.2% 
+TITAN RTX, 0, 0 %, 16 MiB, 15.52 W 
+TITAN RTX, 1, 0 %, 6 MiB, 1.60 W 

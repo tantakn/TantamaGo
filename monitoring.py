@@ -2,12 +2,13 @@ import os
 import time, datetime, psutil, subprocess
 
 
-def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True) -> None:
+def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval:int = 300) -> None:
     """ハードの使用率を表示する。
 
     Args:
         use_gpu (bool): GPU使用フラグ。
         repeat (bool): 繰り返し表示フラグ。
+        interval (int): 表示間隔（秒）。デフォルトは300秒。
     """
 
     def fire(percentage: float) -> str:
@@ -57,7 +58,7 @@ def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True) -> None:
     disp(0.1)
 
     while repeat:
-        time.sleep(60)
+        time.sleep(interval)
 
         disp(1)
 
