@@ -218,6 +218,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
                     # モデルの勾配を初期化
                     # たぶん、ミニバッチ学習で使うためにミニバッチ内の勾配を記録していて、前のミニバッチの勾配が残っているので、それを初期化している。
+                    # ？with の上に移動する？
                     dual_net.zero_grad()
 
                     # ロスの計算
