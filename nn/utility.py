@@ -229,3 +229,5 @@ def choose_network(network_name: str, model_file_path: str, use_gpu: bool):
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")
     return network
+
+TEST = "test"
