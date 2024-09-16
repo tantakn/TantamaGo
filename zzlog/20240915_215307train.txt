@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "train.py", line 8, in <module>
+    from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, \
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 7, in <module>
+    from nn.network.dual_net import DualNet, DualNet_128_12
+ImportError: cannot import name 'DualNet_128_12' from 'nn.network.dual_net' (/data/student/u2424004/igo/TantamaGo/nn/network/dual_net.py)

@@ -20,7 +20,7 @@ def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval
             return "🔥"
         else:
             return ""
-    
+
     def gpu_fire(text: str) -> str:
             mem = float(text.split(" %, ")[1].split(" MiB, ")[0])
             return "🔥" if mem > 30 else ""
@@ -56,6 +56,11 @@ def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval
     time.sleep(0.1)
 
     disp(0.1)
+
+    if repeat:
+        time.sleep(10)
+
+        disp(1)
 
     while repeat:
         time.sleep(interval)

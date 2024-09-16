@@ -4,7 +4,9 @@ import glob
 import os
 import time
 import torch
-from nn.network.dual_net import DualNet, DualNet_128_12
+from nn.network.dual_net import DualNet
+from nn.network.dual_net_128_12 import DualNet_128_12
+from nn.network.dual_net_256_24 import DualNet_256_24
 from nn.loss import calculate_policy_loss, calculate_value_loss, \
     calculate_policy_kld_loss
 from nn.utility import get_torch_device, print_learning_process, \
@@ -165,6 +167,8 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
         """DualNetのインスタンス。多分、ここにニューラルネットワークのパラメタとか入ってる。"""
     elif network_name == "DualNet_128_12":
         dual_net = DualNet_128_12(device=device, board_size=board_size)
+    elif network_name == "DualNet_256_24":
+        dual_net = DualNet_256_24(device=device, board_size=board_size)
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")
@@ -205,7 +209,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
             iteration = 0
 
-            # モデルを訓練モードにする
+            # モデルを訓練モードにする。バッチ正規化とかドロップアウトとか訓練時と推論時で挙動が違うものが訓練モードになる。。
             dual_net.train()
 
             # バッチループ。epoch_time ってあるけど多分バッチの時間を計測してる。

@@ -192,11 +192,39 @@ def load_DualNet_128_12(model_file_path: str, use_gpu: bool) -> DualNet_128_12:
     return network
 
 
+from nn.network.dual_net_256_24 import DualNet_256_24
+
+def load_DualNet_256_24(model_file_path: str, use_gpu: bool) -> DualNet_128_12:
+    """ニューラルネットワークをロードして取得する。DualNet_128_12 版。
+
+    Args:
+        model_file_path (str): ニューラルネットワークのパラメータファイルパス。
+        use_gpu (bool): GPU使用フラグ。
+
+    Returns:
+        DualNet: パラメータロード済みのニューラルネットワーク。
+    """
+    device = get_torch_device(use_gpu=use_gpu)
+    network = DualNet_256_24(device)
+    network.to(device)
+    try:
+        network.load_state_dict(torch.load(model_file_path))
+    except Exception as e: # pylint: disable=W0702
+        print(f"Failed to load_DualNet_256_24 {model_file_path}.")
+        raise("Failed to load_DualNet_256_24.")
+    network.eval()
+    torch.set_grad_enabled(False)
+
+    return network
+
+
 def choose_network(network_name: str, model_file_path: str, use_gpu: bool):
     if network_name == "DualNet":
         network = load_network(model_file_path=model_file_path, use_gpu=use_gpu)
     elif network_name == "DualNet_128_12":
         network = load_DualNet_128_12(model_file_path=model_file_path, use_gpu=use_gpu)
+    elif network_name == "DualNet_256_24":
+        network = load_DualNet_256_24(model_file_path=model_file_path, use_gpu=use_gpu)
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")
