@@ -22,6 +22,7 @@ def generate_input_planes(board: GoBoard, color: Stone, sym: int=0) -> np.ndarra
     # 下の方に例がある。
 
     board_data = board.get_board_data(sym)
+    """空点は0, 黒石は1, 白石は2の盤面の2次元リスト。"""
     board_size = board.get_board_size()
     # 手番が白の時は石の色を反転する.
     if color is Stone.WHITE:

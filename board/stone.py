@@ -3,7 +3,7 @@
 from enum import Enum
 
 class Stone(Enum):
-    """石の色を表すクラス。
+    """石の色を表すクラス。列挙型。
     """
     EMPTY = 0
     BLACK = 1

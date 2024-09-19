@@ -26,6 +26,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
 
         self.device = device
 
+        # resnet前の畳み込み層
         self.conv_layer = nn.Conv2d(in_channels=6, out_channels=filters, kernel_size=3, padding=1, bias=False)
         self.bn_layer = nn.BatchNorm2d(num_features=filters)
         self.relu = nn.ReLU()
@@ -45,6 +46,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: PolicyとValueのlogit。
         """
+        # blocks がresnet
         blocks_out = self.blocks(self.relu(self.bn_layer(self.conv_layer(input_plane))))
 
         return self.policy_head(blocks_out), self.value_head(blocks_out)
@@ -104,7 +106,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
 
 
 def make_common_blocks(num_blocks: int, num_filters: int) -> torch.nn.Sequential:
-    """DualNetの共通の残差ブロックを構成して返す。
+    """DualNetの共通の残差ブロック（多分、resnet）を構成して返す。
 
     Args:
         num_blocks (int): 積み上げる残差ブロック数。

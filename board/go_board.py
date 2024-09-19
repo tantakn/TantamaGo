@@ -33,6 +33,7 @@ class GoBoard: # pylint: disable=R0902
 
         def pos(x_coord: int, y_coord: int) -> int:
             """(x, y)座標を1次元配列のインデックスに変換する。
+            return x_coord + y_coord * self.board_size_with_ob
 
             Args:
                 x_coord (int): X座標。
@@ -61,11 +62,12 @@ class GoBoard: # pylint: disable=R0902
                 pos + self.board_size_with_ob - 1, pos + self.board_size_with_ob + 1]
 
         self.board = [Stone.EMPTY] * (self.board_size_with_ob ** 2)
-        """碁盤本体"""
+        """盤外を含む碁盤本体.。enumの一次元配列"""
         self.pattern = Pattern(board_size, pos)
         self.strings = StringData(board_size, pos, get_neighbor4)
         self.record = Record()
         self.onboard_pos = [0] * (self.board_size ** 2)
+        """盤外を含まない碁盤の座標。整数一次元配列。要素は座標を示す整数。"""
         self.coordinate = Coordinate(board_size=board_size)
         self.ko_move = 0
         self.ko_pos = PASS
