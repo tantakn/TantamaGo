@@ -1,3 +1,5 @@
+何だっけこれ。なんでep13で止まってるの？
+
 🐾train_main
     EPOCHS: 15
     kifu_dir: None
