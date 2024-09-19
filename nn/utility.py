@@ -7,7 +7,7 @@ import torch
 import numpy as np
 
 from common.print_console import print_err
-from nn.network.dual_net import DualNet
+from nn.network import DualNet, DualNet_128_12, DualNet_256_24
 
 
 def get_torch_device(use_gpu: bool) -> torch.device:
@@ -166,7 +166,6 @@ def load_network(model_file_path: str, use_gpu: bool) -> DualNet:
     return network
 
 
-from nn.network.dual_net_128_12 import DualNet_128_12
 
 def load_DualNet_128_12(model_file_path: str, use_gpu: bool) -> DualNet_128_12:
     """ニューラルネットワークをロードして取得する。DualNet_128_12 版。
@@ -192,7 +191,6 @@ def load_DualNet_128_12(model_file_path: str, use_gpu: bool) -> DualNet_128_12:
     return network
 
 
-from nn.network.dual_net_256_24 import DualNet_256_24
 
 def load_DualNet_256_24(model_file_path: str, use_gpu: bool) -> DualNet_128_12:
     """ニューラルネットワークをロードして取得する。DualNet_128_12 版。

@@ -4,9 +4,7 @@ import glob
 import os
 import time
 import torch
-from nn.network.dual_net import DualNet
-from nn.network.dual_net_128_12 import DualNet_128_12
-from nn.network.dual_net_256_24 import DualNet_256_24
+from nn.network import DualNet, DualNet_128_12, DualNet_256_24
 from nn.loss import calculate_policy_loss, calculate_value_loss, \
     calculate_policy_kld_loss
 from nn.utility import get_torch_device, print_learning_process, \
@@ -33,10 +31,16 @@ def train_on_cpu(program_dir: str, board_size: int, batch_size: \
         batch_size (int): ミニバッチサイズ。
         epochs (int): 実行する最大エポック数。
     """
+    print(f"🐾train_on_cpu {dt_now}")###########
+
+    batch_size = 1#######################
+
+
     # 学習データと検証用データの分割
     data_set = sorted(glob.glob(os.path.join(program_dir, "data", "sl_data_*.npz")))
 
-    train_data_set, test_data_set = split_train_test_set(data_set, 0.8)
+    train_data_set, test_data_set = split_train_test_set(data_set, 1)
+    # train_data_set, test_data_set = split_train_test_set(data_set, 0.8)
 
     # 学習処理を行うデバイスの設定
     device = get_torch_device(use_gpu=False)
@@ -53,6 +57,7 @@ def train_on_cpu(program_dir: str, board_size: int, batch_size: \
     current_lr = SL_LEARNING_RATE
 
     for epoch in range(epochs):
+        print(f"🐾epoch: {epoch}")############
         for data_index, train_data_path in enumerate(train_data_set):
             plane_data, policy_data, value_data = load_data_set(train_data_path)
             train_loss = {
@@ -64,9 +69,14 @@ def train_on_cpu(program_dir: str, board_size: int, batch_size: \
             dual_net.train()
             epoch_time = time.time()
             for i in range(0, len(value_data) - batch_size + 1, batch_size):
+                print(f"🐾バッチ: {i}")############
                 plane = torch.tensor(plane_data[i:i+batch_size])
                 policy = torch.tensor(policy_data[i:i+batch_size])
                 value = torch.tensor(value_data[i:i+batch_size])
+
+                print(plane)
+                print(policy)
+                print(value)
 
                 policy_predict, value_predict = dual_net.forward_for_sl(plane)
 
@@ -85,7 +95,13 @@ def train_on_cpu(program_dir: str, board_size: int, batch_size: \
                 train_loss["policy"] += policy_loss.mean().item()
                 train_loss["value"] += value_loss.mean().item()
                 iteration += 1
-
+                
+                print("!!!dual_net\n", dual_net)
+                print("!!!dual_net.state_dict().keys()\n", dual_net.state_dict().keys())############
+                print("!!!dual_net.state_dict()\n", dual_net.state_dict())
+                print("!!!list(dual_net.parameters()\n", list(dual_net.parameters()))
+                return
+            
             print_learning_process(train_loss, epoch, data_index, iteration, epoch_time)
 
         test_loss = {
@@ -115,6 +131,7 @@ def train_on_cpu(program_dir: str, board_size: int, batch_size: \
                     test_loss["policy"] += policy_loss.mean().item()
                     test_loss["value"] += value_loss.mean().item()
                     test_iteration += 1
+
 
         print_evaluation_information(test_loss, epoch, test_iteration, testing_time)
 
@@ -217,6 +234,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
             for i in range(0, len(value_data) - batch_size + 1, batch_size):
                 with torch.cuda.amp.autocast(enabled=True):
                     plane = torch.tensor(plane_data[i:i+batch_size]).to(device)
+                    """盤面データのミニバッチのリスト。81*6*batch_size のテンソル。"""
                     policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
