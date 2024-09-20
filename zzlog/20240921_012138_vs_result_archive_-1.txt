@@ -1,0 +1,7 @@
+
+[20240921_012138] vs_result
+games: 200
+model1: backup/model/sl-model_20240918_203013_Ep:14.bin
+    win: (115 + 0.5*3)/200 (57.50%)
+model2: backup/model/sl-model_20240918_203013_Ep:06.bin
+    win: (82 + 0.5*3)/200 (41.00%)

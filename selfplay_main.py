@@ -14,6 +14,9 @@ from learning_param import SELF_PLAY_VISITS, NUM_SELF_PLAY_WORKERS, \
 from monitoring import display_train_monitoring_worker#############
 import datetime
 
+import torch
+import multiprocessing
+
 # pylint: disable=R0913, R0914
 @click.command()
 @click.option('--save-dir', type=click.STRING, default="archive", \
@@ -81,6 +84,17 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
 
     print(f"Self play visits : {visits}")
 
+    cnt = 0
+    def cnt_up_return():
+        if not torch.cuda.is_available():
+            return 0
+        nonlocal cnt
+        cnt += 1
+        print("cnt: ", cnt)###################
+        print("cnt % torch.cuda.device_count(): ", cnt % torch.cuda.device_count())###################
+        return cnt % torch.cuda.device_count()
+    print("qwer")###################
+
     if model2 == "None":
         # テンプレ改造？ここでsgfを出力してないselfplay_workerでしてる？
         # submit(selfplay_worker,...（selfplay_workerの引数たち）)らしい
@@ -97,7 +111,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
                 future.result()
     else:
         with ProcessPoolExecutor(max_workers=process) as executor:
-            futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), model, model2, file_list, size, visits, use_gpu, network_name1, network_name2) for file_list in file_indice]
+            futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), model, model2, file_list, size, visits, use_gpu, network_name1, network_name2, cuda_num=cnt_up_return()) for file_list in file_indice]
 
             monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True);
             monitoring_worker.start()
@@ -113,4 +127,5 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
 
 
 if __name__ == "__main__":
+    multiprocessing.set_start_method('spawn')
     selfplay_main() # pylint: disable=E1120

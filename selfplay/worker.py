@@ -118,7 +118,7 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool
 
 
 # pylint: disable=R0913,R0914
-def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str, network_name2: str) -> None:
+def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str, network_name2: str, cuda_num: int=0) -> None:
     """異なるモデルを対戦させる自己対戦実行ワーカ。
 
     Args:
@@ -131,15 +131,17 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
         use_gpu (bool): GPU使用フラグ。
         network_name1 (str): 使用するニューラルネットワーク名。
         network_name2 (str): 使用するニューラルネットワーク名2。
+        cuda_num (int): 使用するGPU番号。
     """
     # print("🐾selfplay_worker_vs_start")##############
+    print("cuda_num: ", cuda_num)##############
 
     board = GoBoard(board_size=size, komi=7.0, check_superko=True)
     init_board = GoBoard(board_size=size, komi=7.0, check_superko=True)
     record = SelfPlayRecord(save_dir, board.coordinate)
 
-    network1 = choose_network(network_name1, model_file_path1, use_gpu)
-    network2 = choose_network(network_name2, model_file_path2, use_gpu)
+    network1 = choose_network(network_name1, model_file_path1, use_gpu, cuda_num=cuda_num)
+    network2 = choose_network(network_name2, model_file_path2, use_gpu, cuda_num=cuda_num)
 
     network1.training = False
     network2.training = False
