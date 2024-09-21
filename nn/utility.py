@@ -10,7 +10,7 @@ from common.print_console import print_err
 from nn.network import DualNet, DualNet_128_12, DualNet_256_24
 
 
-def get_torch_device(use_gpu: bool, cuda_num: int = 0) -> torch.device:
+def get_torch_device(use_gpu: bool, gpu_num: int = 0) -> torch.device:
     """torch.deviceを取得する。
 
     Args:
@@ -20,7 +20,7 @@ def get_torch_device(use_gpu: bool, cuda_num: int = 0) -> torch.device:
         torch.device: デバイス情報。
     """
     if use_gpu:
-        torch.cuda.set_device(cuda_num)
+        torch.cuda.set_device(gpu_num)
         return torch.device("cuda")
     return torch.device("cpu")
 
@@ -142,7 +142,7 @@ def apply_softmax(logits: np.array) -> np.array:
     return shift_exp / np.sum(shift_exp)
 
 
-def load_network(model_file_path: str, use_gpu: bool, cuda_num: int) -> DualNet:
+def load_network(model_file_path: str, use_gpu: bool, gpu_num: int) -> DualNet:
     """ニューラルネットワークをロードして取得する。
 
     Args:
@@ -152,7 +152,7 @@ def load_network(model_file_path: str, use_gpu: bool, cuda_num: int) -> DualNet:
     Returns:
         DualNet: パラメータロード済みのニューラルネットワーク。
     """
-    device = get_torch_device(use_gpu=use_gpu, cuda_num=cuda_num)
+    device = get_torch_device(use_gpu=use_gpu, gpu_num=gpu_num)
     network = DualNet(device)
     network.to(device)
     try:
@@ -167,7 +167,7 @@ def load_network(model_file_path: str, use_gpu: bool, cuda_num: int) -> DualNet:
 
 
 
-def load_DualNet_128_12(model_file_path: str, use_gpu: bool, cuda_num: int) -> DualNet_128_12:
+def load_DualNet_128_12(model_file_path: str, use_gpu: bool, gpu_num: int) -> DualNet_128_12:
     """ニューラルネットワークをロードして取得する。DualNet_128_12 版。
 
     Args:
@@ -177,7 +177,7 @@ def load_DualNet_128_12(model_file_path: str, use_gpu: bool, cuda_num: int) -> D
     Returns:
         DualNet: パラメータロード済みのニューラルネットワーク。
     """
-    device = get_torch_device(use_gpu=use_gpu, cuda_num=cuda_num)
+    device = get_torch_device(use_gpu=use_gpu, gpu_num=gpu_num)
     network = DualNet_128_12(device)
     network.to(device)
     try:
@@ -192,7 +192,7 @@ def load_DualNet_128_12(model_file_path: str, use_gpu: bool, cuda_num: int) -> D
 
 
 
-def load_DualNet_256_24(model_file_path: str, use_gpu: bool, cuda_num: int) -> DualNet_128_12:
+def load_DualNet_256_24(model_file_path: str, use_gpu: bool, gpu_num: int) -> DualNet_128_12:
     """ニューラルネットワークをロードして取得する。DualNet_128_12 版。
 
     Args:
@@ -202,7 +202,7 @@ def load_DualNet_256_24(model_file_path: str, use_gpu: bool, cuda_num: int) -> D
     Returns:
         DualNet: パラメータロード済みのニューラルネットワーク。
     """
-    device = get_torch_device(use_gpu=use_gpu, cuda_num=cuda_num)
+    device = get_torch_device(use_gpu=use_gpu, gpu_num=gpu_num)
     network = DualNet_256_24(device)
     network.to(device)
     try:
@@ -216,13 +216,13 @@ def load_DualNet_256_24(model_file_path: str, use_gpu: bool, cuda_num: int) -> D
     return network
 
 
-def choose_network(network_name: str, model_file_path: str, use_gpu: bool, cuda_num: int):
+def choose_network(network_name: str, model_file_path: str, use_gpu: bool, gpu_num: int):
     if network_name == "DualNet":
-        network = load_network(model_file_path=model_file_path, use_gpu=use_gpu, cuda_num=cuda_num)
+        network = load_network(model_file_path=model_file_path, use_gpu=use_gpu, gpu_num=gpu_num)
     elif network_name == "DualNet_128_12":
-        network = load_DualNet_128_12(model_file_path=model_file_path, use_gpu=use_gpu, cuda_num=cuda_num)
+        network = load_DualNet_128_12(model_file_path=model_file_path, use_gpu=use_gpu, gpu_num=gpu_num)
     elif network_name == "DualNet_256_24":
-        network = load_DualNet_256_24(model_file_path=model_file_path, use_gpu=use_gpu, cuda_num=cuda_num)
+        network = load_DualNet_256_24(model_file_path=model_file_path, use_gpu=use_gpu, gpu_num=gpu_num)
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")

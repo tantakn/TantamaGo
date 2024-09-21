@@ -58,7 +58,7 @@ def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval
     disp(0.1)
 
     if repeat:
-        time.sleep(10)
+        time.sleep(10 if interval > 10 else interval)
 
         disp(1)
 

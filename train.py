@@ -28,7 +28,9 @@ from monitoring import display_train_monitoring_worker
     help="強化学習時のウィンドウサイズ")
 @click.option('--net', 'network_name', type=click.STRING, default="DualNet", \
     help="ネットワーク。デフォルトは DualNet。")
-def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str): # pylint: disable=C0103
+@click.option('--npz-dir', 'npz_dir', type=click.STRING, default="data", \
+    help="npzがあるフォルダのパス。デフォルトは data。")
+def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 
     Args:
@@ -47,9 +49,10 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     print(f"    rl: {rl}")
     print(f"    window_size: {window_size}")
     print(f"    network_name: {network_name}")
+    print(f"    npz_dir: {npz_dir}")
 
     # ハードウェア使用率の監視スレッドを起動
-    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu,), daemon=True);
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 20), daemon=True)
     monitoring_worker.start()
 
 
@@ -85,7 +88,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
     else:
         if use_gpu:
-            train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name)
+            train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
         else:
             train_on_cpu(program_dir=program_dir,board_size=size, batch_size=BATCH_SIZE, epochs=EPOCHS)
 
