@@ -261,7 +261,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
                     if torch.cuda.device_count() > 1:##########ここTrueで作ったので対局しようとするとFailed to load model/sl-model_2024のエラー出る
-                        policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                        policy_predict, value_predict = dual_net(plane)
                         # policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
                     else:
                         policy_predict, value_predict = dual_net.forward_for_sl(plane)
@@ -308,7 +308,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
                     if torch.cuda.device_count() > 1:##########ここTrueで作ったので対局しようとするとFailed to load model/sl-model_2024のエラー出る
-                        policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                        policy_predict, value_predict = dual_net(plane)
                     else:
                         policy_predict, value_predict = dual_net.forward_for_sl(plane)
                     # policy_predict, value_predict = dual_net.forward_for_sl(plane)############def
@@ -336,7 +336,8 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
         # たぶん、save_model すると変更が入るので、ディープコピーを作ってそれを保存する。
         dual_net_copy = copy.deepcopy(dual_net)######
-        save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
+        torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
+        # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
 
     # save_model(dual_net, os.path.join("model", "sl-model.bin"))
 
