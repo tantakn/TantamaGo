@@ -37,7 +37,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
         self.softmax = nn.Softmax(dim=1)
 
 
-    def tmp_forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+    def tmp_forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:####################
     # def forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         """前向き伝搬処理を実行する。
 
@@ -53,7 +53,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
         return self.policy_head(blocks_out), self.value_head(blocks_out)
 
 
-    def forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:################
     # def forward_for_sl(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         """前向き伝搬処理を実行する。教師有り学習で利用する。
 
@@ -63,7 +63,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: Softmaxを通したPolicyと, Valueのlogit
         """
-        policy, value = self.tmp_forward(input_plane)
+        policy, value = self.tmp_forward(input_plane)################
         # policy, value = self.forward(input_plane)
         return self.softmax(policy), value
 
