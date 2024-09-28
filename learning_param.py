@@ -16,7 +16,8 @@ MOMENTUM=0.9
 # L2正則化の重み
 WEIGHT_DECAY = 1e-4
 
-EPOCHS = 15
+EPOCHS = 2
+# EPOCHS = 15
 
 # 学習率を変更するエポック数と変更後の学習率
 LEARNING_SCHEDULE = { # default
@@ -43,7 +44,8 @@ SELF_PLAY_VISITS = 16
 NUM_SELF_PLAY_WORKERS = 4
 
 # 1回の学習ごとに生成する棋譜の数
-NUM_SELF_PLAY_GAMES = 10000
+NUM_SELF_PLAY_GAMES = 5000
+# NUM_SELF_PLAY_GAMES = 10000
 
 
 
