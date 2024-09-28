@@ -1,0 +1,31 @@
+🐾train_main
+    EPOCHS: 15
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: backup/data_Q50000
+🐾train_on_gpu 2024-09-22 13:39:56.946687
+[20240922_133957] device
+torch.cuda.current_device:  0
+torch.cuda.device_count:  2
+torch.cuda.get_device_name(0):  TITAN RTX
+torch.cuda.get_device_name(1):  TITAN RTX
+torch.cuda.get_device_capability(0):  (7, 5)
+torch.cuda.get_device_capability(1):  (7, 5)
+torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['backup/data_Q50000/sl_data_0.npz', 'backup/data_Q50000/sl_data_1.npz', 'backup/data_Q50000/sl_data_10.npz', 'backup/data_Q50000/sl_data_11.npz', 'backup/data_Q50000/sl_data_12.npz', 'backup/data_Q50000/sl_data_13.npz', 'backup/data_Q50000/sl_data_14.npz', 'backup/data_Q50000/sl_data_15.npz', 'backup/data_Q50000/sl_data_16.npz', 'backup/data_Q50000/sl_data_17.npz', 'backup/data_Q50000/sl_data_18.npz', 'backup/data_Q50000/sl_data_2.npz', 'backup/data_Q50000/sl_data_3.npz', 'backup/data_Q50000/sl_data_4.npz', 'backup/data_Q50000/sl_data_5.npz']
+Testing data set  : ['backup/data_Q50000/sl_data_6.npz', 'backup/data_Q50000/sl_data_7.npz', 'backup/data_Q50000/sl_data_8.npz', 'backup/data_Q50000/sl_data_9.npz']
+[20240922_133957] monitoring
+cpu: 6.9% [18.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0] 
+mem: 7.3% 
+TITAN RTX, 0, 0 %, 194 MiB, 63.04 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 1.98 W 
+🐾device:  cuda
+[20240922_134007] monitoring
+cpu: 50.0% [49.0, 52.0, 0.0, 100.0, 0.0, 0.0, 0.0, 100.0, 0.0, 100.0, 100.0, 0.0, 100.0, 100.0, 99.0, 0.0] 🔥
+mem: 13.8% 🔥
+TITAN RTX, 0, 53 %, 1268 MiB, 172.97 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 4.30 W 

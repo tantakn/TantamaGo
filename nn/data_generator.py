@@ -70,7 +70,7 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
     """moveのデータ。目的変数（ターゲットデータ）たち。"""
 
     value_data = []
-    """勝敗のデータ。目的変数？たち。？これが 0 のとき学習しない？"""
+    """勝敗のデータ。目的変数？たち。"""
 
     kifu_counter = 1
     """npzファイルに書き込む棋譜データの個数を数えておく。npzにも書き込む。"""

@@ -1,0 +1,331 @@
+🐾train_main
+    EPOCHS: 15
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: backup/data_Q50000
+🐾train_on_gpu 2024-09-22 21:02:19.638950
+[20240922_210219] device
+torch.cuda.current_device:  0
+torch.cuda.device_count:  2
+torch.cuda.get_device_name(0):  TITAN RTX
+torch.cuda.get_device_name(1):  TITAN RTX
+torch.cuda.get_device_capability(0):  (7, 5)
+torch.cuda.get_device_capability(1):  (7, 5)
+torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['backup/data_Q50000/sl_data_0.npz', 'backup/data_Q50000/sl_data_1.npz', 'backup/data_Q50000/sl_data_10.npz', 'backup/data_Q50000/sl_data_11.npz', 'backup/data_Q50000/sl_data_12.npz', 'backup/data_Q50000/sl_data_13.npz', 'backup/data_Q50000/sl_data_14.npz', 'backup/data_Q50000/sl_data_15.npz', 'backup/data_Q50000/sl_data_16.npz', 'backup/data_Q50000/sl_data_17.npz', 'backup/data_Q50000/sl_data_18.npz', 'backup/data_Q50000/sl_data_2.npz', 'backup/data_Q50000/sl_data_3.npz', 'backup/data_Q50000/sl_data_4.npz', 'backup/data_Q50000/sl_data_5.npz']
+Testing data set  : ['backup/data_Q50000/sl_data_6.npz', 'backup/data_Q50000/sl_data_7.npz', 'backup/data_Q50000/sl_data_8.npz', 'backup/data_Q50000/sl_data_9.npz']
+[20240922_210219] monitoring
+cpu: 7.4% [33.3, 0.0, 0.0, 0.0, 10.0, 0.0, 90.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 9.1, 0.0, 0.0] 
+mem: 7.2% 
+TITAN RTX, 0, 1 %, 210 MiB, 37.47 W 🔥
+TITAN RTX, 1, 0 %, 9 MiB, 1.86 W 
+🐾device:  cuda
+[20240922_210230] monitoring
+cpu: 39.3% [70.0, 68.0, 68.0, 68.4, 0.0, 0.0, 23.3, 1.0, 46.5, 24.0, 8.9, 11.1, 68.7, 68.0, 29.7, 68.0] 🔥
+mem: 15.5% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 80.03 W 🔥
+TITAN RTX, 1, 32 %, 1196 MiB, 61.99 W 🔥
+[20240922_210252] monitoring
+cpu: 38.9% [68.3, 68.3, 68.3, 68.6, 1.0, 0.0, 69.0, 21.2, 22.2, 0.0, 0.0, 1.0, 69.3, 68.6, 69.6, 29.7] 🔥
+mem: 15.7% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 81.26 W 🔥
+TITAN RTX, 1, 32 %, 1196 MiB, 64.53 W 🔥
+[20240922_210314] monitoring
+cpu: 39.5% [5.7, 47.0, 68.7, 68.0, 0.0, 68.0, 0.0, 22.0, 68.7, 69.7, 20.2, 0.0, 68.7, 30.0, 68.0, 22.0] 🔥
+mem: 15.7% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 81.42 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 61.63 W 🔥
+[20240922_210323] learn
+epoch 0, data-0 : loss = 2.223950, time = 58.6 [s].
+	policy loss : 2.209826
+	value loss  : 0.706219
+[20240922_210336] monitoring
+cpu: 39.2% [72.3, 32.7, 72.3, 31.6, 37.0, 22.2, 1.0, 0.0, 0.0, 72.3, 0.0, 19.8, 73.0, 73.0, 72.3, 72.3] 🔥
+mem: 15.5% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 84.77 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 62.72 W 🔥
+[20240922_210358] monitoring
+cpu: 41.1% [73.0, 33.7, 73.0, 73.0, 65.0, 24.0, 0.0, 1.0, 0.0, 73.3, 0.0, 0.0, 22.0, 73.3, 73.3, 73.3] 🔥
+mem: 15.5% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 83.48 W 🔥
+TITAN RTX, 1, 35 %, 1196 MiB, 63.39 W 🔥
+[20240922_210422] learn
+epoch 0, data-1 : loss = 1.788802, time = 54.7 [s].
+	policy loss : 1.775007
+	value loss  : 0.689745
+[20240922_210420] monitoring
+cpu: 38.6% [39.0, 17.2, 39.0, 39.6, 12.9, 0.0, 0.0, 67.3, 13.0, 39.4, 0.0, 0.0, 13.0, 39.0, 39.0, 40.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 33 %, 1210 MiB, 70.03 W 🔥
+TITAN RTX, 1, 28 %, 1196 MiB, 53.98 W 🔥
+[20240922_210442] monitoring
+cpu: 42.3% [73.7, 12.1, 0.0, 67.0, 41.4, 38.6, 20.2, 1.0, 0.0, 73.3, 73.0, 5.0, 34.0, 74.0, 73.0, 73.7] 🔥
+mem: 15.5% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 90.79 W 🔥
+TITAN RTX, 1, 35 %, 1196 MiB, 65.40 W 🔥
+[20240922_210504] monitoring
+cpu: 38.7% [68.9, 23.5, 2.0, 0.0, 21.8, 46.0, 22.0, 0.0, 0.0, 68.6, 68.9, 68.9, 30.4, 70.6, 69.3, 68.6] 🔥
+mem: 15.5% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 83.46 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 62.78 W 🔥
+[20240922_210521] learn
+epoch 0, data-2 : loss = 1.714511, time = 55.4 [s].
+	policy loss : 1.700952
+	value loss  : 0.677922
+[20240922_210527] monitoring
+cpu: 38.8% [68.7, 4.0, 22.0, 0.0, 68.0, 1.0, 44.9, 13.0, 20.8, 68.0, 68.0, 68.0, 29.7, 68.0, 69.3, 9.9] 🔥
+mem: 15.5% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 82.24 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 64.12 W 🔥
+[20240922_210549] monitoring
+cpu: 40.8% [73.0, 72.3, 32.7, 0.0, 73.0, 0.0, 0.0, 47.1, 24.8, 0.0, 74.0, 72.3, 0.0, 73.0, 73.0, 43.1] 🔥
+mem: 15.5% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 84.35 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 65.86 W 🔥
+[20240922_210611] monitoring
+cpu: 39.6% [3.8, 10.0, 71.0, 54.5, 39.2, 24.2, 71.0, 71.0, 70.3, 36.0, 29.3, 9.0, 71.3, 71.0, 9.1, 3.0] 🔥
+mem: 15.5% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 86.31 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 63.33 W 🔥
+[20240922_210621] learn
+epoch 0, data-3 : loss = 1.666415, time = 55.8 [s].
+	policy loss : 1.653109
+	value loss  : 0.665306
+[20240922_210633] monitoring
+cpu: 42.2% [3.9, 69.7, 0.0, 69.4, 30.3, 70.0, 69.3, 69.4, 69.0, 19.6, 69.0, 1.0, 26.0, 43.6, 23.0, 2.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 85.36 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 64.58 W 🔥
+[20240922_210655] monitoring
+cpu: 40.9% [65.0, 10.0, 26.0, 11.9, 11.0, 0.0, 0.0, 70.6, 10.1, 70.3, 71.3, 46.5, 71.0, 70.3, 70.3, 32.7] 🔥
+mem: 15.6% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 87.80 W 🔥
+TITAN RTX, 1, 35 %, 1196 MiB, 66.28 W 🔥
+[20240922_210717] monitoring
+cpu: 38.4% [4.8, 23.5, 1.0, 68.0, 0.0, 30.7, 44.9, 21.0, 68.0, 67.7, 67.7, 0.0, 68.0, 21.0, 69.3, 67.7] 🔥
+mem: 15.6% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 87.41 W 🔥
+TITAN RTX, 1, 32 %, 1196 MiB, 63.73 W 🔥
+[20240922_210722] learn
+epoch 0, data-4 : loss = 1.627189, time = 56.9 [s].
+	policy loss : 1.614298
+	value loss  : 0.644582
+[20240922_210739] monitoring
+cpu: 40.7% [22.2, 25.7, 22.8, 72.7, 0.0, 72.0, 0.0, 33.7, 43.0, 72.5, 73.0, 1.0, 72.3, 0.0, 72.0, 72.3] 🔥
+mem: 15.6% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 90.88 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 63.83 W 🔥
+[20240922_210801] monitoring
+cpu: 40.9% [73.0, 65.0, 49.0, 28.7, 0.0, 73.0, 0.0, 33.7, 0.0, 23.5, 18.8, 72.7, 72.0, 0.0, 72.7, 73.0] 🔥
+mem: 15.6% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 87.27 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 65.92 W 🔥
+[20240922_210821] learn
+epoch 0, data-5 : loss = 1.592881, time = 54.8 [s].
+	policy loss : 1.580206
+	value loss  : 0.633726
+[20240922_210823] monitoring
+cpu: 7.1% [14.9, 14.0, 14.9, 14.9, 89.0, 4.0, 4.0, 1.0, 0.0, 6.1, 0.0, 0.0, 7.9, 14.0, 14.0, 14.0] 
+mem: 15.6% 🔥
+TITAN RTX, 0, 0 %, 1210 MiB, 84.41 W 🔥
+TITAN RTX, 1, 0 %, 1196 MiB, 64.72 W 🔥
+[20240922_210845] monitoring
+cpu: 43.4% [6.5, 12.0, 71.3, 42.6, 72.0, 72.0, 71.3, 29.6, 72.0, 72.0, 3.0, 41.0, 24.5, 1.0, 1.0, 72.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 88.88 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 66.58 W 🔥
+[20240922_210908] monitoring
+cpu: 43.6% [71.0, 59.2, 34.3, 13.0, 71.0, 71.0, 52.5, 69.7, 10.9, 23.8, 53.5, 58.6, 71.0, 4.1, 16.5, 37.4] 🔥
+mem: 16.1% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 92.66 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 66.02 W 🔥
+[20240922_210921] learn
+epoch 0, data-6 : loss = 1.551370, time = 56.1 [s].
+	policy loss : 1.538548
+	value loss  : 0.641097
+[20240922_210930] monitoring
+cpu: 41.0% [73.7, 73.3, 0.0, 73.0, 72.7, 0.0, 23.3, 23.5, 73.0, 24.2, 73.0, 0.0, 0.0, 73.0, 42.4, 32.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 92.90 W 🔥
+TITAN RTX, 1, 35 %, 1196 MiB, 64.05 W 🔥
+[20240922_210952] monitoring
+cpu: 41.1% [72.7, 72.3, 0.0, 72.0, 72.3, 31.6, 72.0, 22.8, 23.2, 0.0, 72.7, 0.0, 0.0, 73.7, 0.0, 66.3] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 96.83 W 🔥
+TITAN RTX, 1, 35 %, 1196 MiB, 65.40 W 🔥
+[20240922_211014] monitoring
+cpu: 40.9% [72.7, 72.7, 0.0, 72.7, 72.0, 31.3, 72.0, 24.5, 25.7, 0.0, 72.7, 0.0, 0.0, 72.7, 0.0, 65.3] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 89.17 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 63.65 W 🔥
+[20240922_211020] learn
+epoch 0, data-7 : loss = 1.539083, time = 54.6 [s].
+	policy loss : 1.526293
+	value loss  : 0.639502
+[20240922_211036] monitoring
+cpu: 39.1% [30.7, 70.3, 21.8, 69.3, 69.3, 1.0, 64.7, 70.3, 22.8, 45.4, 28.2, 0.0, 1.0, 69.3, 1.0, 69.6] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 88.11 W 🔥
+TITAN RTX, 1, 32 %, 1196 MiB, 65.20 W 🔥
+[20240922_211058] monitoring
+cpu: 41.6% [73.7, 73.0, 73.7, 74.0, 43.6, 26.0, 73.7, 0.0, 0.0, 3.0, 0.0, 27.0, 44.4, 73.7, 1.0, 73.7] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 97.15 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 65.87 W 🔥
+[20240922_211120] learn
+epoch 0, data-8 : loss = 1.527935, time = 56.2 [s].
+	policy loss : 1.515166
+	value loss  : 0.638455
+[20240922_211120] monitoring
+cpu: 6.7% [5.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0] 
+mem: 18.2% 🔥
+TITAN RTX, 0, 0 %, 1210 MiB, 72.12 W 🔥
+TITAN RTX, 1, 0 %, 1196 MiB, 55.82 W 🔥
+[20240922_211142] monitoring
+cpu: 39.3% [68.7, 68.7, 68.7, 70.7, 67.0, 23.0, 32.3, 68.7, 0.0, 0.0, 0.0, 45.9, 21.2, 69.3, 21.6, 1.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 87.88 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 64.07 W 🔥
+[20240922_211204] monitoring
+cpu: 38.7% [69.3, 69.0, 69.3, 69.3, 68.7, 23.0, 21.0, 68.7, 15.0, 7.9, 31.7, 13.3, 0.0, 69.0, 30.0, 0.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 86.35 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 65.25 W 🔥
+[20240922_211220] learn
+epoch 0, data-9 : loss = 1.523990, time = 55.9 [s].
+	policy loss : 1.511314
+	value loss  : 0.633839
+[20240922_211227] monitoring
+cpu: 38.7% [69.7, 22.2, 0.0, 68.0, 68.3, 0.0, 0.0, 29.0, 68.7, 68.0, 68.0, 0.0, 0.0, 68.0, 68.7, 22.8] 🔥
+mem: 15.0% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 85.29 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 64.65 W 🔥
+[20240922_211249] monitoring
+cpu: 38.9% [31.0, 68.7, 0.0, 46.5, 68.7, 12.1, 3.0, 68.4, 20.4, 2.0, 68.0, 70.0, 25.0, 68.7, 68.7, 1.0] 🔥
+mem: 15.0% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 90.04 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 67.30 W 🔥
+[20240922_211306] learn
+epoch 0, data-10 : loss = 1.517536, time = 42.8 [s].
+	policy loss : 1.504851
+	value loss  : 0.634249
+[20240922_211311] monitoring
+cpu: 41.4% [69.7, 69.3, 69.7, 6.0, 54.9, 37.4, 26.7, 18.0, 6.0, 0.0, 0.0, 69.0, 32.7, 45.1, 70.0, 59.4] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 38 %, 1210 MiB, 90.35 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 64.78 W 🔥
+[20240922_211333] monitoring
+cpu: 41.1% [73.0, 73.3, 72.5, 45.5, 24.0, 72.3, 0.0, 73.0, 0.0, 0.0, 0.0, 42.0, 73.0, 0.0, 72.3, 33.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 89.53 W 🔥
+TITAN RTX, 1, 35 %, 1196 MiB, 67.87 W 🔥
+[20240922_211355] monitoring
+cpu: 38.7% [69.3, 69.7, 69.7, 20.4, 70.0, 69.0, 30.0, 71.0, 0.0, 1.0, 0.0, 22.0, 70.0, 0.0, 21.0, 47.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 90.29 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 64.72 W 🔥
+[20240922_211406] learn
+epoch 0, data-11 : loss = 1.544992, time = 56.5 [s].
+	policy loss : 1.532342
+	value loss  : 0.632498
+[20240922_211417] monitoring
+cpu: 41.1% [73.3, 73.3, 34.0, 42.6, 73.3, 73.0, 73.0, 73.0, 25.3, 1.0, 73.3, 21.2, 23.2, 0.0, 0.0, 1.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 91.36 W 🔥
+TITAN RTX, 1, 35 %, 1196 MiB, 65.57 W 🔥
+[20240922_211439] monitoring
+cpu: 40.9% [73.3, 73.3, 1.0, 0.0, 72.5, 72.5, 72.5, 41.4, 24.8, 34.3, 73.3, 72.5, 0.0, 0.0, 0.0, 45.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 93.77 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 68.08 W 🔥
+[20240922_211501] monitoring
+cpu: 42.2% [73.0, 72.3, 0.0, 0.0, 23.3, 31.4, 72.5, 73.3, 26.3, 0.0, 72.5, 72.3, 30.0, 34.6, 73.0, 0.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 108.17 W 🔥
+TITAN RTX, 1, 36 %, 1196 MiB, 64.52 W 🔥
+[20240922_211505] learn
+epoch 0, data-12 : loss = 1.517354, time = 54.9 [s].
+	policy loss : 1.504932
+	value loss  : 0.621091
+[20240922_211523] monitoring
+cpu: 40.7% [42.6, 72.3, 72.3, 32.3, 72.3, 1.0, 0.0, 72.3, 22.2, 24.0, 0.0, 72.0, 0.0, 72.3, 72.0, 24.2] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 95.46 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 64.43 W 🔥
+[20240922_211545] monitoring
+cpu: 40.8% [64.6, 73.3, 72.3, 0.0, 73.3, 32.7, 0.0, 72.3, 22.2, 24.8, 1.0, 73.0, 0.0, 73.0, 72.3, 0.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 92.40 W 🔥
+TITAN RTX, 1, 34 %, 1196 MiB, 67.14 W 🔥
+[20240922_211605] learn
+epoch 0, data-13 : loss = 1.494000, time = 55.3 [s].
+	policy loss : 1.481557
+	value loss  : 0.622189
+[20240922_211608] monitoring
+cpu: 6.4% [2.0, 67.0, 47.0, 21.2, 67.7, 1.0, 1.0, 67.0, 67.0, 31.7, 19.0, 68.0, 24.0, 67.0, 67.0, 0.0] 
+mem: 15.9% 🔥
+TITAN RTX, 0, 17 %, 1210 MiB, 93.91 W 🔥
+TITAN RTX, 1, 8 %, 1196 MiB, 64.35 W 🔥
+[20240922_211630] monitoring
+cpu: 38.8% [68.3, 0.0, 28.0, 0.0, 22.0, 0.0, 46.5, 68.7, 2.0, 68.7, 22.8, 68.0, 69.0, 68.7, 70.0, 22.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1210 MiB, 89.69 W 🔥
+TITAN RTX, 1, 33 %, 1196 MiB, 64.42 W 🔥
+[20240922_211652] monitoring
+cpu: 40.0% [73.7, 2.0, 43.1, 24.8, 0.0, 0.0, 0.0, 74.0, 25.3, 73.3, 52.0, 73.7, 74.0, 73.7, 73.7, 0.0] 🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 40 %, 1210 MiB, 93.08 W 🔥
+TITAN RTX, 1, 35 %, 1196 MiB, 65.80 W 🔥
+[20240922_211705] learn
+epoch 0, data-14 : loss = 1.498453, time = 56.3 [s].
+	policy loss : 1.486028
+	value loss  : 0.621221
+[20240922_211714] monitoring
+cpu: 52.3% [99.0, 59.8, 99.0, 99.0, 10.5, 99.0, 0.0, 99.0, 0.0, 26.9, 29.5, 12.4, 99.0, 0.0, 99.0, 0.0] 🔥🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 38 %, 1238 MiB, 139.14 W 🔥
+TITAN RTX, 1, 38 %, 1224 MiB, 99.24 W 🔥
+[20240922_211736] monitoring
+cpu: 51.8% [17.0, 5.8, 4.9, 56.0, 0.0, 76.5, 100.0, 82.2, 100.0, 100.0, 100.0, 44.4, 100.0, 16.3, 16.7, 17.2] 🔥🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 41 %, 1238 MiB, 162.42 W 🔥
+TITAN RTX, 1, 41 %, 1224 MiB, 104.01 W 🔥
+[20240922_211758] monitoring
+cpu: 51.9% [0.0, 53.0, 77.8, 16.3, 5.0, 3.9, 53.0, 53.0, 53.0, 0.0, 15.6, 52.5, 53.0, 53.0, 0.0, 0.0] 🔥🔥
+mem: 16.3% 🔥
+TITAN RTX, 0, 39 %, 1238 MiB, 88.13 W 🔥
+TITAN RTX, 1, 39 %, 1224 MiB, 62.58 W 🔥
+[20240922_211820] monitoring
+cpu: 52.4% [0.0, 58.4, 100.0, 16.0, 100.0, 100.0, 0.0, 100.0, 100.0, 30.5, 26.3, 100.0, 7.8, 0.0, 100.0, 0.0] 🔥🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1238 MiB, 137.58 W 🔥
+TITAN RTX, 1, 39 %, 1224 MiB, 101.87 W 🔥
+[20240922_211842] monitoring
+cpu: 52.3% [56.9, 29.5, 11.7, 99.0, 99.0, 99.0, 0.0, 99.0, 31.6, 99.0, 99.0, 7.8, 0.0, 0.0, 99.0, 0.0] 🔥🔥
+mem: 15.9% 🔥
+TITAN RTX, 0, 39 %, 1238 MiB, 136.91 W 🔥
+TITAN RTX, 1, 39 %, 1224 MiB, 97.43 W 🔥
+[20240922_211854] test
+Test 0 : loss = 1.513641, time = 109.401267 [s].
+	policy loss : 1.501363
+	value loss  : 0.613883
+Traceback (most recent call last):
+  File "train.py", line 98, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 91, in train_main
+    train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 339, in train_on_gpu
+    torch.save(network.to("cpu").module.state_dict(), path)############
+NameError: name 'network' is not defined

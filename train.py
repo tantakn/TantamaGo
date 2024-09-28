@@ -5,13 +5,13 @@ import os
 import click
 from learning_param import BATCH_SIZE, EPOCHS
 from board.constant import BOARD_SIZE
-from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, \
-    train_with_gumbel_alphazero_on_cpu
-from nn.data_generator import generate_supervised_learning_data, \
-    generate_reinforcement_learning_data
+from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, train_with_gumbel_alphazero_on_cpu,  train_on_gpu_ddp
+from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data
 
 import threading, time, datetime
 from monitoring import display_train_monitoring_worker
+
+import torch
 
 
 
@@ -22,6 +22,8 @@ from monitoring import display_train_monitoring_worker
     help=f"碁盤の大きさ。最小2, 最大{BOARD_SIZE}")
 @click.option('--use-gpu', type=click.BOOL, default=True, \
     help="学習時にGPUを使用するフラグ。指定がなければGPUを使用するものとする。")
+@click.option('--use-ddp', type=click.BOOL, default=True, \
+    help="ddp。")#############
 @click.option('--rl', type=click.BOOL, default=False, \
     help="強化学習実行フラグ。教師あり学習を実行するときにはfalseを指定する。")
 @click.option('--window-size', type=click.INT, default=300000, \
@@ -30,7 +32,7 @@ from monitoring import display_train_monitoring_worker
     help="ネットワーク。デフォルトは DualNet。")
 @click.option('--npz-dir', 'npz_dir', type=click.STRING, default="data", \
     help="npzがあるフォルダのパス。デフォルトは data。")
-def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str): # pylint: disable=C0103
+def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, ddp: bool): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 
     Args:
@@ -52,7 +54,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     print(f"    npz_dir: {npz_dir}")
 
     # ハードウェア使用率の監視スレッドを起動
-    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 20), daemon=True)
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True), daemon=True)
     monitoring_worker.start()
 
 
@@ -87,6 +89,15 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
         else:
             train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
     else:
+        if use_gpu and ddp:
+            train_dataset, val_dataset = getMyDataset()
+
+            os.environ['MASTER_ADDR'] = 'localhost'
+            os.environ['MASTER_PORT'] = '50000'
+            os.environ['TORCH_DISTRIBUTED_DEBUG'] = 'DETAIL'
+            os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
+
+            torch.multiprocessing.spawn(train_on_gpu_ddp, args=(torch.cuda.device_count(), train_dataset, val_dataset, program_dir, size, BATCH_SIZE, EPOCHS, network_name, npz_dir), nprocs = torch.cuda.device_count(), join = True)
         if use_gpu:
             train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
         else:
