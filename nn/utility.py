@@ -10,7 +10,7 @@ from common.print_console import print_err
 from nn.network import DualNet, DualNet_128_12, DualNet_256_24
 
 
-def get_torch_device(use_gpu: bool, gpu_num: int = 0) -> torch.device:
+def get_torch_device(use_gpu: bool, gpu_num: int = -1) -> torch.device:
     """torch.deviceを取得する。
 
     Args:
@@ -142,7 +142,7 @@ def apply_softmax(logits: np.array) -> np.array:
     return shift_exp / np.sum(shift_exp)
 
 
-def load_network(model_file_path: str, use_gpu: bool, gpu_num: int) -> DualNet:
+def load_network(model_file_path: str, use_gpu: bool, gpu_num: int=-1) -> DualNet:
     """ニューラルネットワークをロードして取得する。
 
     Args:
@@ -216,7 +216,7 @@ def load_DualNet_256_24(model_file_path: str, use_gpu: bool, gpu_num: int) -> Du
     return network
 
 
-def choose_network(network_name: str, model_file_path: str, use_gpu: bool, gpu_num: int):
+def choose_network(network_name: str, model_file_path: str, use_gpu: bool, gpu_num: int=-1):
     if network_name == "DualNet":
         network = load_network(model_file_path=model_file_path, use_gpu=use_gpu, gpu_num=gpu_num)
     elif network_name == "DualNet_128_12":
