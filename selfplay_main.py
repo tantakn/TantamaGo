@@ -36,7 +36,7 @@ import multiprocessing
 @click.option('--model2', type=click.STRING, default="None", \
     help="異なるモデルを対局させるときに指定する。")
 @click.option('--net', 'network_name1', type=click.STRING, default="DualNet", \
-    help="--model のネットワーク。デフォルトは DualNet。")
+    help="--model のネットワーク。デフォルトは DualNet。DualNet_256_24 とかを指定する。")
 @click.option('--net2', 'network_name2', type=click.STRING, default="DualNet", \
     help="--model2 のネットワーク。デフォルトは DualNet。")
 def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu: bool, visits: int, model: str, model2: str, network_name1: str, network_name2: str):
@@ -88,7 +88,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
     cnt = 0
     def gpu_num():
         if not torch.cuda.is_available():
-            return 0
+            return -1
         nonlocal cnt
         cnt += 1
         print("cnt: ", cnt)###################
@@ -100,7 +100,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
         # submit(selfplay_worker,...（selfplay_workerの引数たち）)らしい
         # max_workers=process は使用するプロセス数？
         with ProcessPoolExecutor(max_workers=process) as executor:
-            futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), model, file_list, size, visits, use_gpu, network_name1) for file_list in file_indice]
+            futures = [executor.submit(selfplay_worker, os.path.join(save_dir, str(kifu_dir_index)), model, file_list, size, visits, use_gpu, network_name1, gpu_num=gpu_num()) for file_list in file_indice]
 
             monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True);
             monitoring_worker.start()

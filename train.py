@@ -22,17 +22,21 @@ import torch
     help=f"碁盤の大きさ。最小2, 最大{BOARD_SIZE}")
 @click.option('--use-gpu', type=click.BOOL, default=True, \
     help="学習時にGPUを使用するフラグ。指定がなければGPUを使用するものとする。")
-@click.option('--use-ddp', type=click.BOOL, default=True, \
+@click.option('--use-ddp', 'ddp', type=click.BOOL, default=False, \
     help="ddp。")#############
 @click.option('--rl', type=click.BOOL, default=False, \
     help="強化学習実行フラグ。教師あり学習を実行するときにはfalseを指定する。")
 @click.option('--window-size', type=click.INT, default=300000, \
     help="強化学習時のウィンドウサイズ")
 @click.option('--net', 'network_name', type=click.STRING, default="DualNet", \
-    help="ネットワーク。デフォルトは DualNet。")
+    help="ネットワーク。デフォルトは DualNet。DualNet_256_24 とかを指定する。")
 @click.option('--npz-dir', 'npz_dir', type=click.STRING, default="data", \
     help="npzがあるフォルダのパス。デフォルトは data。")
-def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, ddp: bool): # pylint: disable=C0103
+@click.option('--rl-num', 'rl_num', type=click.INT, default=-1, \
+    help="rl のパイプラインが何周目か。")
+@click.option('--rl-datetime', 'rl_datetime', type=click.STRING, default="", \
+    help="rl のパイプラインの開始日時。")
+def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, ddp: bool, rl_num: int, rl_datetime: str): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 
     Args:
@@ -85,7 +89,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
 
     if rl:
         if use_gpu:
-            train_with_gumbel_alphazero_on_gpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
+            train_with_gumbel_alphazero_on_gpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE, rl_num=rl_num, rl_datetime=rl_datetime, network_name=network_name)
         else:
             train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
     else:
@@ -98,7 +102,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
 
             torch.multiprocessing.spawn(train_on_gpu_ddp, args=(torch.cuda.device_count(), train_dataset, val_dataset, program_dir, size, BATCH_SIZE, EPOCHS, network_name, npz_dir), nprocs = torch.cuda.device_count(), join = True)
-        if use_gpu:
+        elif use_gpu:
             train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
         else:
             train_on_cpu(program_dir=program_dir,board_size=size, batch_size=BATCH_SIZE, epochs=EPOCHS)

@@ -4,7 +4,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import re, glob, click, datetime
 
 # TODO:--num == 0 で全てのファイルを対象にする。
-# TODO:3つ目のmodelが見つかったときエラー出すようにする。
 
 @click.command()
 @click.option("--path", type=click.STRING, default="archive", help="棋譜フォルダがあるディレクトリ。デフォルトはarchive。")
@@ -23,9 +22,8 @@ def main(path, num, save):
         for folder in folder_list:
             path_list += sorted(glob.glob(os.path.join("./", folder, "*.sgf")))
     elif num == -1:
-        # TODO: ゼロ埋めされていないから10以上でバグる
-        folder = sorted(glob.glob(os.path.join("./", path, "*")))[-1]
-        path_list = sorted(glob.glob(os.path.join("./", folder, "*.sgf")))
+        max_folder_num = sorted(int(os.path.split(x)[-1]) for x in glob.glob(os.path.join("./", path, "*")))[-1]
+        path_list = sorted(glob.glob(os.path.join("./", path, str(max_folder_num), "*.sgf")))
     else:
         path_list = sorted(glob.glob(os.path.join("./", path, str(num), "*.sgf")))
 
@@ -47,6 +45,10 @@ def main(path, num, save):
     for tmp_path in path_list:
         with open(tmp_path) as f:
             sgf = f.read()
+
+            if set([model1, model2]) != set([re.search(r"PB\[(.*?)\]", sgf).group(1), re.search(r"PW\[(.*?)\]", sgf).group(1)]):
+                print(f"warning: {tmp_path} には {model1} と {model2} 以外のモデルが含まれています")
+                continue
 
             #(;FF[4]GM[1]SZ[9]
             # AP[TantamaGo]PB[model/sl-model_default.bin]PW[model/sl-model20240711.bin]RE[W+88.0]KM[7.0];B[ha]C[82 A9:2.243

@@ -781,8 +781,11 @@ def train_with_gumbel_alphazero_on_cpu(program_dir: str, board_size: int, \
     torch.save(state, state_file_path)
 
 
+
+
+
 def train_with_gumbel_alphazero_on_gpu(program_dir: str, board_size: int, \
-    batch_size: int) -> None: # pylint: disable=R0914,R0915
+    batch_size: int, rl_num: int, rl_datetime: str, network_name: str="DualNet") -> None: # pylint: disable=R0914,R0915
     """教師あり学習を実行し、学習したモデルを保存する。GPUで実行。
 
     Args:
@@ -790,12 +793,25 @@ def train_with_gumbel_alphazero_on_gpu(program_dir: str, board_size: int, \
         board_size (int): 碁盤の大きさ。
         batch_size (int): ミニバッチサイズ。
     """
+
+    print(f"🐾train_with_gumbel_alphazero_on_gpu {dt_now}")###########
+
     data_set = sorted(glob.glob(os.path.join(program_dir, "data", "rl_data_*.npz")))
 
     # 学習処理を行うデバイスの設定
     device = get_torch_device(use_gpu=True)
 
-    dual_net = DualNet(device=device, board_size=board_size)
+    if network_name == "DualNet":
+        dual_net = DualNet(device=device, board_size=board_size)
+        """DualNetのインスタンス。多分、ここにニューラルネットワークのパラメタとか入ってる。"""
+    elif network_name == "DualNet_128_12":
+        dual_net = DualNet_128_12(device=device, board_size=board_size)
+    elif network_name == "DualNet_256_24":
+        dual_net = DualNet_256_24(device=device, board_size=board_size)
+    else:
+        print(f"👺network_name: {network_name} is not defined.")
+        raise(f"network_name is not defined.")#############
+    # dual_net = DualNet(device=device, board_size=board_size)
 
     dual_net.to(device)
 
@@ -824,6 +840,7 @@ def train_with_gumbel_alphazero_on_gpu(program_dir: str, board_size: int, \
         print(f"num_trained_batches : {num_trained_batches}")
 
     for data_index, train_data_path in enumerate(data_set):
+        print(f"🐾train_rl_gpu, idx: {data_index}")###########
         plane_data, policy_data, value_data = load_data_set(train_data_path)
         train_loss = {
             "loss": 0.0,
@@ -859,6 +876,7 @@ def train_with_gumbel_alphazero_on_gpu(program_dir: str, board_size: int, \
 
         print_learning_process(train_loss, 0, data_index, iteration, epoch_time)
 
+    save_model(dual_net, os.path.join(program_dir, "model", f"rl-model_{rl_datetime}_{rl_num}.bin"))
     save_model(dual_net, model_file_path)
 
     state = {
@@ -866,4 +884,5 @@ def train_with_gumbel_alphazero_on_gpu(program_dir: str, board_size: int, \
         "optimizer_state_dict": optimizer.state_dict(),
         "scaler_state_dict": scaler.state_dict()
     }
+    torch.save(state, os.path.join(program_dir, "model", f"rl-state_{rl_datetime}_{rl_num}.ckpt"))
     torch.save(state, state_file_path)

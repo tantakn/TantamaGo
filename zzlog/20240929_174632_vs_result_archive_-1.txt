@@ -1,0 +1,7 @@
+
+[20240929_174632] vs_result
+games: 1000
+model1: TantamaGo
+    win: (364 + 0.5*19)/1000 (36.40%)
+model2: TantamaGo
+    win: (617 + 0.5*19)/1000 (61.70%)

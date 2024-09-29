@@ -21,7 +21,7 @@ import psutil, subprocess, datetime
 
 
 # pylint: disable=R0913,R0914
-def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str) -> None:
+def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str, gpu_num: int=-1) -> None:
     """自己対戦実行ワーカ。
 
     Args:
@@ -41,7 +41,7 @@ def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], 
     """初期化用"""
     record = SelfPlayRecord(save_dir, board.coordinate)
 
-    network = choose_network(network_name1, model_file_path, use_gpu)
+    network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_num)
 
     network.training = False
 
@@ -95,7 +95,8 @@ def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], 
                 winner = Stone.OUT_OF_BOARD
 
         record.set_index(index)
-        record.write_record(winner, board.get_komi(), is_resign, score)
+        record.write_record(winner, board.get_komi(), is_resign, score, black_name=model_file_path, white_name=model_file_path)
+        # record.write_record(winner, board.get_komi(), is_resign, score)
 
 
 def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool) -> None:
@@ -118,7 +119,7 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool
 
 
 # pylint: disable=R0913,R0914
-def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str, network_name2: str, gpu_num: int=0) -> None:
+def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str, network_name2: str, gpu_num: int=-1) -> None:
     """異なるモデルを対戦させる自己対戦実行ワーカ。
 
     Args:
