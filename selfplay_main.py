@@ -31,7 +31,7 @@ import multiprocessing
     help="GPU使用フラグ。デフォルトはTrue。")
 @click.option('--visits', type=click.IntRange(min=2), default=SELF_PLAY_VISITS, \
     help=f"自己対戦時の探索回数。デフォルトは{SELF_PLAY_VISITS}。")
-@click.option('--model', type=click.STRING, default=os.path.join("model", "sl-model_default.bin"), \
+@click.option('--model', type=click.STRING, default=os.path.join("model_def", "sl-model_default.bin"), \
     help="ニューラルネットワークのモデルファイルパス。デフォルトはmodelディレクトリ内のsl-model_default.bin。")
 @click.option('--model2', type=click.STRING, default="None", \
     help="異なるモデルを対局させるときに指定する。")
