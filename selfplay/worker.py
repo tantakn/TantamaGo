@@ -59,7 +59,8 @@ def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], 
         color = Stone.BLACK
         record.clear()
         pass_count = 0
-        never_resign = True if random.randint(1, 10) == 1 else False # pylint: disable=R1719
+        never_resign = True######################
+        # never_resign = True if random.randint(1, 10) == 1 else False # pylint: disable=R1719
         is_resign = False
         score = 0.0
         for _ in range(max_moves):
@@ -93,6 +94,14 @@ def selfplay_worker(save_dir: str, model_file_path: str, index_list: List[int], 
                 winner = Stone.WHITE
             else:
                 winner = Stone.OUT_OF_BOARD
+
+        
+        # UnboundLocalError: local variable 'winner' referenced before assignment のエラーが出たので追加
+        try:
+            winner
+        except NameError:
+            print("winner is not defined")
+            raise ValueError("Winner was not determined")
 
         record.set_index(index)
         record.write_record(winner, board.get_komi(), is_resign, score, black_name=model_file_path, white_name=model_file_path)
@@ -162,7 +171,8 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
         color = Stone.BLACK
         record.clear()
         pass_count = 0
-        never_resign = True if random.randint(1, 10) == 1 else False # pylint: disable=R1719
+        never_resign = True#######################
+        # never_resign = True if random.randint(1, 10) == 1 else False # pylint: disable=R1719
         is_resign = False
         score = 0.0
         for i in range(max_moves):
@@ -211,6 +221,13 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
         if model_file_path1 == model_file_path2:
             tmp_path1 += "_selfVs1"
             tmp_path2 += "_selfVs2"
+
+        # UnboundLocalError: local variable 'winner' referenced before assignment のエラーが出たので追加
+        try:
+            winner
+        except NameError:
+            print("winner is not defined")
+            raise ValueError("Winner was not determined")
 
         if (index) % 2 == 1:
             record.write_record(winner, board.get_komi(), is_resign, score, black_name=tmp_path1, white_name=tmp_path2)

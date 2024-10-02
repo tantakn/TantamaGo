@@ -1,0 +1,7 @@
+
+[20241001_123751] vs_result
+games: 200
+model1: model/rl-model_20240930_004110_10.bin
+    win: (160 + 0.5*5)/200 (80.00%)
+model2: model/rl-model_20240930_004110_0.bin
+    win: (35 + 0.5*5)/200 (17.50%)
