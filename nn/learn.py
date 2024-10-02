@@ -260,12 +260,13 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
-                    if torch.cuda.device_count() > 1:
-                        policy_predict, value_predict = dual_net(plane)##################
-                        # policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
-                    else:
-                        policy_predict, value_predict = dual_net.forward_for_sl(plane)
-                    # policy_predict, value_predict = dual_net.forward_for_sl(plane)###################def
+                    policy_predict, value_predict = dual_net(plane, pram="sl")
+                    # if torch.cuda.device_count() > 1:
+                    #     policy_predict, value_predict = dual_net(plane)##################
+                    #     # policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                    # else:
+                    #     policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    # # policy_predict, value_predict = dual_net.forward_for_sl(plane)###################def
 
                     # モデルの勾配を初期化
                     # たぶん、ミニバッチ学習で使うためにミニバッチ内の勾配を記録していて、前のミニバッチの勾配が残っているので、それを初期化している。
@@ -307,12 +308,13 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
                     policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
                     value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
-                    if torch.cuda.device_count() > 1:
-                        policy_predict, value_predict = dual_net(plane)##################
-                        # policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
-                    else:
-                        policy_predict, value_predict = dual_net.forward_for_sl(plane)
-                    # policy_predict, value_predict = dual_net.forward_for_sl(plane)############def
+                    policy_predict, value_predict = dual_net(plane, pram="sl")
+                    # if torch.cuda.device_count() > 1:
+                    #     policy_predict, value_predict = dual_net(plane)##################
+                    #     # policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                    # else:
+                    #     policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                    # # policy_predict, value_predict = dual_net.forward_for_sl(plane)############def
 
                     policy_loss = calculate_policy_loss(policy_predict, policy)
                     value_loss = calculate_value_loss(value_predict, value)

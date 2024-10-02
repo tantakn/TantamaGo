@@ -37,8 +37,7 @@ class DualNet(nn.Module): # pylint: disable=R0902
         self.softmax = nn.Softmax(dim=1)
 
 
-    def tmp_forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:####################
-    # def forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, input_plane: torch.Tensor, pram: str="") -> Tuple[torch.Tensor, torch.Tensor]:
         """前向き伝搬処理を実行する。
 
         Args:
@@ -47,14 +46,18 @@ class DualNet(nn.Module): # pylint: disable=R0902
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: PolicyとValueのlogit。
         """
+
+        if pram == "sl":
+            return self.forward_for_sl(input_plane)
+
         # blocks がresnet
         blocks_out = self.blocks(self.relu(self.bn_layer(self.conv_layer(input_plane))))
 
         return self.policy_head(blocks_out), self.value_head(blocks_out)
 
 
-    def forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:################
-    # def forward_for_sl(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+
+    def forward_for_sl(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         """前向き伝搬処理を実行する。教師有り学習で利用する。
 
         Args:
@@ -63,8 +66,8 @@ class DualNet(nn.Module): # pylint: disable=R0902
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: Softmaxを通したPolicyと, Valueのlogit
         """
-        policy, value = self.tmp_forward(input_plane)################
-        # policy, value = self.forward(input_plane)
+
+        policy, value = self.forward(input_plane)
         return self.softmax(policy), value
 
 
@@ -95,8 +98,8 @@ class DualNet(nn.Module): # pylint: disable=R0902
 
 
     def inference_with_policy_logits(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        """前向き伝搬処理を実行する。Gumbel AlphaZero用の探索に使うメソッドのため、
-        デバイス間データ転送も内部処理する。
+        """前向き伝搬処理を実行する。Gumbel AlphaZero用の探索に使うメソッドのため、デバイス間データ転送も内部処理する。
+        inference() との違いは policy が softmax を通らないこと。
 
         Args:
             input_plane (torch.Tensor): 入力特徴テンソル。
