@@ -55,7 +55,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
         network_name2 (str): 使用するニューラルネットワーク名。デフォルトはDualNet。
     """
 
-    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 30, ), daemon=True)
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300, ), daemon=True)
     monitoring_worker.start()
 
     print("🐾model: ", model)#############
