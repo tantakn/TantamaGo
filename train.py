@@ -13,6 +13,8 @@ from monitoring import display_train_monitoring_worker
 
 import torch
 
+from nn.utility import split_train_test_set
+
 
 
 @click.command()
@@ -49,6 +51,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
 
     print(f"🐾train_main")########
     print(f"    EPOCHS: {EPOCHS}")
+    print(f"    BATCH_SIZE: {BATCH_SIZE}")
     print(f"    kifu_dir: {kifu_dir}")
     print(f"    size: {size}")
     print(f"    use_gpu: {use_gpu}")
@@ -94,14 +97,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
     else:
         if use_gpu and ddp:
-            train_dataset, val_dataset = getMyDataset()
-
-            os.environ['MASTER_ADDR'] = 'localhost'
-            os.environ['MASTER_PORT'] = '50000'
-            os.environ['TORCH_DISTRIBUTED_DEBUG'] = 'DETAIL'
-            os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
-
-            torch.multiprocessing.spawn(train_on_gpu_ddp, args=(torch.cuda.device_count(), train_dataset, val_dataset, program_dir, size, BATCH_SIZE, EPOCHS, network_name, npz_dir), nprocs = torch.cuda.device_count(), join = True)
+            train_on_gpu_ddp(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
         elif use_gpu:
             train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
         else:

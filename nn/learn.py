@@ -13,12 +13,16 @@ from nn.utility import get_torch_device, print_learning_process, \
 
 from learning_param import SL_LEARNING_RATE, RL_LEARNING_RATE, \
     MOMENTUM, WEIGHT_DECAY, SL_VALUE_WEIGHT, RL_VALUE_WEIGHT, \
-    LEARNING_SCHEDULE
+    LEARNING_SCHEDULE, BATCH_SIZE, EPOCHS
 
 import datetime###########
 dt_now = datetime.datetime.now()############
 
 import copy##########
+
+import numpy as np
+
+import psutil
 
 
 def train_on_cpu(program_dir: str, board_size: int, batch_size: \
@@ -349,7 +353,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
 
 
-def train_on_gpu_ddp(rank, world, train_dataset, val_dataset, program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data") -> None: # pylint: disable=R0914,R0915
+def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data") -> None: # pylint: disable=R0914,R0915
     """教師あり学習を実行し、学習したモデルを保存する。
 
     Args:
@@ -359,46 +363,26 @@ def train_on_gpu_ddp(rank, world, train_dataset, val_dataset, program_dir: str, 
         epochs (int): 実行する最大エポック数。
     """
 
-    print(f"🐾train_on_gpu {dt_now}")###########
-    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
-    print("torch.cuda.current_device: ", torch.cuda.current_device())
-    print("torch.cuda.device_count: ", torch.cuda.device_count())
-    print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
-    if torch.cuda.device_count() > 1:##########
-        print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
-    print("torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
-    if torch.cuda.device_count() > 1:##########
-        print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
-    print("torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
+    assert batch_size % world == 0
+    batch_size = batch_size // world
 
+    torch.distributed.init_process_group("nccl", rank = rank, world_size = world)
 
-
-    # 学習データと検証用データの分割
-    data_set = sorted(glob.glob(os.path.join(program_dir, npz_dir, "sl_data_*.npz")))
-    """sl_data_*.npz のファイルパスのリスト。"""
-    train_data_set, test_data_set = split_train_test_set(data_set, 0.8)
-    """sl_data_*.npz のファイルパスのリストを学習データと検証用データの分割したもの。"""
-
-    # 学習処理を行うデバイスの設定
-    device = torch.device("cuda")
-    # device = get_torch_device(use_gpu=True)######################
 
     if network_name == "DualNet":
-        dual_net = DualNet(device=device, board_size=board_size)
+        dual_net = DualNet(device=rank, board_size=board_size)
         """DualNetのインスタンス。多分、ここにニューラルネットワークのパラメタとか入ってる。"""
     elif network_name == "DualNet_128_12":
-        dual_net = DualNet_128_12(device=device, board_size=board_size)
+        dual_net = DualNet_128_12(device=rank, board_size=board_size)
     elif network_name == "DualNet_256_24":
-        dual_net = DualNet_256_24(device=device, board_size=board_size)
+        dual_net = DualNet_256_24(device=rank, board_size=board_size)
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")
 
-    if torch.cuda.device_count() > 1:##########ここTrueで作ったので対局しようとするとFailed to load model/sl-model_2024のエラー出る
-        dual_net = torch.nn.DataParallel(dual_net)
+    net = net.to(rank)
+    net = torch.nn.parallel.DistributedDataParallel(net, device_ids = [rank], output_device = rank, find_unused_parameters=False)
 
-    dual_net.to(device)
-    print(f"🐾device: ", device)
 
     optimizer = torch.optim.SGD(dual_net.parameters(),
                                 lr=SL_LEARNING_RATE,
@@ -412,15 +396,41 @@ def train_on_gpu_ddp(rank, world, train_dataset, val_dataset, program_dir: str, 
     current_lr = SL_LEARNING_RATE
     """学習率"""
 
-    # if device == 'cuda':###########
-    #     dual_net = torch.nn.DataParallel(dual_net) # make parallel
-    #     torch.backends.cuda.nn.benchmark = True
+
+    def tmp_load_data_set(file_path):
+        def check_memory_usage():
+            if psutil.virtual_memory().percent > 80:
+                assert False, f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]"
+
+        check_memory_usage()
+
+        data = np.load(file_path)
+
+        check_memory_usage()
+
+        plane_data = data["input"]
+        policy_data = data["policy"].astype(np.float32)
+        value_data = data["value"].astype(np.int64)
+
+        check_memory_usage()
+
+        return plane_data, policy_data, value_data
+
 
     for epoch in range(epochs):
 
         # npz ループ
-        for data_index, train_data_path in enumerate(train_data_set):
-            plane_data, policy_data, value_data = load_data_set(train_data_path)
+        for data_index, train_data_path in enumerate(train_dataset):
+
+            plane_data, policy_data, value_data = tmp_load_data_set(train_data_path)
+
+            train_dataset = torch.utils.data.TensorDataset(plane_data, policy_data, value_data)
+
+            train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas = world, rank = rank, shuffle = True)
+
+            # samplerの設定とshuffleをFalseにすることを忘れない
+            train_loader = torch.utils.data.DataLoader(train_dataset, batch_size = batch_size, shuffle = False, pin_memory=True, num_workers = 2, sampler = train_sampler)
+
 
             train_loss = {
                 "loss": 0.0,
@@ -430,28 +440,19 @@ def train_on_gpu_ddp(rank, world, train_dataset, val_dataset, program_dir: str, 
 
             iteration = 0
 
-            # モデルを訓練モードにする。バッチ正規化とかドロップアウトとか訓練時と推論時で挙動が違うものが訓練モードになる。。
             dual_net.train()
 
-            # バッチループ。epoch_time ってあるけど多分バッチの時間を計測してる。
             epoch_time = time.time()
-            for i in range(0, len(value_data) - batch_size + 1, batch_size):
+            for train_batch in train_loader:
                 with torch.cuda.amp.autocast(enabled=True):
-                    plane = torch.tensor(plane_data[i:i+batch_size]).to(device)
-                    """盤面データのミニバッチのリスト。81*6*batch_size のテンソル。"""
-                    policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
-                    value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
-                    if torch.cuda.device_count() > 1:
-                        policy_predict, value_predict = dual_net(plane)##################
-                        # policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
-                    else:
-                        policy_predict, value_predict = dual_net.forward_for_sl(plane)
-                    # policy_predict, value_predict = dual_net.forward_for_sl(plane)###################def
+                    plane, policy, value = train_batch
+                    plane = plane.to(rank, non_blocking=True)
+                    policy = policy.to(rank, non_blocking=True)
+                    value = value.to(rank, non_blocking=True)
 
-                    # モデルの勾配を初期化
-                    # たぶん、ミニバッチ学習で使うためにミニバッチ内の勾配を記録していて、前のミニバッチの勾配が残っているので、それを初期化している。
-                    # ？with の上に移動する？
+                    policy_predict, value_predict = dual_net(plane, pram="sl")
+
                     dual_net.zero_grad()
 
                     # ロスの計算
@@ -465,6 +466,10 @@ def train_on_gpu_ddp(rank, world, train_dataset, val_dataset, program_dir: str, 
                 # 重みの更新をしてる？
                 scaler.step(optimizer)
                 scaler.update()
+
+                torch.distributed.all_reduce(loss)
+                torch.distributed.all_reduce(policy_loss)
+                torch.distributed.all_reduce(value_loss)
 
                 train_loss["loss"] += loss.item()
                 train_loss["policy"] += policy_loss.mean().item()
@@ -480,26 +485,36 @@ def train_on_gpu_ddp(rank, world, train_dataset, val_dataset, program_dir: str, 
         }
         test_iteration = 0
         testing_time = time.time()
-        for data_index, test_data_path in enumerate(test_data_set):
+        for data_index, test_data_path in enumerate(test_dataset):
             dual_net.eval()
-            plane_data, policy_data, value_data = load_data_set(test_data_path)
-            with torch.no_grad():
-                for i in range(0, len(value_data) - batch_size + 1, batch_size):
-                    plane = torch.tensor(plane_data[i:i+batch_size]).to(device)
-                    policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
-                    value = torch.tensor(value_data[i:i+batch_size]).to(device)
 
-                    if torch.cuda.device_count() > 1:
-                        policy_predict, value_predict = dual_net(plane)##################
-                        # policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
-                    else:
-                        policy_predict, value_predict = dual_net.forward_for_sl(plane)
-                    # policy_predict, value_predict = dual_net.forward_for_sl(plane)############def
+            plane_data, policy_data, value_data = tmp_load_data_set(test_data_path)
+
+            test_dataset = torch.utils.data.TensorDataset(plane_data, policy_data, value_data)
+
+            test_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas = world, rank = rank, shuffle = False)
+
+            test_loader = torch.utils.data.DataLoader(test_dataset, batch_size = 1, shuffle = False, pin_memory=True, num_workers = 2, sampler = test_sampler)
+
+
+            with torch.no_grad():
+                for test_batch in test_loader:
+                    plane, policy, value = test_batch
+                    plane = plane.to(rank, non_blocking=True)
+                    policy = policy.to(rank, non_blocking=True)
+                    value = value.to(rank, non_blocking=True)
+
+                    policy_predict, value_predict = dual_net(plane, pram="sl")
 
                     policy_loss = calculate_policy_loss(policy_predict, policy)
                     value_loss = calculate_value_loss(value_predict, value)
 
                     loss = (policy_loss + SL_VALUE_WEIGHT * value_loss).mean()
+
+
+                    torch.distributed.all_reduce(loss)
+                    torch.distributed.all_reduce(policy_loss)
+                    torch.distributed.all_reduce(value_loss)
 
                     test_loss["loss"] += loss.item()
                     test_loss["policy"] += policy_loss.mean().item()
@@ -526,7 +541,34 @@ def train_on_gpu_ddp(rank, world, train_dataset, val_dataset, program_dir: str, 
 
 
 
+def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data") -> None: # pylint: disable=R0914,R0915
+    
+    print(f"🐾train_on_gpu {dt_now}")###########
+    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
+    print("torch.cuda.current_device: ", torch.cuda.current_device())
+    print("torch.cuda.device_count: ", torch.cuda.device_count())
+    print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
+    if torch.cuda.device_count() > 1:##########
+        print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
+    print("torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
+    if torch.cuda.device_count() > 1:##########
+        print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
+    print("torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
 
+    # train_dataset, val_dataset = getMyDataset()
+
+    # 学習データと検証用データの分割
+    data_set = sorted(glob.glob(os.path.join(program_dir, npz_dir, "sl_data_*.npz")))
+    """sl_data_*.npz のファイルパスのリスト。"""
+    train_data_set, test_data_set = split_train_test_set(data_set, 0.8)
+    """sl_data_*.npz のファイルパスのリストを学習データと検証用データの分割したもの。"""
+
+    os.environ['MASTER_ADDR'] = 'localhost'
+    os.environ['MASTER_PORT'] = '50000'
+    os.environ['TORCH_DISTRIBUTED_DEBUG'] = 'DETAIL'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
+
+    torch.multiprocessing.spawn(train_on_gpu_ddp_worker, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir), nprocs = torch.cuda.device_count(), join = True)
 
 
 

@@ -2,7 +2,7 @@ import os
 import time, datetime, psutil, subprocess
 
 
-def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval:int = 300) -> None:
+def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval:int = 300, msg: str="") -> None:
     """ハードの使用率を表示する。
 
     Args:
@@ -35,6 +35,7 @@ def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval
 
         mem_use = psutil.virtual_memory().percent
         text += f"\nmem: {mem_use}% {fire(mem_use)}"
+        assert mem_use < 90, f"memory usage is too high.[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}], mem_use: {mem_use}% {msg}"
 
         if use_gpu:
             result_subprocess = subprocess.run(['nvidia-smi --query-gpu=name,index,utilization.gpu,memory.used,power.draw --format=csv'], capture_output=True, text=True, shell=True)
