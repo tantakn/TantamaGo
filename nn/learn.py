@@ -380,8 +380,8 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")
 
-    net = net.to(rank)
-    net = torch.nn.parallel.DistributedDataParallel(net, device_ids = [rank], output_device = rank, find_unused_parameters=False)
+    dual_net = dual_net.to(rank)
+    dual_net = torch.nn.parallel.DistributedDataParallel(dual_net, device_ids = [rank], output_device = rank, find_unused_parameters=False)
 
 
     optimizer = torch.optim.SGD(dual_net.parameters(),
@@ -399,8 +399,7 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
 
     def tmp_load_data_set(file_path):
         def check_memory_usage():
-            if psutil.virtual_memory().percent > 80:
-                assert False, f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]"
+            assert psutil.virtual_memory().percent < 80, f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]"
 
         check_memory_usage()
 
@@ -542,18 +541,18 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
 
 
 def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data") -> None: # pylint: disable=R0914,R0915
-    
-    print(f"🐾train_on_gpu {dt_now}")###########
-    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
-    print("torch.cuda.current_device: ", torch.cuda.current_device())
-    print("torch.cuda.device_count: ", torch.cuda.device_count())
-    print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
+
+    print(f"🐾train_on_gpu_ddp {dt_now}")###########
+    print(f"    [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
+    print("    torch.cuda.current_device: ", torch.cuda.current_device())
+    print("    torch.cuda.device_count: ", torch.cuda.device_count())
+    print("    torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
     if torch.cuda.device_count() > 1:##########
-        print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
-    print("torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
+        print("    torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
+    print("    torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
     if torch.cuda.device_count() > 1:##########
-        print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
-    print("torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
+        print("    torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
+    print("    torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
 
     # train_dataset, val_dataset = getMyDataset()
 
