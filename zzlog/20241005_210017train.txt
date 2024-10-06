@@ -1,0 +1,20 @@
+Usage: train.py [OPTIONS]
+
+  教師あり学習、または強化学習のデータ生成と学習を実行する。
+
+  Args:     kifu_dir (str): 学習する棋譜ファイルを格納したディレクトリパス。     size (int): 碁盤の大きさ。
+  use_gpu (bool): GPU使用フラグ。     rl (bool): 強化学習実行フラグ。     window_size (int):
+  強化学習で使用するウィンドウサイズ。
+
+Options:
+  --kifu-dir TEXT        学習データの棋譜ファイルを格納したディレクトリのパス。指定がない場合はデータ生成を実行しない。
+  --size INTEGER RANGE   碁盤の大きさ。最小2, 最大9  [2<=x<=9]
+  --use-gpu BOOLEAN      学習時にGPUを使用するフラグ。指定がなければGPUを使用するものとする。
+  --use-ddp BOOLEAN      ddp。
+  --rl BOOLEAN           強化学習実行フラグ。教師あり学習を実行するときにはfalseを指定する。
+  --window-size INTEGER  強化学習時のウィンドウサイズ
+  --net TEXT             ネットワーク。デフォルトは DualNet。DualNet_256_24 とかを指定する。
+  --npz-dir TEXT         npzがあるフォルダのパス。デフォルトは data。
+  --rl-num INTEGER       rl のパイプラインが何周目か。
+  --rl-datetime TEXT     rl のパイプラインの開始日時。
+  --help                 Show this message and exit.

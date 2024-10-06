@@ -1,0 +1,1269 @@
+ddp True
+
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 256
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+🐾train_on_gpu_ddp 2024-10-04 20:10:40.628442
+    [20241004_201040] device
+    torch.cuda.current_device:  0
+    torch.cuda.device_count:  2
+    torch.cuda.get_device_name(0):  TITAN RTX
+    torch.cuda.get_device_name(1):  TITAN RTX
+    torch.cuda.get_device_capability(0):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[20241004_201040] monitoring
+cpu: 40.9% [100.0, 9.1, 10.0, 100.0, 0.0, 0.0, 18.2, 10.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.0] 🔥
+mem: 8.3% 
+TITAN RTX, 0, 0 %, 19 MiB, 16.02 W 
+TITAN RTX, 1, 0 %, 9 MiB, 1.77 W 
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[20241004_201050] monitoring
+cpu: 16.1% [14.4, 18.6, 6.9, 5.1, 21.9, 5.0, 21.2, 16.8, 29.5, 20.6, 14.0, 12.1, 9.1, 19.6, 18.6, 18.4] 🔥
+mem: 24.4% 🔥
+TITAN RTX, 0, 38 %, 1855 MiB, 83.01 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 68.28 W 🔥
+[20241004_201150] learn
+epoch 0, data-0 : loss = 4.542519, time = 62.1 [s].
+	policy loss : 4.514425
+	value loss  : 1.404734
+[20241004_201255] learn
+epoch 0, data-1 : loss = 3.613030, time = 61.3 [s].
+	policy loss : 3.585409
+	value loss  : 1.381082
+[20241004_201405] learn
+epoch 0, data-2 : loss = 3.459380, time = 65.6 [s].
+	policy loss : 3.432399
+	value loss  : 1.349044
+[20241004_201511] learn
+epoch 0, data-3 : loss = 3.357125, time = 61.1 [s].
+	policy loss : 3.330564
+	value loss  : 1.328039
+[20241004_201553] monitoring
+cpu: 16.1% [13.6, 12.7, 12.0, 7.9, 19.6, 22.3, 21.6, 20.2, 22.2, 26.3, 11.7, 22.1, 10.0, 11.0, 12.1, 9.8] 🔥
+mem: 24.5% 🔥
+TITAN RTX, 0, 37 %, 1855 MiB, 86.36 W 🔥
+TITAN RTX, 1, 37 %, 1210 MiB, 67.19 W 🔥
+[20241004_201616] learn
+epoch 0, data-4 : loss = 3.276129, time = 61.1 [s].
+	policy loss : 3.250301
+	value loss  : 1.291421
+[20241004_201721] learn
+epoch 0, data-5 : loss = 3.206997, time = 61.0 [s].
+	policy loss : 3.181588
+	value loss  : 1.270464
+[20241004_201832] learn
+epoch 0, data-6 : loss = 3.122149, time = 66.4 [s].
+	policy loss : 3.096575
+	value loss  : 1.278692
+[20241004_201943] learn
+epoch 0, data-7 : loss = 3.098826, time = 66.5 [s].
+	policy loss : 3.073117
+	value loss  : 1.285439
+[20241004_202049] learn
+epoch 0, data-8 : loss = 3.076077, time = 61.3 [s].
+	policy loss : 3.050391
+	value loss  : 1.284312
+[20241004_202055] monitoring
+cpu: 6.9% [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 4.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+mem: 24.3% 🔥
+TITAN RTX, 0, 0 %, 1855 MiB, 71.41 W 🔥
+TITAN RTX, 1, 0 %, 1210 MiB, 55.24 W 🔥
+[20241004_202159] learn
+epoch 0, data-9 : loss = 3.070343, time = 66.1 [s].
+	policy loss : 3.044826
+	value loss  : 1.275854
+[20241004_202254] learn
+epoch 0, data-10 : loss = 3.050484, time = 51.9 [s].
+	policy loss : 3.025063
+	value loss  : 1.271070
+[20241004_202400] learn
+epoch 0, data-11 : loss = 3.109394, time = 61.3 [s].
+	policy loss : 3.083901
+	value loss  : 1.274649
+[20241004_202506] learn
+epoch 0, data-12 : loss = 3.054613, time = 61.8 [s].
+	policy loss : 3.029572
+	value loss  : 1.252062
+[20241004_202557] monitoring
+cpu: 15.8% [18.5, 31.1, 14.6, 12.6, 18.1, 7.0, 28.0, 28.7, 9.9, 34.0, 21.8, 5.0, 4.1, 12.1, 4.0, 5.0] 🔥
+mem: 24.5% 🔥
+TITAN RTX, 0, 37 %, 1855 MiB, 90.39 W 🔥
+TITAN RTX, 1, 36 %, 1210 MiB, 71.31 W 🔥
+[20241004_202617] learn
+epoch 0, data-13 : loss = 3.006545, time = 66.5 [s].
+	policy loss : 2.981522
+	value loss  : 1.251149
+[20241004_202727] learn
+epoch 0, data-14 : loss = 3.015370, time = 66.0 [s].
+	policy loss : 2.990297
+	value loss  : 1.253662
+[20241004_202901] test
+Test 0 : loss = 3.035389, time = 93.079064 [s].
+	policy loss : 3.010295
+	value loss  : 1.254664
+[20241004_203006] learn
+epoch 1, data-0 : loss = 3.003511, time = 60.9 [s].
+	policy loss : 2.978265
+	value loss  : 1.262309
+[20241004_203059] monitoring
+cpu: 15.6% [27.0, 34.7, 18.4, 13.0, 9.7, 17.0, 12.9, 25.7, 10.1, 6.0, 23.5, 12.9, 7.1, 8.9, 16.0, 8.1] 🔥
+mem: 31.4% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 88.99 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 69.77 W 🔥
+[20241004_203115] learn
+epoch 1, data-1 : loss = 3.004662, time = 64.6 [s].
+	policy loss : 2.979666
+	value loss  : 1.249824
+[20241004_203220] learn
+epoch 1, data-2 : loss = 3.020763, time = 60.8 [s].
+	policy loss : 2.996108
+	value loss  : 1.232744
+[20241004_203325] learn
+epoch 1, data-3 : loss = 3.011988, time = 61.1 [s].
+	policy loss : 2.987329
+	value loss  : 1.232980
+[20241004_203430] learn
+epoch 1, data-4 : loss = 2.989010, time = 60.8 [s].
+	policy loss : 2.964877
+	value loss  : 1.206634
+[20241004_203536] learn
+epoch 1, data-5 : loss = 2.966944, time = 61.3 [s].
+	policy loss : 2.942883
+	value loss  : 1.203067
+[20241004_203601] monitoring
+cpu: 15.5% [11.9, 13.9, 11.0, 14.4, 13.6, 8.2, 24.8, 12.1, 7.8, 22.2, 18.0, 7.9, 28.4, 23.0, 14.9, 17.8] 🔥
+mem: 31.4% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 88.82 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 69.02 W 🔥
+[20241004_203641] learn
+epoch 1, data-6 : loss = 2.902938, time = 61.0 [s].
+	policy loss : 2.878542
+	value loss  : 1.219825
+[20241004_203747] learn
+epoch 1, data-7 : loss = 2.910218, time = 61.0 [s].
+	policy loss : 2.885519
+	value loss  : 1.234904
+[20241004_203852] learn
+epoch 1, data-8 : loss = 2.908727, time = 60.9 [s].
+	policy loss : 2.883977
+	value loss  : 1.237477
+[20241004_204002] learn
+epoch 1, data-9 : loss = 2.919456, time = 66.5 [s].
+	policy loss : 2.894832
+	value loss  : 1.231233
+[20241004_204053] learn
+epoch 1, data-10 : loss = 2.914729, time = 47.3 [s].
+	policy loss : 2.889984
+	value loss  : 1.237239
+[20241004_204103] monitoring
+cpu: 15.6% [8.2, 31.4, 12.5, 16.2, 22.9, 33.3, 12.0, 10.7, 16.7, 5.2, 22.0, 10.1, 8.2, 16.8, 15.4, 9.3] 🔥
+mem: 31.6% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 90.16 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 71.57 W 🔥
+[20241004_204158] learn
+epoch 1, data-11 : loss = 2.982743, time = 61.3 [s].
+	policy loss : 2.957961
+	value loss  : 1.239074
+[20241004_204305] learn
+epoch 1, data-12 : loss = 2.939408, time = 61.9 [s].
+	policy loss : 2.915157
+	value loss  : 1.212552
+[20241004_204416] learn
+epoch 1, data-13 : loss = 2.899332, time = 66.6 [s].
+	policy loss : 2.874871
+	value loss  : 1.223028
+[20241004_204522] learn
+epoch 1, data-14 : loss = 2.916866, time = 61.7 [s].
+	policy loss : 2.892417
+	value loss  : 1.222448
+[20241004_204605] monitoring
+cpu: 21.3% [26.4, 10.8, 12.6, 20.0, 20.8, 33.3, 23.3, 14.1, 35.3, 25.7, 16.8, 43.6, 15.7, 9.3, 35.5, 18.1] 🔥
+mem: 31.5% 🔥
+TITAN RTX, 0, 25 %, 1875 MiB, 84.51 W 🔥
+TITAN RTX, 1, 25 %, 1210 MiB, 65.27 W 🔥
+[20241004_204707] test
+Test 1 : loss = 2.962282, time = 105.107268 [s].
+	policy loss : 2.937680
+	value loss  : 1.230070
+[20241004_204812] learn
+epoch 2, data-0 : loss = 2.912952, time = 60.6 [s].
+	policy loss : 2.888194
+	value loss  : 1.237901
+[20241004_204918] learn
+epoch 2, data-1 : loss = 2.919888, time = 61.5 [s].
+	policy loss : 2.895414
+	value loss  : 1.223673
+[20241004_205028] learn
+epoch 2, data-2 : loss = 2.943163, time = 66.0 [s].
+	policy loss : 2.919047
+	value loss  : 1.205798
+[20241004_205107] monitoring
+cpu: 16.4% [16.2, 5.1, 24.8, 20.8, 20.8, 25.7, 7.1, 13.7, 34.7, 6.2, 24.5, 20.4, 11.7, 7.9, 12.0, 23.3] 🔥
+mem: 32.1% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 92.29 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 72.74 W 🔥
+[20241004_205139] learn
+epoch 2, data-3 : loss = 2.938809, time = 66.8 [s].
+	policy loss : 2.914653
+	value loss  : 1.207781
+[20241004_205249] learn
+epoch 2, data-4 : loss = 2.919584, time = 66.1 [s].
+	policy loss : 2.895912
+	value loss  : 1.183577
+[20241004_205400] learn
+epoch 2, data-5 : loss = 2.901876, time = 66.1 [s].
+	policy loss : 2.878224
+	value loss  : 1.182609
+[20241004_205506] learn
+epoch 2, data-6 : loss = 2.841385, time = 61.5 [s].
+	policy loss : 2.817322
+	value loss  : 1.203142
+[20241004_205610] monitoring
+cpu: 16.3% [8.6, 17.5, 21.0, 10.8, 4.9, 5.9, 13.0, 28.0, 7.0, 29.8, 18.6, 28.3, 16.2, 23.0, 31.4, 15.7] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 77.87 W 🔥
+TITAN RTX, 1, 36 %, 1210 MiB, 57.96 W 🔥
+[20241004_205612] learn
+epoch 2, data-7 : loss = 2.850444, time = 61.6 [s].
+	policy loss : 2.826062
+	value loss  : 1.219081
+[20241004_205717] learn
+epoch 2, data-8 : loss = 2.852030, time = 60.9 [s].
+	policy loss : 2.827551
+	value loss  : 1.223960
+[20241004_205825] learn
+epoch 2, data-9 : loss = 2.866463, time = 64.4 [s].
+	policy loss : 2.842243
+	value loss  : 1.211029
+[20241004_205917] learn
+epoch 2, data-10 : loss = 2.863401, time = 48.1 [s].
+	policy loss : 2.839020
+	value loss  : 1.219027
+[20241004_210022] learn
+epoch 2, data-11 : loss = 2.935084, time = 61.3 [s].
+	policy loss : 2.910570
+	value loss  : 1.225712
+[20241004_210112] monitoring
+cpu: 15.8% [9.5, 40.2, 1.0, 5.1, 3.9, 2.0, 49.5, 5.0, 6.1, 6.8, 24.5, 13.7, 27.5, 30.5, 5.9, 3.0] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 37 %, 1875 MiB, 87.41 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 69.15 W 🔥
+[20241004_210133] learn
+epoch 2, data-12 : loss = 2.891602, time = 66.7 [s].
+	policy loss : 2.867756
+	value loss  : 1.192334
+[20241004_210243] learn
+epoch 2, data-13 : loss = 2.852916, time = 65.8 [s].
+	policy loss : 2.828755
+	value loss  : 1.208048
+[20241004_210348] learn
+epoch 2, data-14 : loss = 2.873183, time = 61.6 [s].
+	policy loss : 2.849068
+	value loss  : 1.205770
+[20241004_210532] test
+Test 2 : loss = 2.946382, time = 103.156106 [s].
+	policy loss : 2.922059
+	value loss  : 1.216181
+[20241004_210614] monitoring
+cpu: 14.9% [16.0, 38.2, 15.8, 17.6, 16.5, 24.5, 21.4, 12.1, 17.3, 5.9, 36.2, 22.5, 28.7, 14.0, 19.0, 17.8] 🔥
+mem: 32.8% 🔥
+TITAN RTX, 0, 35 %, 1875 MiB, 92.97 W 🔥
+TITAN RTX, 1, 36 %, 1210 MiB, 73.12 W 🔥
+[20241004_210638] learn
+epoch 3, data-0 : loss = 2.871687, time = 61.8 [s].
+	policy loss : 2.847156
+	value loss  : 1.226540
+[20241004_210744] learn
+epoch 3, data-1 : loss = 2.880802, time = 61.9 [s].
+	policy loss : 2.856672
+	value loss  : 1.206527
+[20241004_210849] learn
+epoch 3, data-2 : loss = 2.906175, time = 61.1 [s].
+	policy loss : 2.882346
+	value loss  : 1.191476
+[20241004_210954] learn
+epoch 3, data-3 : loss = 2.901177, time = 61.3 [s].
+	policy loss : 2.877274
+	value loss  : 1.195153
+[20241004_211059] learn
+epoch 3, data-4 : loss = 2.883105, time = 60.9 [s].
+	policy loss : 2.859707
+	value loss  : 1.169904
+[20241004_211116] monitoring
+cpu: 15.1% [38.6, 1.0, 3.9, 1.0, 2.0, 5.0, 9.1, 50.5, 51.9, 7.8, 6.9, 4.0, 5.9, 31.3, 2.0, 6.9] 🔥
+mem: 31.7% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 90.90 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 74.39 W 🔥
+[20241004_211205] learn
+epoch 3, data-5 : loss = 2.867314, time = 61.0 [s].
+	policy loss : 2.843865
+	value loss  : 1.172486
+[20241004_211310] learn
+epoch 3, data-6 : loss = 2.806899, time = 60.8 [s].
+	policy loss : 2.783039
+	value loss  : 1.193020
+[20241004_211415] learn
+epoch 3, data-7 : loss = 2.819491, time = 60.9 [s].
+	policy loss : 2.795336
+	value loss  : 1.207707
+[20241004_211520] learn
+epoch 3, data-8 : loss = 2.819386, time = 61.2 [s].
+	policy loss : 2.795164
+	value loss  : 1.211116
+[20241004_211618] monitoring
+cpu: 16.0% [29.4, 11.2, 21.4, 10.9, 23.2, 19.8, 4.0, 15.2, 13.0, 14.6, 4.0, 10.8, 29.5, 14.0, 34.0, 12.6] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 37 %, 1875 MiB, 90.06 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 68.39 W 🔥
+[20241004_211630] learn
+epoch 3, data-9 : loss = 2.832643, time = 66.0 [s].
+	policy loss : 2.808620
+	value loss  : 1.201150
+[20241004_211720] learn
+epoch 3, data-10 : loss = 2.832610, time = 46.7 [s].
+	policy loss : 2.808382
+	value loss  : 1.211363
+[20241004_211824] learn
+epoch 3, data-11 : loss = 2.904933, time = 60.4 [s].
+	policy loss : 2.880594
+	value loss  : 1.216953
+[20241004_211929] learn
+epoch 3, data-12 : loss = 2.862604, time = 61.0 [s].
+	policy loss : 2.838942
+	value loss  : 1.183096
+[20241004_212034] learn
+epoch 3, data-13 : loss = 2.825255, time = 60.8 [s].
+	policy loss : 2.801285
+	value loss  : 1.198491
+[20241004_212120] monitoring
+cpu: 14.5% [9.7, 6.7, 16.2, 11.9, 37.6, 28.9, 48.5, 4.0, 36.0, 1.0, 5.0, 5.0, 4.9, 7.8, 9.0, 5.0] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 88.55 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 69.06 W 🔥
+[20241004_212140] learn
+epoch 3, data-14 : loss = 2.844021, time = 61.4 [s].
+	policy loss : 2.820114
+	value loss  : 1.195361
+[20241004_212332] test
+Test 3 : loss = 2.913903, time = 112.518194 [s].
+	policy loss : 2.890172
+	value loss  : 1.186532
+[20241004_212442] learn
+epoch 4, data-0 : loss = 2.844409, time = 65.4 [s].
+	policy loss : 2.820019
+	value loss  : 1.219503
+[20241004_212547] learn
+epoch 4, data-1 : loss = 2.852736, time = 61.0 [s].
+	policy loss : 2.828770
+	value loss  : 1.198301
+[20241004_212622] monitoring
+cpu: 16.0% [10.8, 6.7, 33.3, 26.5, 3.0, 45.1, 5.8, 2.0, 31.7, 9.7, 5.9, 3.0, 41.2, 2.0, 5.9, 3.0] 🔥
+mem: 32.1% 🔥
+TITAN RTX, 0, 37 %, 1875 MiB, 89.96 W 🔥
+TITAN RTX, 1, 37 %, 1210 MiB, 68.86 W 🔥
+[20241004_212652] learn
+epoch 4, data-2 : loss = 2.878417, time = 60.5 [s].
+	policy loss : 2.854793
+	value loss  : 1.181233
+[20241004_212757] learn
+epoch 4, data-3 : loss = 2.875181, time = 60.6 [s].
+	policy loss : 2.851470
+	value loss  : 1.185548
+[20241004_212906] learn
+epoch 4, data-4 : loss = 2.858782, time = 65.5 [s].
+	policy loss : 2.835533
+	value loss  : 1.162442
+[20241004_213011] learn
+epoch 4, data-5 : loss = 2.841777, time = 60.4 [s].
+	policy loss : 2.818491
+	value loss  : 1.164298
+[20241004_213116] learn
+epoch 4, data-6 : loss = 2.783112, time = 60.9 [s].
+	policy loss : 2.759408
+	value loss  : 1.185246
+[20241004_213124] monitoring
+cpu: 15.2% [39.4, 8.4, 9.5, 18.1, 36.2, 5.9, 5.9, 34.0, 42.9, 5.1, 4.0, 3.0, 8.9, 8.8, 9.0, 2.0] 🔥
+mem: 32.1% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 88.65 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 66.62 W 🔥
+[20241004_213221] learn
+epoch 4, data-7 : loss = 2.795368, time = 60.8 [s].
+	policy loss : 2.771371
+	value loss  : 1.199845
+[20241004_213326] learn
+epoch 4, data-8 : loss = 2.795267, time = 60.9 [s].
+	policy loss : 2.771216
+	value loss  : 1.202510
+[20241004_213430] learn
+epoch 4, data-9 : loss = 2.812102, time = 60.7 [s].
+	policy loss : 2.788180
+	value loss  : 1.196113
+[20241004_213520] learn
+epoch 4, data-10 : loss = 2.809421, time = 46.6 [s].
+	policy loss : 2.785316
+	value loss  : 1.205251
+[20241004_213627] monitoring
+cpu: 12.7% [19.8, 17.0, 25.0, 9.9, 9.0, 10.0, 25.0, 100.0, 10.0, 22.8, 25.0, 5.0, 24.2, 95.0, 25.0, 9.9] 🔥
+mem: 39.7% 🔥
+TITAN RTX, 0, 0 %, 1875 MiB, 73.38 W 🔥
+TITAN RTX, 1, 0 %, 1210 MiB, 55.97 W 🔥
+[20241004_213625] learn
+epoch 4, data-11 : loss = 2.883987, time = 60.4 [s].
+	policy loss : 2.859743
+	value loss  : 1.212186
+[20241004_213730] learn
+epoch 4, data-12 : loss = 2.840281, time = 61.2 [s].
+	policy loss : 2.816772
+	value loss  : 1.175408
+[20241004_213839] learn
+epoch 4, data-13 : loss = 2.803844, time = 64.9 [s].
+	policy loss : 2.779996
+	value loss  : 1.192399
+[20241004_213947] learn
+epoch 4, data-14 : loss = 2.824157, time = 63.9 [s].
+	policy loss : 2.800387
+	value loss  : 1.188497
+[20241004_214120] test
+Test 4 : loss = 2.870726, time = 92.623090 [s].
+	policy loss : 2.846843
+	value loss  : 1.194156
+[20241004_214129] monitoring
+cpu: 14.5% [39.0, 5.0, 7.7, 11.4, 1.0, 1.0, 38.2, 5.1, 51.4, 2.0, 1.0, 6.7, 49.5, 8.7, 1.0, 12.6] 🔥
+mem: 32.1% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 89.60 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 69.28 W 🔥
+[20241004_214224] learn
+epoch 5, data-0 : loss = 2.824660, time = 60.6 [s].
+	policy loss : 2.800368
+	value loss  : 1.214590
+[20241004_214329] learn
+epoch 5, data-1 : loss = 2.832685, time = 60.5 [s].
+	policy loss : 2.808816
+	value loss  : 1.193426
+[20241004_214434] learn
+epoch 5, data-2 : loss = 2.857634, time = 61.1 [s].
+	policy loss : 2.834143
+	value loss  : 1.174519
+[20241004_214539] learn
+epoch 5, data-3 : loss = 2.854743, time = 60.4 [s].
+	policy loss : 2.831132
+	value loss  : 1.180533
+[20241004_214631] monitoring
+cpu: 14.4% [9.8, 7.9, 7.9, 38.1, 5.8, 0.0, 7.1, 1.0, 26.7, 25.3, 48.0, 4.0, 9.8, 3.0, 0.0, 29.7] 🔥
+mem: 32.1% 🔥
+TITAN RTX, 0, 36 %, 1875 MiB, 90.03 W 🔥
+TITAN RTX, 1, 36 %, 1210 MiB, 68.49 W 🔥
+[20241004_214643] learn
+epoch 5, data-4 : loss = 2.838807, time = 60.5 [s].
+	policy loss : 2.815649
+	value loss  : 1.157935
+[20241004_214749] learn
+epoch 5, data-5 : loss = 2.823637, time = 61.1 [s].
+	policy loss : 2.800448
+	value loss  : 1.159482
+[20241004_214853] learn
+epoch 5, data-6 : loss = 2.764417, time = 60.4 [s].
+	policy loss : 2.740835
+	value loss  : 1.179084
+[20241004_214958] learn
+epoch 5, data-7 : loss = 2.775771, time = 61.1 [s].
+	policy loss : 2.751884
+	value loss  : 1.194384
+[20241004_215109] learn
+epoch 5, data-8 : loss = 2.777948, time = 66.8 [s].
+	policy loss : 2.753931
+	value loss  : 1.200849
+[20241004_215133] monitoring
+cpu: 14.8% [46.6, 11.8, 29.6, 15.0, 18.6, 0.0, 0.0, 3.9, 2.0, 4.0, 2.0, 3.0, 43.7, 44.3, 6.1, 4.0] 🔥
+mem: 32.1% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 89.41 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 68.48 W 🔥
+[20241004_215219] learn
+epoch 5, data-9 : loss = 2.794511, time = 65.3 [s].
+	policy loss : 2.770694
+	value loss  : 1.190896
+[20241004_215308] learn
+epoch 5, data-10 : loss = 2.791604, time = 46.6 [s].
+	policy loss : 2.767598
+	value loss  : 1.200314
+[20241004_215413] learn
+epoch 5, data-11 : loss = 2.866847, time = 60.4 [s].
+	policy loss : 2.842709
+	value loss  : 1.206883
+[20241004_215517] learn
+epoch 5, data-12 : loss = 2.823459, time = 60.4 [s].
+	policy loss : 2.800082
+	value loss  : 1.168886
+[20241004_215622] learn
+epoch 5, data-13 : loss = 2.787626, time = 60.5 [s].
+	policy loss : 2.763868
+	value loss  : 1.187899
+[20241004_215635] monitoring
+cpu: 14.6% [4.9, 7.6, 7.8, 32.7, 6.7, 5.8, 1.0, 7.9, 46.2, 40.2, 6.9, 11.7, 3.0, 4.9, 5.0, 51.5] 🔥
+mem: 32.1% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 89.08 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 68.38 W 🔥
+[20241004_215727] learn
+epoch 5, data-14 : loss = 2.807861, time = 60.9 [s].
+	policy loss : 2.784190
+	value loss  : 1.183553
+Epoch 5, learning rate has changed 0.01 -> 0.001
+Epoch 5, learning rate has changed 0.01 -> 0.001
+[20241004_215859] test
+Test 5 : loss = 2.885842, time = 91.641198 [s].
+	policy loss : 2.859248
+	value loss  : 1.329711
+[20241004_220004] learn
+epoch 6, data-0 : loss = 2.722630, time = 60.6 [s].
+	policy loss : 2.698777
+	value loss  : 1.192622
+[20241004_220108] learn
+epoch 6, data-1 : loss = 2.701861, time = 60.5 [s].
+	policy loss : 2.678598
+	value loss  : 1.163155
+[20241004_220137] monitoring
+cpu: 14.4% [49.5, 8.7, 6.8, 2.9, 40.8, 34.0, 49.0, 5.9, 3.0, 1.0, 4.0, 6.1, 4.0, 2.0, 3.0, 4.0] 🔥
+mem: 32.2% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 89.72 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 69.36 W 🔥
+[20241004_220213] learn
+epoch 6, data-2 : loss = 2.714417, time = 60.9 [s].
+	policy loss : 2.691519
+	value loss  : 1.144875
+[20241004_220319] learn
+epoch 6, data-3 : loss = 2.703993, time = 61.0 [s].
+	policy loss : 2.681087
+	value loss  : 1.145316
+[20241004_220428] learn
+epoch 6, data-4 : loss = 2.682346, time = 65.9 [s].
+	policy loss : 2.659910
+	value loss  : 1.121777
+[20241004_220534] learn
+epoch 6, data-5 : loss = 2.663514, time = 61.4 [s].
+	policy loss : 2.641042
+	value loss  : 1.123580
+[20241004_220639] monitoring
+cpu: 12.9% [100.0, 12.4, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0] 🔥
+mem: 36.3% 🔥
+TITAN RTX, 0, 0 %, 1875 MiB, 73.49 W 🔥
+TITAN RTX, 1, 0 %, 1210 MiB, 55.75 W 🔥
+[20241004_220639] learn
+epoch 6, data-6 : loss = 2.599055, time = 61.1 [s].
+	policy loss : 2.576191
+	value loss  : 1.143220
+[20241004_220744] learn
+epoch 6, data-7 : loss = 2.603271, time = 61.0 [s].
+	policy loss : 2.580103
+	value loss  : 1.158412
+[20241004_220850] learn
+epoch 6, data-8 : loss = 2.601336, time = 61.1 [s].
+	policy loss : 2.578026
+	value loss  : 1.165509
+[20241004_220955] learn
+epoch 6, data-9 : loss = 2.614967, time = 61.0 [s].
+	policy loss : 2.591941
+	value loss  : 1.151325
+[20241004_221044] learn
+epoch 6, data-10 : loss = 2.611560, time = 46.3 [s].
+	policy loss : 2.588290
+	value loss  : 1.163527
+[20241004_221141] monitoring
+cpu: 15.1% [28.8, 32.7, 6.9, 23.2, 16.8, 4.0, 7.0, 7.0, 2.0, 3.0, 50.0, 2.1, 4.0, 36.6, 1.0, 5.9] 🔥
+mem: 32.2% 🔥
+TITAN RTX, 0, 37 %, 1875 MiB, 94.22 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 73.20 W 🔥
+[20241004_221149] learn
+epoch 6, data-11 : loss = 2.678862, time = 60.4 [s].
+	policy loss : 2.655451
+	value loss  : 1.170552
+[20241004_221255] learn
+epoch 6, data-12 : loss = 2.626377, time = 61.9 [s].
+	policy loss : 2.603807
+	value loss  : 1.128527
+[20241004_221400] learn
+epoch 6, data-13 : loss = 2.580285, time = 60.8 [s].
+	policy loss : 2.557265
+	value loss  : 1.150996
+[20241004_221506] learn
+epoch 6, data-14 : loss = 2.588296, time = 62.1 [s].
+	policy loss : 2.565431
+	value loss  : 1.143257
+[20241004_221638] test
+Test 6 : loss = 2.682894, time = 92.349514 [s].
+	policy loss : 2.660171
+	value loss  : 1.136146
+[20241004_221644] monitoring
+cpu: 19.8% [7.9, 5.0, 7.9, 14.0, 18.8, 11.0, 15.4, 25.0, 23.2, 14.9, 5.0, 2.0, 8.1, 42.2, 33.3, 6.9] 🔥
+mem: 32.2% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 93.22 W 🔥
+TITAN RTX, 1, 40 %, 1210 MiB, 73.34 W 🔥
+[20241004_221743] learn
+epoch 7, data-0 : loss = 2.639509, time = 60.2 [s].
+	policy loss : 2.616020
+	value loss  : 1.174467
+[20241004_221848] learn
+epoch 7, data-1 : loss = 2.646914, time = 60.5 [s].
+	policy loss : 2.623898
+	value loss  : 1.150794
+[20241004_221952] learn
+epoch 7, data-2 : loss = 2.670381, time = 60.8 [s].
+	policy loss : 2.647700
+	value loss  : 1.134030
+[20241004_222057] learn
+epoch 7, data-3 : loss = 2.663619, time = 60.6 [s].
+	policy loss : 2.640908
+	value loss  : 1.135550
+[20241004_222146] monitoring
+cpu: 15.2% [18.5, 15.0, 12.1, 9.8, 8.8, 3.0, 23.5, 19.8, 13.1, 39.0, 9.0, 4.0, 8.8, 3.0, 7.8, 33.3] 🔥
+mem: 32.2% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 92.96 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 71.82 W 🔥
+[20241004_222202] learn
+epoch 7, data-4 : loss = 2.647950, time = 61.1 [s].
+	policy loss : 2.625691
+	value loss  : 1.112976
+[20241004_222308] learn
+epoch 7, data-5 : loss = 2.632526, time = 61.0 [s].
+	policy loss : 2.610228
+	value loss  : 1.114856
+[20241004_222413] learn
+epoch 7, data-6 : loss = 2.569392, time = 60.9 [s].
+	policy loss : 2.546687
+	value loss  : 1.135219
+[20241004_222517] learn
+epoch 7, data-7 : loss = 2.576784, time = 60.5 [s].
+	policy loss : 2.553743
+	value loss  : 1.152048
+[20241004_222623] learn
+epoch 7, data-8 : loss = 2.576879, time = 61.2 [s].
+	policy loss : 2.553705
+	value loss  : 1.158708
+[20241004_222648] monitoring
+cpu: 15.1% [9.4, 5.8, 3.9, 48.5, 4.9, 9.8, 7.8, 49.5, 1.0, 33.7, 5.0, 8.0, 5.1, 2.0, 37.0, 1.0] 🔥
+mem: 32.2% 🔥
+TITAN RTX, 0, 37 %, 1875 MiB, 92.15 W 🔥
+TITAN RTX, 1, 37 %, 1210 MiB, 71.25 W 🔥
+[20241004_222733] learn
+epoch 7, data-9 : loss = 2.592964, time = 65.7 [s].
+	policy loss : 2.570036
+	value loss  : 1.146398
+[20241004_222827] learn
+epoch 7, data-10 : loss = 2.590874, time = 51.8 [s].
+	policy loss : 2.567682
+	value loss  : 1.159600
+[20241004_222938] learn
+epoch 7, data-11 : loss = 2.660818, time = 66.8 [s].
+	policy loss : 2.637476
+	value loss  : 1.167126
+[20241004_223049] learn
+epoch 7, data-12 : loss = 2.612450, time = 66.8 [s].
+	policy loss : 2.589972
+	value loss  : 1.123873
+[20241004_223150] monitoring
+cpu: 15.3% [8.5, 4.8, 3.0, 5.0, 10.7, 45.6, 6.3, 32.7, 8.7, 14.6, 25.5, 29.4, 3.0, 11.9, 24.3, 6.9] 🔥
+mem: 32.2% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 92.66 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 73.14 W 🔥
+[20241004_223200] learn
+epoch 7, data-13 : loss = 2.571054, time = 66.3 [s].
+	policy loss : 2.548114
+	value loss  : 1.147002
+[20241004_223310] learn
+epoch 7, data-14 : loss = 2.586818, time = 66.3 [s].
+	policy loss : 2.564014
+	value loss  : 1.140189
+[20241004_223447] test
+Test 7 : loss = 2.673373, time = 96.672949 [s].
+	policy loss : 2.650657
+	value loss  : 1.135786
+[20241004_223552] learn
+epoch 8, data-0 : loss = 2.622816, time = 60.6 [s].
+	policy loss : 2.599397
+	value loss  : 1.170915
+[20241004_223652] monitoring
+cpu: 14.4% [9.7, 9.3, 35.4, 2.0, 4.0, 7.0, 33.3, 5.1, 51.9, 3.0, 4.0, 7.8, 4.0, 21.9, 27.5, 5.0] 🔥
+mem: 32.2% 🔥
+TITAN RTX, 0, 37 %, 1875 MiB, 88.93 W 🔥
+TITAN RTX, 1, 37 %, 1210 MiB, 70.29 W 🔥
+[20241004_223658] learn
+epoch 8, data-1 : loss = 2.630772, time = 62.4 [s].
+	policy loss : 2.607833
+	value loss  : 1.146948
+[20241004_223803] learn
+epoch 8, data-2 : loss = 2.655222, time = 60.9 [s].
+	policy loss : 2.632621
+	value loss  : 1.130053
+[20241004_223909] learn
+epoch 8, data-3 : loss = 2.649491, time = 61.6 [s].
+	policy loss : 2.626852
+	value loss  : 1.131972
+[20241004_224016] learn
+epoch 8, data-4 : loss = 2.633578, time = 62.9 [s].
+	policy loss : 2.611390
+	value loss  : 1.109363
+[20241004_224123] learn
+epoch 8, data-5 : loss = 2.618576, time = 62.3 [s].
+	policy loss : 2.596330
+	value loss  : 1.112326
+[20241004_224154] monitoring
+cpu: 14.5% [6.0, 11.9, 11.5, 2.0, 2.0, 3.0, 7.7, 2.0, 43.7, 12.9, 44.7, 26.3, 6.0, 5.0, 12.9, 32.0] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 91.23 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 68.68 W 🔥
+[20241004_224228] learn
+epoch 8, data-6 : loss = 2.556974, time = 61.2 [s].
+	policy loss : 2.534323
+	value loss  : 1.132536
+[20241004_224333] learn
+epoch 8, data-7 : loss = 2.564994, time = 60.5 [s].
+	policy loss : 2.541998
+	value loss  : 1.149804
+[20241004_224438] learn
+epoch 8, data-8 : loss = 2.565580, time = 60.5 [s].
+	policy loss : 2.542449
+	value loss  : 1.156511
+[20241004_224548] learn
+epoch 8, data-9 : loss = 2.583197, time = 66.0 [s].
+	policy loss : 2.560301
+	value loss  : 1.144759
+[20241004_224643] learn
+epoch 8, data-10 : loss = 2.581484, time = 51.9 [s].
+	policy loss : 2.558313
+	value loss  : 1.158530
+[20241004_224656] monitoring
+cpu: 14.5% [36.0, 16.0, 3.0, 18.4, 5.1, 29.9, 6.8, 3.0, 5.9, 4.0, 40.4, 35.1, 16.8, 7.8, 1.0, 6.1] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 92.79 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 73.26 W 🔥
+[20241004_224748] learn
+epoch 8, data-11 : loss = 2.653934, time = 61.0 [s].
+	policy loss : 2.630640
+	value loss  : 1.164713
+[20241004_224854] learn
+epoch 8, data-12 : loss = 2.607044, time = 61.2 [s].
+	policy loss : 2.584612
+	value loss  : 1.121604
+[20241004_225004] learn
+epoch 8, data-13 : loss = 2.567461, time = 66.2 [s].
+	policy loss : 2.544559
+	value loss  : 1.145120
+[20241004_225114] learn
+epoch 8, data-14 : loss = 2.585790, time = 66.1 [s].
+	policy loss : 2.563020
+	value loss  : 1.138529
+[20241004_225159] monitoring
+cpu: 20.0% [46.6, 74.8, 75.5, 22.6, 12.0, 18.2, 3.1, 21.0, 5.1, 3.0, 4.0, 4.0, 2.0, 15.1, 4.0, 7.0] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 25 %, 1875 MiB, 85.69 W 🔥
+TITAN RTX, 1, 26 %, 1210 MiB, 66.76 W 🔥
+Epoch 8, learning rate has changed 0.001 -> 0.0001
+[20241004_225258] test
+Test 8 : loss = 2.666644, time = 103.826842 [s].
+	policy loss : 2.643880
+	value loss  : 1.138209
+Epoch 8, learning rate has changed 0.001 -> 0.0001
+[20241004_225408] learn
+epoch 9, data-0 : loss = 2.609351, time = 66.1 [s].
+	policy loss : 2.585977
+	value loss  : 1.168710
+[20241004_225519] learn
+epoch 9, data-1 : loss = 2.612062, time = 66.2 [s].
+	policy loss : 2.589218
+	value loss  : 1.142207
+[20241004_225629] learn
+epoch 9, data-2 : loss = 2.633327, time = 66.1 [s].
+	policy loss : 2.610807
+	value loss  : 1.126012
+[20241004_225701] monitoring
+cpu: 19.4% [35.2, 15.4, 23.8, 23.1, 10.9, 28.3, 23.2, 16.8, 14.6, 24.0, 18.0, 33.0, 17.6, 31.3, 17.8, 21.2] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 36 %, 1875 MiB, 89.49 W 🔥
+TITAN RTX, 1, 36 %, 1210 MiB, 70.59 W 🔥
+[20241004_225740] learn
+epoch 9, data-3 : loss = 2.626810, time = 67.3 [s].
+	policy loss : 2.604269
+	value loss  : 1.127054
+[20241004_225851] learn
+epoch 9, data-4 : loss = 2.608409, time = 66.6 [s].
+	policy loss : 2.586313
+	value loss  : 1.104786
+[20241004_225957] learn
+epoch 9, data-5 : loss = 2.591962, time = 61.4 [s].
+	policy loss : 2.569805
+	value loss  : 1.107875
+[20241004_230105] learn
+epoch 9, data-6 : loss = 2.528503, time = 64.1 [s].
+	policy loss : 2.505942
+	value loss  : 1.128069
+[20241004_230203] monitoring
+cpu: 15.4% [6.8, 4.9, 43.8, 3.0, 3.0, 1.0, 8.9, 1.0, 50.0, 1.0, 8.6, 49.0, 41.9, 3.0, 2.0, 5.0] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 92.42 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 71.57 W 🔥
+[20241004_230214] learn
+epoch 9, data-7 : loss = 2.533793, time = 65.1 [s].
+	policy loss : 2.510868
+	value loss  : 1.146208
+[20241004_230324] learn
+epoch 9, data-8 : loss = 2.531775, time = 66.1 [s].
+	policy loss : 2.508748
+	value loss  : 1.151373
+[20241004_230434] learn
+epoch 9, data-9 : loss = 2.546727, time = 65.7 [s].
+	policy loss : 2.523979
+	value loss  : 1.137388
+[20241004_230529] learn
+epoch 9, data-10 : loss = 2.546109, time = 51.3 [s].
+	policy loss : 2.523055
+	value loss  : 1.152710
+[20241004_230633] learn
+epoch 9, data-11 : loss = 2.612070, time = 60.6 [s].
+	policy loss : 2.588886
+	value loss  : 1.159201
+[20241004_230705] monitoring
+cpu: 14.7% [14.3, 27.5, 25.5, 41.6, 29.3, 15.0, 36.0, 12.0, 1.0, 2.0, 7.8, 8.0, 5.8, 0.0, 5.9, 5.0] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 89.52 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 70.85 W 🔥
+[20241004_230743] learn
+epoch 9, data-12 : loss = 2.560123, time = 65.8 [s].
+	policy loss : 2.537834
+	value loss  : 1.114459
+[20241004_230854] learn
+epoch 9, data-13 : loss = 2.514917, time = 66.1 [s].
+	policy loss : 2.492155
+	value loss  : 1.138114
+[20241004_231004] learn
+epoch 9, data-14 : loss = 2.525792, time = 66.1 [s].
+	policy loss : 2.503137
+	value loss  : 1.132734
+[20241004_231137] test
+Test 9 : loss = 2.635015, time = 93.344541 [s].
+	policy loss : 2.612519
+	value loss  : 1.124767
+[20241004_231207] monitoring
+cpu: 15.3% [27.9, 10.8, 10.7, 18.4, 21.4, 40.6, 7.0, 7.7, 4.9, 5.9, 32.7, 2.0, 5.9, 43.3, 3.0, 3.1] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 89.21 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 70.20 W 🔥
+[20241004_231242] learn
+epoch 10, data-0 : loss = 2.587940, time = 60.7 [s].
+	policy loss : 2.564660
+	value loss  : 1.163998
+[20241004_231347] learn
+epoch 10, data-1 : loss = 2.596539, time = 61.2 [s].
+	policy loss : 2.573753
+	value loss  : 1.139280
+[20241004_231452] learn
+epoch 10, data-2 : loss = 2.620792, time = 60.6 [s].
+	policy loss : 2.598319
+	value loss  : 1.123679
+[20241004_231556] learn
+epoch 10, data-3 : loss = 2.614446, time = 60.0 [s].
+	policy loss : 2.591955
+	value loss  : 1.124562
+[20241004_231702] learn
+epoch 10, data-4 : loss = 2.597898, time = 61.1 [s].
+	policy loss : 2.575837
+	value loss  : 1.103055
+[20241004_231709] monitoring
+cpu: 14.6% [10.4, 14.3, 9.6, 8.5, 5.0, 8.0, 5.0, 47.6, 35.0, 3.0, 5.0, 32.4, 4.0, 49.1, 6.9, 6.0] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 85.28 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 67.47 W 🔥
+[20241004_231807] learn
+epoch 10, data-5 : loss = 2.583057, time = 61.3 [s].
+	policy loss : 2.560936
+	value loss  : 1.106053
+[20241004_231917] learn
+epoch 10, data-6 : loss = 2.520064, time = 66.1 [s].
+	policy loss : 2.497540
+	value loss  : 1.126165
+[20241004_232027] learn
+epoch 10, data-7 : loss = 2.526501, time = 65.4 [s].
+	policy loss : 2.503604
+	value loss  : 1.144867
+[20241004_232137] learn
+epoch 10, data-8 : loss = 2.524956, time = 66.0 [s].
+	policy loss : 2.501942
+	value loss  : 1.150665
+[20241004_232211] monitoring
+cpu: 14.9% [39.8, 22.8, 3.0, 35.2, 7.9, 21.0, 26.3, 6.8, 3.9, 5.9, 10.1, 24.0, 6.1, 10.0, 11.7, 2.0] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 88.54 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 68.27 W 🔥
+[20241004_232242] learn
+epoch 10, data-9 : loss = 2.540919, time = 61.3 [s].
+	policy loss : 2.518189
+	value loss  : 1.136493
+[20241004_232332] learn
+epoch 10, data-10 : loss = 2.541231, time = 46.6 [s].
+	policy loss : 2.518190
+	value loss  : 1.152008
+[20241004_232437] learn
+epoch 10, data-11 : loss = 2.608233, time = 60.6 [s].
+	policy loss : 2.585075
+	value loss  : 1.157922
+[20241004_232545] learn
+epoch 10, data-12 : loss = 2.558085, time = 63.9 [s].
+	policy loss : 2.535821
+	value loss  : 1.113238
+[20241004_232655] learn
+epoch 10, data-13 : loss = 2.515520, time = 66.0 [s].
+	policy loss : 2.492766
+	value loss  : 1.137691
+[20241004_232713] monitoring
+cpu: 14.0% [9.3, 3.0, 48.0, 29.7, 4.0, 5.0, 45.2, 5.9, 40.8, 5.0, 8.1, 2.0, 4.0, 7.0, 1.0, 4.0] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 37 %, 1875 MiB, 87.73 W 🔥
+TITAN RTX, 1, 37 %, 1210 MiB, 67.45 W 🔥
+[20241004_232800] learn
+epoch 10, data-14 : loss = 2.530167, time = 60.4 [s].
+	policy loss : 2.507518
+	value loss  : 1.132442
+Epoch 10, learning rate has changed 0.0001 -> 1e-05
+Epoch 10, learning rate has changed 0.0001 -> 1e-05
+[20241004_232942] test
+Test 10 : loss = 2.632165, time = 102.285359 [s].
+	policy loss : 2.609660
+	value loss  : 1.125251
+[20241004_233047] learn
+epoch 11, data-0 : loss = 2.587902, time = 60.6 [s].
+	policy loss : 2.564635
+	value loss  : 1.163330
+[20241004_233152] learn
+epoch 11, data-1 : loss = 2.595115, time = 61.1 [s].
+	policy loss : 2.572335
+	value loss  : 1.138991
+[20241004_233216] monitoring
+cpu: 15.0% [6.0, 13.4, 5.8, 9.7, 11.9, 44.7, 29.7, 5.9, 5.0, 11.0, 7.9, 2.0, 28.6, 8.2, 42.7, 6.9] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 89.41 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 70.67 W 🔥
+[20241004_233257] learn
+epoch 11, data-2 : loss = 2.620319, time = 60.8 [s].
+	policy loss : 2.597845
+	value loss  : 1.123685
+[20241004_233402] learn
+epoch 11, data-3 : loss = 2.613837, time = 60.6 [s].
+	policy loss : 2.591344
+	value loss  : 1.124646
+[20241004_233507] learn
+epoch 11, data-4 : loss = 2.596604, time = 60.9 [s].
+	policy loss : 2.574539
+	value loss  : 1.103268
+[20241004_233612] learn
+epoch 11, data-5 : loss = 2.581814, time = 60.9 [s].
+	policy loss : 2.559676
+	value loss  : 1.106890
+[20241004_233718] monitoring
+cpu: 13.2% [14.5, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 100.0, 0.0, 0.0] 🔥
+mem: 37.7% 🔥
+TITAN RTX, 0, 0 %, 1875 MiB, 73.26 W 🔥
+TITAN RTX, 1, 0 %, 1210 MiB, 55.65 W 🔥
+[20241004_233717] learn
+epoch 11, data-6 : loss = 2.518546, time = 60.9 [s].
+	policy loss : 2.496033
+	value loss  : 1.125646
+[20241004_233823] learn
+epoch 11, data-7 : loss = 2.524339, time = 61.7 [s].
+	policy loss : 2.501477
+	value loss  : 1.143081
+[20241004_233933] learn
+epoch 11, data-8 : loss = 2.521817, time = 66.5 [s].
+	policy loss : 2.498803
+	value loss  : 1.150713
+[20241004_234043] learn
+epoch 11, data-9 : loss = 2.537380, time = 66.2 [s].
+	policy loss : 2.514644
+	value loss  : 1.136808
+[20241004_234134] learn
+epoch 11, data-10 : loss = 2.538153, time = 47.0 [s].
+	policy loss : 2.515107
+	value loss  : 1.152278
+[20241004_234220] monitoring
+cpu: 14.3% [10.2, 4.0, 26.7, 24.8, 8.9, 4.0, 5.9, 6.9, 6.1, 47.6, 1.0, 3.9, 35.6, 5.9, 3.0, 40.8] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 89.11 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 69.63 W 🔥
+[20241004_234239] learn
+epoch 11, data-11 : loss = 2.603635, time = 60.8 [s].
+	policy loss : 2.580476
+	value loss  : 1.157973
+[20241004_234343] learn
+epoch 11, data-12 : loss = 2.551405, time = 60.8 [s].
+	policy loss : 2.529157
+	value loss  : 1.112388
+[20241004_234448] learn
+epoch 11, data-13 : loss = 2.508521, time = 60.7 [s].
+	policy loss : 2.485788
+	value loss  : 1.136639
+[20241004_234558] learn
+epoch 11, data-14 : loss = 2.520797, time = 66.0 [s].
+	policy loss : 2.498161
+	value loss  : 1.131825
+[20241004_234722] monitoring
+cpu: 19.5% [10.7, 26.4, 5.0, 29.1, 69.6, 27.7, 27.4, 22.3, 4.1, 3.9, 5.9, 0.0, 0.0, 75.7, 6.9, 0.0] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 24 %, 1875 MiB, 84.52 W 🔥
+TITAN RTX, 1, 24 %, 1210 MiB, 65.70 W 🔥
+[20241004_234735] test
+Test 11 : loss = 2.627628, time = 96.533668 [s].
+	policy loss : 2.605161
+	value loss  : 1.123353
+[20241004_234840] learn
+epoch 12, data-0 : loss = 2.582717, time = 60.5 [s].
+	policy loss : 2.559467
+	value loss  : 1.162525
+[20241004_234945] learn
+epoch 12, data-1 : loss = 2.591796, time = 61.6 [s].
+	policy loss : 2.569029
+	value loss  : 1.138361
+[20241004_235056] learn
+epoch 12, data-2 : loss = 2.617240, time = 66.7 [s].
+	policy loss : 2.594766
+	value loss  : 1.123738
+[20241004_235207] learn
+epoch 12, data-3 : loss = 2.611198, time = 66.3 [s].
+	policy loss : 2.588718
+	value loss  : 1.123995
+[20241004_235224] monitoring
+cpu: 15.9% [18.3, 28.2, 6.0, 1.0, 2.0, 4.9, 47.1, 5.0, 6.9, 20.2, 5.0, 2.0, 6.0, 46.5, 3.0, 33.0] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 88.11 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 69.24 W 🔥
+[20241004_235311] learn
+epoch 12, data-4 : loss = 2.594607, time = 60.3 [s].
+	policy loss : 2.572547
+	value loss  : 1.103003
+[20241004_235417] learn
+epoch 12, data-5 : loss = 2.579499, time = 61.2 [s].
+	policy loss : 2.557370
+	value loss  : 1.106426
+[20241004_235522] learn
+epoch 12, data-6 : loss = 2.516968, time = 60.7 [s].
+	policy loss : 2.494452
+	value loss  : 1.125786
+[20241004_235626] learn
+epoch 12, data-7 : loss = 2.522988, time = 60.5 [s].
+	policy loss : 2.500135
+	value loss  : 1.142680
+[20241004_235726] monitoring
+cpu: 14.6% [5.9, 12.6, 5.9, 0.0, 4.0, 3.9, 50.5, 31.3, 8.0, 9.7, 8.7, 31.0, 48.0, 3.9, 10.9, 1.0] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 90.90 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 70.28 W 🔥
+[20241004_235731] learn
+epoch 12, data-8 : loss = 2.520551, time = 60.9 [s].
+	policy loss : 2.497551
+	value loss  : 1.149996
+[20241004_235842] learn
+epoch 12, data-9 : loss = 2.536642, time = 66.4 [s].
+	policy loss : 2.513908
+	value loss  : 1.136706
+[20241004_235936] learn
+epoch 12, data-10 : loss = 2.537407, time = 51.5 [s].
+	policy loss : 2.514371
+	value loss  : 1.151796
+[20241005_000041] learn
+epoch 12, data-11 : loss = 2.603030, time = 60.5 [s].
+	policy loss : 2.579880
+	value loss  : 1.157511
+[20241005_000147] learn
+epoch 12, data-12 : loss = 2.551539, time = 61.8 [s].
+	policy loss : 2.529298
+	value loss  : 1.112083
+[20241005_000228] monitoring
+cpu: 15.2% [17.1, 5.8, 3.9, 27.5, 49.0, 38.4, 21.4, 4.0, 6.0, 7.9, 2.0, 4.0, 45.2, 6.0, 3.0, 5.0] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 86.13 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 68.52 W 🔥
+[20241005_000252] learn
+epoch 12, data-13 : loss = 2.509051, time = 60.7 [s].
+	policy loss : 2.486321
+	value loss  : 1.136537
+[20241005_000402] learn
+epoch 12, data-14 : loss = 2.522243, time = 65.9 [s].
+	policy loss : 2.499602
+	value loss  : 1.132041
+[20241005_000546] test
+Test 12 : loss = 2.626918, time = 104.288069 [s].
+	policy loss : 2.604445
+	value loss  : 1.123632
+[20241005_000651] learn
+epoch 13, data-0 : loss = 2.581217, time = 60.5 [s].
+	policy loss : 2.557968
+	value loss  : 1.162459
+[20241005_000730] monitoring
+cpu: 14.6% [33.1, 5.0, 8.9, 7.1, 4.0, 5.0, 13.3, 11.8, 0.0, 37.9, 0.0, 0.0, 49.0, 5.9, 3.0, 51.4] 🔥
+mem: 31.9% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 90.24 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 70.06 W 🔥
+[20241005_000756] learn
+epoch 13, data-1 : loss = 2.590944, time = 61.2 [s].
+	policy loss : 2.568180
+	value loss  : 1.138191
+[20241005_000901] learn
+epoch 13, data-2 : loss = 2.616214, time = 60.6 [s].
+	policy loss : 2.593745
+	value loss  : 1.123492
+[20241005_001006] learn
+epoch 13, data-3 : loss = 2.609967, time = 61.1 [s].
+	policy loss : 2.587493
+	value loss  : 1.123715
+[20241005_001111] learn
+epoch 13, data-4 : loss = 2.593015, time = 61.0 [s].
+	policy loss : 2.570964
+	value loss  : 1.102521
+[20241005_001216] learn
+epoch 13, data-5 : loss = 2.578653, time = 60.6 [s].
+	policy loss : 2.556533
+	value loss  : 1.105964
+[20241005_001233] monitoring
+cpu: 14.5% [53.3, 9.9, 7.0, 2.0, 1.0, 0.0, 5.9, 5.9, 35.4, 2.0, 3.0, 6.9, 5.2, 37.3, 8.1, 50.9] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 90.60 W 🔥
+TITAN RTX, 1, 37 %, 1210 MiB, 70.55 W 🔥
+[20241005_001321] learn
+epoch 13, data-6 : loss = 2.515935, time = 61.0 [s].
+	policy loss : 2.493424
+	value loss  : 1.125543
+[20241005_001429] learn
+epoch 13, data-7 : loss = 2.522421, time = 63.6 [s].
+	policy loss : 2.499562
+	value loss  : 1.142944
+[20241005_001534] learn
+epoch 13, data-8 : loss = 2.519931, time = 61.2 [s].
+	policy loss : 2.496934
+	value loss  : 1.149865
+[20241005_001639] learn
+epoch 13, data-9 : loss = 2.535699, time = 60.7 [s].
+	policy loss : 2.512973
+	value loss  : 1.136313
+[20241005_001729] learn
+epoch 13, data-10 : loss = 2.536578, time = 46.8 [s].
+	policy loss : 2.513549
+	value loss  : 1.151468
+[20241005_001735] monitoring
+cpu: 15.2% [6.8, 49.5, 51.9, 8.1, 6.9, 2.0, 5.0, 6.9, 3.0, 6.9, 8.8, 5.0, 37.0, 1.0, 31.6, 6.8] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 40 %, 1875 MiB, 91.38 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 71.47 W 🔥
+[20241005_001834] learn
+epoch 13, data-11 : loss = 2.602701, time = 60.3 [s].
+	policy loss : 2.579550
+	value loss  : 1.157553
+[20241005_001939] learn
+epoch 13, data-12 : loss = 2.551647, time = 61.0 [s].
+	policy loss : 2.529410
+	value loss  : 1.111860
+[20241005_002044] learn
+epoch 13, data-13 : loss = 2.509021, time = 60.8 [s].
+	policy loss : 2.486291
+	value loss  : 1.136529
+[20241005_002149] learn
+epoch 13, data-14 : loss = 2.523251, time = 61.6 [s].
+	policy loss : 2.500604
+	value loss  : 1.132345
+[20241005_002237] monitoring
+cpu: 12.8% [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 100.0, 0.0, 0.0, 0.0] 🔥
+mem: 36.2% 🔥
+TITAN RTX, 0, 0 %, 1875 MiB, 72.35 W 🔥
+TITAN RTX, 1, 0 %, 1210 MiB, 55.23 W 🔥
+[20241005_002323] test
+Test 13 : loss = 2.627853, time = 93.110838 [s].
+	policy loss : 2.605391
+	value loss  : 1.123084
+[20241005_002428] learn
+epoch 14, data-0 : loss = 2.580638, time = 61.2 [s].
+	policy loss : 2.557388
+	value loss  : 1.162505
+[20241005_002533] learn
+epoch 14, data-1 : loss = 2.589845, time = 60.7 [s].
+	policy loss : 2.567074
+	value loss  : 1.138571
+[20241005_002638] learn
+epoch 14, data-2 : loss = 2.615414, time = 61.3 [s].
+	policy loss : 2.592947
+	value loss  : 1.123356
+[20241005_002739] monitoring
+cpu: 14.7% [8.7, 12.4, 3.0, 1.0, 33.0, 29.5, 29.7, 33.7, 3.0, 3.1, 2.0, 4.0, 52.3, 3.1, 5.9, 4.0] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 92.18 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 70.85 W 🔥
+[20241005_002744] learn
+epoch 14, data-3 : loss = 2.608687, time = 61.4 [s].
+	policy loss : 2.586211
+	value loss  : 1.123777
+[20241005_002849] learn
+epoch 14, data-4 : loss = 2.592567, time = 61.0 [s].
+	policy loss : 2.570522
+	value loss  : 1.102250
+[20241005_002954] learn
+epoch 14, data-5 : loss = 2.577700, time = 61.3 [s].
+	policy loss : 2.555582
+	value loss  : 1.105896
+[20241005_003104] learn
+epoch 14, data-6 : loss = 2.515777, time = 65.5 [s].
+	policy loss : 2.493273
+	value loss  : 1.125203
+[20241005_003209] learn
+epoch 14, data-7 : loss = 2.522060, time = 60.8 [s].
+	policy loss : 2.499211
+	value loss  : 1.142446
+[20241005_003241] monitoring
+cpu: 15.2% [37.6, 24.4, 31.7, 15.8, 3.0, 2.0, 11.1, 5.9, 4.0, 8.9, 8.9, 6.9, 7.0, 33.0, 6.0, 36.5] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 38 %, 1875 MiB, 89.77 W 🔥
+TITAN RTX, 1, 38 %, 1210 MiB, 70.79 W 🔥
+[20241005_003314] learn
+epoch 14, data-8 : loss = 2.519465, time = 60.7 [s].
+	policy loss : 2.496466
+	value loss  : 1.149984
+[20241005_003419] learn
+epoch 14, data-9 : loss = 2.535768, time = 61.0 [s].
+	policy loss : 2.513043
+	value loss  : 1.136254
+[20241005_003509] learn
+epoch 14, data-10 : loss = 2.536898, time = 46.5 [s].
+	policy loss : 2.513861
+	value loss  : 1.151839
+[20241005_003613] learn
+epoch 14, data-11 : loss = 2.602870, time = 60.7 [s].
+	policy loss : 2.579725
+	value loss  : 1.157222
+[20241005_003718] learn
+epoch 14, data-12 : loss = 2.552298, time = 60.5 [s].
+	policy loss : 2.530057
+	value loss  : 1.112064
+[20241005_003743] monitoring
+cpu: 14.6% [5.7, 1.0, 49.5, 6.9, 7.8, 6.1, 9.6, 3.0, 33.3, 9.9, 1.0, 33.7, 4.9, 7.1, 6.0, 50.0] 🔥
+mem: 32.0% 🔥
+TITAN RTX, 0, 39 %, 1875 MiB, 86.56 W 🔥
+TITAN RTX, 1, 39 %, 1210 MiB, 70.22 W 🔥
+[20241005_003823] learn
+epoch 14, data-13 : loss = 2.509908, time = 61.3 [s].
+	policy loss : 2.487178
+	value loss  : 1.136484
+[20241005_003931] learn
+epoch 14, data-14 : loss = 2.523555, time = 63.6 [s].
+	policy loss : 2.500906
+	value loss  : 1.132421
+[20241005_004104] test
+Test 14 : loss = 2.626859, time = 93.271961 [s].
+	policy loss : 2.604399
+	value loss  : 1.122992
