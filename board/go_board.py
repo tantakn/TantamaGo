@@ -67,7 +67,7 @@ class GoBoard: # pylint: disable=R0902
         self.strings = StringData(board_size, pos, get_neighbor4)
         self.record = Record()
         self.onboard_pos = [0] * (self.board_size ** 2)
-        """盤外を含まない碁盤の座標。整数一次元配列。要素は座標を示す整数。"""
+        """盤外を含む配列の要素を右上から数えていったとき、盤内のものの座標を表す整数のリスト。整数一次元配列。"""
         self.coordinate = Coordinate(board_size=board_size)
         self.ko_move = 0
         self.ko_pos = PASS

@@ -282,6 +282,7 @@ class MCTSTree: # pylint: disable=R0902
             value_data, self.batch_queue.path, self.batch_queue.node_index):
             self.node[node_index].update_policy(policy)
             self.node[node_index].set_raw_value(value_dist[1] * 0.5 + value_dist[2])
+            print("🐾MCTSTree process_mini_batch update_policy ある？")##########
 
             if path:
                 value = value_dist[0] + value_dist[1] * 0.5

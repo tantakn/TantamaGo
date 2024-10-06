@@ -84,7 +84,7 @@ class DualNet_256_24(nn.Module): # pylint: disable=R0902
 
 
     def inference(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        """前向き伝搬処理を実行する。探索用に使うメソッドのため、デバイス間データ転送も内部処理する。
+        """前向き伝搬処理を実行する。探索用に使うメソッドのため、デバイス間データ転送も内部処理する。（たぶん、cpuに転送するという意味）
 
         Args:
             input_plane (torch.Tensor): 入力特徴テンソル。
@@ -98,7 +98,7 @@ class DualNet_256_24(nn.Module): # pylint: disable=R0902
 
     def inference_with_policy_logits(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         """前向き伝搬処理を実行する。Gumbel AlphaZero用の探索に使うメソッドのため、
-        デバイス間データ転送も内部処理する。
+        デバイス間データ転送も内部処理する。（たぶん、cpuに転送するという意味）
 
         Args:
             input_plane (torch.Tensor): 入力特徴テンソル。
