@@ -61,7 +61,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     print(f"    npz_dir: {npz_dir}")
 
     # ハードウェア使用率の監視スレッドを起動
-    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True), daemon=True)
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300), daemon=True)
     monitoring_worker.start()
 
 

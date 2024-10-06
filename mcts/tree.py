@@ -255,7 +255,7 @@ class MCTSTree: # pylint: disable=R0902
 
 
     def process_mini_batch(self, board: GoBoard, use_logit: bool=False): # pylint: disable=R0914
-        """ニューラルネットワークの入力をミニバッチ処理して、計算結果を探索結果に反映する。
+        """ニューラルネットワークの入力をミニバッチ処理して、計算結果を探索結果に反映する。batch_queue の allpop みたいな感じ。
 
         Args:
             board (GoBoard): 碁盤の情報。

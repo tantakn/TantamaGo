@@ -1,6 +1,6 @@
 # 240606
 ```
-C:\code\igo\TamaGo-main>C:/Users/gjmdj/AppData/Local/Programs/Python/Python312/python.exe main.py --model model\sl-model.bin
+C:\code\igo\TamaGo-main>C:/Users/〇〇/AppData/Local/Programs/Python/Python312/python.exe main.py --model model\sl-model.bin
 Microsoft Visual C++ Redistributable is not installed, this may lead to the DLL load failure.
                  It can be downloaded at https://aka.ms/vs/16/release/vc_redist.x64.exe
 Traceback (most recent call last):
@@ -10,9 +10,9 @@ Traceback (most recent call last):
     from gtp.gogui import GoguiAnalyzeCommand, display_policy_distribution, \
   File "C:\code\igo\TamaGo-main\gtp\gogui.py", line 5, in <module>
     import torch
-  File "C:\Users\gjmdj\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\__init__.py", line 143, in <module>
+  File "C:\Users\〇〇\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\__init__.py", line 143, in <module>
     raise err
-OSError: [WinError 126] 指定されたモジュールが見つかりません。 Error loading "C:\Users\gjmdj\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\lib\c10.dll" or one of its dependencies.
+OSError: [WinError 126] 指定されたモジュールが見つかりません。 Error loading "C:\Users\〇〇\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\lib\c10.dll" or one of its dependencies.
 ```
 
 ここで
@@ -20,7 +20,7 @@ https://learn.microsoft.com/ja-jp/cpp/windows/latest-supported-vc-redist?view=ms
 からx64のをインストール
 
 ```
-C:\code\igo\TamaGo-main>C:/Users/gjmdj/AppData/Local/Programs/Python/Python312/python.exe main.py --model model\sl-model.bin
+C:\code\igo\TamaGo-main>C:/Users/〇〇/AppData/Local/Programs/Python/Python312/python.exe main.py --model model\sl-model.bin
 name =tamago
 = TamaGo
 
@@ -200,7 +200,7 @@ branchTest
 
 # 20240909
 ```shell
-(env) (base) u2424004@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 8 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-m
+(env) (base) 〇〇@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 8 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-m
 odel_20240906_193431_e:03.bin
 Self play visits : 16
 Generating   107/  200 games (6417.5251 games/hour).
@@ -243,7 +243,7 @@ Mon Sep  9 17:54:41 2024
 
 Generating   199/  200 games (5863.3893 games/hour).
 123.712792 seconds, 5819.931683 games/hour
-(env) (base) u2424004@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 16 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-
+(env) (base) 〇〇@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 16 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-
 model_20240906_193431_e:03.bin
 Self play visits : 16
 Generating    87/  200 games (5214.2371 games/hour).
@@ -294,7 +294,7 @@ Mon Sep  9 17:57:07 2024
 
 Generating   199/  200 games (5862.0509 games/hour).
 123.289611 seconds, 5839.908135 games/hour
-(env) (base) u2424004@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 12 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-
+(env) (base) 〇〇@g17:~/igo/TantamaGo$ python3 selfplay_main.py --process 12 --num-data 200 --model model/rl-model_default.bin --model2 model/sl-
 model_20240906_193431_e:03.bin
 Self play visits : 16
 Generating    90/  200 games (5392.9567 games/hour).

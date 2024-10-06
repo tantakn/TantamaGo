@@ -38,7 +38,7 @@ class DualNet_256_24(nn.Module): # pylint: disable=R0902
         self.softmax = nn.Softmax(dim=1)
 
 
-    def forward(self, input_plane: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, input_plane: torch.Tensor, pram: str="") -> Tuple[torch.Tensor, torch.Tensor]:
         """前向き伝搬処理を実行する。
 
         Args:
@@ -47,6 +47,11 @@ class DualNet_256_24(nn.Module): # pylint: disable=R0902
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: PolicyとValueのlogit。
         """
+
+        if pram == "sl":
+            return self.forward_for_sl(input_plane)
+
+        # blocks がresnet
         blocks_out = self.blocks(self.relu(self.bn_layer(self.conv_layer(input_plane))))
 
         return self.policy_head(blocks_out), self.value_head(blocks_out)

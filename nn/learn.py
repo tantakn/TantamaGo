@@ -22,7 +22,7 @@ import copy##########
 
 import numpy as np
 
-import psutil
+import psutil, sys
 
 
 def train_on_cpu(program_dir: str, board_size: int, batch_size: \
@@ -353,7 +353,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
 
 
-def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data") -> None: # pylint: disable=R0914,R0915
+def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data") -> None: # pylint: disable=R0914,R0915
     """教師あり学習を実行し、学習したモデルを保存する。
 
     Args:
@@ -397,13 +397,13 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
     """学習率"""
 
 
-    def tmp_load_data_set(file_path):
+    def tmp_load_data_set(npz_path, rank):
         def check_memory_usage():
             assert psutil.virtual_memory().percent < 80, f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]"
 
         check_memory_usage()
 
-        data = np.load(file_path)
+        data = np.load(npz_path)
 
         check_memory_usage()
 
@@ -413,15 +413,19 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
 
         check_memory_usage()
 
+        plane_data = torch.tensor(plane_data)
+        policy_data = torch.tensor(policy_data)
+        value_data = torch.tensor(value_data)
+
         return plane_data, policy_data, value_data
 
 
     for epoch in range(epochs):
 
         # npz ループ
-        for data_index, train_data_path in enumerate(train_dataset):
+        for data_index, train_npz_path in enumerate(train_npz_paths):
 
-            plane_data, policy_data, value_data = tmp_load_data_set(train_data_path)
+            plane_data, policy_data, value_data = tmp_load_data_set(train_npz_path, rank)
 
             train_dataset = torch.utils.data.TensorDataset(plane_data, policy_data, value_data)
 
@@ -429,6 +433,9 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
 
             # samplerの設定とshuffleをFalseにすることを忘れない
             train_loader = torch.utils.data.DataLoader(train_dataset, batch_size = batch_size, shuffle = False, pin_memory=True, num_workers = 2, sampler = train_sampler)
+
+
+            train_sampler.set_epoch(epoch)
 
 
             train_loss = {
@@ -443,6 +450,9 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
 
             epoch_time = time.time()
             for train_batch in train_loader:
+                # if iteration % 1000 == 0:##############
+                #         print(f"\r{train_npz_path}, iteration: {iteration}/{len(train_loader)}, rank: {rank}", end="")##########
+                #         sys.stdout.flush()
                 with torch.cuda.amp.autocast(enabled=True):
 
                     plane, policy, value = train_batch
@@ -475,7 +485,10 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
                 train_loss["value"] += value_loss.mean().item()
                 iteration += 1
 
-            print_learning_process(train_loss, epoch, data_index, iteration, epoch_time)
+
+            if int(rank) == 0:
+                print_learning_process(train_loss, epoch, data_index, iteration, epoch_time)
+
 
         test_loss = {
             "loss": 0.0,
@@ -484,45 +497,52 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
         }
         test_iteration = 0
         testing_time = time.time()
-        for data_index, test_data_path in enumerate(test_dataset):
-            dual_net.eval()
+        for data_index, test_npz_path in enumerate(test_npz_paths):
 
-            plane_data, policy_data, value_data = tmp_load_data_set(test_data_path)
+            plane_data, policy_data, value_data = tmp_load_data_set(test_npz_path, rank)
 
             test_dataset = torch.utils.data.TensorDataset(plane_data, policy_data, value_data)
 
-            test_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas = world, rank = rank, shuffle = False)
+            test_sampler = torch.utils.data.distributed.DistributedSampler(test_dataset, num_replicas = world, rank = rank, shuffle = False)
 
-            test_loader = torch.utils.data.DataLoader(test_dataset, batch_size = 1, shuffle = False, pin_memory=True, num_workers = 2, sampler = test_sampler)
+            test_sampler.set_epoch(epoch)
 
+            test_loader = torch.utils.data.DataLoader(test_dataset, batch_size = batch_size, shuffle = False, pin_memory=True, num_workers = 2, sampler = test_sampler)
 
+            torch.distributed.barrier()
+
+            dual_net.eval()
             with torch.no_grad():
                 for test_batch in test_loader:
-                    plane, policy, value = test_batch
-                    plane = plane.to(rank, non_blocking=True)
-                    policy = policy.to(rank, non_blocking=True)
-                    value = value.to(rank, non_blocking=True)
+                    # if test_iteration % 1000 == 0:##############
+                    #     print(f"\r{test_npz_path}, test_iteration: {test_iteration}/{len(test_loader)}, rank: {rank}", end="")##########
+                    #     sys.stdout.flush()
+                    with torch.cuda.amp.autocast(enabled=True):
+                        plane, policy, value = test_batch
+                        plane = plane.to(rank, non_blocking=True)
+                        policy = policy.to(rank, non_blocking=True)
+                        value = value.to(rank, non_blocking=True)
 
-                    policy_predict, value_predict = dual_net(plane, pram="sl")
+                        policy_predict, value_predict = dual_net(plane, pram="sl")
 
-                    policy_loss = calculate_policy_loss(policy_predict, policy)
-                    value_loss = calculate_value_loss(value_predict, value)
+                        policy_loss = calculate_policy_loss(policy_predict, policy)
+                        value_loss = calculate_value_loss(value_predict, value)
 
-                    loss = (policy_loss + SL_VALUE_WEIGHT * value_loss).mean()
+                        loss = (policy_loss + SL_VALUE_WEIGHT * value_loss).mean()
 
-
-                    torch.distributed.all_reduce(loss)
-                    torch.distributed.all_reduce(policy_loss)
-                    torch.distributed.all_reduce(value_loss)
+                    torch.distributed.all_reduce(loss, op=torch.distributed.ReduceOp.AVG)
+                    torch.distributed.all_reduce(policy_loss, op=torch.distributed.ReduceOp.AVG)
+                    torch.distributed.all_reduce(value_loss, op=torch.distributed.ReduceOp.AVG)
 
                     test_loss["loss"] += loss.item()
                     test_loss["policy"] += policy_loss.mean().item()
                     test_loss["value"] += value_loss.mean().item()
                     test_iteration += 1
 
+        if int(rank) == 0:
+            print_evaluation_information(test_loss, epoch, test_iteration, testing_time)
 
-        print_evaluation_information(test_loss, epoch, test_iteration, testing_time)
-
+        torch.distributed.barrier()
         # 学習率を変更する
         if epoch in LEARNING_SCHEDULE["learning_rate"]:
             previous_lr = current_lr
@@ -531,12 +551,15 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
             current_lr = LEARNING_SCHEDULE["learning_rate"][epoch]
             print(f"Epoch {epoch}, learning rate has changed {previous_lr} -> {current_lr}")
 
-        # たぶん、save_model すると変更が入るので、ディープコピーを作ってそれを保存する。
-        dual_net_copy = copy.deepcopy(dual_net)######
-        torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
-        # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
+        if int(rank) == 0:
+            # たぶん、save_model すると変更が入るので、ディープコピーを作ってそれを保存する。
+            dual_net_copy = copy.deepcopy(dual_net)######
+            torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
+            # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
 
     # save_model(dual_net, os.path.join("model", "sl-model.bin"))
+
+    torch.distributed.destroy_process_group()
 
 
 
