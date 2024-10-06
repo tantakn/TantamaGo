@@ -413,6 +413,10 @@ def train_on_gpu_ddp_worker(rank, world, train_dataset, test_dataset, program_di
 
         check_memory_usage()
 
+        print(f"🐾plane_data: {plane_data.shape}")#############
+        print(f"🐾policy_data: {policy_data.shape}")
+        print(f"🐾value_data: {value_data.shape}")
+
         return plane_data, policy_data, value_data
 
 
