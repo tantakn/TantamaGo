@@ -56,7 +56,7 @@ def generate_input_planes(board: GoBoard, color: Stone, sym: int=0, opt: str="")
 
     input_data = np.concatenate([board_plane, history_plane, pass_plane, color_plane]) \
         .reshape(6, board_size, board_size).astype(np.float32) # pylint: disable=E1121
-    
+
     if opt == "semeai":
         semeai_data = board.get_liberty_data(sym)
         semeai_plane = [semeai_data[x:x+9] for x in range(0, board_size**2, board_size)]
