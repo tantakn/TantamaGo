@@ -68,7 +68,7 @@ class MCTSTree: # pylint: disable=R0902
         time_manager.start_timer()
 
         self.current_root = self.expand_node(board, color)
-        input_plane = generate_input_planes(board, color, 0)
+        input_plane = generate_input_planes(board, color, 0, self.network.input_type)
         self.batch_queue.push(input_plane, [], self.current_root)
 
         self.process_mini_batch(board)
@@ -119,7 +119,7 @@ class MCTSTree: # pylint: disable=R0902
         self.num_nodes = 0
 
         self.current_root = self.expand_node(board, color)
-        input_plane = generate_input_planes(board, color, 0)
+        input_plane = generate_input_planes(board, color, 0, self.network.input_type)
         self.batch_queue.push(input_plane, [], self.current_root)
         self.process_mini_batch(board)
 
@@ -220,7 +220,7 @@ class MCTSTree: # pylint: disable=R0902
                 self.node[current_index].set_child_index(next_index, child_index)
             else:
                 child_index = self.node[current_index].get_child_index(next_index)
-            input_plane = generate_input_planes(board, color, 0)
+            input_plane = generate_input_planes(board, color, 0, self.network.input_type)
             self.batch_queue.push(input_plane, path, child_index)
             if len(self.batch_queue.node_index) >= self.batch_size:
                 self.process_mini_batch(board)
@@ -242,6 +242,7 @@ class MCTSTree: # pylint: disable=R0902
         node_index = self.num_nodes
 
         # 候補手を取得
+        # ？？読めない
         candidates = board.get_all_legal_pos(color)
         candidates = [candidate for candidate in candidates if (board.check_self_atari_stone(candidate, color) < 7) and not board.is_complete_eye(candidate, color)]
         candidates.append(PASS)
@@ -255,7 +256,7 @@ class MCTSTree: # pylint: disable=R0902
 
 
     def process_mini_batch(self, board: GoBoard, use_logit: bool=False): # pylint: disable=R0914
-        """ニューラルネットワークの入力をミニバッチ処理して、計算結果を探索結果に反映する。batch_queue の allpop みたいな感じ。
+        """ニューラルネットワークの入力をミニバッチ処理して、計算結果を探索結果に反映する。たぶん、batch_queue の allpop みたいな感じ。
 
         Args:
             board (GoBoard): 碁盤の情報。
@@ -268,6 +269,7 @@ class MCTSTree: # pylint: disable=R0902
         else:
             raw_policy, value_data = self.network.inference(input_planes)
 
+        # たぶん、盤外なし連番から盤外有り連番に変換している
         policy_data = []
         for policy in raw_policy:
             policy_dict = {}
@@ -282,7 +284,6 @@ class MCTSTree: # pylint: disable=R0902
             value_data, self.batch_queue.path, self.batch_queue.node_index):
             self.node[node_index].update_policy(policy)
             self.node[node_index].set_raw_value(value_dist[1] * 0.5 + value_dist[2])
-            print("🐾MCTSTree process_mini_batch update_policy ある？")##########
 
             if path:
                 value = value_dist[0] + value_dist[1] * 0.5
@@ -314,7 +315,7 @@ class MCTSTree: # pylint: disable=R0902
         self.num_nodes = 0 # ？初期化？
         start_time = time.time()
         self.current_root = self.expand_node(board, color)
-        input_plane = generate_input_planes(board, color)
+        input_plane = generate_input_planes(board, color, 0, self.network.input_type)
         """input_plane (numpy.ndarray): ニューラルネットワークの入力データ。"""
         self.batch_queue.push(input_plane, [], self.current_root)
         self.process_mini_batch(board, use_logit=True)
@@ -395,7 +396,7 @@ class MCTSTree: # pylint: disable=R0902
 
         if self.node[current_index].children_visits[next_index] < 1:
             # ニューラルネットワークの計算
-            input_plane = generate_input_planes(board, color)
+            input_plane = generate_input_planes(board, color, 0, self.network.input_type)
             next_node_index = self.node[current_index].get_child_index(next_index)
             self.batch_queue.push(input_plane, path, next_node_index)
         else:

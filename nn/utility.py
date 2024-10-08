@@ -7,7 +7,7 @@ import torch
 import numpy as np
 
 from common.print_console import print_err
-from nn.network import DualNet, DualNet_128_12, DualNet_256_24
+from nn.network import DualNet, DualNet_128_12, DualNet_256_24, DualNet_semeai
 
 
 def get_torch_device(use_gpu: bool, gpu_num: int = -1) -> torch.device:
@@ -219,6 +219,29 @@ def load_DualNet_256_24(model_file_path: str, use_gpu: bool, gpu_num: int) -> Du
 
     return network
 
+def load_DualNet_semeai(model_file_path: str, use_gpu: bool, gpu_num: int) -> DualNet_semeai:
+    """ニューラルネットワークをロードして取得する。DualNet_semeai 版。
+
+    Args:
+        model_file_path (str): ニューラルネットワークのパラメータファイルパス。
+        use_gpu (bool): GPU使用フラグ。
+
+    Returns:
+        DualNet: パラメータロード済みのニューラルネットワーク。
+    """
+    device = get_torch_device(use_gpu=use_gpu, gpu_num=gpu_num)
+    network = DualNet_semeai(device)
+    network.to(device)
+    try:
+        network.load_state_dict(torch.load(model_file_path))
+    except Exception as e: # pylint: disable=W0702
+        print(f"Failed to load_DualNet_semeai {model_file_path}.")
+        raise("Failed to load_DualNet_semeai.")
+    network.eval()
+    torch.set_grad_enabled(False)
+
+    return network
+
 
 def choose_network(network_name: str, model_file_path: str, use_gpu: bool, gpu_num: int=-1):
     if network_name == "DualNet":
@@ -227,6 +250,8 @@ def choose_network(network_name: str, model_file_path: str, use_gpu: bool, gpu_n
         network = load_DualNet_128_12(model_file_path=model_file_path, use_gpu=use_gpu, gpu_num=gpu_num)
     elif network_name == "DualNet_256_24":
         network = load_DualNet_256_24(model_file_path=model_file_path, use_gpu=use_gpu, gpu_num=gpu_num)
+    elif network_name == "DualNet_semeai":
+        network = load_DualNet_semeai(model_file_path=model_file_path, use_gpu=use_gpu, gpu_num=gpu_num)
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")

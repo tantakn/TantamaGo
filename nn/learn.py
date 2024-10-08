@@ -4,7 +4,7 @@ import glob
 import os
 import time
 import torch
-from nn.network import DualNet, DualNet_128_12, DualNet_256_24
+from nn.network import DualNet, DualNet_128_12, DualNet_256_24, DualNet_semeai
 from nn.loss import calculate_policy_loss, calculate_value_loss, \
     calculate_policy_kld_loss
 from nn.utility import get_torch_device, print_learning_process, \
@@ -212,6 +212,8 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
         dual_net = DualNet_128_12(device=device, board_size=board_size)
     elif network_name == "DualNet_256_24":
         dual_net = DualNet_256_24(device=device, board_size=board_size)
+    elif network_name == "DualNet_semeai":
+        dual_net = DualNet_semeai(device=device, board_size=board_size)
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")
@@ -376,6 +378,8 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
         dual_net = DualNet_128_12(device=rank, board_size=board_size)
     elif network_name == "DualNet_256_24":
         dual_net = DualNet_256_24(device=rank, board_size=board_size)
+    elif network_name == "DualNet_semeai":
+        dual_net = DualNet_semeai(device=rank, board_size=board_size)
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")

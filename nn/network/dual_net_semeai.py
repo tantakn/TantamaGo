@@ -10,7 +10,7 @@ from nn.network.head.policy_head import PolicyHead
 from nn.network.head.value_head import ValueHead
 
 
-class DualNet(nn.Module): # pylint: disable=R0902
+class DualNet_semeai(nn.Module): # pylint: disable=R0902
     """Dual Networkの実装クラス。
     """
     def __init__(self, device: torch.device, board_size: int=BOARD_SIZE):
@@ -35,6 +35,10 @@ class DualNet(nn.Module): # pylint: disable=R0902
         self.value_head = ValueHead(board_size, filters)
 
         self.softmax = nn.Softmax(dim=1)
+
+        self.filter_num = filters#########
+        self.block_num = blocks
+        self.input_type = "semeai"
 
 
     def forward(self, input_plane: torch.Tensor, pram: str="") -> Tuple[torch.Tensor, torch.Tensor]:

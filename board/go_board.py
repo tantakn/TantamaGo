@@ -334,6 +334,7 @@ class GoBoard: # pylint: disable=R0902
 
     def check_self_atari_stone(self, pos: int, color: Stone) -> int:
         """アタリに突っ込んで取られる石の数を返す。取られない場合は0を返す。
+        ？？？読めない
 
         Args:
             pos (int): 評価する座標。

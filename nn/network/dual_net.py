@@ -36,6 +36,10 @@ class DualNet(nn.Module): # pylint: disable=R0902
 
         self.softmax = nn.Softmax(dim=1)
 
+        self.filter_num = filters#########
+        self.block_num = blocks
+        self.input_type = ""
+
 
     def forward(self, input_plane: torch.Tensor, pram: str="") -> Tuple[torch.Tensor, torch.Tensor]:
         """前向き伝搬処理を実行する。

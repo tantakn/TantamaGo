@@ -6,7 +6,7 @@ import click
 from learning_param import BATCH_SIZE, EPOCHS
 from board.constant import BOARD_SIZE
 from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, train_with_gumbel_alphazero_on_cpu,  train_on_gpu_ddp
-from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data
+from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data, generate_supervised_learning_data_with_semeai
 
 import threading, time, datetime
 from monitoring import display_train_monitoring_worker
@@ -38,7 +38,9 @@ from nn.utility import split_train_test_set
     help="rl のパイプラインが何周目か。")
 @click.option('--rl-datetime', 'rl_datetime', type=click.STRING, default="", \
     help="rl のパイプラインの開始日時。")
-def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, ddp: bool, rl_num: int, rl_datetime: str): # pylint: disable=C0103
+@click.option('--input-opt', 'input_opt', type=click.STRING, default="", \
+    help="input_planes のオプション。")
+def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, ddp: bool, rl_num: int, rl_datetime: str, input_opt: str): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 
     Args:
@@ -87,7 +89,8 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             generate_reinforcement_learning_data(program_dir=program_dir, kifu_dir_list=kifu_dir_list, board_size=size)
         else:
             # こっちの kifu_dir は kifu_dir/*.sgf
-            generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
+            generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
+            # generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
 
 
     if rl:
