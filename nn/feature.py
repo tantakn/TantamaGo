@@ -66,6 +66,10 @@ def generate_input_planes(board: GoBoard, color: Stone, sym: int=0, opt: str="")
             .reshape(7, board_size, board_size).astype(np.float32) # pylint: disable=E1121
 
         return input_data
+    
+    # if opt == "semeai2":
+        # TODO: 1眼、2眼、共通ダメ、ダメの情報を追加する。1目の1眼だけでなく複数目の1眼も判定したいけど難しそう？
+
 
     return input_data
 

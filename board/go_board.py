@@ -401,6 +401,7 @@ class GoBoard: # pylint: disable=R0902
             #   1. 盤端かつ4方向の斜めの箇所がちゃんと結合していること
             #   2. 盤端ではなく、かつ4方向の斜めの箇所の内、3箇所を自分の石が専有していること
             # 厳密にはぐるっと回った形もある？
+            # たぶん意外と難しい。
             if (edge and connection_count == 4) or (not edge and connection_count >= 3):
                 return True
 

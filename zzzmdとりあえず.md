@@ -342,3 +342,7 @@ Mon Sep  9 17:59:59 2024
 Generating   199/  200 games (5861.3577 games/hour).
 123.629591 seconds, 5823.848435 games/hour
 ```
+
+
+# 20241011
+http://www.yss-aya.com/bbs/patio.cgi?read=50
