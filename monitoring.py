@@ -1,5 +1,6 @@
 import os
 import time, datetime, psutil, subprocess
+import torch
 
 
 def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval:int = 300, msg: str="") -> None:
@@ -43,13 +44,15 @@ def display_train_monitoring_worker(use_gpu: bool, repeat: bool = True, interval
             gpu_text = result_subprocess.stdout
             gpu_text = gpu_text.split(", power.draw [W]\n")[1]
             gpu_text0 = gpu_text.split("\n")[0]
-            gpu_text1 = gpu_text.split("\n")[1]
 
             text += f"\n{gpu_text0} {gpu_fire(gpu_text0)}"
-            text += f"\n{gpu_text1} {gpu_fire(gpu_text1)}"
+
+            if torch.cuda.device_count() == 2:
+                gpu_text1 = gpu_text.split("\n")[1]
+                text += f"\n{gpu_text1} {gpu_fire(gpu_text1)}"
+
 
         print(text)
-
 
 
     start_time = time.time()
