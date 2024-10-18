@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "train.py", line 8, in <module>
+    from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, train_with_gumbel_alphazero_on_cpu,  train_on_gpu_ddp
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 7, in <module>
+    from nn.network import DualNet, DualNet_128_12, DualNet_256_24, DualNet_semeai, DualNet_256_24_semeai
+ImportError: cannot import name 'DualNet_256_24_semeai' from 'nn.network' (/data/student/u2424004/igo/TantamaGo/nn/network/__init__.py)

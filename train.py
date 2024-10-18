@@ -6,7 +6,7 @@ import click
 from learning_param import BATCH_SIZE, EPOCHS
 from board.constant import BOARD_SIZE
 from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, train_with_gumbel_alphazero_on_cpu,  train_on_gpu_ddp
-from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data, generate_supervised_learning_data_with_semeai
+from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data
 
 import threading, time, datetime
 from monitoring import display_train_monitoring_worker
@@ -61,6 +61,10 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     print(f"    window_size: {window_size}")
     print(f"    network_name: {network_name}")
     print(f"    npz_dir: {npz_dir}")
+    print(f"    ddp: {ddp}")
+    print(f"    rl_num: {rl_num}")
+    print(f"    rl_datetime: {rl_datetime}")
+    print(f"    input_opt: {input_opt}")
 
     # ハードウェア使用率の監視スレッドを起動
     monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300), daemon=True)

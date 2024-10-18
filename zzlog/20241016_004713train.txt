@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "train.py", line 9, in <module>
+    from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data, generate_supervised_learning_data_with_semeai
+ImportError: cannot import name 'generate_supervised_learning_data_with_semeai' from 'nn.data_generator' (/data/student/u2424004/igo/TantamaGo/nn/data_generator.py)
