@@ -66,7 +66,7 @@ def print_learning_process(loss_data: Dict[str, float], epoch: int, index: int, 
 
 
 def print_evaluation_information(loss_data: Dict[str, float], epoch: int, \
-    iteration: int, start_time: float) -> NoReturn:
+    iteration: int, start_time: float) -> None:
     """テストデータの評価情報を表示する。
 
     Args:
