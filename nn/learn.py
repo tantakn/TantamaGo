@@ -396,6 +396,7 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")
 
+    print(f"🐾device: ", rank)#############
     dual_net = dual_net.to(rank)
     dual_net = torch.nn.parallel.DistributedDataParallel(dual_net, device_ids = [rank], output_device = rank, find_unused_parameters=False)
 
@@ -586,10 +587,14 @@ def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs:
     print("    torch.cuda.current_device: ", torch.cuda.current_device())
     print("    torch.cuda.device_count: ", torch.cuda.device_count())
     print("    torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
-    if torch.cuda.device_count() > 1:##########
-        print("    torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
-    print("    torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
-    if torch.cuda.device_count() > 1:##########
+    for i in range(torch.cuda.device_count()):
+        print(f"    torch.cuda.get_device_name({i}): ", torch.cuda.get_device_name(i))
+    # if torch.cuda.device_count() > 1:##########
+    #     print("    torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
+    for i in range(torch.cuda.device_count()):
+        print(f"    torch.cuda.get_device_capability({i}): ", torch.cuda.get_device_capability(i))
+    # print("    torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
+    # if torch.cuda.device_count() > 1:##########
         print("    torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
     print("    torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
 
@@ -604,7 +609,7 @@ def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs:
     os.environ['MASTER_ADDR'] = 'localhost'
     os.environ['MASTER_PORT'] = '50000'
     os.environ['TORCH_DISTRIBUTED_DEBUG'] = 'DETAIL'
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
 
     torch.multiprocessing.spawn(train_on_gpu_ddp_worker, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir), nprocs = torch.cuda.device_count(), join = True)
 

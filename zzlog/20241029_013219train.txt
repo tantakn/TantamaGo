@@ -1,0 +1,71 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 256
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+🐾train_on_gpu_ddp 2024-10-29 01:32:20.933417
+    [20241029_013221] device
+    torch.cuda.current_device:  0
+    torch.cuda.device_count:  4
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(1):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(2):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(3):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_capability(0):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(2):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(3):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[20241029_013221] monitoring
+cpu: 36.2% [88.9, 80.0, 81.8, 10.0, 25.0, 0.0, 90.0, 0.0] 🔥
+mem: 7.4% 
+GeForce RTX 2080 Ti, 0, 0 %, 9 MiB, 3.33 W 
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[20241029_013231] monitoring
+cpu: 50.6% [62.4, 100.0, 0.0, 80.0, 58.4, 81.0, 18.0, 1.0] 🔥🔥
+mem: 25.9% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 2545 MiB, 52.24 W 🔥
+🐾device:  2
+🐾device:  0
+🐾device:  3
+🐾device:  1
+[20241029_013522] learn
+epoch 0, data-0 : loss = 2.252218, time = 161.8 [s].
+	policy loss : 2.238081
+	value loss  : 0.706840
+[20241029_013733] monitoring
+cpu: 40.9% [43.6, 53.5, 42.4, 43.0, 39.6, 38.0, 25.5, 36.8] 🔥
+mem: 41.3% 🔥
+GeForce RTX 2080 Ti, 0, 15 %, 3073 MiB, 56.31 W 🔥
+[20241029_013815] learn
+epoch 0, data-1 : loss = 1.808797, time = 162.6 [s].
+	policy loss : 1.794918
+	value loss  : 0.693943
+[20241029_014105] learn
+epoch 0, data-2 : loss = 1.732582, time = 161.4 [s].
+	policy loss : 1.718745
+	value loss  : 0.691841
