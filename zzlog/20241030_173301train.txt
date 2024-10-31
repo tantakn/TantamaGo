@@ -1,0 +1,939 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 512
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+🐾train_on_gpu_ddp 2024-10-30 17:33:03.721186
+    [20241030_173303] device
+    torch.cuda.current_device:  0
+    torch.cuda.device_count:  4
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(1):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(2):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(3):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_capability(0):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(2):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(3):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[20241030_173303] monitoring
+cpu: 41.8% [10.0, 100.0, 80.0, 10.0, 20.0, 100.0, 100.0, 18.2] 🔥
+mem: 8.4% 
+GeForce RTX 2080 Ti, 0, 0 %, 9 MiB, 4.99 W 
+GeForce RTX 2080 Ti, 1, 0 %, 9 MiB, 22.20 W 
+GeForce RTX 2080 Ti, 2, 0 %, 9 MiB, 22.21 W 
+GeForce RTX 2080 Ti, 3, 0 %, 9 MiB, 22.18 W 
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[20241030_173314] monitoring
+cpu: 50.3% [0.0, 0.0, 100.0, 0.0, 100.0, 100.0, 0.0, 100.0] 🔥🔥
+mem: 31.0% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 2545 MiB, 53.40 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 670 MiB, 67.13 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 670 MiB, 67.28 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 670 MiB, 69.54 W 🔥
+🐾device:  1
+🐾device:  2
+🐾device:  3
+🐾device:  0
+[20241030_173444] learn
+epoch 0, data-0 : loss = 2.329550, time = 85.2 [s].
+	policy loss : 2.315333
+	value loss  : 0.710855
+[20241030_173619] learn
+epoch 0, data-1 : loss = 1.799378, time = 86.9 [s].
+	policy loss : 1.785469
+	value loss  : 0.695445
+[20241030_173750] learn
+epoch 0, data-2 : loss = 1.721279, time = 82.2 [s].
+	policy loss : 1.707444
+	value loss  : 0.691785
+[20241030_173816] monitoring
+cpu: 40.8% [41.8, 32.3, 24.2, 45.9, 33.0, 49.5, 54.9, 53.1] 🔥
+mem: 41.7% 🔥
+GeForce RTX 2080 Ti, 0, 18 %, 3075 MiB, 57.19 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 73.59 W 🔥
+GeForce RTX 2080 Ti, 2, 22 %, 1200 MiB, 71.74 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 76.33 W 🔥
+[20241030_173925] learn
+epoch 0, data-3 : loss = 1.671522, time = 86.7 [s].
+	policy loss : 1.657812
+	value loss  : 0.685468
+[20241030_174057] learn
+epoch 0, data-4 : loss = 1.631157, time = 83.1 [s].
+	policy loss : 1.617786
+	value loss  : 0.668525
+[20241030_174237] learn
+epoch 0, data-5 : loss = 1.595797, time = 91.3 [s].
+	policy loss : 1.582821
+	value loss  : 0.648775
+[20241030_174318] monitoring
+cpu: 38.7% [41.8, 37.4, 37.5, 43.9, 42.6, 39.4, 37.8, 41.3] 🔥
+mem: 41.7% 🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3075 MiB, 57.08 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 73.04 W 🔥
+GeForce RTX 2080 Ti, 2, 22 %, 1200 MiB, 72.82 W 🔥
+GeForce RTX 2080 Ti, 3, 23 %, 1200 MiB, 75.56 W 🔥
+[20241030_174419] learn
+epoch 0, data-6 : loss = 1.554028, time = 93.7 [s].
+	policy loss : 1.541053
+	value loss  : 0.648752
+[20241030_174603] learn
+epoch 0, data-7 : loss = 1.539330, time = 95.0 [s].
+	policy loss : 1.526369
+	value loss  : 0.648040
+[20241030_174745] learn
+epoch 0, data-8 : loss = 1.528407, time = 93.6 [s].
+	policy loss : 1.515492
+	value loss  : 0.645753
+[20241030_174820] monitoring
+cpu: 41.8% [32.0, 39.4, 43.7, 48.5, 39.6, 44.4, 43.3, 45.0] 🔥
+mem: 41.7% 🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3075 MiB, 57.56 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 72.03 W 🔥
+GeForce RTX 2080 Ti, 2, 20 %, 1200 MiB, 72.17 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 75.49 W 🔥
+[20241030_174936] learn
+epoch 0, data-9 : loss = 1.524461, time = 102.5 [s].
+	policy loss : 1.511639
+	value loss  : 0.641106
+[20241030_175057] learn
+epoch 0, data-10 : loss = 1.514163, time = 74.3 [s].
+	policy loss : 1.501390
+	value loss  : 0.638671
+[20241030_175233] learn
+epoch 0, data-11 : loss = 1.542205, time = 87.3 [s].
+	policy loss : 1.529425
+	value loss  : 0.638957
+[20241030_175322] monitoring
+cpu: 39.7% [42.2, 45.8, 40.2, 39.6, 35.7, 34.7, 41.8, 43.0] 🔥
+mem: 41.7% 🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3075 MiB, 57.74 W 🔥
+GeForce RTX 2080 Ti, 1, 22 %, 1200 MiB, 72.76 W 🔥
+GeForce RTX 2080 Ti, 2, 24 %, 1200 MiB, 72.67 W 🔥
+GeForce RTX 2080 Ti, 3, 25 %, 1200 MiB, 76.63 W 🔥
+[20241030_175419] learn
+epoch 0, data-12 : loss = 1.513967, time = 97.2 [s].
+	policy loss : 1.501410
+	value loss  : 0.627849
+[20241030_175601] learn
+epoch 0, data-13 : loss = 1.488985, time = 93.2 [s].
+	policy loss : 1.476471
+	value loss  : 0.625688
+[20241030_175747] learn
+epoch 0, data-14 : loss = 1.492372, time = 97.7 [s].
+	policy loss : 1.479843
+	value loss  : 0.626415
+[20241030_175824] monitoring
+cpu: 57.1% [40.4, 89.0, 88.1, 47.5, 85.9, 90.0, 36.7, 42.4] 🔥🔥
+mem: 54.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 4 %, 3075 MiB, 53.24 W 🔥
+GeForce RTX 2080 Ti, 1, 3 %, 1200 MiB, 67.23 W 🔥
+GeForce RTX 2080 Ti, 2, 12 %, 1200 MiB, 66.73 W 🔥
+GeForce RTX 2080 Ti, 3, 11 %, 1200 MiB, 69.84 W 🔥
+[20241030_180026] test
+Test 0 : loss = 1.510198, time = 158.860909 [s].
+	policy loss : 1.497603
+	value loss  : 0.629785
+[20241030_180159] learn
+epoch 1, data-0 : loss = 1.486761, time = 84.7 [s].
+	policy loss : 1.474144
+	value loss  : 0.630850
+[20241030_180326] monitoring
+cpu: 44.3% [36.7, 43.9, 44.0, 38.5, 40.6, 42.9, 42.7, 50.0] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 21 %, 3095 MiB, 58.62 W 🔥
+GeForce RTX 2080 Ti, 1, 21 %, 1200 MiB, 73.83 W 🔥
+GeForce RTX 2080 Ti, 2, 22 %, 1200 MiB, 72.77 W 🔥
+GeForce RTX 2080 Ti, 3, 22 %, 1200 MiB, 77.54 W 🔥
+[20241030_180332] learn
+epoch 1, data-1 : loss = 1.486478, time = 84.5 [s].
+	policy loss : 1.474027
+	value loss  : 0.622534
+[20241030_180510] learn
+epoch 1, data-2 : loss = 1.493281, time = 89.6 [s].
+	policy loss : 1.481007
+	value loss  : 0.613723
+[20241030_180652] learn
+epoch 1, data-3 : loss = 1.487928, time = 92.8 [s].
+	policy loss : 1.475630
+	value loss  : 0.614893
+[20241030_180829] monitoring
+cpu: 50.4% [100.0, 100.0, 2.0, 1.0, 100.0, 0.0, 100.0, 2.0] 🔥🔥
+mem: 63.4% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 54.10 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.66 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 66.22 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 70.53 W 🔥
+[20241030_180826] learn
+epoch 1, data-4 : loss = 1.475061, time = 86.0 [s].
+	policy loss : 1.463035
+	value loss  : 0.601317
+[20241030_181004] learn
+epoch 1, data-5 : loss = 1.463357, time = 88.7 [s].
+	policy loss : 1.451346
+	value loss  : 0.600509
+[20241030_181134] learn
+epoch 1, data-6 : loss = 1.432695, time = 82.1 [s].
+	policy loss : 1.420501
+	value loss  : 0.609696
+[20241030_181315] learn
+epoch 1, data-7 : loss = 1.434309, time = 92.6 [s].
+	policy loss : 1.422012
+	value loss  : 0.614828
+[20241030_181331] monitoring
+cpu: 11.9% [33.3, 7.0, 3.0, 32.3, 5.1, 7.1, 30.0, 1.0] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 56.71 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 51.44 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 68.60 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 70.02 W 🔥
+[20241030_181451] learn
+epoch 1, data-8 : loss = 1.432635, time = 87.4 [s].
+	policy loss : 1.420305
+	value loss  : 0.616535
+[20241030_181639] learn
+epoch 1, data-9 : loss = 1.438398, time = 98.8 [s].
+	policy loss : 1.426121
+	value loss  : 0.613826
+[20241030_181754] learn
+epoch 1, data-10 : loss = 1.436593, time = 69.3 [s].
+	policy loss : 1.424274
+	value loss  : 0.615931
+[20241030_181833] monitoring
+cpu: 43.4% [37.4, 38.7, 37.4, 37.5, 36.6, 43.6, 39.6, 41.5] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3095 MiB, 56.93 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 72.00 W 🔥
+GeForce RTX 2080 Ti, 2, 20 %, 1200 MiB, 70.19 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 75.33 W 🔥
+[20241030_181925] learn
+epoch 1, data-11 : loss = 1.469483, time = 82.4 [s].
+	policy loss : 1.457131
+	value loss  : 0.617638
+[20241030_182109] learn
+epoch 1, data-12 : loss = 1.446646, time = 95.3 [s].
+	policy loss : 1.434555
+	value loss  : 0.604541
+[20241030_182252] learn
+epoch 1, data-13 : loss = 1.426617, time = 94.5 [s].
+	policy loss : 1.414458
+	value loss  : 0.607958
+[20241030_182335] monitoring
+cpu: 41.8% [36.6, 38.9, 44.8, 32.7, 41.4, 37.6, 44.9, 36.4] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 17 %, 3095 MiB, 56.97 W 🔥
+GeForce RTX 2080 Ti, 1, 18 %, 1200 MiB, 71.04 W 🔥
+GeForce RTX 2080 Ti, 2, 20 %, 1200 MiB, 70.48 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 74.59 W 🔥
+[20241030_182437] learn
+epoch 1, data-14 : loss = 1.434956, time = 96.0 [s].
+	policy loss : 1.422801
+	value loss  : 0.607754
+[20241030_182727] test
+Test 1 : loss = 1.474096, time = 170.280606 [s].
+	policy loss : 1.461544
+	value loss  : 0.627602
+[20241030_182837] monitoring
+cpu: 43.6% [28.9, 44.9, 46.1, 49.0, 45.0, 47.5, 37.5, 39.4] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 58.30 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 73.49 W 🔥
+GeForce RTX 2080 Ti, 2, 21 %, 1200 MiB, 73.93 W 🔥
+GeForce RTX 2080 Ti, 3, 23 %, 1200 MiB, 76.83 W 🔥
+[20241030_182901] learn
+epoch 2, data-0 : loss = 1.432556, time = 85.2 [s].
+	policy loss : 1.420234
+	value loss  : 0.616141
+[20241030_183036] learn
+epoch 2, data-1 : loss = 1.436326, time = 86.0 [s].
+	policy loss : 1.424198
+	value loss  : 0.606391
+[20241030_183219] learn
+epoch 2, data-2 : loss = 1.447566, time = 93.6 [s].
+	policy loss : 1.435604
+	value loss  : 0.598115
+[20241030_183339] monitoring
+cpu: 43.1% [47.5, 46.9, 39.4, 43.4, 45.0, 45.5, 44.4, 45.5] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 21 %, 3095 MiB, 58.67 W 🔥
+GeForce RTX 2080 Ti, 1, 21 %, 1200 MiB, 72.93 W 🔥
+GeForce RTX 2080 Ti, 2, 21 %, 1200 MiB, 73.30 W 🔥
+GeForce RTX 2080 Ti, 3, 22 %, 1200 MiB, 77.25 W 🔥
+[20241030_183359] learn
+epoch 2, data-3 : loss = 1.444081, time = 92.0 [s].
+	policy loss : 1.432107
+	value loss  : 0.598697
+[20241030_183542] learn
+epoch 2, data-4 : loss = 1.433719, time = 93.9 [s].
+	policy loss : 1.421962
+	value loss  : 0.587838
+[20241030_183714] learn
+epoch 2, data-5 : loss = 1.424831, time = 83.1 [s].
+	policy loss : 1.413060
+	value loss  : 0.588580
+[20241030_183842] monitoring
+cpu: 44.2% [45.9, 41.4, 41.7, 43.8, 45.8, 49.5, 43.0, 41.2] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3095 MiB, 58.44 W 🔥
+GeForce RTX 2080 Ti, 1, 22 %, 1200 MiB, 72.51 W 🔥
+GeForce RTX 2080 Ti, 2, 22 %, 1200 MiB, 72.79 W 🔥
+GeForce RTX 2080 Ti, 3, 23 %, 1200 MiB, 76.90 W 🔥
+[20241030_183850] learn
+epoch 2, data-6 : loss = 1.395578, time = 87.1 [s].
+	policy loss : 1.383631
+	value loss  : 0.597346
+[20241030_184028] learn
+epoch 2, data-7 : loss = 1.399033, time = 89.5 [s].
+	policy loss : 1.386948
+	value loss  : 0.604295
+[20241030_184204] learn
+epoch 2, data-8 : loss = 1.399983, time = 87.6 [s].
+	policy loss : 1.387833
+	value loss  : 0.607490
+[20241030_184344] monitoring
+cpu: 50.4% [100.0, 2.0, 100.0, 0.0, 100.0, 3.0, 100.0, 2.0] 🔥🔥
+mem: 64.7% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.88 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.78 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 67.72 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.73 W 🔥
+[20241030_184341] learn
+epoch 2, data-9 : loss = 1.407425, time = 88.2 [s].
+	policy loss : 1.395359
+	value loss  : 0.603318
+[20241030_184455] learn
+epoch 2, data-10 : loss = 1.406200, time = 67.8 [s].
+	policy loss : 1.394056
+	value loss  : 0.607208
+[20241030_184631] learn
+epoch 2, data-11 : loss = 1.441812, time = 87.2 [s].
+	policy loss : 1.429606
+	value loss  : 0.610304
+[20241030_184812] learn
+epoch 2, data-12 : loss = 1.419958, time = 92.5 [s].
+	policy loss : 1.408071
+	value loss  : 0.594338
+[20241030_184846] monitoring
+cpu: 39.6% [39.8, 44.7, 40.8, 40.8, 42.2, 43.4, 43.0, 40.6] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 57.86 W 🔥
+GeForce RTX 2080 Ti, 1, 21 %, 1200 MiB, 73.11 W 🔥
+GeForce RTX 2080 Ti, 2, 22 %, 1200 MiB, 72.86 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 76.07 W 🔥
+[20241030_184954] learn
+epoch 2, data-13 : loss = 1.399673, time = 93.0 [s].
+	policy loss : 1.387673
+	value loss  : 0.599992
+[20241030_185134] learn
+epoch 2, data-14 : loss = 1.410919, time = 92.0 [s].
+	policy loss : 1.398939
+	value loss  : 0.598978
+[20241030_185348] monitoring
+cpu: 48.5% [49.0, 50.5, 66.0, 52.0, 52.5, 40.4, 63.6, 77.5] 🔥
+mem: 55.5% 🔥🔥
+GeForce RTX 2080 Ti, 0, 10 %, 3095 MiB, 53.71 W 🔥
+GeForce RTX 2080 Ti, 1, 10 %, 1200 MiB, 67.68 W 🔥
+GeForce RTX 2080 Ti, 2, 8 %, 1200 MiB, 67.86 W 🔥
+GeForce RTX 2080 Ti, 3, 10 %, 1200 MiB, 70.49 W 🔥
+[20241030_185434] test
+Test 2 : loss = 1.441127, time = 179.384466 [s].
+	policy loss : 1.429166
+	value loss  : 0.598028
+[20241030_185610] learn
+epoch 3, data-0 : loss = 1.408689, time = 86.7 [s].
+	policy loss : 1.396501
+	value loss  : 0.609411
+[20241030_185750] learn
+epoch 3, data-1 : loss = 1.414253, time = 92.3 [s].
+	policy loss : 1.402260
+	value loss  : 0.599651
+[20241030_185850] monitoring
+cpu: 42.1% [41.6, 38.4, 39.2, 35.4, 38.1, 42.0, 44.3, 42.7] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3095 MiB, 56.82 W 🔥
+GeForce RTX 2080 Ti, 1, 22 %, 1200 MiB, 72.44 W 🔥
+GeForce RTX 2080 Ti, 2, 20 %, 1200 MiB, 71.22 W 🔥
+GeForce RTX 2080 Ti, 3, 20 %, 1200 MiB, 77.64 W 🔥
+[20241030_185926] learn
+epoch 3, data-2 : loss = 1.426227, time = 87.4 [s].
+	policy loss : 1.414401
+	value loss  : 0.591295
+[20241030_190103] learn
+epoch 3, data-3 : loss = 1.423098, time = 87.8 [s].
+	policy loss : 1.411271
+	value loss  : 0.591363
+[20241030_190245] learn
+epoch 3, data-4 : loss = 1.414107, time = 93.1 [s].
+	policy loss : 1.402492
+	value loss  : 0.580720
+[20241030_190353] monitoring
+cpu: 41.6% [26.2, 45.5, 41.8, 37.0, 39.4, 41.0, 33.3, 39.2] 🔥
+mem: 55.7% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 56.73 W 🔥
+GeForce RTX 2080 Ti, 1, 22 %, 1200 MiB, 72.57 W 🔥
+GeForce RTX 2080 Ti, 2, 21 %, 1200 MiB, 71.57 W 🔥
+GeForce RTX 2080 Ti, 3, 22 %, 1200 MiB, 75.16 W 🔥
+[20241030_190431] learn
+epoch 3, data-5 : loss = 1.406503, time = 97.9 [s].
+	policy loss : 1.394843
+	value loss  : 0.583036
+[20241030_190612] learn
+epoch 3, data-6 : loss = 1.376761, time = 92.5 [s].
+	policy loss : 1.364945
+	value loss  : 0.590784
+[20241030_190753] learn
+epoch 3, data-7 : loss = 1.382047, time = 92.2 [s].
+	policy loss : 1.370093
+	value loss  : 0.597711
+[20241030_190855] monitoring
+cpu: 43.2% [46.5, 38.6, 34.7, 44.4, 42.9, 60.8, 45.1, 36.6] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3095 MiB, 58.31 W 🔥
+GeForce RTX 2080 Ti, 1, 22 %, 1200 MiB, 73.68 W 🔥
+GeForce RTX 2080 Ti, 2, 23 %, 1200 MiB, 73.25 W 🔥
+GeForce RTX 2080 Ti, 3, 23 %, 1200 MiB, 77.16 W 🔥
+[20241030_190929] learn
+epoch 3, data-8 : loss = 1.383108, time = 87.7 [s].
+	policy loss : 1.371079
+	value loss  : 0.601463
+[20241030_191104] learn
+epoch 3, data-9 : loss = 1.390520, time = 86.5 [s].
+	policy loss : 1.378575
+	value loss  : 0.597265
+[20241030_191228] learn
+epoch 3, data-10 : loss = 1.389857, time = 77.6 [s].
+	policy loss : 1.377816
+	value loss  : 0.602051
+[20241030_191357] monitoring
+cpu: 40.3% [40.6, 40.2, 36.8, 45.9, 50.5, 44.3, 34.0, 49.0] 🔥
+mem: 55.7% 🔥🔥
+GeForce RTX 2080 Ti, 0, 22 %, 3095 MiB, 58.24 W 🔥
+GeForce RTX 2080 Ti, 1, 21 %, 1200 MiB, 73.52 W 🔥
+GeForce RTX 2080 Ti, 2, 20 %, 1200 MiB, 72.03 W 🔥
+GeForce RTX 2080 Ti, 3, 20 %, 1200 MiB, 76.73 W 🔥
+[20241030_191410] learn
+epoch 3, data-11 : loss = 1.426195, time = 93.5 [s].
+	policy loss : 1.414112
+	value loss  : 0.604169
+[20241030_191548] learn
+epoch 3, data-12 : loss = 1.405148, time = 89.1 [s].
+	policy loss : 1.393393
+	value loss  : 0.587784
+[20241030_191723] learn
+epoch 3, data-13 : loss = 1.385543, time = 86.9 [s].
+	policy loss : 1.373653
+	value loss  : 0.594505
+[20241030_191859] monitoring
+cpu: 40.7% [40.2, 47.4, 44.0, 44.2, 43.0, 40.4, 41.6, 49.5] 🔥
+mem: 55.7% 🔥🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3095 MiB, 57.33 W 🔥
+GeForce RTX 2080 Ti, 1, 19 %, 1200 MiB, 73.27 W 🔥
+GeForce RTX 2080 Ti, 2, 23 %, 1200 MiB, 71.71 W 🔥
+GeForce RTX 2080 Ti, 3, 22 %, 1200 MiB, 76.19 W 🔥
+[20241030_191911] learn
+epoch 3, data-14 : loss = 1.396448, time = 99.0 [s].
+	policy loss : 1.384585
+	value loss  : 0.593136
+[20241030_192218] test
+Test 3 : loss = 1.427112, time = 186.968754 [s].
+	policy loss : 1.415126
+	value loss  : 0.599324
+[20241030_192401] monitoring
+cpu: 42.0% [41.1, 45.9, 42.0, 46.5, 29.6, 47.5, 37.2, 53.9] 🔥
+mem: 55.7% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 58.01 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 73.26 W 🔥
+GeForce RTX 2080 Ti, 2, 21 %, 1200 MiB, 71.12 W 🔥
+GeForce RTX 2080 Ti, 3, 22 %, 1200 MiB, 76.90 W 🔥
+[20241030_192406] learn
+epoch 4, data-0 : loss = 1.395041, time = 99.3 [s].
+	policy loss : 1.382932
+	value loss  : 0.605484
+[20241030_192542] learn
+epoch 4, data-1 : loss = 1.401083, time = 87.2 [s].
+	policy loss : 1.389191
+	value loss  : 0.594588
+[20241030_192719] learn
+epoch 4, data-2 : loss = 1.412860, time = 89.4 [s].
+	policy loss : 1.401132
+	value loss  : 0.586402
+[20241030_192903] monitoring
+cpu: 50.1% [100.0, 100.0, 0.0, 100.0, 0.0, 0.0, 1.0, 100.0] 🔥🔥
+mem: 61.1% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.84 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.03 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 68.70 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.96 W 🔥
+[20241030_192902] learn
+epoch 4, data-3 : loss = 1.409918, time = 94.1 [s].
+	policy loss : 1.398174
+	value loss  : 0.587192
+[20241030_193036] learn
+epoch 4, data-4 : loss = 1.401592, time = 85.9 [s].
+	policy loss : 1.390073
+	value loss  : 0.575950
+[20241030_193217] learn
+epoch 4, data-5 : loss = 1.393768, time = 92.2 [s].
+	policy loss : 1.382181
+	value loss  : 0.579336
+[20241030_193358] learn
+epoch 4, data-6 : loss = 1.364787, time = 92.5 [s].
+	policy loss : 1.353054
+	value loss  : 0.586647
+[20241030_193406] monitoring
+cpu: 86.1% [84.0, 100.0, 85.0, 100.0, 100.0, 89.9, 96.0, 85.0] 🔥🔥
+mem: 62.8% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.76 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 66.97 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 67.75 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.60 W 🔥
+[20241030_193542] learn
+epoch 4, data-7 : loss = 1.369867, time = 95.1 [s].
+	policy loss : 1.357988
+	value loss  : 0.593954
+[20241030_193718] learn
+epoch 4, data-8 : loss = 1.371759, time = 87.5 [s].
+	policy loss : 1.359783
+	value loss  : 0.598798
+[20241030_193854] learn
+epoch 4, data-9 : loss = 1.380265, time = 87.5 [s].
+	policy loss : 1.368408
+	value loss  : 0.592898
+[20241030_193908] monitoring
+cpu: 43.1% [52.5, 39.0, 47.1, 32.0, 26.8, 48.5, 54.6, 60.4] 🔥
+mem: 52.3% 🔥🔥
+GeForce RTX 2080 Ti, 0, 21 %, 3095 MiB, 58.46 W 🔥
+GeForce RTX 2080 Ti, 1, 22 %, 1200 MiB, 73.44 W 🔥
+GeForce RTX 2080 Ti, 2, 22 %, 1200 MiB, 72.56 W 🔥
+GeForce RTX 2080 Ti, 3, 22 %, 1200 MiB, 76.86 W 🔥
+[20241030_194003] learn
+epoch 4, data-10 : loss = 1.379115, time = 62.4 [s].
+	policy loss : 1.367129
+	value loss  : 0.599300
+[20241030_194132] learn
+epoch 4, data-11 : loss = 1.416001, time = 81.3 [s].
+	policy loss : 1.403981
+	value loss  : 0.601023
+[20241030_194315] learn
+epoch 4, data-12 : loss = 1.394605, time = 94.6 [s].
+	policy loss : 1.382916
+	value loss  : 0.584450
+[20241030_194410] monitoring
+cpu: 40.7% [42.3, 44.1, 39.2, 49.0, 43.2, 34.0, 27.8, 50.0] 🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 58.37 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 72.80 W 🔥
+GeForce RTX 2080 Ti, 2, 23 %, 1200 MiB, 72.73 W 🔥
+GeForce RTX 2080 Ti, 3, 22 %, 1200 MiB, 76.62 W 🔥
+[20241030_194501] learn
+epoch 4, data-13 : loss = 1.375218, time = 97.2 [s].
+	policy loss : 1.363393
+	value loss  : 0.591211
+[20241030_194631] learn
+epoch 4, data-14 : loss = 1.386841, time = 81.4 [s].
+	policy loss : 1.375042
+	value loss  : 0.589977
+[20241030_194912] monitoring
+cpu: 52.4% [60.8, 47.5, 42.3, 16.8, 69.7, 71.9, 52.0, 66.7] 🔥🔥
+mem: 55.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 10 %, 3095 MiB, 56.71 W 🔥
+GeForce RTX 2080 Ti, 1, 10 %, 1200 MiB, 70.55 W 🔥
+GeForce RTX 2080 Ti, 2, 11 %, 1200 MiB, 70.78 W 🔥
+GeForce RTX 2080 Ti, 3, 10 %, 1200 MiB, 74.10 W 🔥
+[20241030_194920] test
+Test 4 : loss = 1.423019, time = 168.996495 [s].
+	policy loss : 1.411160
+	value loss  : 0.592930
+[20241030_195104] learn
+epoch 5, data-0 : loss = 1.385223, time = 95.6 [s].
+	policy loss : 1.373176
+	value loss  : 0.602348
+[20241030_195247] learn
+epoch 5, data-1 : loss = 1.391426, time = 94.6 [s].
+	policy loss : 1.379598
+	value loss  : 0.591423
+[20241030_195414] monitoring
+cpu: 47.7% [45.5, 42.7, 36.8, 43.3, 45.5, 40.0, 45.1, 31.6] 🔥
+mem: 58.4% 🔥🔥
+GeForce RTX 2080 Ti, 0, 16 %, 3095 MiB, 56.66 W 🔥
+GeForce RTX 2080 Ti, 1, 19 %, 1200 MiB, 71.68 W 🔥
+GeForce RTX 2080 Ti, 2, 17 %, 1200 MiB, 72.39 W 🔥
+GeForce RTX 2080 Ti, 3, 20 %, 1200 MiB, 75.82 W 🔥
+[20241030_195435] learn
+epoch 5, data-2 : loss = 1.403835, time = 99.4 [s].
+	policy loss : 1.392157
+	value loss  : 0.583923
+[20241030_195612] learn
+epoch 5, data-3 : loss = 1.401035, time = 88.1 [s].
+	policy loss : 1.389358
+	value loss  : 0.583832
+[20241030_195754] learn
+epoch 5, data-4 : loss = 1.392475, time = 93.8 [s].
+	policy loss : 1.381014
+	value loss  : 0.573077
+[20241030_195917] monitoring
+cpu: 41.8% [42.4, 35.3, 44.3, 43.6, 41.0, 40.8, 44.0, 39.6] 🔥
+mem: 54.2% 🔥🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3095 MiB, 57.87 W 🔥
+GeForce RTX 2080 Ti, 1, 24 %, 1200 MiB, 72.02 W 🔥
+GeForce RTX 2080 Ti, 2, 24 %, 1200 MiB, 72.37 W 🔥
+GeForce RTX 2080 Ti, 3, 23 %, 1200 MiB, 77.21 W 🔥
+[20241030_195938] learn
+epoch 5, data-5 : loss = 1.385612, time = 94.8 [s].
+	policy loss : 1.374088
+	value loss  : 0.576175
+[20241030_200123] learn
+epoch 5, data-6 : loss = 1.356281, time = 97.0 [s].
+	policy loss : 1.344591
+	value loss  : 0.584461
+[20241030_200305] learn
+epoch 5, data-7 : loss = 1.361390, time = 92.1 [s].
+	policy loss : 1.349550
+	value loss  : 0.592028
+[20241030_200419] monitoring
+cpu: 39.8% [35.4, 38.8, 51.5, 40.6, 38.9, 47.4, 30.3, 48.0] 🔥
+mem: 54.5% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 58.35 W 🔥
+GeForce RTX 2080 Ti, 1, 19 %, 1200 MiB, 71.75 W 🔥
+GeForce RTX 2080 Ti, 2, 23 %, 1200 MiB, 72.69 W 🔥
+GeForce RTX 2080 Ti, 3, 24 %, 1200 MiB, 75.38 W 🔥
+[20241030_200501] learn
+epoch 5, data-8 : loss = 1.363919, time = 107.1 [s].
+	policy loss : 1.351989
+	value loss  : 0.596538
+[20241030_200639] learn
+epoch 5, data-9 : loss = 1.372085, time = 88.8 [s].
+	policy loss : 1.360271
+	value loss  : 0.590686
+[20241030_200750] learn
+epoch 5, data-10 : loss = 1.371008, time = 64.3 [s].
+	policy loss : 1.359064
+	value loss  : 0.597205
+[20241030_200921] monitoring
+cpu: 65.6% [100.0, 0.0, 100.0, 1.0, 1.0, 100.0, 2.0, 100.0] 🔥🔥
+mem: 56.0% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.26 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.39 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 67.40 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 70.04 W 🔥
+[20241030_200921] learn
+epoch 5, data-11 : loss = 1.408219, time = 83.1 [s].
+	policy loss : 1.396237
+	value loss  : 0.599096
+[20241030_201051] learn
+epoch 5, data-12 : loss = 1.386522, time = 81.5 [s].
+	policy loss : 1.374890
+	value loss  : 0.581605
+[20241030_201232] learn
+epoch 5, data-13 : loss = 1.367622, time = 92.6 [s].
+	policy loss : 1.355827
+	value loss  : 0.589723
+[20241030_201408] learn
+epoch 5, data-14 : loss = 1.379517, time = 87.4 [s].
+	policy loss : 1.367770
+	value loss  : 0.587325
+[20241030_201423] monitoring
+cpu: 0.3% [1.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0] 
+mem: 54.4% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.88 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 66.76 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 67.17 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.02 W 🔥
+Epoch 5, learning rate has changed 0.01 -> 0.001
+Epoch 5, learning rate has changed 0.01 -> 0.001
+Epoch 5, learning rate has changed 0.01 -> 0.001
+Epoch 5, learning rate has changed 0.01 -> 0.001
+[20241030_201646] test
+Test 5 : loss = 1.419662, time = 157.690538 [s].
+	policy loss : 1.407914
+	value loss  : 0.587397
+[20241030_201817] learn
+epoch 6, data-0 : loss = 1.347032, time = 81.7 [s].
+	policy loss : 1.335139
+	value loss  : 0.594663
+[20241030_201925] monitoring
+cpu: 39.3% [38.1, 55.4, 38.1, 36.5, 27.1, 44.1, 39.0, 49.0] 🔥
+mem: 54.7% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 58.47 W 🔥
+GeForce RTX 2080 Ti, 1, 21 %, 1200 MiB, 72.22 W 🔥
+GeForce RTX 2080 Ti, 2, 21 %, 1200 MiB, 73.50 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 75.77 W 🔥
+[20241030_201954] learn
+epoch 6, data-1 : loss = 1.342095, time = 89.0 [s].
+	policy loss : 1.330460
+	value loss  : 0.581754
+[20241030_202132] learn
+epoch 6, data-2 : loss = 1.349606, time = 88.7 [s].
+	policy loss : 1.338153
+	value loss  : 0.572653
+[20241030_202320] learn
+epoch 6, data-3 : loss = 1.343245, time = 99.3 [s].
+	policy loss : 1.331825
+	value loss  : 0.571029
+[20241030_202427] monitoring
+cpu: 40.0% [40.4, 42.4, 41.8, 38.8, 42.6, 38.5, 42.7, 39.2] 🔥
+mem: 54.8% 🔥🔥
+GeForce RTX 2080 Ti, 0, 18 %, 3095 MiB, 58.28 W 🔥
+GeForce RTX 2080 Ti, 1, 19 %, 1200 MiB, 72.97 W 🔥
+GeForce RTX 2080 Ti, 2, 20 %, 1200 MiB, 73.54 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 76.13 W 🔥
+[20241030_202456] learn
+epoch 6, data-4 : loss = 1.332660, time = 88.0 [s].
+	policy loss : 1.321430
+	value loss  : 0.561486
+[20241030_202626] learn
+epoch 6, data-5 : loss = 1.324124, time = 80.7 [s].
+	policy loss : 1.312849
+	value loss  : 0.563757
+[20241030_202805] learn
+epoch 6, data-6 : loss = 1.291859, time = 90.7 [s].
+	policy loss : 1.280429
+	value loss  : 0.571496
+[20241030_202930] monitoring
+cpu: 43.9% [39.8, 39.0, 41.2, 30.9, 36.1, 34.3, 51.5, 43.4] 🔥
+mem: 54.8% 🔥🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3095 MiB, 57.08 W 🔥
+GeForce RTX 2080 Ti, 1, 21 %, 1200 MiB, 71.30 W 🔥
+GeForce RTX 2080 Ti, 2, 20 %, 1200 MiB, 72.62 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 76.47 W 🔥
+[20241030_202946] learn
+epoch 6, data-7 : loss = 1.294559, time = 91.8 [s].
+	policy loss : 1.282966
+	value loss  : 0.579645
+[20241030_203116] learn
+epoch 6, data-8 : loss = 1.294968, time = 81.8 [s].
+	policy loss : 1.283293
+	value loss  : 0.583753
+[20241030_203256] learn
+epoch 6, data-9 : loss = 1.301068, time = 91.4 [s].
+	policy loss : 1.289530
+	value loss  : 0.576935
+[20241030_203418] learn
+epoch 6, data-10 : loss = 1.299603, time = 75.4 [s].
+	policy loss : 1.287917
+	value loss  : 0.584314
+[20241030_203432] monitoring
+cpu: 1.0% [0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0] 
+mem: 54.4% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.29 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 66.55 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 66.55 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.60 W 🔥
+[20241030_203554] learn
+epoch 6, data-11 : loss = 1.333190, time = 87.0 [s].
+	policy loss : 1.321454
+	value loss  : 0.586826
+[20241030_203732] learn
+epoch 6, data-12 : loss = 1.307146, time = 89.4 [s].
+	policy loss : 1.295812
+	value loss  : 0.566698
+[20241030_203913] learn
+epoch 6, data-13 : loss = 1.283470, time = 91.5 [s].
+	policy loss : 1.271972
+	value loss  : 0.574901
+[20241030_203934] monitoring
+cpu: 43.1% [40.6, 39.6, 34.3, 50.0, 39.6, 43.1, 40.6, 41.1] 🔥
+mem: 54.8% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 57.95 W 🔥
+GeForce RTX 2080 Ti, 1, 21 %, 1200 MiB, 72.77 W 🔥
+GeForce RTX 2080 Ti, 2, 24 %, 1200 MiB, 72.21 W 🔥
+GeForce RTX 2080 Ti, 3, 23 %, 1200 MiB, 76.58 W 🔥
+[20241030_204049] learn
+epoch 6, data-14 : loss = 1.289836, time = 87.9 [s].
+	policy loss : 1.278394
+	value loss  : 0.572132
+[20241030_204321] test
+Test 6 : loss = 1.337594, time = 152.018724 [s].
+	policy loss : 1.326186
+	value loss  : 0.570395
+[20241030_204436] monitoring
+cpu: 41.1% [42.3, 46.0, 40.6, 39.0, 38.4, 35.4, 45.9, 40.2] 🔥
+mem: 54.8% 🔥🔥
+GeForce RTX 2080 Ti, 0, 19 %, 3095 MiB, 58.47 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 73.09 W 🔥
+GeForce RTX 2080 Ti, 2, 21 %, 1200 MiB, 72.09 W 🔥
+GeForce RTX 2080 Ti, 3, 22 %, 1200 MiB, 76.90 W 🔥
+[20241030_204452] learn
+epoch 7, data-0 : loss = 1.313642, time = 82.0 [s].
+	policy loss : 1.301892
+	value loss  : 0.587512
+[20241030_204622] learn
+epoch 7, data-1 : loss = 1.318875, time = 81.3 [s].
+	policy loss : 1.307357
+	value loss  : 0.575874
+[20241030_204755] learn
+epoch 7, data-2 : loss = 1.331213, time = 84.5 [s].
+	policy loss : 1.319850
+	value loss  : 0.568138
+[20241030_204931] learn
+epoch 7, data-3 : loss = 1.326405, time = 87.0 [s].
+	policy loss : 1.315060
+	value loss  : 0.567263
+[20241030_204938] monitoring
+cpu: 79.6% [100.0, 100.0, 75.0, 74.3, 100.0, 75.0, 75.8, 100.0] 🔥🔥
+mem: 61.5% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.59 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.26 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 66.88 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.36 W 🔥
+[20241030_205112] learn
+epoch 7, data-4 : loss = 1.318378, time = 92.4 [s].
+	policy loss : 1.307222
+	value loss  : 0.557830
+[20241030_205252] learn
+epoch 7, data-5 : loss = 1.311438, time = 91.6 [s].
+	policy loss : 1.300219
+	value loss  : 0.560988
+[20241030_205431] learn
+epoch 7, data-6 : loss = 1.279927, time = 90.5 [s].
+	policy loss : 1.268564
+	value loss  : 0.568159
+[20241030_205440] monitoring
+cpu: 80.7% [30.0, 32.7, 41.8, 17.8, 41.4, 24.0, 40.0, 41.6] 🔥🔥
+mem: 54.1% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.83 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 66.75 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 68.30 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.76 W 🔥
+[20241030_205618] learn
+epoch 7, data-7 : loss = 1.283749, time = 98.9 [s].
+	policy loss : 1.272202
+	value loss  : 0.577344
+[20241030_205759] learn
+epoch 7, data-8 : loss = 1.284766, time = 92.4 [s].
+	policy loss : 1.273137
+	value loss  : 0.581462
+[20241030_205942] monitoring
+cpu: 50.6% [0.0, 100.0, 100.0, 100.0, 0.0, 100.0, 0.0, 2.0] 🔥🔥
+mem: 60.6% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.79 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 66.43 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 67.66 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.43 W 🔥
+[20241030_205941] learn
+epoch 7, data-9 : loss = 1.292021, time = 92.9 [s].
+	policy loss : 1.280532
+	value loss  : 0.574434
+[20241030_210058] learn
+epoch 7, data-10 : loss = 1.291090, time = 70.6 [s].
+	policy loss : 1.279434
+	value loss  : 0.582811
+[20241030_210234] learn
+epoch 7, data-11 : loss = 1.325664, time = 87.2 [s].
+	policy loss : 1.313959
+	value loss  : 0.585231
+[20241030_210416] learn
+epoch 7, data-12 : loss = 1.301825, time = 93.4 [s].
+	policy loss : 1.290523
+	value loss  : 0.565124
+[20241030_210445] monitoring
+cpu: 41.5% [38.8, 42.2, 56.0, 36.5, 42.1, 38.8, 31.0, 51.0] 🔥
+mem: 54.8% 🔥🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3095 MiB, 58.57 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 72.87 W 🔥
+GeForce RTX 2080 Ti, 2, 21 %, 1200 MiB, 72.36 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 76.02 W 🔥
+[20241030_210551] learn
+epoch 7, data-13 : loss = 1.279921, time = 86.9 [s].
+	policy loss : 1.268447
+	value loss  : 0.573700
+[20241030_210732] learn
+epoch 7, data-14 : loss = 1.289787, time = 92.5 [s].
+	policy loss : 1.278371
+	value loss  : 0.570814
+[20241030_210947] monitoring
+cpu: 48.5% [34.7, 61.5, 62.6, 54.0, 50.5, 54.1, 29.0, 57.6] 🔥
+mem: 54.8% 🔥🔥
+GeForce RTX 2080 Ti, 0, 10 %, 3095 MiB, 57.13 W 🔥
+GeForce RTX 2080 Ti, 1, 10 %, 1200 MiB, 71.73 W 🔥
+GeForce RTX 2080 Ti, 2, 9 %, 1200 MiB, 70.38 W 🔥
+GeForce RTX 2080 Ti, 3, 10 %, 1200 MiB, 74.19 W 🔥
+[20241030_211012] test
+Test 7 : loss = 1.333522, time = 160.206368 [s].
+	policy loss : 1.322149
+	value loss  : 0.568658
+[20241030_211142] learn
+epoch 8, data-0 : loss = 1.306454, time = 81.0 [s].
+	policy loss : 1.294733
+	value loss  : 0.586054
+[20241030_211314] learn
+epoch 8, data-1 : loss = 1.312193, time = 83.1 [s].
+	policy loss : 1.300711
+	value loss  : 0.574097
+[20241030_211449] monitoring
+cpu: 64.4% [1.0, 0.0, 100.0, 0.0, 100.0, 0.0, 100.0, 100.0] 🔥🔥
+mem: 55.8% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.40 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.14 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 67.02 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.90 W 🔥
+[20241030_211450] learn
+epoch 8, data-2 : loss = 1.324666, time = 87.5 [s].
+	policy loss : 1.313340
+	value loss  : 0.566295
+[20241030_211632] learn
+epoch 8, data-3 : loss = 1.320013, time = 93.9 [s].
+	policy loss : 1.308693
+	value loss  : 0.565983
+[20241030_211806] learn
+epoch 8, data-4 : loss = 1.312185, time = 85.9 [s].
+	policy loss : 1.301062
+	value loss  : 0.556119
+[20241030_211951] monitoring
+cpu: 50.1% [100.0, 1.0, 100.0, 0.0, 100.0, 4.0, 1.0, 100.0] 🔥🔥
+mem: 68.0% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 53.20 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.29 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 66.56 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.83 W 🔥
+[20241030_211946] learn
+epoch 8, data-5 : loss = 1.305807, time = 91.2 [s].
+	policy loss : 1.294617
+	value loss  : 0.559535
+[20241030_212121] learn
+epoch 8, data-6 : loss = 1.274512, time = 85.6 [s].
+	policy loss : 1.263171
+	value loss  : 0.567069
+[20241030_212306] learn
+epoch 8, data-7 : loss = 1.278504, time = 96.9 [s].
+	policy loss : 1.266980
+	value loss  : 0.576227
+[20241030_212453] monitoring
+cpu: 50.4% [88.0, 7.0, 94.0, 8.0, 7.1, 0.0, 100.0, 100.0] 🔥🔥
+mem: 58.7% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3095 MiB, 54.00 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 66.97 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 66.27 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 70.07 W 🔥
+[20241030_212453] learn
+epoch 8, data-8 : loss = 1.280044, time = 98.5 [s].
+	policy loss : 1.268431
+	value loss  : 0.580669
+[20241030_212633] learn
+epoch 8, data-9 : loss = 1.287652, time = 91.3 [s].
+	policy loss : 1.276183
+	value loss  : 0.573459

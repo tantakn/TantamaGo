@@ -1,0 +1,37 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 4096
+    kifu_dir: SgfFile/GoQuest_9x9_49893games/sgf
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+[20241031_012759] gen_sl_data start
+    BATCH_SIZE: 4096
+    DATA_SET_SIZE: 1024000
+    kifu_num: 49893
+[20241031_012759] monitoring
+cpu: 17.0% [0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0] 🔥
+mem: 9.0% 
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.18 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.70 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.82 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 22.54 W 
+
+[20241031_012810] monitoring
+cpu: 14.4% [34.9, 2.1, 6.1, 4.2, 20.3, 34.7, 10.3, 2.7] 🔥
+mem: 9.1% 
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.05 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.67 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.72 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 22.07 W 
+
+[20241031_013121] gen_sl_npz
+    saved: sl_data_1.npz (0:03:21.939665)
+    cnt: 2637 / 49893kyoku

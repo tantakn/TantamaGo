@@ -1,0 +1,115 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 4096
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+🐾train_on_gpu_ddp 2024-10-31 00:58:06.151950
+    [20241031_005806] device
+    torch.cuda.current_device:  0
+    torch.cuda.device_count:  4
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(1):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(2):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(3):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_capability(0):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(2):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(3):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[20241031_005806] monitoring
+cpu: 45.0% [0.0, 83.3, 88.9, 88.9, 0.0, 0.0, 0.0, 90.9] 🔥
+cpu(process): 578.8%
+(c: 0.0)(m: 252.4453125MB)(c: 0.0)(m: 10.9765625MB)(c: 0.0)(m: 196.0390625MB)(c: 59.9)(m: 223.6171875MB)(c: 59.9)(m: 228.01953125MB)(c: 59.9)(m: 234.24609375MB)
+
+mem: 8.9% 
+mem(process): 983.203125 MB
+GeForce RTX 2080 Ti, 0, 0 %, 9 MiB, 3.67 W 
+GeForce RTX 2080 Ti, 1, 0 %, 9 MiB, 21.32 W 
+GeForce RTX 2080 Ti, 2, 0 %, 9 MiB, 21.82 W 
+GeForce RTX 2080 Ti, 3, 0 %, 9 MiB, 22.21 W 
+
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[20241031_005817] monitoring
+cpu: 21.7% [30.4, 23.2, 13.0, 16.2, 12.9, 12.1, 26.8, 37.3] 🔥
+cpu(process): 0.0%
+(c: 0.0)(m: 252.484375MB)(c: 0.0)(m: 10.9765625MB)(c: 0.0)(m: 1572.10546875MB)(c: 0.0)(m: 1915.23046875MB)(c: 0.0)(m: 1841.828125MB)(c: 0.0)(m: 1852.7890625MB)
+
+mem: 17.7% 🔥
+mem(process): 7444.8671875 MB
+GeForce RTX 2080 Ti, 0, 14 %, 1799 MiB, 52.83 W 🔥
+GeForce RTX 2080 Ti, 1, 1 %, 636 MiB, 62.97 W 🔥
+GeForce RTX 2080 Ti, 2, 1 %, 636 MiB, 61.88 W 🔥
+GeForce RTX 2080 Ti, 3, 2 %, 636 MiB, 66.61 W 🔥
+
+🐾device:  1
+🐾device:  0
+🐾device:  3
+🐾device:  2
+[20241031_005847] monitoring
+cpu: 41.1% [50.8, 39.9, 52.5, 27.2, 52.1, 32.4, 21.4, 52.3] 🔥
+cpu(process): 0.0%
+(c: 0.0)(m: 252.484375MB)(c: 0.0)(m: 10.9765625MB)(c: 0.0)(m: 5419.109375MB)(c: 0.0)(m: 5930.73046875MB)(c: 0.0)(m: 5934.71875MB)(c: 0.0)(m: 5909.734375MB)(c: 0.0)(m: 11.078125MB)(c: 0.0)(m: 1845.5MB)(c: 0.0)(m: 1841.33984375MB)(c: 0.0)(m: 10.97265625MB)(c: 0.0)(m: 1844.70703125MB)(c: 0.0)(m: 1841.33203125MB)(c: 0.0)(m: 11.00390625MB)(c: 0.0)(m: 1842.45703125MB)(c: 0.0)(m: 1839.79296875MB)(c: 0.0)(m: 11.0625MB)(c: 0.0)(m: 1839.42578125MB)(c: 0.0)(m: 1836.83984375MB)
+
+mem: 42.1% 🔥
+mem(process): 38233.265625 MB
+GeForce RTX 2080 Ti, 0, 38 %, 3391 MiB, 77.83 W 🔥
+GeForce RTX 2080 Ti, 1, 39 %, 1516 MiB, 89.82 W 🔥
+GeForce RTX 2080 Ti, 2, 38 %, 1516 MiB, 105.30 W 🔥
+GeForce RTX 2080 Ti, 3, 39 %, 1516 MiB, 107.30 W 🔥
+
+[20241031_005859] learn
+epoch 0, data-0 : loss = 3.694047, time = 31.9 [s].
+	policy loss : 3.678668
+	value loss  : 0.768975
+[20241031_005917] monitoring
+cpu: 47.4% [51.4, 61.1, 38.0, 51.8, 59.0, 34.7, 34.1, 49.1] 🔥
+cpu(process): 0.0%
+(c: 0.0)(m: 252.51953125MB)(c: 0.0)(m: 10.9765625MB)(c: 0.0)(m: 5435.12109375MB)(c: 0.0)(m: 5948.94921875MB)(c: 0.0)(m: 5951.1484375MB)(c: 0.0)(m: 5929.328125MB)(c: 0.0)(m: 11.078125MB)(c: 0.0)(m: 1039.64453125MB)(c: 0.0)(m: 1040.1875MB)(c: 0.0)(m: 10.97265625MB)(c: 0.0)(m: 1034.87109375MB)(c: 0.0)(m: 1036.65234375MB)(c: 0.0)(m: 11.00390625MB)(c: 0.0)(m: 1037.2109375MB)(c: 0.0)(m: 1037.0859375MB)(c: 0.0)(m: 11.0625MB)(c: 0.0)(m: 1038.0078125MB)(c: 0.0)(m: 1036.4765625MB)
+
+mem: 42.2% 🔥
+mem(process): 31872.296875 MB
+GeForce RTX 2080 Ti, 0, 26 %, 3393 MiB, 65.66 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1516 MiB, 83.47 W 🔥
+GeForce RTX 2080 Ti, 2, 20 %, 1516 MiB, 88.08 W 🔥
+GeForce RTX 2080 Ti, 3, 11 %, 1516 MiB, 95.14 W 🔥
+
+[20241031_005931] learn
+epoch 0, data-1 : loss = 2.541245, time = 22.1 [s].
+	policy loss : 2.526962
+	value loss  : 0.714167
+[20241031_005948] monitoring
+cpu: 45.3% [54.0, 37.9, 55.8, 30.7, 44.5, 42.2, 54.9, 42.1] 🔥
+cpu(process): 0.0%
+(c: 0.0)(m: 252.51953125MB)(c: 0.0)(m: 10.9765625MB)(c: 0.0)(m: 5435.0625MB)(c: 0.0)(m: 5949.1875MB)(c: 0.0)(m: 5951.3046875MB)(c: 0.0)(m: 5929.56640625MB)(c: 0.0)(m: 11.078125MB)(c: 0.0)(m: 590.0546875MB)(c: 0.0)(m: 491.16796875MB)(c: 0.0)(m: 10.97265625MB)(c: 0.0)(m: 592.54296875MB)(c: 0.0)(m: 196.04296875MB)(c: 0.0)(m: 11.00390625MB)(c: 0.0)(m: 590.6171875MB)(c: 0.0)(m: 491.76171875MB)(c: 0.0)(m: 11.0625MB)(c: 0.0)(m: 196.3984375MB)(c: 0.0)(m: 491.65625MB)
+
+mem: 42.1% 🔥
+mem(process): 27212.9765625 MB
+GeForce RTX 2080 Ti, 0, 0 %, 3393 MiB, 15.02 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1516 MiB, 65.64 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1516 MiB, 67.06 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1516 MiB, 69.07 W 🔥
+

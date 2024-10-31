@@ -1,0 +1,337 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 512
+    kifu_dir: SgfFile/GoQuest_9x9_49893games/sgf
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+[20241030_141653] gen_sl_data start
+    BATCH_SIZE: 512
+    DATA_SET_SIZE: 1024000
+    kifu_num: 49893
+[20241030_141653] monitoring
+cpu: 13.1% [100.0, 0.0, 0.0, 0.0, 0.0, 8.3, 0.0, 0.0] 🔥
+mem: 7.3% 
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.57 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.56 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.69 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.69 W 
+[20241030_141704] monitoring
+cpu: 12.5% [90.1, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0] 🔥
+mem: 7.7% 
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.40 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.50 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.69 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.83 W 
+[20241030_142010] gen_sl_npz
+    saved: sl_data_1.npz (0:03:16.738278)
+    cnt: 2637 / 49893kyoku
+[20241030_142206] monitoring
+cpu: 12.4% [1.0, 98.1, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0] 🔥
+mem: 11.9% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.11 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.40 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.62 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.82 W 
+[20241030_142325] gen_sl_npz
+    saved: sl_data_2.npz (0:03:15.200316)
+    cnt: 5282 / 49893kyoku
+[20241030_142639] gen_sl_npz
+    saved: sl_data_3.npz (0:03:14.166025)
+    cnt: 7930 / 49893kyoku
+[20241030_142708] monitoring
+cpu: 12.3% [0.0, 96.0, 0.0, 0.0, 0.0, 1.0, 0.0, 2.0] 🔥
+mem: 11.8% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.13 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.70 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.69 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.93 W 
+[20241030_142953] gen_sl_npz
+    saved: sl_data_4.npz (0:03:13.235084)
+    cnt: 10561 / 49893kyoku
+[20241030_143210] monitoring
+cpu: 12.2% [98.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 🔥
+mem: 12.0% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 3.66 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.80 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.50 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 22.46 W 
+[20241030_143306] gen_sl_npz
+    saved: sl_data_5.npz (0:03:12.982446)
+    cnt: 13232 / 49893kyoku
+[20241030_143625] gen_sl_npz
+    saved: sl_data_6.npz (0:03:19.062739)
+    cnt: 15878 / 49893kyoku
+[20241030_143713] monitoring
+cpu: 12.3% [1.0, 0.0, 0.0, 0.0, 97.0, 0.0, 0.0, 1.0] 🔥
+mem: 11.9% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 3.43 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.14 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.77 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.72 W 
+[20241030_143940] gen_sl_npz
+    saved: sl_data_7.npz (0:03:15.771694)
+    cnt: 18546 / 49893kyoku
+[20241030_144215] monitoring
+cpu: 12.4% [97.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 🔥
+mem: 12.1% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 3.98 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.35 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.67 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.74 W 
+[20241030_144301] gen_sl_npz
+    saved: sl_data_8.npz (0:03:20.755378)
+    cnt: 21201 / 49893kyoku
+[20241030_144625] gen_sl_npz
+    saved: sl_data_9.npz (0:03:24.286642)
+    cnt: 23884 / 49893kyoku
+[20241030_144717] monitoring
+cpu: 12.3% [0.0, 0.0, 0.0, 97.1, 0.0, 0.0, 1.0, 0.0] 🔥
+mem: 11.9% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 3.79 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.31 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.61 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.63 W 
+[20241030_144954] gen_sl_npz
+    saved: sl_data_10.npz (0:03:28.256945)
+    cnt: 26546 / 49893kyoku
+[20241030_145220] monitoring
+cpu: 12.4% [0.0, 0.0, 0.0, 0.0, 97.2, 0.9, 0.0, 0.0] 🔥
+mem: 12.1% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.12 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.18 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.75 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.61 W 
+[20241030_145320] gen_sl_npz
+    saved: sl_data_11.npz (0:03:26.066100)
+    cnt: 29171 / 49893kyoku
+[20241030_145646] gen_sl_npz
+    saved: sl_data_12.npz (0:03:26.479363)
+    cnt: 31821 / 49893kyoku
+[20241030_145722] monitoring
+cpu: 12.0% [97.1, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0] 🔥
+mem: 11.8% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 3.96 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.38 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.68 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.73 W 
+[20241030_150014] gen_sl_npz
+    saved: sl_data_13.npz (0:03:27.438599)
+    cnt: 34528 / 49893kyoku
+[20241030_150225] monitoring
+cpu: 12.5% [0.0, 1.0, 96.0, 0.0, 0.0, 0.0, 1.0, 1.0] 🔥
+mem: 12.1% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 3.93 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.25 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.58 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.79 W 
+[20241030_150339] gen_sl_npz
+    saved: sl_data_14.npz (0:03:25.595065)
+    cnt: 37241 / 49893kyoku
+[20241030_150706] gen_sl_npz
+    saved: sl_data_15.npz (0:03:26.359692)
+    cnt: 39881 / 49893kyoku
+[20241030_150727] monitoring
+cpu: 12.1% [0.0, 97.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0] 🔥
+mem: 11.9% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 3.33 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.41 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.71 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 22.33 W 
+[20241030_151033] gen_sl_npz
+    saved: sl_data_16.npz (0:03:27.246408)
+    cnt: 42582 / 49893kyoku
+[20241030_151229] monitoring
+cpu: 11.9% [0.0, 1.0, 94.1, 1.0, 0.0, 0.0, 2.0, 0.0] 🔥
+mem: 12.0% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.19 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.02 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.78 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.70 W 
+[20241030_151402] gen_sl_npz
+    saved: sl_data_17.npz (0:03:28.850223)
+    cnt: 45234 / 49893kyoku
+[20241030_151732] gen_sl_npz
+    saved: sl_data_18.npz (0:03:30.599527)
+    cnt: 47875 / 49893kyoku
+[20241030_151732] monitoring
+cpu: 12.2% [0.0, 0.0, 1.0, 1.9, 1.0, 96.2, 0.0, 1.0] 🔥
+mem: 11.8% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.07 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.25 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.82 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 21.60 W 
+🐾train_on_gpu_ddp 2024-10-30 14:16:53.601051
+    [20241030_152010] device
+    torch.cuda.current_device:  0
+    torch.cuda.device_count:  4
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(1):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(2):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(3):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_capability(0):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(2):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(3):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+🐾device:  3
+🐾device:  2
+🐾device:  0
+🐾device:  1
+[20241030_152158] learn
+epoch 0, data-0 : loss = 2.429359, time = 85.3 [s].
+	policy loss : 2.415084
+	value loss  : 0.713779
+[20241030_152235] monitoring
+cpu: 41.3% [52.9, 48.5, 44.1, 39.1, 48.0, 33.3, 31.6, 34.0] 🔥
+mem: 45.8% 🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3075 MiB, 57.03 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 71.68 W 🔥
+GeForce RTX 2080 Ti, 2, 22 %, 1200 MiB, 70.77 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 73.77 W 🔥
+[20241030_152328] learn
+epoch 0, data-1 : loss = 1.858350, time = 81.2 [s].
+	policy loss : 1.844433
+	value loss  : 0.695818
+[20241030_152503] learn
+epoch 0, data-2 : loss = 1.772110, time = 86.6 [s].
+	policy loss : 1.758231
+	value loss  : 0.693918
+[20241030_152640] learn
+epoch 0, data-3 : loss = 1.716144, time = 87.9 [s].
+	policy loss : 1.702300
+	value loss  : 0.692223
+[20241030_152737] monitoring
+cpu: 43.9% [41.6, 28.3, 38.5, 43.3, 49.5, 44.6, 48.4, 42.3] 🔥
+mem: 45.8% 🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3075 MiB, 58.14 W 🔥
+GeForce RTX 2080 Ti, 1, 22 %, 1200 MiB, 71.96 W 🔥
+GeForce RTX 2080 Ti, 2, 24 %, 1200 MiB, 71.86 W 🔥
+GeForce RTX 2080 Ti, 3, 23 %, 1200 MiB, 76.69 W 🔥
+[20241030_152810] learn
+epoch 0, data-4 : loss = 1.671380, time = 81.8 [s].
+	policy loss : 1.657650
+	value loss  : 0.686506
+[20241030_152944] learn
+epoch 0, data-5 : loss = 1.632838, time = 85.9 [s].
+	policy loss : 1.619280
+	value loss  : 0.677868
+[20241030_153113] learn
+epoch 0, data-6 : loss = 1.591258, time = 80.6 [s].
+	policy loss : 1.577742
+	value loss  : 0.675815
+[20241030_153239] monitoring
+cpu: 41.5% [37.0, 34.3, 88.9, 38.0, 89.9, 73.5, 91.8, 56.9] 🔥
+mem: 44.8% 🔥
+GeForce RTX 2080 Ti, 0, 2 %, 3075 MiB, 53.58 W 🔥
+GeForce RTX 2080 Ti, 1, 3 %, 1200 MiB, 66.54 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 68.70 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 70.32 W 🔥
+[20241030_153241] learn
+epoch 0, data-7 : loss = 1.573763, time = 79.1 [s].
+	policy loss : 1.560298
+	value loss  : 0.673257
+[20241030_153416] learn
+epoch 0, data-8 : loss = 1.561225, time = 86.8 [s].
+	policy loss : 1.547813
+	value loss  : 0.670590
+[20241030_153549] learn
+epoch 0, data-9 : loss = 1.556222, time = 84.2 [s].
+	policy loss : 1.542914
+	value loss  : 0.665360
+[20241030_153658] learn
+epoch 0, data-10 : loss = 1.544618, time = 62.0 [s].
+	policy loss : 1.531378
+	value loss  : 0.662011
+[20241030_153742] monitoring
+cpu: 42.5% [44.0, 52.5, 29.7, 40.0, 44.8, 45.7, 43.6, 49.0] 🔥
+mem: 45.8% 🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3075 MiB, 57.54 W 🔥
+GeForce RTX 2080 Ti, 1, 19 %, 1200 MiB, 71.50 W 🔥
+GeForce RTX 2080 Ti, 2, 21 %, 1200 MiB, 69.90 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 75.55 W 🔥
+[20241030_153828] learn
+epoch 0, data-11 : loss = 1.571115, time = 81.2 [s].
+	policy loss : 1.557965
+	value loss  : 0.657498
+[20241030_154007] learn
+epoch 0, data-12 : loss = 1.543683, time = 91.1 [s].
+	policy loss : 1.530716
+	value loss  : 0.648321
+[20241030_154148] learn
+epoch 0, data-13 : loss = 1.517848, time = 91.7 [s].
+	policy loss : 1.504969
+	value loss  : 0.643953
+[20241030_154244] monitoring
+cpu: 40.8% [48.4, 35.4, 50.5, 43.6, 45.7, 29.9, 41.2, 46.9] 🔥
+mem: 45.8% 🔥
+GeForce RTX 2080 Ti, 0, 20 %, 3075 MiB, 57.59 W 🔥
+GeForce RTX 2080 Ti, 1, 20 %, 1200 MiB, 72.72 W 🔥
+GeForce RTX 2080 Ti, 2, 22 %, 1200 MiB, 71.47 W 🔥
+GeForce RTX 2080 Ti, 3, 21 %, 1200 MiB, 75.33 W 🔥
+[20241030_154324] learn
+epoch 0, data-14 : loss = 1.519507, time = 86.6 [s].
+	policy loss : 1.506672
+	value loss  : 0.641717
+[20241030_154620] test
+Test 0 : loss = 1.534331, time = 176.103827 [s].
+	policy loss : 1.521636
+	value loss  : 0.634730
+Traceback (most recent call last):
+  File "train.py", line 116, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 107, in train_main
+    train_on_gpu_ddp(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 614, in train_on_gpu_ddp
+    torch.multiprocessing.spawn(train_on_gpu_ddp_worker, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir), nprocs = torch.cuda.device_count(), join = True)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 240, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method='spawn')
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 198, in start_processes
+    while not context.join():
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 160, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 3 terminated with the following error:
+Traceback (most recent call last):
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 69, in _wrap
+    fn(i, *args)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 445, in train_on_gpu_ddp_worker
+    plane_data, policy_data, value_data = tmp_load_data_set(train_npz_path, rank)
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 431, in tmp_load_data_set
+    check_memory_usage()
+  File "/data/student/u2424004/igo/TantamaGo/nn/learn.py", line 419, in check_memory_usage
+    assert psutil.virtual_memory().percent < 80, f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]"
+AssertionError: memory usage is too high. mem_use: 80.1% [20241030_154628]
+

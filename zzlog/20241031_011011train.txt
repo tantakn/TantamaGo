@@ -1,0 +1,112 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 4096
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+🐾train_on_gpu_ddp 2024-10-31 01:10:13.691194
+    [20241031_011013] device
+    torch.cuda.current_device:  0
+    torch.cuda.device_count:  4
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(1):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(2):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(3):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_capability(0):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(2):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(3):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[20241031_011013] monitoring
+cpu: 43.0% [10.0, 100.0, 0.0, 100.0, 100.0, 10.0, 10.0, 100.0] 🔥
+cpu(process): [0.0, 0.0, 48.9, 99.9, 88.9, 98.9]%
+mem: 18.7% 🔥
+mem(process): [252.4296875, 11.0859375, 1567.8125, 2000.14453125, 2059.78515625, 1988.22265625]
+GeForce RTX 2080 Ti, 0, 17 %, 2285 MiB, 54.17 W 🔥
+GeForce RTX 2080 Ti, 1, 1 %, 636 MiB, 67.68 W 🔥
+GeForce RTX 2080 Ti, 2, 1 %, 636 MiB, 69.64 W 🔥
+GeForce RTX 2080 Ti, 3, 2 %, 636 MiB, 70.70 W 🔥
+
+🐾device:  1
+🐾device:  0
+🐾device:  2
+🐾device:  3
+[20241031_011030] monitoring
+cpu: 53.8% [36.1, 41.8, 55.1, 41.7, 74.7, 39.3, 76.6, 65.2] 🔥🔥
+cpu(process): [0.0, 0.0, 97.9, 83.9, 55.9, 58.9, 0.0, 0.0, 0.0, 13.0, 18.0, 0.0, 17.0, 14.0]%
+mem: 42.1% 🔥
+mem(process): [252.47265625, 11.0859375, 5410.5, 5934.2578125, 5931.56640625, 5911.55078125, 10.93359375, 11.03515625, 10.98828125, 2414.859375, 2412.16015625, 11.08203125, 2417.04296875, 2417.73046875]
+GeForce RTX 2080 Ti, 0, 38 %, 3391 MiB, 128.30 W 🔥
+GeForce RTX 2080 Ti, 1, 38 %, 1516 MiB, 151.61 W 🔥
+GeForce RTX 2080 Ti, 2, 40 %, 1516 MiB, 150.68 W 🔥
+GeForce RTX 2080 Ti, 3, 40 %, 1516 MiB, 156.02 W 🔥
+
+[20241031_011048] learn
+epoch 0, data-0 : loss = 3.650505, time = 19.5 [s].
+	policy loss : 3.634962
+	value loss  : 0.777127
+process no longer exists (pid=2000374)
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/local/anaconda3/lib/python3.7/threading.py", line 926, in _bootstrap_inner
+    self.run()
+  File "/usr/local/anaconda3/lib/python3.7/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/student/u2424004/igo/TantamaGo/monitoring.py", line 113, in display_train_monitoring_worker
+    disp(None)
+  File "/data/student/u2424004/igo/TantamaGo/monitoring.py", line 62, in disp
+    text += f"\ncpu(process): {cup_usages}%"
+UnboundLocalError: local variable 'cup_usages' referenced before assignment
+
+[20241031_011114] learn
+epoch 0, data-1 : loss = 2.560497, time = 17.7 [s].
+	policy loss : 2.546152
+	value loss  : 0.717251
+[20241031_011140] learn
+epoch 0, data-2 : loss = 2.195438, time = 18.0 [s].
+	policy loss : 2.181275
+	value loss  : 0.708111
+[20241031_011209] learn
+epoch 0, data-3 : loss = 2.037576, time = 19.5 [s].
+	policy loss : 2.023509
+	value loss  : 0.703349
+[20241031_011238] learn
+epoch 0, data-4 : loss = 1.953083, time = 18.8 [s].
+	policy loss : 1.939076
+	value loss  : 0.700380
+[20241031_011306] learn
+epoch 0, data-5 : loss = 1.880759, time = 19.6 [s].
+	policy loss : 1.866781
+	value loss  : 0.698915
+[20241031_011335] learn
+epoch 0, data-6 : loss = 1.826745, time = 19.0 [s].
+	policy loss : 1.812778
+	value loss  : 0.698336
+[20241031_011402] learn
+epoch 0, data-7 : loss = 1.793532, time = 17.9 [s].
+	policy loss : 1.779585
+	value loss  : 0.697342

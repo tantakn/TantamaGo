@@ -1,0 +1,250 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 4096
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+🐾train_on_gpu_ddp 2024-10-31 00:18:25.965670
+    [20241031_001826] device
+    torch.cuda.current_device:  0
+    torch.cuda.device_count:  4
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(1):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(2):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(3):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_capability(0):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(2):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(3):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[20241031_001826] monitoring
+cpu: 17.7% [9.1, 11.1, 60.0, 66.7, 0.0, 60.0, 40.0, 44.4] 🔥
+cpu(process): 398.8%
+mem: 9.0% (soft: -0.00 GB, hard: -0.00 GB) 
+mem(process): 768.3203125 MB
+GeForce RTX 2080 Ti, 0, 0 %, 9 MiB, 2.89 W 
+GeForce RTX 2080 Ti, 1, 0 %, 9 MiB, 21.48 W 
+GeForce RTX 2080 Ti, 2, 0 %, 9 MiB, 22.20 W 
+GeForce RTX 2080 Ti, 3, 0 %, 9 MiB, 22.29 W 
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.7638889999999998, ru_stime=1.146528, ru_maxrss=258512, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=39792, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1674, ru_nivcsw=353),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.010398, ru_stime=0.022494, ru_maxrss=130700, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=1117, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=10, ru_nivcsw=3),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.013177, ru_stime=0.013177, ru_maxrss=258512, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=615, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=23, ru_nivcsw=0)
+
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[20241031_001837] monitoring
+cpu: 51.1% [0.0, 0.0, 100.0, 100.0, 0.0, 1.0, 100.0, 100.0] 🔥🔥
+cpu(process): 399.6%
+mem: 35.3% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 17229.05859375 MB
+GeForce RTX 2080 Ti, 0, 0 %, 2545 MiB, 51.85 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 670 MiB, 63.64 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 670 MiB, 61.53 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 670 MiB, 66.87 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.782028, ru_stime=1.151896, ru_maxrss=258540, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=40224, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1690, ru_nivcsw=353),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.010398, ru_stime=0.052569, ru_maxrss=130736, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=2068, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=18, ru_nivcsw=7),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.03173, ru_stime=0.018130999999999998, ru_maxrss=258540, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=1047, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=39, ru_nivcsw=0)
+
+🐾device:  1
+🐾device:  2
+🐾device:  3
+🐾device:  0
+[20241031_001912] learn
+epoch 0, data-0 : loss = 3.650683, time = 26.2 [s].
+	policy loss : 3.634886
+	value loss  : 0.789874
+[20241031_001915] monitoring
+cpu: 51.4% [0.0, 100.0, 100.0, 68.0, 0.0, 0.0, 100.0, 33.0] 🔥🔥
+cpu(process): 594.9000000000001%
+mem: 41.9% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 30085.328125 MB
+GeForce RTX 2080 Ti, 0, 0 %, 3391 MiB, 52.22 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1516 MiB, 64.43 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1516 MiB, 63.83 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1516 MiB, 67.90 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.790718, ru_stime=1.168383, ru_maxrss=258556, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=40669, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1710, ru_nivcsw=353),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.019868999999999998, ru_stime=0.073227, ru_maxrss=130744, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=3020, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=28, ru_nivcsw=10),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.039726, ru_stime=0.035311999999999996, ru_maxrss=258556, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=1492, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=59, ru_nivcsw=0)
+
+[20241031_001948] learn
+epoch 0, data-1 : loss = 2.509634, time = 26.6 [s].
+	policy loss : 2.495367
+	value loss  : 0.713373
+[20241031_001957] monitoring
+cpu: 94.2% [100.0, 100.0, 100.0, 98.0, 100.0, 99.0, 99.0, 97.0] 🔥🔥
+cpu(process): 97.80000000000001%
+mem: 42.2% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 34456.609375 MB
+GeForce RTX 2080 Ti, 0, 37 %, 3391 MiB, 86.99 W 🔥
+GeForce RTX 2080 Ti, 1, 36 %, 1516 MiB, 110.11 W 🔥
+GeForce RTX 2080 Ti, 2, 38 %, 1516 MiB, 144.68 W 🔥
+GeForce RTX 2080 Ti, 3, 38 %, 1516 MiB, 154.94 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.804916, ru_stime=1.1813259999999999, ru_maxrss=258568, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=41131, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1736, ru_nivcsw=356),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.019868999999999998, ru_stime=0.098676, ru_maxrss=130764, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=3974, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=39, ru_nivcsw=81),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.053133, ru_stime=0.049046, ru_maxrss=258568, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=1954, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=85, ru_nivcsw=3)
+
+[20241031_002021] learn
+epoch 0, data-2 : loss = 2.136429, time = 23.3 [s].
+	policy loss : 2.122304
+	value loss  : 0.706254
+[20241031_002045] monitoring
+cpu: 47.8% [42.3, 40.2, 37.2, 40.4, 37.8, 52.0, 49.5, 39.6] 🔥
+cpu(process): 228.7%
+mem: 48.5% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 23537.94140625 MB
+GeForce RTX 2080 Ti, 0, 0 %, 3391 MiB, 53.69 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1516 MiB, 68.47 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1516 MiB, 70.06 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1516 MiB, 71.78 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.8170060000000001, ru_stime=1.188037, ru_maxrss=258576, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=41587, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1756, ru_nivcsw=378),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.019868999999999998, ru_stime=0.12093699999999999, ru_maxrss=130772, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=4924, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=47, ru_nivcsw=85),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.066748, ru_stime=0.054231999999999995, ru_maxrss=258576, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=2410, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=105, ru_nivcsw=25)
+
+[20241031_002053] learn
+epoch 0, data-3 : loss = 1.987848, time = 22.3 [s].
+	policy loss : 1.973809
+	value loss  : 0.701946
+[20241031_002124] learn
+epoch 0, data-4 : loss = 1.905312, time = 22.1 [s].
+	policy loss : 1.891312
+	value loss  : 0.700011
+[20241031_002127] monitoring
+cpu: 50.9% [1.0, 0.0, 100.0, 100.0, 0.0, 100.0, 2.0, 100.0] 🔥🔥
+cpu(process): 407.5%
+mem: 42.2% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 27593.64453125 MB
+GeForce RTX 2080 Ti, 0, 36 %, 3391 MiB, 94.19 W 🔥
+GeForce RTX 2080 Ti, 1, 37 %, 1516 MiB, 159.59 W 🔥
+GeForce RTX 2080 Ti, 2, 41 %, 1516 MiB, 151.01 W 🔥
+GeForce RTX 2080 Ti, 3, 42 %, 1516 MiB, 162.67 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.8319519999999998, ru_stime=1.191395, ru_maxrss=258576, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=42043, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1801, ru_nivcsw=379),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.019868999999999998, ru_stime=0.14130299999999998, ru_maxrss=130772, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=5875, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=60, ru_nivcsw=149),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.08193199999999999, ru_stime=0.057352, ru_maxrss=258576, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=2868, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=150, ru_nivcsw=26)
+
+[20241031_002150] learn
+epoch 0, data-5 : loss = 1.836685, time = 17.7 [s].
+	policy loss : 1.822717
+	value loss  : 0.698424
+[20241031_002209] monitoring
+cpu: 47.1% [46.5, 60.2, 54.6, 47.4, 52.0, 54.0, 52.0, 57.0] 🔥
+cpu(process): 207.8%
+mem: 49.3% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 23540.85546875 MB
+GeForce RTX 2080 Ti, 0, 0 %, 3391 MiB, 54.17 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1516 MiB, 69.01 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1516 MiB, 70.93 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1516 MiB, 73.95 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.8379590000000001, ru_stime=1.203903, ru_maxrss=258576, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=42490, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1821, ru_nivcsw=391),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.023614, ru_stime=0.157228, ru_maxrss=130772, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=6828, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=68, ru_nivcsw=149),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.08720499999999999, ru_stime=0.07059399999999999, ru_maxrss=258576, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=3313, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=170, ru_nivcsw=38)
+
+[20241031_002218] learn
+epoch 0, data-6 : loss = 1.784795, time = 18.7 [s].
+	policy loss : 1.770836
+	value loss  : 0.697932
+[20241031_002243] learn
+epoch 0, data-7 : loss = 1.753889, time = 17.1 [s].
+	policy loss : 1.739948
+	value loss  : 0.697027
+[20241031_002251] monitoring
+cpu: 93.6% [95.0, 97.0, 96.0, 97.0, 97.0, 99.0, 100.0, 97.0] 🔥🔥
+cpu(process): 316.6%
+mem: 41.4% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 37910.6484375 MB
+GeForce RTX 2080 Ti, 0, 28 %, 3391 MiB, 74.88 W 🔥
+GeForce RTX 2080 Ti, 1, 38 %, 1516 MiB, 95.11 W 🔥
+GeForce RTX 2080 Ti, 2, 7 %, 1516 MiB, 92.35 W 🔥
+GeForce RTX 2080 Ti, 3, 23 %, 1516 MiB, 101.50 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.851632, ru_stime=1.210374, ru_maxrss=258580, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=42949, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1847, ru_nivcsw=393),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.029765999999999997, ru_stime=0.17204899999999998, ru_maxrss=130776, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=7778, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=82, ru_nivcsw=156),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.101104, ru_stime=0.07683899999999999, ru_maxrss=258580, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=3774, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=196, ru_nivcsw=40)
+
+[20241031_002309] learn
+epoch 0, data-8 : loss = 1.726201, time = 17.5 [s].
+	policy loss : 1.712279
+	value loss  : 0.696114
+[20241031_002335] learn
+epoch 0, data-9 : loss = 1.714481, time = 17.3 [s].
+	policy loss : 1.700571
+	value loss  : 0.695511
+[20241031_002339] monitoring
+cpu: 50.6% [56.4, 55.1, 83.2, 100.0, 73.3, 100.0, 75.2, 81.8] 🔥🔥
+cpu(process): 187.70000000000002%
+mem: 39.1% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 21399.74609375 MB
+GeForce RTX 2080 Ti, 0, 34 %, 3391 MiB, 117.24 W 🔥
+GeForce RTX 2080 Ti, 1, 39 %, 1516 MiB, 154.09 W 🔥
+GeForce RTX 2080 Ti, 2, 37 %, 1516 MiB, 149.23 W 🔥
+GeForce RTX 2080 Ti, 3, 40 %, 1516 MiB, 159.64 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.8582809999999998, ru_stime=1.2214990000000001, ru_maxrss=258580, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=43398, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1867, ru_nivcsw=398),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.032032, ru_stime=0.188517, ru_maxrss=130776, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=8728, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=92, ru_nivcsw=208),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.107844, ru_stime=0.08787299999999999, ru_maxrss=258580, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=4223, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=216, ru_nivcsw=45)
+
+[20241031_002355] learn
+epoch 0, data-10 : loss = 1.696936, time = 13.7 [s].
+	policy loss : 1.683028
+	value loss  : 0.695383
+[20241031_002421] learn
+epoch 0, data-11 : loss = 1.712820, time = 17.2 [s].
+	policy loss : 1.698927
+	value loss  : 0.694648
+[20241031_002422] monitoring
+cpu: 50.6% [100.0, 100.0, 100.0, 0.0, 2.0, 0.0, 100.0, 0.0] 🔥🔥
+cpu(process): 452.29999999999995%
+mem: 42.2% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 30103.3125 MB
+GeForce RTX 2080 Ti, 0, 22 %, 3391 MiB, 76.02 W 🔥
+GeForce RTX 2080 Ti, 1, 14 %, 1516 MiB, 88.09 W 🔥
+GeForce RTX 2080 Ti, 2, 34 %, 1516 MiB, 89.98 W 🔥
+GeForce RTX 2080 Ti, 3, 34 %, 1516 MiB, 89.69 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.870235, ru_stime=1.228094, ru_maxrss=258580, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=43840, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1886, ru_nivcsw=398),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.039522999999999996, ru_stime=0.210609, ru_maxrss=130776, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=9679, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=99, ru_nivcsw=235),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.11949499999999999, ru_stime=0.094772, ru_maxrss=258580, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=4663, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=235, ru_nivcsw=45)
+
+[20241031_002447] learn
+epoch 0, data-12 : loss = 1.680453, time = 17.5 [s].
+	policy loss : 1.666571
+	value loss  : 0.694122
+[20241031_002504] monitoring
+cpu: 50.1% [45.5, 47.1, 45.9, 46.5, 41.0, 41.8, 47.3, 41.4] 🔥🔥
+cpu(process): 243.6%
+mem: 47.5% (soft: -0.00 GB, hard: -0.00 GB) 🔥
+mem(process): 23543.30859375 MB
+GeForce RTX 2080 Ti, 0, 0 %, 3391 MiB, 54.43 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1516 MiB, 70.64 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1516 MiB, 72.28 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1516 MiB, 74.21 W 🔥
+resource.RUSAGE_SELF: resource.struct_rusage(ru_utime=1.8704649999999998, ru_stime=1.246175, ru_maxrss=258580, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=44294, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=8, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1906, ru_nivcsw=409),
+resource.RUSAGE_CHILDREN: resource.struct_rusage(ru_utime=0.039522999999999996, ru_stime=0.230365, ru_maxrss=130776, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=10634, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=114, ru_nivcsw=235),
+resource.RUSAGE_THREAD: resource.struct_rusage(ru_utime=0.11949499999999999, ru_stime=0.11308199999999999, ru_maxrss=258580, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=5117, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=255, ru_nivcsw=56)
+
+[20241031_002512] learn
+epoch 0, data-13 : loss = 1.648944, time = 17.1 [s].
+	policy loss : 1.635071
+	value loss  : 0.693665
+[20241031_002538] learn
+epoch 0, data-14 : loss = 1.645734, time = 17.1 [s].
+	policy loss : 1.631878
+	value loss  : 0.692810

@@ -15,6 +15,9 @@ import torch
 
 from nn.utility import split_train_test_set
 
+import resource
+
+
 
 
 @click.command()
@@ -67,8 +70,13 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     print(f"    input_opt: {input_opt}")
 
     # ハードウェア使用率の監視スレッドを起動
-    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300), daemon=True)
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300, os.getpid()), daemon=True)
     monitoring_worker.start()
+
+
+    # # メモリ使用量を制限（単位：バイト）
+    # soft, hard = resource.getrlimit(resource.RLIMIT_AS)
+    # resource.setrlimit(resource.RLIMIT_AS, (1024 * 1024 * 1024 * 8, hard))  # 1GBに制限
 
 
     program_dir = os.path.dirname(__file__)

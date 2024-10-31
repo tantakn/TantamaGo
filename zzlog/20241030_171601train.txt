@@ -1,0 +1,118 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 512
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+🐾train_on_gpu_ddp 2024-10-30 17:16:04.929802
+    [20241030_171604] device
+    torch.cuda.current_device:  0
+    torch.cuda.device_count:  4
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(0):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(1):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(2):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_name(3):  GeForce RTX 2080 Ti
+    torch.cuda.get_device_capability(0):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(2):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_device_capability(3):  (7, 5)
+    torch.cuda.get_device_capability(1):  (7, 5)
+    torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_11.npz', 'data/sl_data_12.npz', 'data/sl_data_13.npz', 'data/sl_data_14.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_2.npz', 'data/sl_data_3.npz', 'data/sl_data_4.npz', 'data/sl_data_5.npz']
+Testing data set  : ['data/sl_data_6.npz', 'data/sl_data_7.npz', 'data/sl_data_8.npz', 'data/sl_data_9.npz']
+[20241030_171605] monitoring
+cpu: 32.9% [55.6, 50.0, 0.0, 10.0, 0.0, 54.5, 0.0, 33.3] 🔥
+mem: 8.3% 
+GeForce RTX 2080 Ti, 0, 0 %, 9 MiB, 4.32 W 
+GeForce RTX 2080 Ti, 1, 0 %, 9 MiB, 21.31 W 
+GeForce RTX 2080 Ti, 2, 0 %, 9 MiB, 21.71 W 
+GeForce RTX 2080 Ti, 3, 0 %, 9 MiB, 22.11 W 
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [::ffff:127.0.0.1]:50000 (errno: 97 - Address family not supported by protocol).
+[20241030_171615] monitoring
+cpu: 50.3% [100.0, 100.0, 100.0, 0.0, 100.0, 0.0, 1.0, 2.0] 🔥🔥
+mem: 29.6% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 2545 MiB, 51.57 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 670 MiB, 63.31 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 670 MiB, 61.72 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 670 MiB, 66.80 W 🔥
+🐾device:  3
+🐾device:  2
+🐾device:  0
+🐾device:  1
+[20241030_171749] learn
+epoch 0, data-0 : loss = 2.392612, time = 88.7 [s].
+	policy loss : 2.378387
+	value loss  : 0.711259
+[20241030_171925] learn
+epoch 0, data-1 : loss = 1.833973, time = 87.6 [s].
+	policy loss : 1.820066
+	value loss  : 0.695365
+[20241030_172110] learn
+epoch 0, data-2 : loss = 1.751119, time = 96.6 [s].
+	policy loss : 1.737255
+	value loss  : 0.693210
+[20241030_172117] monitoring
+cpu: 72.2% [100.0, 72.4, 100.0, 72.7, 100.0, 100.0, 72.0, 72.7] 🔥🔥
+mem: 47.1% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3075 MiB, 53.73 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.83 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 66.64 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 69.97 W 🔥
+[20241030_172250] learn
+epoch 0, data-3 : loss = 1.697703, time = 91.3 [s].
+	policy loss : 1.683894
+	value loss  : 0.690474
+[20241030_172428] learn
+epoch 0, data-4 : loss = 1.654707, time = 89.4 [s].
+	policy loss : 1.641061
+	value loss  : 0.682323
+[20241030_172619] monitoring
+cpu: 50.2% [97.0, 100.0, 67.3, 66.0, 100.0, 67.7, 100.0, 67.0] 🔥🔥
+mem: 52.5% 🔥🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3075 MiB, 53.82 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 68.50 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 68.38 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 70.39 W 🔥
+[20241030_172613] learn
+epoch 0, data-5 : loss = 1.616952, time = 97.0 [s].
+	policy loss : 1.603633
+	value loss  : 0.665935
+[20241030_172757] learn
+epoch 0, data-6 : loss = 1.575036, time = 95.3 [s].
+	policy loss : 1.561823
+	value loss  : 0.660625
+[20241030_172939] learn
+epoch 0, data-7 : loss = 1.559831, time = 93.2 [s].
+	policy loss : 1.546711
+	value loss  : 0.656002
+[20241030_173112] learn
+epoch 0, data-8 : loss = 1.548737, time = 85.4 [s].
+	policy loss : 1.535687
+	value loss  : 0.652540
+[20241030_173121] monitoring
+cpu: 91.0% [91.1, 85.4, 65.7, 89.9, 90.1, 90.4, 89.0, 84.5] 🔥🔥
+mem: 41.4% 🔥
+GeForce RTX 2080 Ti, 0, 0 %, 3075 MiB, 53.45 W 🔥
+GeForce RTX 2080 Ti, 1, 0 %, 1200 MiB, 67.67 W 🔥
+GeForce RTX 2080 Ti, 2, 0 %, 1200 MiB, 67.92 W 🔥
+GeForce RTX 2080 Ti, 3, 0 %, 1200 MiB, 70.93 W 🔥

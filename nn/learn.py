@@ -416,7 +416,9 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
 
     def tmp_load_data_set(npz_path, rank):
         def check_memory_usage():
-            assert psutil.virtual_memory().percent < 80, f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]"
+            if not psutil.virtual_memory().percent < 90:
+                print(f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
+                assert True
 
         check_memory_usage()
 

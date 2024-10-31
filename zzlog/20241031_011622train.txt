@@ -1,0 +1,52 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 4096
+    kifu_dir: SgfFile/GoQuest_9x9_49893games/sgf
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet
+    npz_dir: data
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+[20241031_011631] gen_sl_data start
+    BATCH_SIZE: 4096
+    DATA_SET_SIZE: 1024000.0
+    kifu_num: 49893
+[20241031_011631] monitoring
+cpu: 13.5% [18.2, 0.0, 0.0, 18.2, 88.9, 11.1, 11.1, 20.0] 🔥
+mem: 8.2% 
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.66 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.43 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.86 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 22.51 W 
+
+[20241031_011641] monitoring
+cpu: 12.4% [2.3, 0.6, 2.2, 2.9, 84.1, 2.4, 2.1, 2.1] 🔥
+mem: 8.4% 
+GeForce RTX 2080 Ti, 0, 0 %, 6 MiB, 4.44 W 
+GeForce RTX 2080 Ti, 1, 0 %, 6 MiB, 21.66 W 
+GeForce RTX 2080 Ti, 2, 0 %, 6 MiB, 21.83 W 
+GeForce RTX 2080 Ti, 3, 0 %, 6 MiB, 22.01 W 
+
+Traceback (most recent call last):
+  File "train.py", line 124, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 104, in train_main
+    generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
+  File "/data/student/u2424004/igo/TantamaGo/nn/data_generator.py", line 112, in generate_supervised_learning_data
+    _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data, policy_data, value_data, kifu_counter)
+  File "/data/student/u2424004/igo/TantamaGo/nn/data_generator.py", line 32, in _save_data
+    "input": np.array(input_data[0:DATA_SET_SIZE]),
+TypeError: slice indices must be integers or None or have an __index__ method

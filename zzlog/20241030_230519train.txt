@@ -1,0 +1,4 @@
+  File "train.py", line 73
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300, pid=os.getpid()), daemon=True)
+                                                                                                              ^
+SyntaxError: invalid syntax
