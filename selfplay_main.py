@@ -55,7 +55,15 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
         network_name2 (str): 使用するニューラルネットワーク名。デフォルトはDualNet。
     """
 
-    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300, ), daemon=True)
+    import resource
+
+    # メモリ使用量を制限（単位：バイト）#########
+    soft, hard = resource.getrlimit(resource.RLIMIT_AS)
+    resource.setrlimit(resource.RLIMIT_AS, (1024 * 1024 * 1024 * 8, hard))  # n GBに制限
+    print(f"🐾resource.getrlimit(resource.RLIMIT_AS): {resource.getrlimit(resource.RLIMIT_AS)}")###############
+
+    monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 30, ), daemon=True)
+    # monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300, ), daemon=True)
     monitoring_worker.start()
 
     print("🐾model: ", model)#############

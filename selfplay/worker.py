@@ -146,6 +146,10 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
     # print("🐾selfplay_worker_vs_start")##############
     print("gpu_num: ", gpu_num)##############
 
+    import resource
+    print(f"🐾resource.getrlimit(resource.RLIMIT_AS): {resource.getrlimit(resource.RLIMIT_AS)}")###############
+
+
     board = GoBoard(board_size=size, komi=7.0, check_superko=True)
     init_board = GoBoard(board_size=size, komi=7.0, check_superko=True)
     record = SelfPlayRecord(save_dir, board.coordinate)

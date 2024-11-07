@@ -4,6 +4,10 @@
 #include "/home0/y2024/u2424004/.local/mycudnn/TensorRT-6.0.1.5/include/NvInfer.h"
 #include "/home0/y2024/u2424004/.local/mycudnn/TensorRT-6.0.1.5/include/NvOnnxParser.h"
 #include <cuda_runtime_api.h>
+#include <cstdio>
+#include <memory>
+#include <stdexcept>
+#include <array>
 
 using namespace nvinfer1;
 
@@ -15,6 +19,17 @@ public:
             std::cout << msg << std::endl;
     }
 };
+
+std::string execCommand(const std::string& cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::shared_ptr<FILE> pipe(popen(cmd.c_str(), "r"), pclose);
+    if (!pipe) throw std::runtime_error("popen() に失敗しました！");
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
+}
 
 int main() {
     // Loggerの初期化
@@ -101,6 +116,14 @@ int main() {
     for (size_t i = 0; i < outputValueSize; ++i)
         std::cout << outputValueData[i] << " ";
     std::cout << std::endl;
+
+    // Pythonスクリプトの呼び出し
+    std::string pythonScript = "python3 /path/to/your_script.py arg1 arg2";
+    std::string output = execCommand(pythonScript);
+
+    // 出力の表示
+    std::cout << "Pythonの出力:" << std::endl;
+    std::cout << output << std::endl;
 
     // リソースの解放
     delete[] inputData;
