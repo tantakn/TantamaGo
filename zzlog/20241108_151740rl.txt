@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "./get_final_status.py", line 150, in <module>
+    adjust_result() # pylint: disable=E1120
+  File "/home/tantakn/code/TantamaGo/envGo/lib/python3.8/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/home/tantakn/code/TantamaGo/envGo/lib/python3.8/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/home/tantakn/code/TantamaGo/envGo/lib/python3.8/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/home/tantakn/code/TantamaGo/envGo/lib/python3.8/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "./get_final_status.py", line 142, in adjust_result
+    future.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 444, in result
+    return self.__get_result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 389, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.8/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "./get_final_status.py", line 114, in judgment_worker
+    adjust_by_gnugo_judgment(filename, print)
+  File "./get_final_status.py", line 95, in adjust_by_gnugo_judgment
+    print(f"\rget_final_status  {filename}", end="", flush=True)#####
+TypeError: 'bool' object is not callable

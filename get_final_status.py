@@ -72,7 +72,7 @@ def get_gnugo_judgment(filename: str, is_japanese_rule: bool) -> str:
     return responses[2]
 
 
-def adjust_by_gnugo_judgment(filename: str, print: bool) -> NoReturn:
+def adjust_by_gnugo_judgment(filename: str, pri: bool) -> NoReturn:
     """_summary_
 
     Args:
@@ -91,7 +91,7 @@ def adjust_by_gnugo_judgment(filename: str, print: bool) -> NoReturn:
     current_result_string = "RE[" + current_result + "]"
     adjust_result_string = "RE[" + result + "]"
 
-    if print:
+    if pri:
         print(f"\rget_final_status  {filename}", end="", flush=True)#####
 
     global cnt#####
@@ -116,8 +116,8 @@ def judgment_worker(kifu_list: str, print: bool) -> NoReturn:
 
 @click.command()
 @click.option('--kifu-dir', type=click.STRING, default='archive', help='')
-@click.option('--print', type=click.BOOL, default=True, help='')
-def adjust_result(kifu_dir: str, print: True) -> NoReturn:
+@click.option('--pri', '--print', type=click.BOOL, default=True, help='')
+def adjust_result(kifu_dir: str, pri: bool) -> NoReturn:
     """_summary_
 
     Args:
@@ -141,7 +141,7 @@ def adjust_result(kifu_dir: str, print: True) -> NoReturn:
     for future in futures:
         future.result()
 
-    if print:
+    if pri:
         global cnt#####
         print(f"\nchange : {cnt}")#####
 
