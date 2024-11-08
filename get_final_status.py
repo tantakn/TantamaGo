@@ -72,7 +72,7 @@ def get_gnugo_judgment(filename: str, is_japanese_rule: bool) -> str:
     return responses[2]
 
 
-def adjust_by_gnugo_judgment(filename: str) -> NoReturn:
+def adjust_by_gnugo_judgment(filename: str, print: bool) -> NoReturn:
     """_summary_
 
     Args:
@@ -91,7 +91,8 @@ def adjust_by_gnugo_judgment(filename: str) -> NoReturn:
     current_result_string = "RE[" + current_result + "]"
     adjust_result_string = "RE[" + result + "]"
 
-    print(f"\rget_final_status  {filename}", end="", flush=True)#####
+    if print:
+        print(f"\rget_final_status  {filename}", end="", flush=True)#####
 
     global cnt#####
     if current_result_string != adjust_result_string:#####
@@ -103,19 +104,20 @@ def adjust_by_gnugo_judgment(filename: str) -> NoReturn:
     with open(filename, encoding="utf-8", mode="w") as out_file:
         out_file.write(adjusted_sgf)
 
-def judgment_worker(kifu_list: str) -> NoReturn:
+def judgment_worker(kifu_list: str, print: bool) -> NoReturn:
     """_summary_
 
     Args:
         kifu_list (str): _description_
     """
     for filename in kifu_list:
-        adjust_by_gnugo_judgment(filename)
+        adjust_by_gnugo_judgment(filename, print)
 
 
 @click.command()
 @click.option('--kifu-dir', type=click.STRING, default='archive', help='')
-def adjust_result(kifu_dir: str) -> NoReturn:
+@click.option('--print', type=click.BOOL, default=True, help='')
+def adjust_result(kifu_dir: str, print: True) -> NoReturn:
     """_summary_
 
     Args:
@@ -133,14 +135,15 @@ def adjust_result(kifu_dir: str) -> NoReturn:
     executor = ThreadPoolExecutor(max_workers=WORKER_THREAD)
     futures = []
     for file_list in split_file_lists:
-        future = executor.submit(judgment_worker, file_list)
+        future = executor.submit(judgment_worker, file_list, print)
         futures.append(future)
 
     for future in futures:
         future.result()
 
-    global cnt#####
-    print(f"\nchange : {cnt}")#####
+    if print:
+        global cnt#####
+        print(f"\nchange : {cnt}")#####
 
 
 if __name__ == "__main__":

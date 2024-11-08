@@ -1,0 +1,46 @@
+🐾model:  model_def/sl-model_DualNet_256_24_semeai.bin
+🐾model2:  None
+🐾network_name1:  DualNet_256_24_semeai
+🐾network_name2:  DualNet
+Self play visits : 16
+cnt:  1
+cnt % torch.cuda.device_count():  1
+cnt:  2
+cnt % torch.cuda.device_count():  0
+cnt:  3
+cnt % torch.cuda.device_count():  1
+cnt:  4
+cnt % torch.cuda.device_count():  0
+cnt:  5
+cnt % torch.cuda.device_count():  1
+cnt:  6
+cnt % torch.cuda.device_count():  0
+[20241107_222417] monitoring
+cpu: 47.5% [100.0, 100.0, 100.0, 100.0, 22.2, 0.0, 36.4, 36.4, 10.0, 100.0, 9.1, 23.1] 🔥
+mem: 14.6% 🔥
+GeForce GTX TITAN X, 0, 0 %, 18 MiB, 15.44 W 
+GeForce GTX TITAN X, 1, 0 %, 8 MiB, 15.51 W 
+
+🐾model:  model_def/sl-model_DualNet_256_24_semeai.bin
+🐾model2:  None
+🐾network_name1:  DualNet_256_24_semeai
+🐾network_name2:  DualNet
+Self play visits : 16
+cnt:  1
+cnt % torch.cuda.device_count():  1
+cnt:  2
+cnt % torch.cuda.device_count():  0
+cnt:  3
+cnt % torch.cuda.device_count():  1
+cnt:  4
+cnt % torch.cuda.device_count():  0
+cnt:  5
+cnt % torch.cuda.device_count():  1
+cnt:  6
+cnt % torch.cuda.device_count():  0
+[20241107_222505] monitoring
+cpu: 46.2% [33.3, 60.0, 70.0, 22.2, 22.2, 18.2, 90.0, 0.0, 100.0, 72.7, 100.0, 9.1] 🔥
+mem: 14.5% 🔥
+GeForce GTX TITAN X, 0, 0 %, 18 MiB, 15.24 W 
+GeForce GTX TITAN X, 1, 0 %, 8 MiB, 15.51 W 
+

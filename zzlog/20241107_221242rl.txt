@@ -1,0 +1,53 @@
+🐾model:  model_def/sl-model_DualNet_256_24_semeai.bin
+🐾model2:  None
+🐾network_name1:  DualNet_256_24_semeai
+🐾network_name2:  DualNet
+Self play visits : 16
+cnt:  1
+cnt % torch.cuda.device_count():  1
+cnt:  2
+cnt % torch.cuda.device_count():  0
+cnt:  3
+cnt % torch.cuda.device_count():  1
+cnt:  4
+cnt % torch.cuda.device_count():  0
+cnt:  5
+cnt % torch.cuda.device_count():  1
+cnt:  6
+cnt % torch.cuda.device_count():  0
+[20241107_221246] monitoring
+cpu: 52.0% [44.4, 100.0, 100.0, 25.0, 10.0, 100.0, 55.6, 100.0, 18.2, 0.0, 100.0, 0.0] 🔥🔥
+mem: 10.6% 🔥
+GeForce GTX TITAN X, 0, 0 %, 18 MiB, 14.52 W 
+GeForce GTX TITAN X, 1, 0 %, 8 MiB, 14.34 W 
+
+[20241107_221256] monitoring
+cpu: 24.1% [29.4, 24.8, 26.5, 32.3, 20.7, 26.6, 20.2, 20.8, 26.9, 19.6, 23.6, 13.9] 🔥
+mem: 38.4% 🔥
+GeForce GTX TITAN X, 0, 14 %, 1592 MiB, 70.73 W 🔥
+GeForce GTX TITAN X, 1, 13 %, 1583 MiB, 71.89 W 🔥
+
+[20241107_221346] generating
+   22/10000 games (1318.6926 games/hour).
+[20241107_221446] generating
+   54/10000 games (1618.3878 games/hour).
+[20241107_221546] generating
+   84/10000 games (1678.3188 games/hour).
+[20241107_221646] generating
+  115/10000 games (1723.2335 games/hour).
+[20241107_221746] generating
+  144/10000 games (1726.2069 games/hour).
+[20241107_221756] monitoring
+cpu: 53.5% [22.6, 41.2, 66.6, 48.0, 55.7, 59.8, 85.0, 66.1, 44.3, 58.2, 50.3, 45.2] 🔥🔥
+mem: 41.0% 🔥
+GeForce GTX TITAN X, 0, 52 %, 1778 MiB, 146.47 W 🔥
+GeForce GTX TITAN X, 1, 63 %, 1769 MiB, 133.07 W 🔥
+
+[20241107_221846] generating
+  176/10000 games (1757.9880 games/hour).
+[20241107_221946] generating
+  204/10000 games (1746.5935 games/hour).
+[20241107_222046] generating
+  232/10000 games (1738.0180 games/hour).
+[20241107_222146] generating
+  262/10000 games (1744.6720 games/hour).
