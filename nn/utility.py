@@ -213,7 +213,8 @@ def load_DualNet_256_24(model_file_path: str, use_gpu: bool, gpu_num: int) -> Du
         network.load_state_dict(torch.load(model_file_path))
     except Exception as e: # pylint: disable=W0702
         print(f"Failed to load_DualNet_256_24 {model_file_path}.")
-        raise("Failed to load_DualNet_256_24.")
+        print_err(f"Failed to load_DualNet_256_24 {model_file_path}.")
+        raise Exception(f"Failed to load_DualNet_256_24., e: {e}")
     network.eval()
     torch.set_grad_enabled(False)
 
@@ -256,6 +257,9 @@ def load_DualNet_256_24_semeai(model_file_path: str, use_gpu: bool, gpu_num: int
     device = get_torch_device(use_gpu=use_gpu, gpu_num=gpu_num)
     network = DualNet_256_24_semeai(device)
     network.to(device)
+    # print (f"model_file_path: {model_file_path}")#######
+    # import os
+    # print (f"extst???: {os.path.isfile(model_file_path)}")
     try:
         network.load_state_dict(torch.load(model_file_path))
     except Exception as e: # pylint: disable=W0702

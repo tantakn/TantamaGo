@@ -17,7 +17,7 @@ from gtp.gogui import GoguiAnalyzeCommand, display_policy_distribution, \
 from mcts.time_manager import TimeControl, TimeManager
 from mcts.tree import MCTSTree
 from nn.policy_player import generate_move_from_policy
-from nn.utility import load_network
+from nn.utility import load_network, choose_network
 from sgf.reader import SGFReader
 
 
@@ -30,7 +30,7 @@ class GtpClient: # pylint: disable=R0902,R0903
     def __init__(self, board_size: int, superko: bool, model_file_path: str, \
         use_gpu: bool, policy_move: bool, use_sequential_halving: bool, \
         komi: float, mode: TimeControl, visits: int, const_time: float, \
-        time: float, batch_size: int, tree_size: int, cgos_mode: bool): # pylint: disable=R0913
+        time: float, batch_size: int, tree_size: int, cgos_mode: bool, net: str): # pylint: disable=R0913
         """Go Text Protocolクライアントの初期化をする。
 
         Args:
@@ -99,7 +99,8 @@ class GtpClient: # pylint: disable=R0902,R0903
             self.time_manager = TimeManager(mode=mode, remaining_time=time)
 
         try:
-            self.network = load_network(model_file_path, use_gpu)
+            self.network = choose_network(net, model_file_path, use_gpu)
+            # self.network = load_network(model_file_path, use_gpu)
             self.use_network = True
             self.mcts = MCTSTree(network=self.network, batch_size=batch_size, \
                 tree_size=tree_size, cgos_mode=cgos_mode)
