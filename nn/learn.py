@@ -897,6 +897,8 @@ def train_with_gumbel_alphazero_on_gpu(program_dir: str, board_size: int, \
         dual_net = DualNet_128_12(device=device, board_size=board_size)
     elif network_name == "DualNet_256_24":
         dual_net = DualNet_256_24(device=device, board_size=board_size)
+    elif network_name == "DualNet_256_24_semeai":
+        dual_net = DualNet_256_24_semeai(device=device, board_size=board_size)
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")#############

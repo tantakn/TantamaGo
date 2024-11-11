@@ -1,0 +1,7 @@
+
+[20241111_012958] vs_result
+games: 1000
+model1: model_def/sl-model_q50k_DualNet_256_24.bin
+    win: (502 + 0.5*44)/1000 (50.20%)
+model2: backup/model_rl/rl-model_20240930_004110_10.bin
+    win: (454 + 0.5*44)/1000 (45.40%)

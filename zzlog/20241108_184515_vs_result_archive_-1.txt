@@ -1,0 +1,7 @@
+
+[20241108_184515] vs_result
+games: 200
+model1: model_def/sl-model_default.bin
+    win: (12 + 0.5*5)/200 (6.00%)
+model2: backup/model_rl/rl-model_20240930_004110_10.bin
+    win: (183 + 0.5*5)/200 (91.50%)

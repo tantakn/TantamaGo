@@ -14,6 +14,7 @@ def generate_input_planes(board: GoBoard, color: Stone, sym: int=0, opt: str="")
         board (GoBoard): 碁盤の情報。
         color (Stone): 手番の色。
         sym (int, optional): 対称形の指定. Defaults to 0.
+        opt (str, optional): オプション。デフォルトは空文字列。 Defaults to "".
 
     Returns:
         numpy.ndarray: ニューラルネットワークの入力データ。

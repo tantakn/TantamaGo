@@ -136,7 +136,7 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
 
 
 
-def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[str], board_size: int=9) -> None:
+def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[str], board_size: int=9, input_opt: str="") -> None:
     """強化学習で使用するデータを生成し、保存する。
 
     Args:
@@ -176,7 +176,7 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
         for i, pos in enumerate(sgf.get_moves()):
             if i in target_index:
                 sym = sym_index_list[sym_index]
-                input_data.append(generate_input_planes(board, color, sym))
+                input_data.append(generate_input_planes(board, color, sym, input_opt))
                 policy_data.append(generate_rl_target_data(board, sgf.get_comment(i), sym))
                 value_data.append(value_label)
                 sym_index += 1

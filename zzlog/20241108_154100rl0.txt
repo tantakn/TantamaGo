@@ -1,0 +1,39 @@
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 256
+    kifu_dir: archive
+    size: 9
+    use_gpu: True
+    rl: True
+    window_size: 300000
+    network_name: DualNet_256_24_semeai
+    npz_dir: data
+    ddp: False
+    rl_num: 0
+    rl_datetime: 20241108_154100
+    input_opt: 
+🐾generate_reinforcement_learning_data 2024-11-08 15:59:20.757629🐾
+[20241108_155920] monitoring
+cpu: 4.0% [50.0, 9.1, 55.6, 50.0, 60.0, 50.0, 50.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+mem: 17.7% 🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.24 W 
+
+[20241108_155931] monitoring
+cpu: 7.9% [5.8, 5.2, 4.5, 3.8, 26.4, 6.0, 18.2, 13.8, 1.6, 2.2, 3.2, 1.6] 
+mem: 17.3% 🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.24 W 
+
+🐾train_with_gumbel_alphazero_on_gpu 2024-11-08 15:59:20.676416
+🐾train_rl_gpu, idx: 0
+[20241108_160431] monitoring
+cpu: 10.0% [14.3, 19.4, 16.0, 18.1, 8.9, 14.8, 4.0, 4.3, 8.5, 3.2, 1.7, 5.8] 
+mem: 26.1% 🔥
+GeForce GTX TITAN X, 0, 100 %, 2356 MiB, 217.82 W 🔥
+GeForce GTX TITAN X, 1, 0 %, 8 MiB, 14.40 W 
+
+[20241108_160547] learn
+epoch 0, data-0 : loss = 4.108582, time = 194.4 [s].
+	policy loss : 3.368846
+	value loss  : 0.739736

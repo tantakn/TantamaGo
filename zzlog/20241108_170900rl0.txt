@@ -1,0 +1,68 @@
+Usage: train.py [OPTIONS]
+Try 'train.py --help' for help.
+
+Error: No such option: --input_opt Did you mean --input-opt?
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 256
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: True
+    window_size: 300000
+    network_name: DualNet_256_24_semeai
+    npz_dir: data
+    ddp: False
+    rl_num: 0
+    rl_datetime: 20241108_170900
+    input_opt: smemai
+🐾train_with_gumbel_alphazero_on_gpu 2024-11-08 17:10:17.496233
+[20241108_171017] monitoring
+cpu: 7.5% [23.1, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+mem: 17.8% 🔥
+GeForce GTX TITAN X, 0, 0 %, 18 MiB, 14.85 W 
+GeForce GTX TITAN X, 1, 0 %, 8 MiB, 15.02 W 
+
+load model/rl-model.bin
+load model/rl-state.ckpt
+num_trained_batches : 312
+🐾train_rl_gpu, idx: 0
+[20241108_171027] monitoring
+cpu: 8.5% [14.5, 2.2, 18.9, 1.1, 10.0, 2.3, 0.8, 0.6, 4.3, 1.2, 45.4, 0.7] 
+mem: 25.2% 🔥
+GeForce GTX TITAN X, 0, 91 %, 2596 MiB, 236.47 W 🔥
+GeForce GTX TITAN X, 1, 0 %, 8 MiB, 14.88 W 
+
+🐾train_main
+    EPOCHS: 15
+    BATCH_SIZE: 256
+    kifu_dir: None
+    size: 9
+    use_gpu: True
+    rl: True
+    window_size: 300000
+    network_name: DualNet_256_24_semeai
+    npz_dir: data
+    ddp: False
+    rl_num: 0
+    rl_datetime: 20241108_170900
+    input_opt: smemai
+🐾train_with_gumbel_alphazero_on_gpu 2024-11-08 17:11:36.730112
+[20241108_171136] monitoring
+cpu: 11.4% [41.2, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 🔥
+mem: 17.9% 🔥
+GeForce GTX TITAN X, 0, 0 %, 18 MiB, 15.53 W 
+GeForce GTX TITAN X, 1, 0 %, 8 MiB, 14.82 W 
+
+load model/rl-model.bin
+🐾train_rl_gpu, idx: 0
+[20241108_171147] monitoring
+cpu: 8.7% [6.7, 1.6, 2.4, 1.1, 19.1, 0.6, 0.5, 0.5, 3.2, 28.7, 38.2, 1.6] 
+mem: 25.4% 🔥
+GeForce GTX TITAN X, 0, 100 %, 2356 MiB, 253.21 W 🔥
+GeForce GTX TITAN X, 1, 0 %, 8 MiB, 14.68 W 
+
+[20241108_171453] learn
+epoch 0, data-0 : loss = 2.896773, time = 191.8 [s].
+	policy loss : 2.250600
+	value loss  : 0.646172

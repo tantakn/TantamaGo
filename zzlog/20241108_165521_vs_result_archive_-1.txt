@@ -1,0 +1,7 @@
+
+[20241108_165521] vs_result
+games: 200
+model1: model/rl-model_20241108_154100_0.bin
+    win: (0 + 0.5*0)/200 (0.00%)
+model2: model_def/sl-model_DualNet_256_24_semeai.bin
+    win: (200 + 0.5*0)/200 (100.00%)
