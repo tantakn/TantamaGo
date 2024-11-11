@@ -16,6 +16,7 @@ import datetime
 
 import torch
 import multiprocessing
+import psutil
 
 # pylint: disable=R0913, R0914
 @click.command()
@@ -55,7 +56,9 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
         network_name2 (str): 使用するニューラルネットワーク名。デフォルトはDualNet。
     """
 
+
     monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300, ), daemon=True)
+    # monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 300, ), daemon=True)
     monitoring_worker.start()
 
     print("🐾model: ", model)#############
@@ -63,6 +66,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
     print("🐾network_name1: ", network_name1)###############
     print("🐾network_name2: ", network_name2)###############
 
+    mem_limit = (psutil.virtual_memory().total - psutil.virtual_memory().used) * 0.9
 
     file_index_list = list(range(1, num_data + 1))
     split_size = math.ceil(num_data / process) # 切り上げ
@@ -111,7 +115,7 @@ def selfplay_main(save_dir: str, process: int, num_data: int, size: int, use_gpu
                 future.result()
     else:
         with ProcessPoolExecutor(max_workers=process) as executor:
-            futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), model, model2, file_list, size, visits, use_gpu, network_name1, network_name2, gpu_num=gpu_num()) for file_list in file_indice]
+            futures = [executor.submit(selfplay_worker_vs, os.path.join(save_dir, str(kifu_dir_index)), model, model2, file_list, size, visits, use_gpu, network_name1, network_name2, mem_limit / process, gpu_num=gpu_num()) for file_list in file_indice]
 
             monitoring_worker = threading.Thread(target=display_selfplay_progress_worker, args=(os.path.join(save_dir, str(kifu_dir_index)), num_data, use_gpu), daemon=True);
             monitoring_worker.start()

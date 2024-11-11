@@ -128,7 +128,7 @@ def display_selfplay_progress_worker(save_dir: str, num_data: int, use_gpu: bool
 
 
 # pylint: disable=R0913,R0914
-def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str, network_name2: str, gpu_num: int=-1) -> None:
+def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: str, index_list: List[int], size: int, visits: int, use_gpu: bool, network_name1: str, network_name2: str, mem_limit: int, gpu_num: int=-1) -> None:
     """異なるモデルを対戦させる自己対戦実行ワーカ。
 
     Args:
@@ -145,6 +145,14 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
     """
     # print("🐾selfplay_worker_vs_start")##############
     print("gpu_num: ", gpu_num)##############
+
+    import resource
+
+    soft, hard = resource.getrlimit(resource.RLIMIT_AS)
+    # 必要に応じて新しいソフトリミットを設定
+    resource.setrlimit(resource.RLIMIT_AS, (mem_limit, hard))
+    print(f"resource.getrlimit(resource.RLIMIT_AS): {resource.getrlimit(resource.RLIMIT_AS)}")##############
+
 
     board = GoBoard(board_size=size, komi=7.0, check_superko=True)
     init_board = GoBoard(board_size=size, komi=7.0, check_superko=True)
@@ -182,6 +190,7 @@ def selfplay_worker_vs(save_dir: str, model_file_path1: str, model_file_path2: s
             else:
                 mcts = mcts2
 
+            # pos = mcts.search_best_move(board=board, color=color, time_manager=time_manager, analysis_query={})
             pos = mcts.generate_move_with_sequential_halving(board=board, color=color, time_manager=time_manager, never_resign=never_resign)
 
             if pos == RESIGN:

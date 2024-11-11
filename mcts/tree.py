@@ -91,14 +91,14 @@ class MCTSTree: # pylint: disable=R0902
 
         # 探索結果と探索にかかった時間を表示する
         pv_list = self.get_pv_lists(self.get_root(), board.coordinate)
-        root.print_search_result(board, pv_list)
+        # root.print_search_result(board, pv_list)#####出力抑制
         search_time = time_manager.calculate_consumption_time()
         po_per_sec = root.node_visits / search_time
 
         time_manager.set_search_speed(root.node_visits, search_time)
         time_manager.substract_consumption_time(color, search_time)
 
-        print_err(f"{search_time:.2f} seconds, {po_per_sec:.2f} visits/s")
+        # print_err(f"{search_time:.2f} seconds, {po_per_sec:.2f} visits/s")#####出力抑制
 
         value = root.calculate_value_evaluation(next_index)
 
