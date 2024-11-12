@@ -42,7 +42,7 @@ class BaseClient:
 
 
 class InetClient(BaseClient):
-    def __init__(self, host:str="0.0.0.0", port:int=8080) -> None:
+    def __init__(self, host:str='130.153.16.8', port:int=8123) -> None:
         self.server=(host,port)
         super().__init__(timeout=60, buffer=1024)
         super().connect(self.server, socket.AF_INET, socket.SOCK_STREAM, 0)
