@@ -2,10 +2,6 @@ import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import socket
 
-# hostname = socket.gethostname()
-# ip_address = socket.gethostbyname(hostname)
-# print(f"サーバーのIPアドレス: {ip_address}")
-
 
 # ソケットを作成
 # socket.socket()関数を使用して、新しいソケットオブジェクトserver_socketを生成します。
@@ -55,9 +51,11 @@ print('クライアントと接続しました。')
 data = client_socket.recv(1024).decode('utf-8')
 print('受信したデータ:', data)
 
+
 import time
 time.sleep(5)
 
+# データを送信
 client_socket.send('こんにちは、クライアント！'.encode('utf-8'))
 
 

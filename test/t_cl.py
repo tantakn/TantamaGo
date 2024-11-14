@@ -2,10 +2,6 @@ import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import socket
 
-# hostname = socket.gethostname()
-# ip_address = socket.gethostbyname(hostname)
-# print(f"サーバーのIPアドレス: {ip_address}")
-
 
 # ソケットを作成
 # client_socketというソケットオブジェクトを作成しています。
@@ -27,6 +23,8 @@ client_socket.connect(('localhost', 8000))
 # client_socket.send()メソッドはバイト列を送信するため、エンコードが必要です。
 client_socket.send('こんにちは、サーバー！'.encode('utf-8'))
 
+
+# データを受信
 data = client_socket.recv(1024).decode('utf-8')
 print('受信したデータ:', data)
 
