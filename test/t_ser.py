@@ -1,6 +1,7 @@
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import socket
+from cryptography.fernet import Fernet
 
 
 # ソケットを作成
@@ -15,7 +16,7 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # ('localhost', 8000)は自分自身のマシン（ループバックアドレス）でポート8000を利用することを意味します。
 # これにより、サーバーは指定したアドレスとポートで接続を待ち受ける準備が整います。
 # 多分、ホスト名≒IPアドレス≒住所、ポート番号≒ポストの番号？
-server_socket.bind(('127.0.1.1', 50001))
+server_socket.bind(('172.21.38.95', 51111))
 
 
 # 接続の待ち受け
@@ -48,9 +49,28 @@ print('クライアントと接続しました。')
 # 注意点
 # recv()メソッドの引数は受信する最大バイト数を指定しますが、一度に全てのデータが受信されるとは限りません。そのため、大きなデータを扱う場合はループを使用して全てのデータを受信する実装が必要です。
 # エンコーディングはクライアントとサーバーで一致させる必要があります。異なるエンコーディングを使用すると、デコード時にエラーが発生したり、文字化けの原因となります。
-data = client_socket.recv(1024).decode('utf-8')
+data = client_socket.recv(1024)
 print('受信したデータ:', data)
 
+my_key = "keytest"
+for _ in range(32-len(my_key)):
+    my_key += "0"
+custom_key = my_key.encode()
+import base64
+key = base64.urlsafe_b64encode(custom_key)
+
+f = Fernet(key)
+
+# メッセージを復号化
+decrypted_message = f.decrypt(data)
+
+# 復号化したメッセージを文字列に変換
+decrypted_message = decrypted_message.decode()
+print('復号化したデータ:', decrypted_message)
+
+import json
+data = json.loads(decrypted_message)
+print("data[model]: ", data[model])
 
 import time
 time.sleep(5)
