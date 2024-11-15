@@ -85,14 +85,15 @@ def gtp_main(size: int, superko: bool, model:str, use_gpu: bool, sequential_halv
         "batch_size": batch_size,
         "tree_size": tree_size,
         "cgos_mode": cgos_mode,
-        "net": net
+        "net": net,
+        "mode": mode
     }
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     client_socket.connect(('localhost', 8000))
 
-    client_socket.send(data.encode('utf-8'))
+    client_socket.send(data.dumps.encode('utf-8'))
 
     data = client_socket.recv(1024).decode('utf-8')
     print('受信したデータ:', data)

@@ -1,4 +1,5 @@
 from cryptography.fernet import Fernet
+import json
 
 # キーを生成
 
@@ -21,8 +22,10 @@ message = {
     "age": 20
 }
 
+data = json.dumps(message)
+
 # メッセージをバイト列に変換
-message_bytes = message.encode()
+message_bytes = data.encode()
 print(f"🐾message_bytes: {message_bytes}")
 
 # メッセージを暗号化
