@@ -1,9 +1,18 @@
 from cryptography.fernet import Fernet
+import json
 
 # キーを生成
 
-# 任意の32バイトのバイト文字列を作成（例として32個の'a'を使用）
-custom_key = b'a' * 32  # 必ず32バイトにします
+# # 任意の32バイトのバイト文字列を作成（例として32個の'a'を使用）
+# custom_key = b'a' * 32  # 必ず32バイトにします
+# print(f"🐾custom_key: {custom_key}")
+
+my_key = "keytest"
+for _ in range(32-len(my_key)):
+    my_key += "0"
+print(f"🐾mykey: {my_key}")
+custom_key = my_key.encode()
+print(f"🐾custom_key: {custom_key}")
 
 # バイト文字列をBase64でエンコード
 import base64
@@ -16,10 +25,7 @@ print(f"🐾key: {key}")
 f = Fernet(key)
 
 # 暗号化する文字列
-message = {
-    "name": "TantamaGo",
-    "age": 20
-}
+message = "Hello, World!"
 
 # メッセージをバイト列に変換
 message_bytes = message.encode()
@@ -31,6 +37,7 @@ print(f"🐾encrypted_message: {encrypted_message}")
 
 
 
+print(encrypted_message.encode('utf-8'))
 
 
 
