@@ -1,6 +1,7 @@
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import socket, json
+from cryptography.fernet import Fernet
 
 
 # ソケットを作成
@@ -26,7 +27,26 @@ data = {
     "superko": True,
     "model": "mymodel"
 }
-client_socket.send(json.dumps(data).encode('utf-8'))
+
+my_key = "keytest"
+for _ in range(32-len(my_key)):
+    my_key += "0"
+custom_key = my_key.encode()
+import base64
+key = base64.urlsafe_b64encode(custom_key)
+
+f = Fernet(key)
+
+data = json.dumps(data)
+
+data_bytes = data.encode()
+print(f"🐾message_bytes: {data_bytes}")
+
+# メッセージを暗号化
+encrypted_data = f.encrypt(data_bytes)
+print(f"🐾encrypted_message: {encrypted_data}")
+
+client_socket.send(encrypted_data)
 
 
 # データを受信
