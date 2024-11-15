@@ -15,7 +15,7 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # ('localhost', 8000)は自分自身のマシン（ループバックアドレス）でポート8000を利用することを意味します。
 # これにより、サーバーは指定したアドレスとポートで接続を待ち受ける準備が整います。
 # 多分、ホスト名≒IPアドレス≒住所、ポート番号≒ポストの番号？
-server_socket.bind(('localhost', 8000))
+server_socket.bind(('127.0.1.1', 50001))
 
 
 # 接続の待ち受け
