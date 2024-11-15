@@ -1,57 +1,31 @@
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-import socket
+import socket, json
 from cryptography.fernet import Fernet
 
 
 # ソケットを作成
-# socket.socket()関数を使用して、新しいソケットオブジェクトserver_socketを生成します。
-# socket.AF_INETはIPv4アドレスファミリを指定します。
-# socket.SOCK_STREAMはTCPプロトコルを使用することを指定し、信頼性の高いデータ転送を可能にします。
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-
-# ホスト名とポート番号を設定
-# bind()メソッドでサーバーのホスト名とポート番号を設定します。
-# ('localhost', 8000)は自分自身のマシン（ループバックアドレス）でポート8000を利用することを意味します。
-# これにより、サーバーは指定したアドレスとポートで接続を待ち受ける準備が整います。
-# 多分、ホスト名≒IPアドレス≒住所、ポート番号≒ポストの番号？
 server_socket.bind(('172.21.38.95', 51111))
 
 
 # 接続の待ち受け
-# listen()メソッドを呼び出して、サーバーを接続待ちの状態にします。
-# 引数を指定しない場合、デフォルトの接続待ちキューサイズが適用されます。
-# これにより、サーバーはクライアントからの接続要求を受け付けることができます。
-# これしないと .accept() 出来なかった
-# 多分、ポストを設置するみたいな役割。
 server_socket.listen()
 print('サーバーが起動しました。')
 
 
 # クライアントからの接続を受け入れる
-# server_socket.accept()メソッドを呼び出して、クライアントからの接続要求を受け付けています。
-# このメソッドはブロッキングメソッドであり、クライアントからの接続があるまで処理を停止します。
-# 接続が確立されると、新しいソケットオブジェクトclient_socketと、接続元のアドレスaddrが返されます。
-# 以降、クライアントとの通信はclient_socketを通して行われます。
-# クライアントの接続要求とは、多分クライアント側のコードの `client_socket.connect(('localhost', 8000))` のこと
-# 多分、ポストに手紙が投函されるまで待って、届いたら接続できたという内容の手紙を返信する役割。最初の手紙には、相手側の情報が書いてある。
-# 多分、client_socket 作ったら両方クライアントみたいに動かす
 client_socket, addr = server_socket.accept()
 print('クライアントと接続しました。')
 
 
 # データを受信
-# client_socket.recv(1024)を使用して、クライアントから最大1024バイトのデータを受信します。
-# recv()メソッドは、指定したバイト数までのデータを受信するまでブロックされます。
-# 受信したデータはバイト列（bytes型）となるため、decode('utf-8')でUTF-8エンコーディングの文字列（str型）にデコードしています。
-# これにより、テキストデータとして処理が可能になります。
-# 注意点
-# recv()メソッドの引数は受信する最大バイト数を指定しますが、一度に全てのデータが受信されるとは限りません。そのため、大きなデータを扱う場合はループを使用して全てのデータを受信する実装が必要です。
-# エンコーディングはクライアントとサーバーで一致させる必要があります。異なるエンコーディングを使用すると、デコード時にエラーが発生したり、文字化けの原因となります。
-data = client_socket.recv(1024)
-print('受信したデータ:', data)
+# 暗号データの復号はバイト列で行うから client_socket.recv(1024).decode('utf-8') の .decode('utf-8') は不要
+encrypted_data = client_socket.recv(1024)
+print('受信したデータ:', encrypted_data)
 
+
+# 復号化
 my_key = "keytest"
 for _ in range(32-len(my_key)):
     my_key += "0"
@@ -61,25 +35,28 @@ key = base64.urlsafe_b64encode(custom_key)
 
 f = Fernet(key)
 
-# メッセージを復号化
-decrypted_message = f.decrypt(data)
+# 復号
+decrypted_message = f.decrypt(encrypted_data)
 
-# 復号化したメッセージを文字列に変換
+# バイト列を文字列（json）に変換
 decrypted_message = decrypted_message.decode()
 print('復号化したデータ:', decrypted_message)
 
-import json
+# json から dict に変換
 data = json.loads(decrypted_message)
-print("data[model]: ", data[model])
-
-import time
-time.sleep(5)
-
-# データを送信
-client_socket.send('こんにちは、クライアント！'.encode('utf-8'))
+print("data: ", data)
+print("data['model']: ", data['model'])
 
 
 # ソケットを閉じる
-# クライアントとの通信が終了したら、client_socket.close()でソケットを適切に閉じ、リソースを解放することが重要です。
 client_socket.close()
 server_socket.close()
+
+
+# (base) u2424004@g14:~$ /bin/python3 /data/student/u2424004/igo/TantamaGo/test/t_ser.py
+# サーバーが起動しました。
+# クライアントと接続しました。
+# 受信したデータ: b'gAAAAABnNutONhqYpJ_Vs5QQH28AVjOpfkbsc6vUh8HocJrA7lVbriP-U6VyU_D3wvI-iL7qsdv4kLYkfZylTRa1w4cKB8OG62prmObZZoOTQCYBRU4ZlSA_ujFA-a8_FCe32YTMPBiu-Jw4OVlf4iWiYLhLZWvOgA=='
+# 復号化したデータ: {"size": 9, "superko": true, "model": "mymodel"}
+# data:  {'size': 9, 'superko': True, 'model': 'mymodel'}
+# data['model']:  mymodel
