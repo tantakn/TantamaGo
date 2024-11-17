@@ -26,7 +26,7 @@ data_bytes = data_json.encode()
 
 
 # メッセージを暗号化
-my_key = "keytest"
+my_key = "ttt"
 for _ in range(32-len(my_key)):
     my_key += "0"
 custom_key = my_key.encode()
