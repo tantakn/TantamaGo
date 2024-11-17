@@ -22,7 +22,7 @@ class BlockingServerBase:
         self.__socket = socket.socket(family, typ, proto)  # 新しいソケットを作成
         self.__socket.settimeout(self.__timeout)  # タイムアウトを設定
         self.__socket.bind(address)  # ソケットをアドレスにバインド
-        self.__socket.listen(1)  # 接続待ちの状態���する
+        self.__socket.listen(1)  # 接続待ちの状態にする。ここでの引数1はバックログと呼ばれ、接続待ちキューの最大数を指定します。つまり、同時に1つの接続要求を待機できることを意味します。
         print("Server started :", address)  # サーバー開始のメッセージを表示
         conn, _ = self.__socket.accept()  # クライアントからの接続を受け入れる
 
