@@ -1,6 +1,6 @@
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-import socket
+import socket, json
 from cryptography.fernet import Fernet
 import click
 
