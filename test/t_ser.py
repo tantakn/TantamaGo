@@ -30,6 +30,7 @@ def InetServer(password: str, ip: str="", port: int=51111):
     data = client_socket.recv(1024)
     print('受信したデータ:', data)
 
+    my_key = password
 
     for _ in range(32-len(password)):
         my_key += "0"
@@ -53,7 +54,7 @@ def InetServer(password: str, ip: str="", port: int=51111):
         "model": ""
     }
     data = json.loads(decrypted_message)
-    print("data[model]: ", data[model])
+    print("data['model']: ", data["model"])
 
     import time
     time.sleep(5)
