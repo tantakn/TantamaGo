@@ -110,10 +110,12 @@ def InetServer(password: str, ip: str="", port: int=51111):
                 data = f.decrypt(data)
                 data = data.decode()
                 print('復号化したデータ:', data)#######
-                client.run(data)
-                output = input()
+
+                output = client.run(data)
+                print("output: ", output)
                 output = f.encrypt(output.encode())
                 client_socket.send(output)
+                print("output: ", output)
             
             time.sleep(1)
 
