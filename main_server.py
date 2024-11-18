@@ -1,11 +1,15 @@
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import socket, json, click
+# import sys
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import socket, json, click, time
 from cryptography.fernet import Fernet
-from gtp.client import GtpClient
+from gtp.client_socket import GtpClient_socket
 from mcts.time_manager import TimeControl
+from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
+
+
+default_model_path = os.path.join("model_def", "sl-model_default.bin")
 
 
 @click.command()
@@ -56,39 +60,66 @@ def InetServer(password: str, ip: str="", port: int=51111):
                 data = json.loads(data)
                 print("data['model']: ", data["model"])
 
-                size = data["size"]
-                superko = data["superko"]
-                model = data["model"]
-                use_gpu = data["use_gpu"]
-                policy_move = data["policy_move"]
-                sequential_halving = data["sequential_halving"]
-                komi = data["komi"]
-                visits = data["visits"]
-                const_time = data["const_time"]
-                time = data["time"]
-                batch_size = data["batch_size"]
-                tree_size = data["tree_size"]
-                cgos_mode = data["cgos_mode"]
-                net = data["net"]
+                # size = data["size"]
+                # superko = data["superko"]
+                # model = data["model"]
+                # use_gpu = data["use_gpu"]
+                # policy_move = data["policy_move"]
+                # sequential_halving = data["sequential_halving"]
+                # komi = data["komi"]
+                # visits = data["visits"]
+                # const_time = data["const_time"]
+                # time = data["time"]
+                # batch_size = data["batch_size"]
+                # tree_size = data["tree_size"]
+                # cgos_mode = data["cgos_mode"]
+                # net = data["net"]
+
+                # if data["model"] == "":
+                #     model = default_model_path
+                # if data["batch_size"] == -1:
+                #     batch_size = NN_BATCH_SIZE
+                # if data["tree_size"] == -1:
+                #     tree_size = MCTS_TREE_SIZE
+
+                if data["model"] == "":
+                    data["model"] = default_model_path
+                if data["batch_size"] == -1:
+                    data["batch_size"] = NN_BATCH_SIZE
+                if data["tree_size"] == -1:
+                    data["tree_size"] = MCTS_TREE_SIZE
 
                 mode = TimeControl.CONSTANT_PLAYOUT
 
-                if const_time is not None:
+                if data["const_time"] is not None:
                     mode = TimeControl.CONSTANT_TIME
-                if time is not None:
+                if data["time"] is not None:
                     mode = TimeControl.TIME_CONTROL
 
                 program_dir = os.path.dirname(__file__)
-                client = GtpClient(size, superko, os.path.join(program_dir, model), use_gpu, policy_move, \
-                    sequential_halving, komi, mode, visits, const_time, time, batch_size, tree_size, \
-                    cgos_mode, net)
+                client = GtpClient_socket(data["size"], data["superko"], os.path.join(program_dir, data["model"]), data["use_gpu"], data["policy_move"], \
+                    data["sequential_halving"], data["komi"], mode, data["visits"], data["const_time"], data["time"], data["batch_size"], data["tree_size"], \
+                    data["cgos_mode"], data["net"])
 
                 is_gtp = True
 
-            if is_gtp and data:
+                continue
+
+            if is_gtp == True and data != b'':
+                print("data: ", data)#######
                 data = f.decrypt(data)
                 data = data.decode()
-                client.run(data)
+                print('復号化したデータ:', data)#######
+                if data == "exit" or data == "quit":
+                    break
+
+                output = client.run(data)
+                print("output: ", output)
+                output = f.encrypt(output.encode())
+                client_socket.send(output)
+                print("output: ", output)
+            
+            time.sleep(1)
 
     except KeyboardInterrupt:
         print("サーバーを終了します")
