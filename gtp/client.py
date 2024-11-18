@@ -444,18 +444,26 @@ class GtpClient: # pylint: disable=R0902,R0903
         print_out(f"play {self.coordinate.convert_to_gtp_format(pos)}\n")
 
 
-    def run(self) -> NoReturn: # pylint: disable=R0912,R0915
+    def run(self, command: str="") -> NoReturn: # pylint: disable=R0912,R0915
         """Go Text Protocolのクライアントの実行処理。
         入力されたコマンドに対応する処理を実行し、応答メッセージを表示する。
         """
         global gtp_command_id
+        flag = False
         while True:
-            command = input()
+            if flag:
+                break
+            if command == "":
+                command = input()
+            else:
+                flag = True
+                print("command: ", command)##########
 
             command_list = command.rstrip().split(' ')
 
             gtp_command_id = ""
             input_gtp_command = command_list[0]
+
 
             # 入力されたコマンドの冒頭が数字なら、それを id とみなす。
             # （参照)
@@ -465,6 +473,10 @@ class GtpClient: # pylint: disable=R0902,R0903
             if input_gtp_command.isdigit():
                 gtp_command_id = command_list.pop(0)
                 input_gtp_command = command_list[0]
+
+            
+            print("input_gtp_command: ", input_gtp_command)##########
+            print(type(input_gtp_command))##########
 
             if input_gtp_command == "version":
                 _version()
@@ -553,6 +565,8 @@ class GtpClient: # pylint: disable=R0902,R0903
                 respond_success("")
             else:
                 respond_failure("unknown_command")
+
+            command = ""
 
 def respond_success(response: str, ongoing: bool = False) -> NoReturn:
     """コマンド処理成功時の応答メッセージを表示する。
