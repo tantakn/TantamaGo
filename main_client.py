@@ -17,9 +17,9 @@ default_model_path = os.path.join("model", "model.bin")
 @click.option('--size', type=click.IntRange(2, BOARD_SIZE), default=BOARD_SIZE, \
     help=f"碁盤のサイズを指定。デフォルトは{BOARD_SIZE}。")
 @click.option('--superko', type=click.BOOL, default=False, help="超劫の有効化フラグ。デフォルトはFalse。")
-@click.option('--model', type=click.STRING, default=default_model_path, \
+@click.option('--model', type=click.STRING, default="", \
     help=f"使用するニューラルネットワークのモデルパスを指定する。プログラムのホームディレクトリの相対パスで指定。\
-    デフォルトは{default_model_path}。")
+    デフォルトは''。")
 @click.option('--use-gpu', type=click.BOOL, default=False, \
     help="ニューラルネットワークの計算にGPUを使用するフラグ。デフォルトはFalse。")
 @click.option('--policy-move', type=click.BOOL, default=False, \
@@ -35,10 +35,10 @@ default_model_path = os.path.join("model", "model.bin")
     help="1手あたりの探索時間の指定。--timeオプションが指定された時は無視する。")
 @click.option('--time', type=click.FLOAT, \
     help="持ち時間の指定。")
-@click.option('--batch-size', type=click.IntRange(min=1), default=NN_BATCH_SIZE, \
-    help=f"探索時のミニバッチサイズ。デフォルトはNN_BATCH_SIZE = {NN_BATCH_SIZE}。")
-@click.option('--tree-size', type=click.IntRange(min=1), default=MCTS_TREE_SIZE, \
-    help=f"探索木を構成するノードの最大数。デフォルトはMCTS_TREE_SIZE = {MCTS_TREE_SIZE}。")
+@click.option('--batch-size', type=click.IntRange(min=1), default=-1, \
+    help=f"探索時のミニバッチサイズ。デフォルトはNN_BATCH_SIZE = -1。")
+@click.option('--tree-size', type=click.IntRange(min=1), default=-1, \
+    help=f"探索木を構成するノードの最大数。デフォルトはMCTS_TREE_SIZE = -1。")
 @click.option('--cgos-mode', type=click.BOOL, default=False, \
     help="全ての石を打ち上げるまでパスしないモード設定。デフォルトはFalse。")
 @click.option('--net', type=click.STRING, default="DualNet", \
@@ -74,7 +74,7 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
 
     # ソケットを作成
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.settimeout(10)
+    client_socket.settimeout(30)
 
     # サーバーに接続
     client_socket.connect((ip, port))
@@ -83,7 +83,7 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
     data = {
         "size": size,
         "superko": superko,
-        "model": "",
+        "model": model,
         "use_gpu": use_gpu,
         "policy_move": policy_move,
         "sequential_halving": sequential_halving,
@@ -91,8 +91,8 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
         "visits": visits,
         "const_time": const_time,
         "time": time,
-        "batch_size": -1,
-        "tree_size": -1,
+        "batch_size": batch_size,
+        "tree_size": tree_size,
         "cgos_mode": cgos_mode,
         "net": net
     }
@@ -101,7 +101,7 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
     data_bytes = data_json.encode()
     encrypted_data = f.encrypt(data_bytes)
 
-    print(f"🐾encrypted_data: {encrypted_data}")
+    # print(f"🐾encrypted_data: {encrypted_data}")
     client_socket.send(encrypted_data)
 
     while True:
@@ -112,8 +112,13 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
         data_bytes = data.encode()
         encrypted_data = f.encrypt(data_bytes)
         
-        print(f"🐾encrypted_data: {encrypted_data}")
+        # print(f"🐾encrypted_data: {encrypted_data}")
         client_socket.send(encrypted_data)
+
+        data = client_socket.recv(1024)
+        data = f.decrypt(data)
+        data = data.decode()
+        # print("data: ", data)
 
 
     # ソケットを閉じる
@@ -121,7 +126,3 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
 
 if __name__ == "__main__":
     InerClient()
-
-
-# (envGo) PS C:\code\TantamaGo> & c:/code/TantamaGo/envGo/Scripts/python.exe c:/code/TantamaGo/test/t_cl.py
-# 🐾encrypted_data: b'gAAAAABnNutONhqYpJ_Vs5QQH28AVjOpfkbsc6vUh8HocJrA7lVbriP-U6VyU_D3wvI-iL7qsdv4kLYkfZylTRa1w4cKB8OG62prmObZZoOTQCYBRU4ZlSA_ujFA-a8_FCe32YTMPBiu-Jw4OVlf4iWiYLhLZWvOgA=='
