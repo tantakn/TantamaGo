@@ -110,6 +110,8 @@ def InetServer(password: str, ip: str="", port: int=51111):
                 data = f.decrypt(data)
                 data = data.decode()
                 print('復号化したデータ:', data)#######
+                if data == "exit" or data == "quit":
+                    break
 
                 output = client.run(data)
                 print("output: ", output)

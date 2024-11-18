@@ -260,7 +260,7 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
         time = float(arg_list[0])
         self.time_manager.set_remaining_time(Stone.BLACK, time)
         self.time_manager.set_remaining_time(Stone.WHITE, time)
-        respond_success("")
+        return respond_success("")
 
     def _time_left(self, arg_list: List[str]) -> NoReturn:
         """time_leftコマンドを処理する。
@@ -274,10 +274,10 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
         elif arg_list[0][0] in ['W', 'w']:
             color = Stone.WHITE
         else:
-            respond_failure("invalid color")
+            return respond_failure("invalid color")
 
         self.time_manager.set_remaining_time(color, float(arg_list[1]))
-        respond_success("")
+        return respond_success("")
 
     def _get_komi(self) -> NoReturn:
         """get_komiコマンドを処理する。
@@ -491,9 +491,9 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
         elif input_gtp_command == "clear_board":
             return self._clear_board()
         elif input_gtp_command == "time_settings":
-            self._time_settings(command_list[1:])
+            return self._time_settings(command_list[1:])
         elif input_gtp_command == "time_left":
-            self._time_left(command_list[1:])
+            return self._time_left(command_list[1:])
         elif input_gtp_command == "get_komi":
             self._get_komi()
         elif input_gtp_command == "showboard":
@@ -519,7 +519,7 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             response = ""
             for cmd in self.gogui_analyze_command:
                 response += cmd.get_command_information() + '\n'
-            respond_success(response)
+            return respond_success(response)
         elif input_gtp_command == "display_policy_black_color":
             respond_success(display_policy_distribution(
                 self.network, self.board, Stone.BLACK))
