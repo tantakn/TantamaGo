@@ -28,16 +28,16 @@ default_model_path = os.path.join("model", "model.bin")
     help="Gumbel AlphaZeroの探索手法で着手生成するフラグ。デフォルトはFalse。")
 @click.option('--komi', type=click.FLOAT, default=7.0, \
     help="コミの値の設定。デフォルトは7.0。")
-@click.option('--visits', type=click.IntRange(min=1), default=1000, \
+@click.option('--visits', type=click.INT, default=1000, \
     help="1手あたりの探索回数の指定。デフォルトは1000。\
     --const-timeオプション、または--timeオプションが指定された時は無視する。")
 @click.option('--const-time', type=click.FLOAT, \
     help="1手あたりの探索時間の指定。--timeオプションが指定された時は無視する。")
 @click.option('--time', type=click.FLOAT, \
     help="持ち時間の指定。")
-@click.option('--batch-size', type=click.IntRange(min=1), default=-1, \
+@click.option('--batch-size', type=click.INT, default=-1, \
     help=f"探索時のミニバッチサイズ。デフォルトはNN_BATCH_SIZE = -1。")
-@click.option('--tree-size', type=click.IntRange(min=1), default=-1, \
+@click.option('--tree-size', type=click.INT, default=-1, \
     help=f"探索木を構成するノードの最大数。デフォルトはMCTS_TREE_SIZE = -1。")
 @click.option('--cgos-mode', type=click.BOOL, default=False, \
     help="全ての石を打ち上げるまでパスしないモード設定。デフォルトはFalse。")
@@ -74,7 +74,7 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
 
     # ソケットを作成
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.settimeout(30)
+    client_socket.settimeout(300)
 
     # サーバーに接続
     client_socket.connect((ip, port))
@@ -106,8 +106,6 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
 
     while True:
         data = input()
-        if data == "exit":
-            break
 
         data_bytes = data.encode()
         encrypted_data = f.encrypt(data_bytes)
@@ -115,10 +113,13 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
         # print(f"🐾encrypted_data: {encrypted_data}")
         client_socket.send(encrypted_data)
 
+        if data == "exit" or data == "quit":
+            break
+
         data = client_socket.recv(1024)
         data = f.decrypt(data)
         data = data.decode()
-        # print("data: ", data)
+        print(data)
 
 
     # ソケットを閉じる
