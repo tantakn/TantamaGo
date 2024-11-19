@@ -1,3 +1,4 @@
+// clang-format off
 #define _GLIBCXX_DEBUG
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,8 +21,121 @@ using ull = uint_fast64_t;
 
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
+// clang-format on
 
-int main() {
-    cout << "test" << endl;
+
+int BOARDSIZE = 9;
+struct goBoard {
+    vector<vector<char>> boardRaw;
+    goBoard()
+        : boardRaw(BOARDSIZE + 2, vector<char>(BOARDSIZE + 2, 0b0))
+    {
+        rep (i, 11) {
+            boardRaw[0][i] = 0b11;
+            boardRaw[10][i] = 0b11;
+            boardRaw[i][0] = 0b11;
+            boardRaw[i][10] = 0b11;
+        }
+    }
+
+    vector<vector<char>> board = boardRaw;
+
+    set<vector<vector<char>>> boardHistory;
+
+    int CountLiberties(int x, int y);
+};
+
+int goBoard::CountLiberties(int x, int y)
+{
+    assert (board[x][y] & 0b11 != 0b0);
+    int color = board[x][y] & 0b11;
+
+    vector<vector<char>> boardSearched = boardRaw;
+    boardSearched[x][y] = 1;
+
+    queue<pair<int, int>> bfs;
+
+    vector<pair<int, int>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+
+    int cnt = 0;
+
+    rep (i, 4) {
+        int nx = x + directions[i].first;
+        int ny = y + directions[i].second;
+
+        if (boardSearched[nx][ny]) {
+            continue;
+        }
+        else if (board[nx][ny] & 0b11 == 0b0) {
+            boardSearched[nx][ny] = 1;
+            ++cnt;
+            continue;
+        }
+        else if (board[nx][ny] & 0b11 == color) {
+            bfs.push({nx, ny});
+        }
+    }
+
+    while (!bfs.empty()) {
+        auto [nx, ny] = bfs.front();
+        bfs.pop();
+
+        rep (i, 4) {
+            int nx = x + directions[i].first;
+            int ny = y + directions[i].second;
+
+            if (boardSearched[nx][ny]) {
+                continue;
+            }
+            else if (board[nx][ny] & 0b11 == 0b0) {
+                boardSearched[nx][ny] = 1;
+                ++cnt;
+                continue;
+            }
+            else if (board[nx][ny] & 0b11 == color) {
+                bfs.push({nx, ny});
+            }
+        }
+    }
+    return cnt;
+}
+
+int main()
+{
+    goBoard board;
+    board.board =
+        // clang-format off
+{{
+0,0,0,0,0,0,0,0,0}, {
+0,0,0,0,0,0,0,0,0}, {
+0,0,0,1,1,1,0,0,0}, {
+0,0,0,1,1,1,0,0,0}, {
+0,0,0,0,1,0,0,0,0}, {
+0,0,0,0,0,0,0,0,0}, {
+0,0,0,0,0,0,0,0,0}, {
+0,0,0,0,0,0,0,0,0}, {
+0,0,0,0,0,0,0,0,0}};
+    // clang-format on
+
+    print(board.CountLiberties(3, 3));
+    print((1 & 0b11) == 1);
+    print(1 & 0b11);
+    print(1 == 1);
     return 0;
 }
+
+
+
+
+// // clang-format off
+// {{
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,0,0,0,0}};
+// // clang-format on
