@@ -2,9 +2,10 @@
 #define _GLIBCXX_DEBUG
 #include <bits/stdc++.h>
 using namespace std;
+
+const int INF = 1047483647;
 using ll = int_fast64_t;
 using ull = uint_fast64_t;
-const int INF = 1047483647;
 #define myall(x) (x).begin(), (x).end()
 #define MyWatch(x) (double)(clock() - (x)) / CLOCKS_PER_SEC
 #define istrue ? assert(true) : assert(false && "istrue")
@@ -67,6 +68,12 @@ struct goBoard {
 
     /// @brief 子盤面
     vector<goBoard*> children;
+
+    /// @brief 
+    vector<vector<double>> policyBoard;
+
+    /// @brief 
+    double value;
 
     // /**
     //  * @brief なんかうまくいかない
@@ -151,6 +158,11 @@ struct goBoard {
      * @return goBoard 
      */
     goBoard PutStone(int y, int x, char color);
+
+    goBoard(goBoard *parent)
+        : parent(parent), board(parent->board), idBoard(parent->idBoard), libBoard(parent->libBoard), stringIdCnt(parent->stringIdCnt), history(parent->history) {
+
+        };
 
     /// TODO: 引数なしの初期化関数を作る
     /// TODO: parent と children の処理を書く
@@ -449,13 +461,22 @@ void goBoard::DbgPrint(char bit = 0b111)
 
 goBoard goBoard::PutStone(int y, int x, char color)
 {
-    /// TODO: parent とか children とか history とかの処理も書く。goBoard はポインタで返したほうがいい？
-}
+    /// TODO: parent とか children, history, libBoard とかの処理も書く。goBoard はポインタで返したほうがいい？
+    /// TODO: goBoard はポインタで返したほうがいい？
+    /// TODO: string の処理を考える
+
+    assert(IsLegalMove(y, x, color));
+
+    goBoard newBoard(*this);
+    // std::shared_ptr<goBoard> child = std::make_shared<goBoard>(*this);
+
+    return newBoard;
+};
 
 
 int main()
 {
-    goBoard board(
+    unique_ptr<goBoard> board(new goBoard(
         // clang-format off
 {{
 0,1,0,0,0,0,2,1,0}, {
@@ -468,34 +489,53 @@ int main()
 1,0,0,0,1,0,2,0,0}, {
 0,1,0,0,0,2,2,0,0}}
         // clang-format on
-    );
+    ));
+    
+    board->PrintBoard();
 
 
-    board.PrintBoard();
-    board.DbgPrint();
 
-    while (true) {
-        int x, y, z;
-        cout << "x: ";
-        cin >> x;
-        if (x == -1) {
-            break;
-        }else if (x == -2) {
-            board.DbgPrint();
-            continue;
-        }
-        cout << "y: ";
-        cin >> y;
-        cout << "color: ";
-        cin >> z;
+//     goBoard board(
+//         // clang-format off
+// {{
+// 0,1,0,0,0,0,2,1,0}, {
+// 1,1,0,0,0,0,0,2,2}, {
+// 0,1,0,1,1,1,0,0,2}, {
+// 2,1,0,1,0,1,0,2,0}, {
+// 1,1,0,1,1,0,0,0,2}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,2,0,0,0}, {
+// 1,0,0,0,1,0,2,0,0}, {
+// 0,1,0,0,0,2,2,0,0}}
+//         // clang-format on
+//     );
 
 
-        print("Liberties:", board.CountLiberties(y, x));
-        print("color:", (int)board.board[y][x]);
-        print("IsLegalMove:", board.IsLegalMove(y, x, z));
+//     board.PrintBoard();
+//     board.DbgPrint();
 
-        board.PrintBoard();
-    }
+    // while (true) {
+    //     int x, y, z;
+    //     cout << "x: ";
+    //     cin >> x;
+    //     if (x == -1) {
+    //         break;
+    //     }else if (x == -2) {
+    //         board.DbgPrint();
+    //         continue;
+    //     }
+    //     cout << "y: ";
+    //     cin >> y;
+    //     cout << "color: ";
+    //     cin >> z;
+
+
+    //     print("Liberties:", board.CountLiberties(y, x));
+    //     print("color:", (int)board.board[y][x]);
+    //     print("IsLegalMove:", board.IsLegalMove(y, x, z));
+
+    //     board.PrintBoard();
+    // }
 
     return 0;
 }
