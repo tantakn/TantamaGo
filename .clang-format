@@ -1,0 +1,21 @@
+---
+BasedOnStyle: Google
+
+IndentWidth: 4
+ColumnLimit: 0 # 引数を改行するかどうか（０でしないらしい）
+MaxEmptyLinesToKeep: 5 # 連続する空行数のリミット
+NamespaceIndentation: None # namespace だけのスコープでインデントするかどうか
+
+AllowShortBlocksOnASingleLine: Empty # Always も有力
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse # なんか上手くいかない # WithoutElseも有力
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: true
+
+ForEachMacros: ["rep"] # repマクロの最初の鉤括弧が改行しないようにする
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterFunction: true # 関数の最初の鉤括弧を改行するかどうか
+    BeforeLambdaBody: true # ラムダの最初の鉤括弧を改行するかどうか
+    BeforeElse: true # else の前で改行するかどうか
