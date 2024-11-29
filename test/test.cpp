@@ -22,9 +22,28 @@ template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } retu
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 
 #include <NvInfer.h>
+// Define TRT entrypoints used in common code
+#define DEFINE_TRT_ENTRYPOINTS 1
+#define DEFINE_TRT_LEGACY_PARSER_ENTRYPOINT 0
+
+
+#include "NvInfer.h"
+#include <cuda_runtime_api.h>
+#include <NvCaffeParser.h>   // Caffe モデルのパーサ
+
+// Logger for TensorRT
+class Logger : public ILogger {
+public:
+    void log(ILogger::Severity severity, const char* msg) override
+    {
+        // suppress information level log
+        if (severity == Severity::kINFO) return;
+        std::cout << msg << std::endl;
+    }
+};
 
 
 int main() {
-    cout << "test2" << endl;
+    cout << "test7" << endl;
     return 0;
 }
