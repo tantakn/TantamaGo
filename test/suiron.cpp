@@ -1,8 +1,9 @@
 #include <iostream>
 #include <fstream>
 // #include <NvInfer.h>
-#include "/home0/y2024/u2424004/.local/mycudnn/TensorRT-6.0.1.5/include/NvInfer.h"
-#include "/home0/y2024/u2424004/.local/mycudnn/TensorRT-6.0.1.5/include/NvOnnxParser.h"
+#include "NvInfer.h"
+#include "NvOnnxConfig.h"
+#include "NvOnnxParser.h"
 #include <cuda_runtime_api.h>
 #include <cstdio>
 #include <memory>
