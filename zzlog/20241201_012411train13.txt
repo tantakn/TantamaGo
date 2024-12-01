@@ -1180,3 +1180,704 @@ mem: 65.4% 🔥🔥
 GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
 GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.73 W 
 
+[20241201_134018] monitoring
+cpu: 8.6% [4.6, 14.2, 26.8, 0.8, 14.0, 18.2, 2.8, 1.5, 5.3, 0.5, 3.8, 10.1] 
+mem: 88.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_134128] gen_sl_npz
+    saved: sl_data_93.npz (0:07:54.036550)
+    cnt: 63820 / 100000kyoku
+[20241201_134519] monitoring
+cpu: 8.6% [2.5, 4.1, 20.6, 0.3, 5.1, 30.5, 0.3, 2.6, 23.1, 1.2, 4.7, 7.7] 
+mem: 65.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_134921] gen_sl_npz
+    saved: sl_data_94.npz (0:07:52.548934)
+    cnt: 64505 / 100000kyoku
+[20241201_135019] monitoring
+cpu: 8.5% [3.2, 43.4, 5.1, 13.7, 3.5, 1.9, 1.7, 8.8, 2.3, 13.6, 1.2, 4.2] 
+mem: 65.2% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_135519] monitoring
+cpu: 8.4% [3.7, 17.1, 15.2, 5.3, 20.9, 1.3, 0.3, 5.6, 1.6, 0.3, 19.4, 10.1] 
+mem: 65.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_135716] gen_sl_npz
+    saved: sl_data_95.npz (0:07:55.455298)
+    cnt: 65190 / 100000kyoku
+[20241201_140020] monitoring
+cpu: 8.6% [2.9, 28.7, 14.3, 1.6, 4.0, 8.3, 1.1, 14.1, 18.3, 0.3, 1.1, 8.1] 
+mem: 65.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_140512] gen_sl_npz
+    saved: sl_data_96.npz (0:07:55.503177)
+    cnt: 65883 / 100000kyoku
+[20241201_140520] monitoring
+cpu: 8.6% [12.6, 4.7, 16.8, 37.0, 0.6, 0.3, 6.0, 4.8, 0.8, 9.9, 9.1, 0.3] 
+mem: 65.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_141020] monitoring
+cpu: 8.4% [8.8, 12.8, 19.5, 5.6, 6.8, 7.5, 0.2, 2.6, 25.8, 7.7, 0.3, 3.6] 
+mem: 65.7% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_141308] gen_sl_npz
+    saved: sl_data_97.npz (0:07:56.291654)
+    cnt: 66571 / 100000kyoku
+[20241201_141521] monitoring
+cpu: 8.5% [3.3, 6.5, 7.0, 36.6, 13.1, 13.1, 3.0, 0.3, 4.2, 2.4, 6.7, 6.2] 
+mem: 65.3% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_142021] monitoring
+cpu: 8.5% [9.5, 2.1, 3.7, 3.3, 9.3, 19.8, 4.3, 5.4, 22.2, 5.7, 8.4, 8.8] 
+mem: 87.8% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_142102] gen_sl_npz
+    saved: sl_data_98.npz (0:07:54.055747)
+    cnt: 67256 / 100000kyoku
+[20241201_142522] monitoring
+cpu: 8.5% [2.3, 16.8, 21.7, 6.3, 1.6, 9.3, 2.9, 6.2, 20.8, 13.3, 0.4, 0.6] 
+mem: 65.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.34 W 
+
+[20241201_142856] gen_sl_npz
+    saved: sl_data_99.npz (0:07:53.548734)
+    cnt: 67942 / 100000kyoku
+[20241201_143022] monitoring
+cpu: 8.7% [5.7, 23.1, 10.4, 9.2, 10.6, 7.6, 1.4, 22.0, 0.6, 0.4, 3.5, 9.6] 
+mem: 65.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.42 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.24 W 
+
+[20241201_143522] monitoring
+cpu: 8.4% [9.6, 19.9, 12.0, 6.0, 12.8, 10.9, 4.5, 5.0, 0.9, 0.4, 11.0, 8.0] 
+mem: 85.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.42 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_143651] gen_sl_npz
+    saved: sl_data_100.npz (0:07:55.162885)
+    cnt: 68630 / 100000kyoku
+[20241201_144023] monitoring
+cpu: 8.6% [3.6, 4.6, 25.5, 8.5, 0.3, 8.0, 5.2, 0.6, 34.2, 6.8, 0.3, 5.3] 
+mem: 65.4% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.52 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_144444] gen_sl_npz
+    saved: sl_data_101.npz (0:07:53.195544)
+    cnt: 69319 / 100000kyoku
+[20241201_144523] monitoring
+cpu: 8.6% [4.3, 13.2, 24.6, 4.5, 28.6, 2.7, 5.2, 1.5, 13.1, 0.4, 2.1, 2.7] 
+mem: 65.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_145023] monitoring
+cpu: 8.9% [5.1, 16.5, 20.7, 10.7, 14.2, 4.7, 3.2, 7.3, 16.6, 1.7, 2.8, 3.0] 
+mem: 57.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_145241] gen_sl_npz
+    saved: sl_data_102.npz (0:07:56.712189)
+    cnt: 70012 / 100000kyoku
+[20241201_145524] monitoring
+cpu: 8.5% [3.1, 22.7, 11.1, 9.3, 0.3, 10.6, 0.2, 26.5, 5.7, 0.3, 0.2, 11.7] 
+mem: 56.4% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.43 W 
+
+[20241201_150024] monitoring
+cpu: 8.5% [2.0, 4.5, 10.0, 2.9, 28.1, 9.6, 0.4, 1.4, 14.2, 6.5, 9.1, 12.9] 
+mem: 78.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.46 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_150032] gen_sl_npz
+    saved: sl_data_103.npz (0:07:51.332145)
+    cnt: 70697 / 100000kyoku
+[20241201_150525] monitoring
+cpu: 13.1% [10.9, 12.4, 15.7, 13.0, 21.5, 20.4, 9.2, 15.5, 21.1, 4.9, 7.8, 5.3] 🔥
+mem: 64.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_150832] gen_sl_npz
+    saved: sl_data_104.npz (0:07:59.532287)
+    cnt: 71380 / 100000kyoku
+[20241201_151025] monitoring
+cpu: 12.3% [19.7, 16.9, 17.9, 30.3, 26.7, 4.5, 4.1, 4.3, 7.4, 7.2, 4.0, 4.3] 🔥
+mem: 64.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_151525] monitoring
+cpu: 9.3% [7.8, 9.1, 6.4, 18.4, 10.2, 14.1, 4.9, 8.8, 7.2, 1.6, 10.8, 12.4] 
+mem: 87.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.66 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.64 W 
+
+[20241201_151631] gen_sl_npz
+    saved: sl_data_105.npz (0:07:59.019395)
+    cnt: 72059 / 100000kyoku
+[20241201_152026] monitoring
+cpu: 8.5% [2.4, 23.5, 3.2, 15.9, 0.3, 1.7, 1.6, 12.5, 11.7, 15.9, 2.9, 10.1] 
+mem: 64.8% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_152427] gen_sl_npz
+    saved: sl_data_106.npz (0:07:56.307431)
+    cnt: 72745 / 100000kyoku
+[20241201_152526] monitoring
+cpu: 8.6% [9.1, 13.2, 5.5, 0.4, 25.0, 1.2, 3.8, 3.8, 0.7, 5.7, 32.0, 2.1] 
+mem: 64.3% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.66 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_153026] monitoring
+cpu: 8.4% [11.8, 6.0, 5.7, 12.6, 1.0, 17.5, 14.5, 4.3, 14.7, 5.6, 2.1, 4.5] 
+mem: 65.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_153224] gen_sl_npz
+    saved: sl_data_107.npz (0:07:57.485491)
+    cnt: 73429 / 100000kyoku
+[20241201_153527] monitoring
+cpu: 8.6% [2.4, 9.1, 15.4, 14.6, 0.3, 0.4, 0.5, 11.3, 20.6, 27.7, 0.3, 0.3] 
+mem: 64.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_154019] gen_sl_npz
+    saved: sl_data_108.npz (0:07:54.272077)
+    cnt: 74117 / 100000kyoku
+[20241201_154027] monitoring
+cpu: 8.6% [17.4, 23.3, 21.5, 0.5, 10.1, 4.7, 3.6, 1.7, 0.6, 6.1, 10.6, 2.9] 
+mem: 64.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_154528] monitoring
+cpu: 8.4% [2.1, 9.4, 12.8, 13.5, 8.9, 4.5, 2.1, 2.6, 8.7, 30.7, 5.1, 0.2] 
+mem: 64.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_154816] gen_sl_npz
+    saved: sl_data_109.npz (0:07:57.327285)
+    cnt: 74803 / 100000kyoku
+[20241201_155028] monitoring
+cpu: 8.6% [4.0, 1.5, 9.7, 25.1, 5.8, 9.7, 4.0, 1.5, 10.3, 19.2, 0.6, 11.5] 
+mem: 64.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_155528] monitoring
+cpu: 8.5% [3.6, 40.1, 12.0, 4.5, 1.1, 0.3, 2.2, 16.6, 6.3, 7.3, 6.0, 2.0] 
+mem: 86.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_155612] gen_sl_npz
+    saved: sl_data_110.npz (0:07:55.737408)
+    cnt: 75485 / 100000kyoku
+[20241201_160029] monitoring
+cpu: 8.4% [4.7, 0.7, 27.8, 4.4, 0.4, 0.7, 2.0, 9.1, 25.2, 16.9, 8.1, 1.4] 
+mem: 64.3% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_160407] gen_sl_npz
+    saved: sl_data_111.npz (0:07:55.574189)
+    cnt: 76177 / 100000kyoku
+[20241201_160529] monitoring
+cpu: 8.6% [13.2, 4.1, 15.4, 3.0, 8.9, 16.1, 2.7, 0.3, 24.2, 1.1, 6.1, 7.6] 
+mem: 63.8% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_161029] monitoring
+cpu: 8.4% [5.0, 6.4, 17.8, 14.5, 10.7, 11.1, 0.5, 1.2, 11.6, 10.7, 2.2, 8.9] 
+mem: 64.4% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_161201] gen_sl_npz
+    saved: sl_data_112.npz (0:07:53.359129)
+    cnt: 76862 / 100000kyoku
+[20241201_161530] monitoring
+cpu: 8.5% [10.8, 59.0, 6.3, 7.7, 1.0, 1.0, 0.6, 0.8, 9.1, 3.7, 0.3, 1.9] 
+mem: 64.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_161954] gen_sl_npz
+    saved: sl_data_113.npz (0:07:53.089977)
+    cnt: 77549 / 100000kyoku
+[20241201_162030] monitoring
+cpu: 8.6% [9.7, 32.2, 3.8, 22.6, 13.1, 3.9, 1.3, 0.8, 2.0, 0.5, 6.5, 6.0] 
+mem: 63.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.56 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.54 W 
+
+[20241201_162531] monitoring
+cpu: 8.4% [1.9, 5.7, 12.4, 12.0, 22.4, 10.4, 7.7, 3.8, 7.6, 9.1, 3.6, 4.1] 
+mem: 64.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_162748] gen_sl_npz
+    saved: sl_data_114.npz (0:07:54.377240)
+    cnt: 78238 / 100000kyoku
+[20241201_163031] monitoring
+cpu: 8.6% [2.0, 35.8, 14.1, 11.9, 4.7, 13.3, 7.0, 6.4, 0.6, 0.4, 1.3, 5.2] 
+mem: 63.8% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_163531] monitoring
+cpu: 8.6% [2.6, 3.6, 7.6, 3.6, 13.5, 24.1, 0.3, 0.4, 7.8, 4.6, 24.7, 10.6] 
+mem: 86.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.56 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.64 W 
+
+[20241201_163540] gen_sl_npz
+    saved: sl_data_115.npz (0:07:51.459496)
+    cnt: 78924 / 100000kyoku
+[20241201_164032] monitoring
+cpu: 8.4% [9.2, 5.3, 11.8, 18.0, 13.8, 5.7, 3.8, 1.9, 5.9, 2.6, 11.2, 11.9] 
+mem: 63.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_164331] gen_sl_npz
+    saved: sl_data_116.npz (0:07:51.933699)
+    cnt: 79612 / 100000kyoku
+[20241201_164532] monitoring
+cpu: 8.5% [12.0, 18.6, 35.2, 3.2, 0.3, 5.6, 3.9, 11.2, 9.3, 0.4, 0.3, 2.4] 
+mem: 63.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_165032] monitoring
+cpu: 8.5% [9.3, 21.0, 18.7, 4.5, 6.5, 3.5, 2.4, 4.3, 7.0, 9.3, 8.6, 6.5] 
+mem: 86.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.75 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_165126] gen_sl_npz
+    saved: sl_data_117.npz (0:07:54.010542)
+    cnt: 80296 / 100000kyoku
+[20241201_165533] monitoring
+cpu: 8.5% [5.9, 30.3, 8.0, 15.2, 0.3, 2.6, 0.3, 9.7, 11.7, 5.5, 10.1, 2.0] 
+mem: 63.7% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_165918] gen_sl_npz
+    saved: sl_data_118.npz (0:07:52.927408)
+    cnt: 80984 / 100000kyoku
+[20241201_170033] monitoring
+cpu: 8.6% [17.0, 36.5, 4.9, 9.1, 3.1, 2.0, 8.5, 17.6, 0.8, 0.5, 1.4, 1.0] 
+mem: 63.2% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_170533] monitoring
+cpu: 8.4% [2.6, 7.8, 3.5, 7.7, 31.9, 3.8, 0.9, 8.4, 0.4, 1.5, 17.3, 14.9] 
+mem: 63.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.56 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_170711] gen_sl_npz
+    saved: sl_data_119.npz (0:07:52.254190)
+    cnt: 81671 / 100000kyoku
+[20241201_171034] monitoring
+cpu: 8.5% [7.1, 40.4, 13.5, 1.1, 8.5, 3.4, 5.4, 5.6, 0.5, 0.4, 6.2, 10.5] 
+mem: 63.4% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_171503] gen_sl_npz
+    saved: sl_data_120.npz (0:07:52.554001)
+    cnt: 82361 / 100000kyoku
+[20241201_171534] monitoring
+cpu: 8.5% [21.6, 31.3, 7.6, 6.9, 0.3, 3.1, 3.7, 20.5, 0.4, 3.0, 0.7, 2.4] 
+mem: 62.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.56 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_172035] monitoring
+cpu: 8.4% [3.6, 4.5, 23.0, 23.7, 8.4, 3.2, 3.6, 4.8, 10.6, 15.2, 0.2, 0.3] 
+mem: 63.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_172258] gen_sl_npz
+    saved: sl_data_121.npz (0:07:54.814582)
+    cnt: 83049 / 100000kyoku
+[20241201_172535] monitoring
+cpu: 8.6% [5.1, 4.0, 13.8, 5.0, 0.3, 10.0, 4.4, 1.5, 40.2, 13.6, 3.1, 1.9] 
+mem: 63.2% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_173035] monitoring
+cpu: 8.5% [8.5, 17.9, 14.1, 10.1, 12.0, 5.3, 1.5, 4.9, 3.9, 11.6, 10.7, 1.5] 
+mem: 85.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_173051] gen_sl_npz
+    saved: sl_data_122.npz (0:07:52.869797)
+    cnt: 83738 / 100000kyoku
+[20241201_173536] monitoring
+cpu: 8.4% [9.7, 23.8, 6.7, 12.4, 7.8, 5.6, 2.1, 14.4, 8.5, 2.4, 6.7, 0.6] 
+mem: 63.3% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_173843] gen_sl_npz
+    saved: sl_data_123.npz (0:07:52.533506)
+    cnt: 84425 / 100000kyoku
+[20241201_174036] monitoring
+cpu: 8.5% [2.1, 6.3, 2.9, 0.3, 20.3, 13.8, 2.3, 0.5, 3.9, 2.7, 32.1, 15.3] 
+mem: 63.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_174537] monitoring
+cpu: 8.4% [3.4, 5.3, 3.6, 18.6, 4.7, 5.6, 6.2, 2.5, 18.3, 22.8, 0.5, 9.5] 
+mem: 85.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_174636] gen_sl_npz
+    saved: sl_data_124.npz (0:07:52.963027)
+    cnt: 85115 / 100000kyoku
+[20241201_175037] monitoring
+cpu: 8.6% [7.7, 5.3, 6.5, 17.5, 6.3, 25.8, 1.4, 4.2, 0.5, 21.4, 4.5, 1.6] 
+mem: 63.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_175427] gen_sl_npz
+    saved: sl_data_125.npz (0:07:50.860882)
+    cnt: 85806 / 100000kyoku
+[20241201_175537] monitoring
+cpu: 8.6% [6.2, 12.8, 4.2, 9.7, 1.6, 35.4, 0.4, 7.8, 12.2, 0.5, 1.4, 10.7] 
+mem: 62.7% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_180038] monitoring
+cpu: 8.4% [1.7, 31.0, 1.2, 9.6, 1.5, 19.0, 5.4, 23.5, 5.5, 0.3, 1.0, 0.7] 
+mem: 63.3% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_180220] gen_sl_npz
+    saved: sl_data_126.npz (0:07:52.526973)
+    cnt: 86486 / 100000kyoku
+[20241201_180538] monitoring
+cpu: 8.5% [6.3, 5.0, 35.3, 1.4, 1.0, 0.3, 0.8, 0.3, 37.4, 11.6, 2.5, 0.4] 
+mem: 62.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_181012] gen_sl_npz
+    saved: sl_data_127.npz (0:07:52.610377)
+    cnt: 87177 / 100000kyoku
+[20241201_181038] monitoring
+cpu: 8.5% [3.8, 27.3, 22.1, 1.9, 0.3, 1.0, 0.3, 6.1, 25.3, 8.4, 3.2, 2.3] 
+mem: 62.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.56 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_181539] monitoring
+cpu: 8.4% [3.0, 7.4, 15.9, 15.6, 5.5, 6.0, 2.7, 4.8, 9.6, 4.6, 3.2, 22.6] 
+mem: 63.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.56 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_181807] gen_sl_npz
+    saved: sl_data_128.npz (0:07:54.342926)
+    cnt: 87862 / 100000kyoku
+[20241201_182039] monitoring
+cpu: 8.5% [2.1, 8.1, 19.8, 15.7, 6.0, 3.6, 2.5, 10.6, 7.6, 7.0, 5.4, 14.3] 
+mem: 62.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_182539] monitoring
+cpu: 8.5% [5.0, 13.9, 4.5, 13.9, 0.2, 15.6, 11.2, 4.2, 6.4, 10.9, 13.2, 3.6] 
+mem: 85.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.56 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.54 W 
+
+[20241201_182600] gen_sl_npz
+    saved: sl_data_129.npz (0:07:52.870366)
+    cnt: 88551 / 100000kyoku
+[20241201_183040] monitoring
+cpu: 8.5% [5.4, 7.7, 11.0, 31.5, 15.7, 1.6, 2.0, 4.3, 3.0, 11.6, 6.7, 1.3] 
+mem: 62.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_183351] gen_sl_npz
+    saved: sl_data_130.npz (0:07:51.243606)
+    cnt: 89238 / 100000kyoku
+[20241201_183540] monitoring
+cpu: 8.6% [8.3, 6.4, 21.8, 14.9, 6.0, 2.7, 5.0, 0.2, 20.9, 13.0, 1.0, 2.8] 
+mem: 62.4% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_184041] monitoring
+cpu: 8.5% [3.3, 9.5, 3.3, 21.1, 10.3, 32.5, 5.6, 6.1, 2.8, 1.1, 0.6, 5.6] 
+mem: 85.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_184144] gen_sl_npz
+    saved: sl_data_131.npz (0:07:52.710661)
+    cnt: 89924 / 100000kyoku
+[20241201_184541] monitoring
+cpu: 8.5% [8.4, 16.4, 3.8, 7.6, 32.0, 2.7, 0.3, 0.2, 0.5, 8.8, 14.0, 7.5] 
+mem: 62.7% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_184934] gen_sl_npz
+    saved: sl_data_132.npz (0:07:50.166597)
+    cnt: 90608 / 100000kyoku
+[20241201_185041] monitoring
+cpu: 8.5% [5.1, 6.1, 10.9, 1.5, 23.2, 10.5, 3.8, 0.4, 23.9, 2.4, 4.2, 10.5] 
+mem: 62.4% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_185542] monitoring
+cpu: 8.4% [2.4, 1.5, 20.2, 23.6, 9.5, 18.1, 0.8, 0.3, 4.3, 1.7, 3.5, 15.0] 
+mem: 63.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_185728] gen_sl_npz
+    saved: sl_data_133.npz (0:07:53.813708)
+    cnt: 91298 / 100000kyoku
+[20241201_190042] monitoring
+cpu: 8.5% [2.4, 1.8, 32.1, 25.2, 4.1, 0.3, 1.3, 15.6, 11.5, 7.1, 0.9, 0.3] 
+mem: 62.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_190520] gen_sl_npz
+    saved: sl_data_134.npz (0:07:52.118129)
+    cnt: 91988 / 100000kyoku
+[20241201_190542] monitoring
+cpu: 8.6% [4.3, 33.3, 19.1, 7.6, 11.9, 3.9, 0.6, 0.5, 4.6, 12.8, 2.5, 1.8] 
+mem: 62.2% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_191043] monitoring
+cpu: 8.4% [2.0, 37.2, 18.3, 9.5, 5.0, 0.3, 0.3, 3.8, 19.8, 4.1, 0.3, 0.3] 
+mem: 62.8% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_191315] gen_sl_npz
+    saved: sl_data_135.npz (0:07:54.877939)
+    cnt: 92679 / 100000kyoku
+[20241201_191543] monitoring
+cpu: 8.6% [3.6, 24.4, 0.9, 40.5, 0.4, 0.3, 0.2, 13.3, 3.1, 15.3, 0.3, 0.4] 
+mem: 62.5% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_192043] monitoring
+cpu: 8.5% [2.8, 5.4, 6.8, 36.0, 5.4, 11.4, 7.2, 11.4, 15.0, 0.2, 0.3, 0.3] 
+mem: 84.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_192108] gen_sl_npz
+    saved: sl_data_136.npz (0:07:53.078646)
+    cnt: 93368 / 100000kyoku
+[20241201_192544] monitoring
+cpu: 8.4% [9.8, 3.6, 0.7, 43.3, 6.2, 10.8, 0.3, 5.3, 1.8, 16.2, 2.2, 1.1] 
+mem: 62.7% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.64 W 
+
+[20241201_192858] gen_sl_npz
+    saved: sl_data_137.npz (0:07:50.787034)
+    cnt: 94051 / 100000kyoku
+[20241201_193044] monitoring
+cpu: 8.6% [15.6, 21.4, 17.0, 1.6, 1.9, 12.7, 2.9, 11.3, 5.4, 0.4, 0.8, 11.8] 
+mem: 62.3% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_193545] monitoring
+cpu: 8.5% [1.8, 46.7, 1.2, 3.3, 1.2, 12.5, 1.6, 11.8, 0.5, 10.8, 5.6, 4.6] 
+mem: 84.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.46 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_193650] gen_sl_npz
+    saved: sl_data_138.npz (0:07:51.380412)
+    cnt: 94734 / 100000kyoku
+[20241201_194045] monitoring
+cpu: 8.5% [3.7, 37.4, 11.2, 2.2, 0.3, 1.0, 2.2, 20.3, 17.2, 1.9, 0.3, 4.4] 
+mem: 62.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_194442] gen_sl_npz
+    saved: sl_data_139.npz (0:07:52.388615)
+    cnt: 95421 / 100000kyoku
+[20241201_194545] monitoring
+cpu: 8.5% [17.2, 29.9, 15.5, 16.3, 0.7, 0.5, 1.5, 5.7, 2.7, 8.4, 2.3, 1.3] 
+mem: 62.2% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_195046] monitoring
+cpu: 8.4% [3.4, 10.0, 7.6, 3.1, 2.9, 10.4, 3.2, 0.3, 22.0, 7.1, 19.7, 11.2] 
+mem: 62.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_195234] gen_sl_npz
+    saved: sl_data_140.npz (0:07:52.285969)
+    cnt: 96104 / 100000kyoku
+[20241201_195546] monitoring
+cpu: 10.5% [14.4, 43.0, 5.4, 14.6, 7.2, 14.5, 3.1, 4.4, 1.9, 5.0, 9.1, 2.9] 🔥
+mem: 63.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.56 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.64 W 
+
+[20241201_200024] gen_sl_npz
+    saved: sl_data_141.npz (0:07:49.945146)
+    cnt: 96789 / 100000kyoku
+[20241201_200046] monitoring
+cpu: 9.6% [5.8, 7.9, 54.3, 17.9, 3.3, 2.5, 0.9, 1.5, 3.1, 11.3, 3.5, 2.9] 
+mem: 62.1% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_200547] monitoring
+cpu: 10.4% [6.0, 24.9, 18.7, 31.4, 5.1, 6.0, 3.2, 6.4, 5.5, 4.1, 9.0, 4.7] 🔥
+mem: 62.7% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_200820] gen_sl_npz
+    saved: sl_data_142.npz (0:07:55.090324)
+    cnt: 97473 / 100000kyoku
+[20241201_201047] monitoring
+cpu: 10.0% [7.0, 12.5, 17.3, 5.6, 11.8, 19.7, 1.4, 8.4, 11.5, 1.5, 19.0, 4.4] 
+mem: 62.6% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_201548] monitoring
+cpu: 8.9% [3.2, 19.6, 23.0, 20.5, 7.2, 6.7, 6.5, 0.7, 5.6, 9.4, 0.4, 4.1] 
+mem: 85.0% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+[20241201_201617] gen_sl_npz
+    saved: sl_data_143.npz (0:07:57.485820)
+    cnt: 98158 / 100000kyoku
+[20241201_202048] monitoring
+cpu: 8.4% [2.1, 1.3, 14.0, 25.8, 10.1, 16.1, 0.4, 1.9, 3.0, 7.0, 12.3, 7.0] 
+mem: 62.8% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.65 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_202411] gen_sl_npz
+    saved: sl_data_144.npz (0:07:54.153630)
+    cnt: 98844 / 100000kyoku
+[20241201_202548] monitoring
+cpu: 11.1% [11.7, 46.0, 16.6, 15.2, 6.8, 2.8, 2.4, 21.8, 2.3, 2.1, 2.2, 3.3] 🔥
+mem: 62.4% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.45 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_203049] monitoring
+cpu: 10.1% [5.1, 10.5, 5.9, 16.6, 8.8, 11.9, 1.5, 16.2, 11.1, 21.7, 3.6, 8.6] 🔥
+mem: 85.2% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.63 W 
+
+[20241201_203208] gen_sl_npz
+    saved: sl_data_145.npz (0:07:56.471446)
+    cnt: 99527 / 100000kyoku
+[20241201_203549] monitoring
+cpu: 12.4% [8.7, 10.0, 36.0, 8.8, 8.8, 5.3, 3.2, 4.7, 44.3, 6.9, 3.4, 8.6] 🔥
+mem: 62.9% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 15 MiB, 14.55 W 
+GeForce GTX TITAN X, 1, 0 %, 6 MiB, 14.53 W 
+
+🐾train_on_gpu 2024-12-01 01:24:14.629592
+[20241201_203732] device
+torch.cuda.current_device:  0
+torch.cuda.device_count:  2
+torch.cuda.get_device_name(0):  GeForce GTX TITAN X
+torch.cuda.get_device_name(1):  GeForce GTX TITAN X
+torch.cuda.get_device_capability(0):  (5, 2)
+torch.cuda.get_device_capability(1):  (5, 2)
+torch.cuda.get_arch_list():  ['sm_37', 'sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86']
+Training data set : ['data/sl_data_0.npz', 'data/sl_data_1.npz', 'data/sl_data_10.npz', 'data/sl_data_100.npz', 'data/sl_data_101.npz', 'data/sl_data_102.npz', 'data/sl_data_103.npz', 'data/sl_data_104.npz', 'data/sl_data_105.npz', 'data/sl_data_106.npz', 'data/sl_data_107.npz', 'data/sl_data_108.npz', 'data/sl_data_109.npz', 'data/sl_data_11.npz', 'data/sl_data_110.npz', 'data/sl_data_111.npz', 'data/sl_data_112.npz', 'data/sl_data_113.npz', 'data/sl_data_114.npz', 'data/sl_data_115.npz', 'data/sl_data_116.npz', 'data/sl_data_117.npz', 'data/sl_data_118.npz', 'data/sl_data_119.npz', 'data/sl_data_12.npz', 'data/sl_data_120.npz', 'data/sl_data_121.npz', 'data/sl_data_122.npz', 'data/sl_data_123.npz', 'data/sl_data_124.npz', 'data/sl_data_125.npz', 'data/sl_data_126.npz', 'data/sl_data_127.npz', 'data/sl_data_128.npz', 'data/sl_data_129.npz', 'data/sl_data_13.npz', 'data/sl_data_130.npz', 'data/sl_data_131.npz', 'data/sl_data_132.npz', 'data/sl_data_133.npz', 'data/sl_data_134.npz', 'data/sl_data_135.npz', 'data/sl_data_136.npz', 'data/sl_data_137.npz', 'data/sl_data_138.npz', 'data/sl_data_139.npz', 'data/sl_data_14.npz', 'data/sl_data_140.npz', 'data/sl_data_141.npz', 'data/sl_data_142.npz', 'data/sl_data_143.npz', 'data/sl_data_144.npz', 'data/sl_data_145.npz', 'data/sl_data_15.npz', 'data/sl_data_16.npz', 'data/sl_data_17.npz', 'data/sl_data_18.npz', 'data/sl_data_19.npz', 'data/sl_data_2.npz', 'data/sl_data_20.npz', 'data/sl_data_21.npz', 'data/sl_data_22.npz', 'data/sl_data_23.npz', 'data/sl_data_24.npz', 'data/sl_data_25.npz', 'data/sl_data_26.npz', 'data/sl_data_27.npz', 'data/sl_data_28.npz', 'data/sl_data_29.npz', 'data/sl_data_3.npz', 'data/sl_data_30.npz', 'data/sl_data_31.npz', 'data/sl_data_32.npz', 'data/sl_data_33.npz', 'data/sl_data_34.npz', 'data/sl_data_35.npz', 'data/sl_data_36.npz', 'data/sl_data_37.npz', 'data/sl_data_38.npz', 'data/sl_data_39.npz', 'data/sl_data_4.npz', 'data/sl_data_40.npz', 'data/sl_data_41.npz', 'data/sl_data_42.npz', 'data/sl_data_43.npz', 'data/sl_data_44.npz', 'data/sl_data_45.npz', 'data/sl_data_46.npz', 'data/sl_data_47.npz', 'data/sl_data_48.npz', 'data/sl_data_49.npz', 'data/sl_data_5.npz', 'data/sl_data_50.npz', 'data/sl_data_51.npz', 'data/sl_data_52.npz', 'data/sl_data_53.npz', 'data/sl_data_54.npz', 'data/sl_data_55.npz', 'data/sl_data_56.npz', 'data/sl_data_57.npz', 'data/sl_data_58.npz', 'data/sl_data_59.npz', 'data/sl_data_6.npz', 'data/sl_data_60.npz', 'data/sl_data_61.npz', 'data/sl_data_62.npz', 'data/sl_data_63.npz', 'data/sl_data_64.npz', 'data/sl_data_65.npz', 'data/sl_data_66.npz', 'data/sl_data_67.npz', 'data/sl_data_68.npz', 'data/sl_data_69.npz', 'data/sl_data_7.npz', 'data/sl_data_70.npz', 'data/sl_data_71.npz']
+Testing data set  : ['data/sl_data_72.npz', 'data/sl_data_73.npz', 'data/sl_data_74.npz', 'data/sl_data_75.npz', 'data/sl_data_76.npz', 'data/sl_data_77.npz', 'data/sl_data_78.npz', 'data/sl_data_79.npz', 'data/sl_data_8.npz', 'data/sl_data_80.npz', 'data/sl_data_81.npz', 'data/sl_data_82.npz', 'data/sl_data_83.npz', 'data/sl_data_84.npz', 'data/sl_data_85.npz', 'data/sl_data_86.npz', 'data/sl_data_87.npz', 'data/sl_data_88.npz', 'data/sl_data_89.npz', 'data/sl_data_9.npz', 'data/sl_data_90.npz', 'data/sl_data_91.npz', 'data/sl_data_92.npz', 'data/sl_data_93.npz', 'data/sl_data_94.npz', 'data/sl_data_95.npz', 'data/sl_data_96.npz', 'data/sl_data_97.npz', 'data/sl_data_98.npz', 'data/sl_data_99.npz']
+🐾device:  cuda
+[20241201_204050] monitoring
+cpu: 12.5% [14.2, 12.9, 9.0, 10.0, 31.6, 9.9, 10.1, 9.5, 9.5, 7.5, 18.0, 8.2] 🔥
+mem: 85.9% 🔥🔥
+GeForce GTX TITAN X, 0, 49 %, 910 MiB, 114.96 W 🔥
+GeForce GTX TITAN X, 1, 36 %, 915 MiB, 128.27 W 🔥
+
+[20241201_204128] learn
+epoch 0, data-0 : loss = 3.515594, time = 204.6 [s].
+	policy loss : 3.499853
+	value loss  : 0.787039
+[20241201_204550] monitoring
+cpu: 10.6% [14.5, 11.5, 11.5, 10.3, 11.0, 10.3, 10.3, 10.8, 12.9, 7.0, 9.2, 7.5] 🔥
+mem: 67.0% 🔥🔥
+GeForce GTX TITAN X, 0, 30 %, 910 MiB, 94.63 W 🔥
+GeForce GTX TITAN X, 1, 18 %, 915 MiB, 102.73 W 🔥
+
+[20241201_204703] learn
+epoch 0, data-1 : loss = 2.835939, time = 197.2 [s].
+	policy loss : 2.822150
+	value loss  : 0.689466
+[20241201_205051] monitoring
+cpu: 7.6% [8.9, 6.5, 6.5, 6.5, 6.5, 8.5, 6.2, 6.7, 7.9, 5.5, 5.5, 5.8] 
+mem: 98.4% 🔥🔥
+GeForce GTX TITAN X, 0, 0 %, 910 MiB, 14.85 W 🔥
+GeForce GTX TITAN X, 1, 0 %, 915 MiB, 14.93 W 🔥
+
