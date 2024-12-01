@@ -161,8 +161,9 @@ struct goBoard {
 
     goBoard(goBoard *parent)
         : parent(parent), board(parent->board), idBoard(parent->idBoard), libBoard(parent->libBoard), stringIdCnt(parent->stringIdCnt), history(parent->history) {
-
-        };
+        parent->children.push_back(this);
+        
+    };
 
     /// TODO: 引数なしの初期化関数を作る
     /// TODO: parent と children の処理を書く
@@ -467,10 +468,8 @@ goBoard goBoard::PutStone(int y, int x, char color)
 
     assert(IsLegalMove(y, x, color));
 
-    goBoard newBoard(*this);
+    unique_ptr<goBoard> ptr = make_unique<goBoard>(*this);
     // std::shared_ptr<goBoard> child = std::make_shared<goBoard>(*this);
-
-    return newBoard;
 };
 
 
@@ -542,6 +541,19 @@ int main()
 
 
 
+
+
+
+//    1 2 3 4 5 6 7 8 9
+//  1 ┌ ● ┬ ┬ ┬ ┬ ○ ● ┐ 
+//  2 ● ● + + + + + ○ ○ 
+//  3 ├ ● + ● ● ● + + ○ 
+//  4 ○ ● + ● + ● + ○ ┤ 
+//  5 ● ● + ● ● + + + ○ 
+//  6 ├ + + + + + + + ┤ 
+//  7 ├ + + + + ○ + + ┤ 
+//  8 ● + + + ● + ○ + ┤ 
+//  9 └ ● ┴ ┴ ┴ ○ ○ ┴ ┘ 
 
 
 // Move : 3
