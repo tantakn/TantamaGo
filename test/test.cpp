@@ -1,6 +1,9 @@
+// clang-format off
 #define _GLIBCXX_DEBUG
 #include <bits/stdc++.h>
 using namespace std;
+
+const int INF = 1047483647;
 using ll = int_fast64_t;
 using ull = uint_fast64_t;
 #define myall(x) (x).begin(), (x).end()
@@ -20,6 +23,8 @@ using ull = uint_fast64_t;
 
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
+// clang-format on
+
 
 #include <NvInfer.h>
 // Define TRT entrypoints used in common code
@@ -28,22 +33,32 @@ template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } retu
 
 
 #include "NvInfer.h"
+#include "NvOnnxConfig.h"
+#include "NvOnnxParser.h"
 #include <cuda_runtime_api.h>
-#include <NvCaffeParser.h>   // Caffe モデルのパーサ
+#include <cuda_runtime.h>
 
-// Logger for TensorRT
-class Logger : public ILogger {
-public:
-    void log(ILogger::Severity severity, const char* msg) override
-    {
-        // suppress information level log
-        if (severity == Severity::kINFO) return;
-        std::cout << msg << std::endl;
-    }
-};
-
+// // Logger for TensorRT
+// class Logger : public ILogger {
+// public:
+//     void log(ILogger::Severity severity, const char* msg) override
+//     {
+//         // suppress information level log
+//         if (severity == Severity::kINFO) return;
+//         std::cout << msg << std::endl;
+//     }
+// };
+int device_count;
+int device = 1;
 
 int main() {
-    cout << "test7" << endl;
+    print(cudaGetDeviceCount(&device_count));
+    // setReportableSeverity(Logger::Severity::kINTERNAL_ERROR);
+    if (cudaSetDevice(device) != cudaSuccess)
+{
+    cout << "cudaSetDevice failed" << std::endl;
+    return 0 ;
+}
+    cout << "test4" << endl;
     return 0;
 }
