@@ -422,4 +422,4 @@ if __name__ == "__main__":
     @click.option('--board_size', type=click.INT, \
         help="碁盤のサイズ. Defaults to 9.")
     def tmp_generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None, board_size: int=9) -> None:
-        generate_supervised_learning_data_with_semeai(os.path.dirname(__file__), kifu_dir, board_size)
+        generate_supervised_learning_data(os.path.dirname(__file__), kifu_dir, board_size)
