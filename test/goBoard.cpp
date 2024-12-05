@@ -56,8 +56,8 @@ struct goBoard {
     /// @brief 連のid。0は空点、-1は壁
     vector<vector<int>> idBoard;
 
-    /// @brief 連の呼吸点。0は空点、INFは壁
-    vector<vector<int>> libBoard;
+    /// @brief 連の呼吸点の数。壁はINF
+    map<int, int> libs;
 
     /// @brief 超コウルール用の履歴
     set<vector<vector<char>>> history;
@@ -171,7 +171,7 @@ struct goBoard {
     goBoard PutStone(int y, int x, char color);
 
     goBoard(goBoard *parent, int y, int x, char color)
-        : parent(parent), board(parent->board), idBoard(parent->idBoard), libBoard(parent->libBoard), stringIdCnt(parent->stringIdCnt), history(parent->history) {
+        : parent(parent), board(parent->board), idBoard(parent->idBoard), libs(parent->libs), stringIdCnt(parent->stringIdCnt), history(parent->history) {
         parent->childrens.push_back(this);
         for (auto dir : directions) {
             int nx = x + dir.first;
@@ -187,7 +187,7 @@ struct goBoard {
     /// TODO: 引数なしの初期化関数を作る
     /// TODO: parent と children の処理を書く
     goBoard(vector<vector<char>> inputBoard)
-        : board(InputBoardFromVec(inputBoard)), idBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0)), libBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0))
+        : board(InputBoardFromVec(inputBoard)), idBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0)), libs(0, 0)
     {
         rep (i, BOARDSIZE + 2) {
             idBoard[0][i] = -1;
@@ -195,10 +195,7 @@ struct goBoard {
             idBoard[i][0] = -1;
             idBoard[i][BOARDSIZE + 1] = -1;
 
-            libBoard[0][i] = INF;
-            libBoard[BOARDSIZE + 1][i] = INF;
-            libBoard[i][0] = INF;
-            libBoard[i][BOARDSIZE + 1] = INF;
+            libs[-1] = INF;
         }
 
         int cnt = 1;
@@ -422,7 +419,8 @@ void goBoard::ApplyString(int y, int x)
     /// TODO: 2つの string をつなげるとき、それぞれの lib - 1 を足し合わせればいい？
     /// TODO: lib == 0 の string で assert 出したい
 
-    int lib = CountLiberties(y, x); 
+    int lib = CountLiberties(y, x);
+    libs[stringIdCnt] = lib; 
 
     queue<pair<int, int>> bfs;
 
@@ -433,7 +431,6 @@ void goBoard::ApplyString(int y, int x)
         bfs.pop();
 
         idBoard[y][x] = stringIdCnt;
-        libBoard[y][x] = lib;
 
         for (auto dir : directions) {
             char nx = x + dir.first;
@@ -450,7 +447,7 @@ void goBoard::DeleteString(int y, int x) {
     assert(x >= 1 && x <= BOARDSIZE + 1 && y >= 1 && y <= BOARDSIZE + 1);
     assert(idBoard[y][x] != 0);
     assert(board[y][x] != 0);
-    assert(libBoard[y][x] != 0);
+    assert(libs[idBoard[y][x]] != 0);
 
     int id = idBoard[y][x];
 
@@ -483,7 +480,7 @@ void goBoard::DeleteString(int y, int x) {
                 }
             }
         }
-
+    }
 }
 
 void goBoard::DbgPrint(char bit = 0b111)
@@ -511,7 +508,7 @@ void goBoard::DbgPrint(char bit = 0b111)
     if (bit & 0b100) {
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cout << setw(3) << setfill(' ') << libBoard[i][j] << " ";
+                cout << setw(3) << setfill(' ') << libs[idBoard[i][j]] << " ";
             }
             cout << endl;
         }
