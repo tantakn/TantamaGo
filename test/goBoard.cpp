@@ -47,19 +47,22 @@ vector<vector<char>> boardRaw = []()
  * 
  */
 struct goBoard {
+    /// @brief 現在の手番。0b01: 黒, 0b10: 白
+    char color;
+
     /// 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁。
     vector<vector<char>> board;
 
-    /// @brief stringのid。0は空点、-1は壁
+    /// @brief 連のid。0は空点、-1は壁
     vector<vector<int>> idBoard;
 
-    /// @brief stringのliberty。0は空点、INFは壁
+    /// @brief 連の呼吸点。0は空点、INFは壁
     vector<vector<int>> libBoard;
 
     /// @brief 超コウルール用の履歴
     set<vector<vector<char>>> history;
 
-    /// @brief stringのidのカウント
+    /// @brief idBoardのstringのidのカウント
     int stringIdCnt = 1;
 
     /// @brief 親盤面
@@ -67,7 +70,7 @@ struct goBoard {
     goBoard* parent = nullptr;
 
     /// @brief 子盤面
-    vector<goBoard*> children;
+    vector<goBoard*> childrens;
 
     /// @brief 
     vector<vector<double>> policyBoard;
@@ -142,12 +145,20 @@ struct goBoard {
     void DbgPrint(char bit);
 
     /**
-     * @brief
+     * @brief idBoard[y][x] == 0 な石とつながっている石で新しい連を作る
      *
      * @param y
      * @param x
      */
-    void MakeString(int y, int x);
+    void ApplyString(int y, int x);
+
+    /**
+     * @brief 
+     * 
+     * @param y 
+     * @param x 
+     */
+    void DeleteString(int y, int x);
 
     /**
      * @brief 
@@ -159,10 +170,18 @@ struct goBoard {
      */
     goBoard PutStone(int y, int x, char color);
 
-    goBoard(goBoard *parent)
+    goBoard(goBoard *parent, int y, int x, char color)
         : parent(parent), board(parent->board), idBoard(parent->idBoard), libBoard(parent->libBoard), stringIdCnt(parent->stringIdCnt), history(parent->history) {
-        parent->children.push_back(this);
-        
+        parent->childrens.push_back(this);
+        for (auto dir : directions) {
+            int nx = x + dir.first;
+            int ny = y + dir.second;
+
+            if (libBoard[ny][nx] == 1 && board[ny][nx] == 3 - color) {
+                
+
+            }
+        }
     };
 
     /// TODO: 引数なしの初期化関数を作る
@@ -186,13 +205,12 @@ struct goBoard {
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
                 if (idBoard[i][j] == 0 && board[i][j] != 0) {
-                    MakeString(i, j);
+                    ApplyString(i, j);
                 }
             }
         }
     }
 };
-
 
 vector<vector<char>> goBoard::InputBoardFromVec(vector<vector<char>> input)
 {
@@ -347,7 +365,7 @@ bool goBoard::IsLegalMove(int y, int x, char color)
     // 超コウルールは取れる石を取ってから判定する
 
     bool isSuicide = true;
-    set<int> takeEnemyIds;
+    set<int> toTakeEnemyIds;
     for (auto dir : directions) {
         int nx = x + dir.first;
         int ny = y + dir.second;
@@ -363,7 +381,7 @@ bool goBoard::IsLegalMove(int y, int x, char color)
         else if (board[ny][nx] == 3 - color) {
             if (libBoard[ny][nx] == 1) {
                 isSuicide = false;
-                takeEnemyIds.insert(idBoard[ny][nx]);
+                toTakeEnemyIds.insert(idBoard[ny][nx]);
             }
         }
     }
@@ -375,7 +393,7 @@ bool goBoard::IsLegalMove(int y, int x, char color)
     // TODO: 以下動くか分からない
     vector<vector<char>> tmp = board;
 
-    for (auto id : takeEnemyIds) {
+    for (auto id : toTakeEnemyIds) {
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
                 if (idBoard[i][j] == id) {
@@ -391,7 +409,7 @@ bool goBoard::IsLegalMove(int y, int x, char color)
     return true;
 };
 
-void goBoard::MakeString(int y, int x)
+void goBoard::ApplyString(int y, int x)
 {
     assert(x >= 1 && x <= BOARDSIZE + 1 && y >= 1 && y <= BOARDSIZE + 1);
     assert(idBoard[y][x] == 0);
@@ -403,6 +421,7 @@ void goBoard::MakeString(int y, int x)
 
     /// TODO: 2つの string をつなげるとき、それぞれの lib - 1 を足し合わせればいい？
     /// TODO: lib == 0 の string で assert 出したい
+
     int lib = CountLiberties(y, x); 
 
     queue<pair<int, int>> bfs;
@@ -425,6 +444,46 @@ void goBoard::MakeString(int y, int x)
             }
         }
     }
+}
+
+void goBoard::DeleteString(int y, int x) {
+    assert(x >= 1 && x <= BOARDSIZE + 1 && y >= 1 && y <= BOARDSIZE + 1);
+    assert(idBoard[y][x] != 0);
+    assert(board[y][x] != 0);
+    assert(libBoard[y][x] != 0);
+
+    int id = idBoard[y][x];
+
+    vector<int> neighborIds(0);
+
+    rep (i, 1, BOARDSIZE + 1) {
+        rep (j, 1, BOARDSIZE + 1) {
+            if (idBoard[i][j] == id) {
+                board[i][j] = 0;
+                idBoard[i][j] = 0;
+                libBoard[i][j] = 0;
+
+                for (auto dir : directions) {
+                    char nx = j + dir.first;
+                    char ny = i + dir.second;
+
+                    if (idBoard[ny][nx] != 0 && idBoard[ny][nx] != id) {
+                        neighborIds.push_back(idBoard[ny][nx]);
+                    }
+                }
+            }
+        }
+    }
+
+    for (auto neighborId : neighborIds) {
+        rep (i, 1, BOARDSIZE + 1) {
+            rep (j, 1, BOARDSIZE + 1) {
+                if (idBoard[i][j] == neighborId) {
+                    
+                }
+            }
+        }
+
 }
 
 void goBoard::DbgPrint(char bit = 0b111)
@@ -468,7 +527,7 @@ goBoard goBoard::PutStone(int y, int x, char color)
 
     assert(IsLegalMove(y, x, color));
 
-    unique_ptr<goBoard> ptr = make_unique<goBoard>(*this);
+    unique_ptr<goBoard> ptr = make_unique<goBoard>(*this, y, x);
     // std::shared_ptr<goBoard> child = std::make_shared<goBoard>(*this);
 };
 
