@@ -1,0 +1,1649 @@
+====== Nodes ======
+[Node #0]
+input: "input"
+input: "onnx::Conv_164"
+input: "onnx::Conv_165"
+output: "/conv_layer/Conv_output_0"
+name: "/conv_layer/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #1]
+input: "/conv_layer/Conv_output_0"
+output: "/relu/Relu_output_0"
+name: "/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #2]
+input: "/relu/Relu_output_0"
+input: "onnx::Conv_167"
+input: "onnx::Conv_168"
+output: "/blocks/blocks.0/conv1/Conv_output_0"
+name: "/blocks/blocks.0/conv1/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #3]
+input: "/blocks/blocks.0/conv1/Conv_output_0"
+output: "/blocks/blocks.0/relu/Relu_output_0"
+name: "/blocks/blocks.0/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #4]
+input: "/blocks/blocks.0/relu/Relu_output_0"
+input: "onnx::Conv_170"
+input: "onnx::Conv_171"
+output: "/blocks/blocks.0/conv2/Conv_output_0"
+name: "/blocks/blocks.0/conv2/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(40): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #5]
+input: "/relu/Relu_output_0"
+input: "/blocks/blocks.0/conv2/Conv_output_0"
+output: "/blocks/blocks.0/Add_output_0"
+name: "/blocks/blocks.0/Add"
+op_type: "Add"
+doc_string: "../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #6]
+input: "/blocks/blocks.0/Add_output_0"
+output: "/blocks/blocks.0/relu_1/Relu_output_0"
+name: "/blocks/blocks.0/relu_1/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #7]
+input: "/blocks/blocks.0/relu_1/Relu_output_0"
+input: "onnx::Conv_173"
+input: "onnx::Conv_174"
+output: "/blocks/blocks.1/conv1/Conv_output_0"
+name: "/blocks/blocks.1/conv1/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #8]
+input: "/blocks/blocks.1/conv1/Conv_output_0"
+output: "/blocks/blocks.1/relu/Relu_output_0"
+name: "/blocks/blocks.1/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #9]
+input: "/blocks/blocks.1/relu/Relu_output_0"
+input: "onnx::Conv_176"
+input: "onnx::Conv_177"
+output: "/blocks/blocks.1/conv2/Conv_output_0"
+name: "/blocks/blocks.1/conv2/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(40): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #10]
+input: "/blocks/blocks.0/relu_1/Relu_output_0"
+input: "/blocks/blocks.1/conv2/Conv_output_0"
+output: "/blocks/blocks.1/Add_output_0"
+name: "/blocks/blocks.1/Add"
+op_type: "Add"
+doc_string: "../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #11]
+input: "/blocks/blocks.1/Add_output_0"
+output: "/blocks/blocks.1/relu_1/Relu_output_0"
+name: "/blocks/blocks.1/relu_1/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #12]
+input: "/blocks/blocks.1/relu_1/Relu_output_0"
+input: "onnx::Conv_179"
+input: "onnx::Conv_180"
+output: "/blocks/blocks.2/conv1/Conv_output_0"
+name: "/blocks/blocks.2/conv1/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #13]
+input: "/blocks/blocks.2/conv1/Conv_output_0"
+output: "/blocks/blocks.2/relu/Relu_output_0"
+name: "/blocks/blocks.2/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #14]
+input: "/blocks/blocks.2/relu/Relu_output_0"
+input: "onnx::Conv_182"
+input: "onnx::Conv_183"
+output: "/blocks/blocks.2/conv2/Conv_output_0"
+name: "/blocks/blocks.2/conv2/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(40): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #15]
+input: "/blocks/blocks.1/relu_1/Relu_output_0"
+input: "/blocks/blocks.2/conv2/Conv_output_0"
+output: "/blocks/blocks.2/Add_output_0"
+name: "/blocks/blocks.2/Add"
+op_type: "Add"
+doc_string: "../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #16]
+input: "/blocks/blocks.2/Add_output_0"
+output: "/blocks/blocks.2/relu_1/Relu_output_0"
+name: "/blocks/blocks.2/relu_1/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #17]
+input: "/blocks/blocks.2/relu_1/Relu_output_0"
+input: "onnx::Conv_185"
+input: "onnx::Conv_186"
+output: "/blocks/blocks.3/conv1/Conv_output_0"
+name: "/blocks/blocks.3/conv1/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #18]
+input: "/blocks/blocks.3/conv1/Conv_output_0"
+output: "/blocks/blocks.3/relu/Relu_output_0"
+name: "/blocks/blocks.3/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #19]
+input: "/blocks/blocks.3/relu/Relu_output_0"
+input: "onnx::Conv_188"
+input: "onnx::Conv_189"
+output: "/blocks/blocks.3/conv2/Conv_output_0"
+name: "/blocks/blocks.3/conv2/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(40): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #20]
+input: "/blocks/blocks.2/relu_1/Relu_output_0"
+input: "/blocks/blocks.3/conv2/Conv_output_0"
+output: "/blocks/blocks.3/Add_output_0"
+name: "/blocks/blocks.3/Add"
+op_type: "Add"
+doc_string: "../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #21]
+input: "/blocks/blocks.3/Add_output_0"
+output: "/blocks/blocks.3/relu_1/Relu_output_0"
+name: "/blocks/blocks.3/relu_1/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #22]
+input: "/blocks/blocks.3/relu_1/Relu_output_0"
+input: "onnx::Conv_191"
+input: "onnx::Conv_192"
+output: "/blocks/blocks.4/conv1/Conv_output_0"
+name: "/blocks/blocks.4/conv1/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #23]
+input: "/blocks/blocks.4/conv1/Conv_output_0"
+output: "/blocks/blocks.4/relu/Relu_output_0"
+name: "/blocks/blocks.4/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #24]
+input: "/blocks/blocks.4/relu/Relu_output_0"
+input: "onnx::Conv_194"
+input: "onnx::Conv_195"
+output: "/blocks/blocks.4/conv2/Conv_output_0"
+name: "/blocks/blocks.4/conv2/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(40): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #25]
+input: "/blocks/blocks.3/relu_1/Relu_output_0"
+input: "/blocks/blocks.4/conv2/Conv_output_0"
+output: "/blocks/blocks.4/Add_output_0"
+name: "/blocks/blocks.4/Add"
+op_type: "Add"
+doc_string: "../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #26]
+input: "/blocks/blocks.4/Add_output_0"
+output: "/blocks/blocks.4/relu_1/Relu_output_0"
+name: "/blocks/blocks.4/relu_1/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #27]
+input: "/blocks/blocks.4/relu_1/Relu_output_0"
+input: "onnx::Conv_197"
+input: "onnx::Conv_198"
+output: "/blocks/blocks.5/conv1/Conv_output_0"
+name: "/blocks/blocks.5/conv1/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #28]
+input: "/blocks/blocks.5/conv1/Conv_output_0"
+output: "/blocks/blocks.5/relu/Relu_output_0"
+name: "/blocks/blocks.5/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #29]
+input: "/blocks/blocks.5/relu/Relu_output_0"
+input: "onnx::Conv_200"
+input: "onnx::Conv_201"
+output: "/blocks/blocks.5/conv2/Conv_output_0"
+name: "/blocks/blocks.5/conv2/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 3
+  ints: 3
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 1
+  ints: 1
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(40): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #30]
+input: "/blocks/blocks.4/relu_1/Relu_output_0"
+input: "/blocks/blocks.5/conv2/Conv_output_0"
+output: "/blocks/blocks.5/Add_output_0"
+name: "/blocks/blocks.5/Add"
+op_type: "Add"
+doc_string: "../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #31]
+input: "/blocks/blocks.5/Add_output_0"
+output: "/blocks/blocks.5/relu_1/Relu_output_0"
+name: "/blocks/blocks.5/relu_1/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/res_block.py(42): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/container.py(204): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(58): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #32]
+input: "/blocks/blocks.5/relu_1/Relu_output_0"
+input: "onnx::Conv_203"
+input: "onnx::Conv_204"
+output: "/policy_head/conv_layer/Conv_output_0"
+name: "/policy_head/conv_layer/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 0
+  ints: 0
+  ints: 0
+  ints: 0
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/head/policy_head.py(34): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #33]
+input: "/policy_head/conv_layer/Conv_output_0"
+output: "/policy_head/relu/Relu_output_0"
+name: "/policy_head/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/head/policy_head.py(34): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #34]
+input: "/policy_head/relu/Relu_output_0"
+output: "/policy_head/Shape_output_0"
+name: "/policy_head/Shape"
+op_type: "Shape"
+doc_string: "../nn/network/head/policy_head.py(35): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #35]
+output: "/policy_head/Constant_output_0"
+name: "/policy_head/Constant"
+op_type: "Constant"
+attribute {
+  name: "value"
+  type: TENSOR
+  t {
+    data_type: 11
+    raw_data: "\000\000\000\000\000\000\000\000"
+  }
+}
+doc_string: "../nn/network/head/policy_head.py(35): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #36]
+input: "/policy_head/Constant_output_0"
+output: "/policy_head/Cast_output_0"
+name: "/policy_head/Cast"
+op_type: "Cast"
+attribute {
+  name: "to"
+  type: INT
+  i: 7
+}
+doc_string: "../nn/network/head/policy_head.py(35): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #37]
+input: "/policy_head/Shape_output_0"
+input: "/policy_head/Cast_output_0"
+output: "/policy_head/Gather_output_0"
+name: "/policy_head/Gather"
+op_type: "Gather"
+attribute {
+  name: "axis"
+  type: INT
+  i: 0
+}
+doc_string: "../nn/network/head/policy_head.py(35): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #38]
+output: "/policy_head/Constant_1_output_0"
+name: "/policy_head/Constant_1"
+op_type: "Constant"
+attribute {
+  name: "value"
+  type: TENSOR
+  t {
+    data_type: 11
+    raw_data: "\000\000\000\000\000\000\360\277"
+  }
+}
+doc_string: ""
+
+[Node #39]
+input: "/policy_head/Constant_1_output_0"
+output: "/policy_head/Cast_1_output_0"
+name: "/policy_head/Cast_1"
+op_type: "Cast"
+attribute {
+  name: "to"
+  type: INT
+  i: 7
+}
+doc_string: ""
+
+[Node #40]
+input: "/policy_head/Gather_output_0"
+output: "/policy_head/Unsqueeze_output_0"
+name: "/policy_head/Unsqueeze"
+op_type: "Unsqueeze"
+attribute {
+  name: "axes"
+  type: INTS
+  ints: 0
+}
+doc_string: ""
+
+[Node #41]
+input: "/policy_head/Cast_1_output_0"
+output: "/policy_head/Unsqueeze_1_output_0"
+name: "/policy_head/Unsqueeze_1"
+op_type: "Unsqueeze"
+attribute {
+  name: "axes"
+  type: INTS
+  ints: 0
+}
+doc_string: ""
+
+[Node #42]
+input: "/policy_head/Unsqueeze_output_0"
+input: "/policy_head/Unsqueeze_1_output_0"
+output: "/policy_head/Concat_output_0"
+name: "/policy_head/Concat"
+op_type: "Concat"
+attribute {
+  name: "axis"
+  type: INT
+  i: 0
+}
+doc_string: "../nn/network/head/policy_head.py(38): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #43]
+input: "/policy_head/relu/Relu_output_0"
+input: "/policy_head/Concat_output_0"
+output: "/policy_head/Reshape_output_0"
+name: "/policy_head/Reshape"
+op_type: "Reshape"
+doc_string: "../nn/network/head/policy_head.py(38): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #44]
+input: "/policy_head/Reshape_output_0"
+input: "policy_head.fc_layer.weight"
+input: "policy_head.fc_layer.bias"
+output: "output_policy"
+name: "/policy_head/fc_layer/Gemm"
+op_type: "Gemm"
+attribute {
+  name: "alpha"
+  type: FLOAT
+  f: 1
+}
+attribute {
+  name: "beta"
+  type: FLOAT
+  f: 1
+}
+attribute {
+  name: "transB"
+  type: INT
+  i: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/linear.py(114): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/head/policy_head.py(40): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #45]
+input: "/blocks/blocks.5/relu_1/Relu_output_0"
+input: "onnx::Conv_206"
+input: "onnx::Conv_207"
+output: "/value_head/conv_layer/Conv_output_0"
+name: "/value_head/conv_layer/Conv"
+op_type: "Conv"
+attribute {
+  name: "dilations"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "group"
+  type: INT
+  i: 1
+}
+attribute {
+  name: "kernel_shape"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+attribute {
+  name: "pads"
+  type: INTS
+  ints: 0
+  ints: 0
+  ints: 0
+  ints: 0
+}
+attribute {
+  name: "strides"
+  type: INTS
+  ints: 1
+  ints: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(460): _conv_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/conv.py(463): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/head/value_head.py(35): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #46]
+input: "/value_head/conv_layer/Conv_output_0"
+output: "/value_head/relu/Relu_output_0"
+name: "/value_head/relu/Relu"
+op_type: "Relu"
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/functional.py(1457): relu\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/activation.py(102): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/head/value_head.py(35): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #47]
+input: "/value_head/relu/Relu_output_0"
+output: "/value_head/Shape_output_0"
+name: "/value_head/Shape"
+op_type: "Shape"
+doc_string: "../nn/network/head/value_head.py(36): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #48]
+output: "/value_head/Constant_output_0"
+name: "/value_head/Constant"
+op_type: "Constant"
+attribute {
+  name: "value"
+  type: TENSOR
+  t {
+    data_type: 11
+    raw_data: "\000\000\000\000\000\000\000\000"
+  }
+}
+doc_string: "../nn/network/head/value_head.py(36): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #49]
+input: "/value_head/Constant_output_0"
+output: "/value_head/Cast_output_0"
+name: "/value_head/Cast"
+op_type: "Cast"
+attribute {
+  name: "to"
+  type: INT
+  i: 7
+}
+doc_string: "../nn/network/head/value_head.py(36): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #50]
+input: "/value_head/Shape_output_0"
+input: "/value_head/Cast_output_0"
+output: "/value_head/Gather_output_0"
+name: "/value_head/Gather"
+op_type: "Gather"
+attribute {
+  name: "axis"
+  type: INT
+  i: 0
+}
+doc_string: "../nn/network/head/value_head.py(36): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #51]
+input: "/value_head/Gather_output_0"
+output: "/value_head/Unsqueeze_output_0"
+name: "/value_head/Unsqueeze"
+op_type: "Unsqueeze"
+attribute {
+  name: "axes"
+  type: INTS
+  ints: 0
+}
+doc_string: ""
+
+[Node #52]
+input: "/policy_head/Cast_1_output_0"
+output: "/value_head/Unsqueeze_1_output_0"
+name: "/value_head/Unsqueeze_1"
+op_type: "Unsqueeze"
+attribute {
+  name: "axes"
+  type: INTS
+  ints: 0
+}
+doc_string: ""
+
+[Node #53]
+input: "/value_head/Unsqueeze_output_0"
+input: "/value_head/Unsqueeze_1_output_0"
+output: "/value_head/Concat_output_0"
+name: "/value_head/Concat"
+op_type: "Concat"
+attribute {
+  name: "axis"
+  type: INT
+  i: 0
+}
+doc_string: "../nn/network/head/value_head.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #54]
+input: "/value_head/relu/Relu_output_0"
+input: "/value_head/Concat_output_0"
+output: "/value_head/Reshape_output_0"
+name: "/value_head/Reshape"
+op_type: "Reshape"
+doc_string: "../nn/network/head/value_head.py(39): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+[Node #55]
+input: "/value_head/Reshape_output_0"
+input: "value_head.fc_layer.weight"
+input: "value_head.fc_layer.bias"
+output: "output_value"
+name: "/value_head/fc_layer/Gemm"
+op_type: "Gemm"
+attribute {
+  name: "alpha"
+  type: FLOAT
+  f: 1
+}
+attribute {
+  name: "beta"
+  type: FLOAT
+  f: 1
+}
+attribute {
+  name: "transB"
+  type: INT
+  i: 1
+}
+doc_string: "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/linear.py(114): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/head/value_head.py(41): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n../nn/network/dual_net.py(60): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1182): _slow_forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(118): wrapper\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(132): forward\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/nn/modules/module.py(1194): _call_impl\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/jit/_trace.py(1184): _get_trace_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(896): _trace_and_get_graph_from_model\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(987): _create_jit_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1111): _model_to_graph\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(1539): _export\n/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/torch/onnx/utils.py(519): export\nhen2.py(79): <module>\n"
+
+====== Inputs ======
+[Input #0]
+name: "input"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_param: "batch_size"
+      }
+      dim {
+        dim_value: 6
+      }
+      dim {
+        dim_value: 9
+      }
+      dim {
+        dim_value: 9
+      }
+    }
+  }
+}
+
+[Input #1]
+name: "policy_head.fc_layer.weight"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 82
+      }
+      dim {
+        dim_value: 162
+      }
+    }
+  }
+}
+
+[Input #2]
+name: "policy_head.fc_layer.bias"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 82
+      }
+    }
+  }
+}
+
+[Input #3]
+name: "value_head.fc_layer.weight"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 81
+      }
+    }
+  }
+}
+
+[Input #4]
+name: "value_head.fc_layer.bias"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #5]
+name: "onnx::Conv_164"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 6
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #6]
+name: "onnx::Conv_165"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #7]
+name: "onnx::Conv_167"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #8]
+name: "onnx::Conv_168"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #9]
+name: "onnx::Conv_170"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #10]
+name: "onnx::Conv_171"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #11]
+name: "onnx::Conv_173"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #12]
+name: "onnx::Conv_174"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #13]
+name: "onnx::Conv_176"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #14]
+name: "onnx::Conv_177"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #15]
+name: "onnx::Conv_179"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #16]
+name: "onnx::Conv_180"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #17]
+name: "onnx::Conv_182"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #18]
+name: "onnx::Conv_183"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #19]
+name: "onnx::Conv_185"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #20]
+name: "onnx::Conv_186"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #21]
+name: "onnx::Conv_188"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #22]
+name: "onnx::Conv_189"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #23]
+name: "onnx::Conv_191"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #24]
+name: "onnx::Conv_192"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #25]
+name: "onnx::Conv_194"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #26]
+name: "onnx::Conv_195"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #27]
+name: "onnx::Conv_197"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #28]
+name: "onnx::Conv_198"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #29]
+name: "onnx::Conv_200"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 3
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+
+[Input #30]
+name: "onnx::Conv_201"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 64
+      }
+    }
+  }
+}
+
+[Input #31]
+name: "onnx::Conv_203"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 2
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 1
+      }
+      dim {
+        dim_value: 1
+      }
+    }
+  }
+}
+
+[Input #32]
+name: "onnx::Conv_204"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 2
+      }
+    }
+  }
+}
+
+[Input #33]
+name: "onnx::Conv_206"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 1
+      }
+      dim {
+        dim_value: 64
+      }
+      dim {
+        dim_value: 1
+      }
+      dim {
+        dim_value: 1
+      }
+    }
+  }
+}
+
+[Input #34]
+name: "onnx::Conv_207"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_value: 1
+      }
+    }
+  }
+}
+
+====== Outputs ======
+[Output #0]
+name: "output_policy"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_param: "batch_size"
+      }
+      dim {
+        dim_value: 82
+      }
+    }
+  }
+}
+
+[Output #1]
+name: "output_value"
+type {
+  tensor_type {
+    elem_type: 1
+    shape {
+      dim {
+        dim_param: "batch_size"
+      }
+      dim {
+        dim_value: 3
+      }
+    }
+  }
+}
+

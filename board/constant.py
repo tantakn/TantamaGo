@@ -1,8 +1,8 @@
 """碁盤に関する定数
 """
 # 碁盤のサイズ
-BOARD_SIZE = 13
-# BOARD_SIZE = 9
+# BOARD_SIZE = 13
+BOARD_SIZE = 9
 # 盤外のサイズ
 OB_SIZE = 1
 # 連の最大数

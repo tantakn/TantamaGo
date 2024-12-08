@@ -1,0 +1,7 @@
+
+[20241202_142145] vs_result
+games: 200
+model1: model/sl-model_20241201_213724_Ep:00.bin
+    win: (108 + 0.5*16)/200 (54.00%)
+model2: model/sl-model_20241201_213724_Ep:00.bin
+    win: (76 + 0.5*16)/200 (38.00%)

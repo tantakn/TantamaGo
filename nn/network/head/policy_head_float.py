@@ -17,9 +17,9 @@ class PolicyHead(nn.Module):
         """
         super().__init__()
         self.conv_layer = nn.Conv2d(in_channels=channels, out_channels=2, \
-            kernel_size=1, padding=0, bias=False)
-        self.bn_layer = nn.BatchNorm2d(num_features=2, eps=2e-5, momentum=momentum)
-        self.fc_layer = nn.Linear(2 * board_size ** 2, board_size ** 2 + 1)
+            kernel_size=1, padding=0, bias=False, dtype=float)
+        self.bn_layer = nn.BatchNorm2d(num_features=2, eps=2e-5, momentum=momentum, dtype=float)
+        self.fc_layer = nn.Linear(2 * board_size ** 2, board_size ** 2 + 1, dtype=float)
         self.relu = nn.ReLU()
 
     def forward(self, input_plane: torch.Tensor) -> torch.Tensor:
@@ -31,38 +31,10 @@ class PolicyHead(nn.Module):
         Returns:
             torch.Tensor: PolicyのLogit出力
         """
-        # hidden = self.relu(self.bn_layer(self.conv_layer(input_plane)))
-        # batch_size = hidden.size(0)
-
-        # # total_size の計算を省略し、-1 を使用して自動的にサイズを推定
-        # reshape = hidden.view(batch_size, -1)
-
-        # policy_out = self.fc_layer(reshape)
-
-
-        #---------------
-        # batch_size, channels, height, width = hidden.shape
-
-        # # height と width を明示的に int 型に変換
-        # height = int(height)
-        # width = int(width)
-        # channels = int(channels)
-        # batch_size = int(batch_size)
-
-        # total_size = channels * height * width
-        # total_size = int(total_size)
-        # reshape = hidden.reshape(batch_size, total_size)
-
-        # policy_out = self.fc_layer(reshape)
-
-
-        #---------------
         hidden = self.relu(self.bn_layer(self.conv_layer(input_plane)))
         batch_size, channels, height, witdh = hidden.shape
         reshape = hidden.reshape(batch_size, channels * height * witdh)
 
         policy_out = self.fc_layer(reshape)
-
-
 
         return policy_out
