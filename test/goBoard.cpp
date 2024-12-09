@@ -436,7 +436,6 @@ int main()
     }
 
 
-
     //     goBoard board(
     //         // clang-format off
     // {{
