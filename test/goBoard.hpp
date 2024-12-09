@@ -4,7 +4,7 @@
 #endif
 
 
-constexpr int debugFlag = 0b111111111;
+constexpr int debugFlag = 0b11;
 
 constexpr int BOARDSIZE = 9;
 
@@ -22,6 +22,18 @@ vector<vector<char>> rawBoard = []()
     return tmpBoard;
 }();
 
+vector<vector<int>> rawIdBoard = []() 
+{
+    vector<vector<int>> tmpIdBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0));
+    rep (i, BOARDSIZE + 2) {
+        rawIdBoard[0][i] = -1;
+        rawIdBoard[BOARDSIZE + 1][i] = -1;
+        rawIdBoard[i][0] = -1;
+        rawIdBoard[i][BOARDSIZE + 1] = -1;
+    }
+    return tmpIdBoard;
+}();
+
 /**
  * @brief
  *
@@ -32,6 +44,9 @@ struct goBoard {
 
     /// @brief 直前の手がパスかどうか
     bool isPreviousPass = false;
+
+    /// @brief 終局図かどうか
+    bool isEnded = false;
 
     /// 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁。
     vector<vector<char>> board;
@@ -50,7 +65,7 @@ struct goBoard {
 
     /// @brief 親盤面
     /// TODO: = nullptr でいい？
-    goBoard *parent = nullptr;
+    goBoard *parent;
 
     /// @brief 子盤面
     vector<goBoard *> childrens;
@@ -146,46 +161,11 @@ struct goBoard {
      */
     goBoard* PutStone(int y, int x, char color);
 
+    tuple<char, char, char> GenRandomMove();
 
-    goBoard(goBoard &inputparent, int y, int x, char putcolor)
-        : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), color(1)
-    {
-        assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
+    goBoard();
 
-        if (putcolor == 0) {
-            color = 3 - parent->color;
-            isPreviousPass = true;
-            return;
-        }
-
-        for (auto dir : directions) {
-            int nx = x + dir.first;
-            int ny = y + dir.second;
-
-            if (libs[idBoard[ny][nx]] == 1 && board[ny][nx] == 3 - putcolor) {
-                DeleteString(ny, nx);
-            }
-        }
-
-        board[y][x] = putcolor;
-
-        ApplyString(y, x);
-
-        for (auto dir : directions) {
-            int nx = x + dir.first;
-            int ny = y + dir.second;
-
-            if (idBoard[ny][nx] >= 1) {
-                ApplyString(ny, nx);
-            }
-        }
-
-        color = 3 - putcolor;
-
-        history.insert(board);
-
-        // PrintBoard(1);
-    };
+    goBoard(goBoard &inputparent, int y, int x, char putcolor);
 
     /// TODO: 引数なしの初期化関数を作る
     /// TODO: parent と children の処理を書く

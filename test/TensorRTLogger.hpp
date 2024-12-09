@@ -9,6 +9,8 @@
 #ifndef _TENSOR_RT_LOGGER_HPP_
 #define _TENSOR_RT_LOGGER_HPP_
 
+#define USE_TENSOR_RT  ////////
+
 #if defined USE_TENSOR_RT
 
 #include <iostream>

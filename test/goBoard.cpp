@@ -4,6 +4,11 @@
 #endif
 
 
+goBoard::goBoard() : board(rawBoard), idBoard(rawIdBoard), color(1), parent(nullptr)
+{
+    libs[-1] = INF;
+}
+
 goBoard::goBoard(vector<vector<char>> inputBoard)
     : board(InputBoardFromVec(inputBoard)), idBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0)), color(1)
 {
@@ -24,6 +29,51 @@ goBoard::goBoard(vector<vector<char>> inputBoard)
             }
         }
     }
+}
+
+goBoard::goBoard(goBoard &inputparent, int y, int x, char putcolor)
+    : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), color(1)
+{
+    assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
+
+    if (putcolor == 0) {
+        if (parent->isPreviousPass) {
+            isEnded = true;
+            return;
+        }
+
+        color = 3 - parent->color;
+        isPreviousPass = true;
+        return;
+    }
+
+    for (auto dir : directions) {
+        int nx = x + dir.first;
+        int ny = y + dir.second;
+
+        if (libs[idBoard[ny][nx]] == 1 && board[ny][nx] == 3 - putcolor) {
+            DeleteString(ny, nx);
+        }
+    }
+
+    board[y][x] = putcolor;
+
+    ApplyString(y, x);
+
+    for (auto dir : directions) {
+        int nx = x + dir.first;
+        int ny = y + dir.second;
+
+        if (idBoard[ny][nx] >= 1) {
+            ApplyString(ny, nx);
+        }
+    }
+
+    color = 3 - putcolor;
+
+    history.insert(board);
+
+    // PrintBoard(1);
 }
 
 goBoard::~goBoard()
@@ -203,6 +253,10 @@ int goBoard::IsLegalMove(int y, int x, char color)
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (color == 0b01 || color == 0b10) || color == 0);
 
+    if (isEnded) {
+        return 5;
+    }
+
     if (color == 0) {
         return 0;
     }
@@ -261,13 +315,17 @@ int goBoard::IsLegalMove(int y, int x, char color)
     }
 
     // 終局のために、2眼以上ある石の目を埋める手に良い手が無いと仮定して、その手を禁止とする。
+    bool isFillEye = true;
     for (auto dir : directions) {
         int nx = x + dir.first;
         int ny = y + dir.second;
 
-        if (board[ny][nx] == 3 - color && libs[idBoard[ny][nx]] >= 2) {
-            return 4;
+        if (board[ny][nx] == 0 || board[ny][nx] == 3 - color || libs[idBoard[ny][nx]] == 1) {
+            isFillEye = false;
         }
+    }
+    if (isFillEye) {
+        return 4;
     }
 
     return 0;
@@ -357,22 +415,20 @@ goBoard* goBoard::PutStone(int y, int x, char color)
     /// TODO: goBoard はポインタで返したほうがいい？
     /// TODO: string の処理を考える
 
-    if (color == 0 && isPreviousPass) {
-        return nullptr;
-    }
 
-    int ilegal = IsLegalMove(y, x, color);
-
-    if (ilegal) {
-        if (debugFlag & 0b1) print("IsLegalMove:", ilegal);
-        return nullptr;
-    }
+    assert(!isEnded);
+    assert(!IsLegalMove(y, x, color));
 
     // auto ptr = make_unique<goBoard>(*this, y, x, color);
     // goBoard* newBoardPtr = newBoard.get();
     goBoard* p = new goBoard(*this, y, x, color);
     childrens.push_back(p);
+
+    if (debugFlag & 0b10) p->PrintBoard();
+
     return p;
+
+    
 
     // goBoard* newBoard = new goBoard(*this, y, x, color);
     // childrens.push_back(newBoard);
@@ -383,57 +439,107 @@ goBoard* goBoard::PutStone(int y, int x, char color)
     // return *newBoard;
 };
 
+tuple<char, char, char> goBoard::GenRandomMove() {
+    if (isEnded) {
+        return {-1, -1, -1};
+    }
+
+    mt19937 mt(0);
+
+    vint v(BOARDSIZE * BOARDSIZE + 1);
+    rep (i, BOARDSIZE * BOARDSIZE + 1) {
+        v[i] = i;
+    }
+    shuffle(v.begin(), v.end(), mt);
+
+    for (int i : v) {
+        if (i == BOARDSIZE * BOARDSIZE) {
+            // return {1, 1, 0};
+            continue;
+        }
+        int x = i % BOARDSIZE + 1;
+        int y = i / BOARDSIZE + 1;
+        if (!IsLegalMove(y, x, color)) {
+            return {y, x, color};
+        }
+        else if (debugFlag & 0b100) {
+            print(x, y, IsLegalMove(y, x, color));
+        }
+    }
+
+    return {1, 1, 0};
+};
 
 int main()
 {
-    unique_ptr<goBoard> testboard(new goBoard(
-        // clang-format off
-{{
-0,1,0,0,0,0,2,1,0}, {
-1,1,0,0,0,0,0,2,2}, {
-0,1,0,1,1,1,0,0,2}, {
-2,1,0,1,0,1,0,2,0}, {
-1,1,0,1,1,0,0,0,2}, {
-0,0,0,0,0,0,0,0,0}, {
-0,0,0,0,0,2,0,0,0}, {
-1,0,0,0,1,0,2,0,0}, {
-0,1,0,0,0,2,2,0,0}}
-        // clang-format on
-        ));
+    goBoard* testboard(new goBoard());
 
     testboard->PrintBoard();
 
-    goBoard* ptr = testboard->PutStone(8, 2, 0);
     while (true) {
-        int x, y, z;
-        cout << "x: ";
-        cin >> x;
-        if (x == -1) {
-            ptr = nullptr;
+        auto[y, x, z] = testboard->GenRandomMove();
+        if (y == -1) {
+            testboard->PrintBoard(0b111111);
             break;
         }
-        else if (x == -2) {
-            ptr->PrintBoard(0b111111);
-            continue;
-        }
-        cout << "y: ";
-        cin >> y;
-        cout << "color: ";
-        cin >> z;
-        if (x < 1 || x > BOARDSIZE || y < 1 || y > BOARDSIZE || (z != 1 && z != 2 && z != 0)) {
-            print("Illegal Input");
-            continue;
-        }
-
-        goBoard* ptr2 = ptr->PutStone(y, x, z);
-        if (ptr2 == nullptr) {
-            print("Illegal Move");
-        }
-        else {
-            ptr2->PrintBoard();
-            ptr = ptr2;
-        }
+        testboard = testboard->PutStone(y, x, z);
     }
+
+
+
+
+//     unique_ptr<goBoard> testboard(new goBoard(
+//         // clang-format off
+// {{
+// 0,1,0,0,0,0,2,1,0}, {
+// 1,1,0,0,0,0,0,2,2}, {
+// 0,1,0,1,1,1,0,0,2}, {
+// 2,1,0,1,0,1,0,2,0}, {
+// 1,1,0,1,1,0,0,0,2}, {
+// 0,0,0,0,0,0,0,0,0}, {
+// 0,0,0,0,0,2,0,0,0}, {
+// 1,0,0,0,1,0,2,0,0}, {
+// 0,1,0,0,0,2,2,0,0}}
+//         // clang-format on
+//         ));
+
+//     testboard->PrintBoard();
+
+//     goBoard* ptr = testboard->PutStone(8, 2, 0);
+//     while (true) {
+//         int x, y, z;
+//         cout << "x: ";
+//         cin >> x;
+//         if (x == -1) {
+//             ptr = nullptr;
+//             break;
+//         }
+//         else if (x == -2) {
+//             ptr->PrintBoard(0b111111);
+//             continue;
+//         }
+//         else if (x == -3) {
+//             auto[b, a, c] = ptr->GenRandomMove();
+//             x = a; y = b; z = c;
+//             print(x,y,z);
+//         } else {
+//             cout << "y: ";
+//             cin >> y;
+//             cout << "color: ";
+//             cin >> z;
+//         }
+//         if (x < 1 || x > BOARDSIZE || y < 1 || y > BOARDSIZE || (z != 1 && z != 2 && z != 0)) {
+//             print("Illegal Input");
+//             continue;
+//         }
+//         if (ptr->IsLegalMove(y, x, z)) {
+//             print("Illegal Move");
+//             continue;
+//         }
+//         goBoard* ptr2 = ptr->PutStone(y, x, z);
+//         ptr2->PrintBoard();
+//         ptr = ptr2;
+//     }
 
 
     //     goBoard board(
