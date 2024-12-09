@@ -104,7 +104,7 @@ int main() {
 
     // 入力データの準備（バッチサイズ1、チャンネル6、サイズ9x9）
     int batchSize = 1;
-    int inputIndex = engine->getTensorIOMode("input");
+    int inputIndex = engine->getTensorIndex("input");
     Dims inputDims = engine->getTensorShape(inputIndex);
     // int inputIndex = engine->getBindingIndex("input");
     // Dims inputDims = engine->getBindingDimensions(inputIndex);
