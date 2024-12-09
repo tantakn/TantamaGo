@@ -323,8 +323,7 @@ class NNTensorRT : public RayNet {
 
 
 int main() {
-    char 
-    const char *filename = "test.onnx";
+    char[] *filename = "test.onnx";
     const int gpu_id = 0;
     const int max_batch_size = 1;
     
