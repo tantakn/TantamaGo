@@ -4,6 +4,15 @@
 #endif
 
 
+#define dbg_flag
+#ifdef dbg_flag
+ll g_node_cnt = 0;
+#endif
+
+
+mt19937 mt(random_device{}());
+
+
 goBoard::goBoard() : board(rawBoard), idBoard(rawIdBoard), color(1), parent(nullptr)
 {
     libs[-1] = INF;
@@ -35,6 +44,10 @@ goBoard::goBoard(goBoard &inputparent, int y, int x, char putcolor)
     : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), color(1)
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
+
+    #ifdef dbg_flag
+    g_node_cnt++;
+    #endif
 
     if (putcolor == 0) {
         if (parent->isPreviousPass) {
@@ -78,7 +91,8 @@ goBoard::goBoard(goBoard &inputparent, int y, int x, char putcolor)
 
 goBoard::~goBoard()
 {
-    for (goBoard *child : childrens) {
+    for (auto m : childrens) {
+        goBoard* child = m.second;
         if (debugFlag & 0b100) print("delete child");
         delete child;
         child = nullptr;
@@ -422,13 +436,12 @@ goBoard* goBoard::PutStone(int y, int x, char color)
     // auto ptr = make_unique<goBoard>(*this, y, x, color);
     // goBoard* newBoardPtr = newBoard.get();
     goBoard* p = new goBoard(*this, y, x, color);
-    childrens.push_back(p);
+    childrens[make_pair(y, x)] = p;
 
     if (debugFlag & 0b10) p->PrintBoard();
 
     return p;
 
-    
 
     // goBoard* newBoard = new goBoard(*this, y, x, color);
     // childrens.push_back(newBoard);
@@ -443,8 +456,6 @@ tuple<char, char, char> goBoard::GenRandomMove() {
     if (isEnded) {
         return {-1, -1, -1};
     }
-
-    mt19937 mt(0);
 
     vint v(BOARDSIZE * BOARDSIZE + 1);
     rep (i, BOARDSIZE * BOARDSIZE + 1) {
@@ -470,6 +481,52 @@ tuple<char, char, char> goBoard::GenRandomMove() {
     return {1, 1, 0};
 };
 
+double goBoard::CountResult() {
+    int blackScore = 0;
+    int whiteScore = 0;
+
+    rep (i, 1, BOARDSIZE + 1) {
+        rep (j, 1, BOARDSIZE + 1) {
+            if (board[i][j] == 0) {
+                /// TODO: 全部見る必要はない
+                char tmpColor = 0;
+                for (auto dir : directions) {
+                    int nx = j + dir.first;
+                    int ny = i + dir.second;
+                    if (board[ny][nx] == 1) {
+                        assert(tmpColor != 2);
+                        tmpColor = 1;
+                    }
+                    else if (board[ny][nx] == 2) {
+                        assert(tmpColor != 1);
+                        tmpColor = 2;
+                    }
+                }
+                if (tmpColor == 1) {
+                    ++blackScore;
+                }
+                else if (tmpColor == 2) {
+                    ++whiteScore;
+                }
+            }
+            else if (board[i][j] == 1) {
+                ++blackScore;
+            }
+            else if (board[i][j] == 2) {
+                ++whiteScore;
+            }
+        }
+    }
+
+    print("blackScore:", blackScore);
+    print("whiteScore:", whiteScore);
+    print("komi:", komi);
+
+    return blackScore - whiteScore - komi;
+}
+
+
+
 int main()
 {
     goBoard* testboard(new goBoard());
@@ -480,12 +537,13 @@ int main()
         auto[y, x, z] = testboard->GenRandomMove();
         if (y == -1) {
             testboard->PrintBoard(0b111111);
+            print(testboard->CountResult());
             break;
         }
         testboard = testboard->PutStone(y, x, z);
     }
 
-
+    print(g_node_cnt);
 
 
 //     unique_ptr<goBoard> testboard(new goBoard(

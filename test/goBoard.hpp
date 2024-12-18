@@ -8,6 +8,8 @@ constexpr int debugFlag = 0b11;
 
 constexpr int BOARDSIZE = 9;
 
+constexpr double komi = 7.5;
+
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
 vector<vector<char>> rawBoard = []()
@@ -68,7 +70,7 @@ struct goBoard {
     goBoard *parent;
 
     /// @brief 子盤面
-    vector<goBoard *> childrens;
+    map<tuple<char, char>, goBoard *> childrens;
 
     /// @brief
     vector<vector<double>> policyBoard;
@@ -162,6 +164,8 @@ struct goBoard {
     goBoard* PutStone(int y, int x, char color);
 
     tuple<char, char, char> GenRandomMove();
+
+    double CountResult();
 
     goBoard();
 
