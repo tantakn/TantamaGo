@@ -86,10 +86,10 @@ int main() {
         IBuilderConfig* config = builder->createBuilderConfig();
 
         // 変更前
-        // config->setMaxWorkspaceSize(1 << 20);  // 1MB
+        config->setMaxWorkspaceSize(1 << 20);  // 1MB
 
-        // 変更後
-        config->setMemoryPoolLimit(nvinfer1::MemoryPoolType::kWORKSPACE, 1 << 20);
+        // // 変更後
+        // config->setMemoryPoolLimit(nvinfer1::MemoryPoolType::kWORKSPACE, 1 << 20);
 
         engine = builder->buildEngineWithConfig(*network, *config);
         // リソースの解放

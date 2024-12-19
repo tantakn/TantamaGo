@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cppshogi.h"
+// #include "cppshogi.h"
 
 #include "NvInferRuntimeCommon.h"
 #include "NvInfer.h"

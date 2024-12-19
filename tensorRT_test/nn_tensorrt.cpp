@@ -1,7 +1,7 @@
 #include "nn_tensorrt.h"
 
-#include "cppshogi.h"
-#include "unpack.h"
+// #include "cppshogi.h"
+// #include "unpack.h"
 
 class Logger : public nvinfer1::ILogger
 {
