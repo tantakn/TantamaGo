@@ -3,7 +3,6 @@
 #define goBoard_INCLUDED
 #endif
 
-
 #define dbg_flag
 #ifdef dbg_flag
 ll g_node_cnt = 0;
@@ -13,14 +12,15 @@ ll g_node_cnt = 0;
 mt19937 mt(random_device{}());
 
 
-goBoard::goBoard() : board(rawBoard), idBoard(rawIdBoard), color(1), parent(nullptr)
+goBoard::goBoard() : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr)
 {
     libs[-1] = INF;
 }
 
 goBoard::goBoard(vector<vector<char>> inputBoard)
-    : board(InputBoardFromVec(inputBoard)), idBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0)), color(1)
+    : board(InputBoardFromVec(inputBoard)), idBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0)), teban(1)
 {
+    /// TODO: teban の扱いを考える
     rep (i, BOARDSIZE + 2) {
         idBoard[0][i] = -1;
         idBoard[BOARDSIZE + 1][i] = -1;
@@ -41,7 +41,7 @@ goBoard::goBoard(vector<vector<char>> inputBoard)
 }
 
 goBoard::goBoard(goBoard &inputparent, int y, int x, char putcolor)
-    : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), color(1)
+    : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), teban(1), previousMove(make_pair(y, x))
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
 
@@ -50,13 +50,13 @@ goBoard::goBoard(goBoard &inputparent, int y, int x, char putcolor)
     #endif
 
     if (putcolor == 0) {
-        if (parent->isPreviousPass) {
+        if (parent->previousMove == make_pair((char)0, (char)0)) {
             isEnded = true;
             return;
         }
 
-        color = 3 - parent->color;
-        isPreviousPass = true;
+        teban = 3 - parent->teban;
+        previousMove = make_pair(0, 0);
         return;
     }
 
@@ -82,7 +82,7 @@ goBoard::goBoard(goBoard &inputparent, int y, int x, char putcolor)
         }
     }
 
-    color = 3 - putcolor;
+    teban = 3 - putcolor;
 
     history.insert(board);
 
@@ -136,7 +136,8 @@ void goBoard::PrintBoard(char bit=0b1)
     //     }
     // }
     if (bit & 0b0001) {
-        cout << "turn: " << (int)color << endl;
+        cout << (int)previousMove.first << " " << (int)previousMove.second << " " << (int)teban << endl;////////////////
+        cout << "turn: " << (int)teban << endl;
         cout << "   1 2 3 4 5 6 7 8 9" << endl;
         rep (i, board.size()) {
             if (i == 0 || i == BOARDSIZE + 1) {
@@ -213,7 +214,27 @@ void goBoard::PrintBoard(char bit=0b1)
         }
         cout << endl;
     }
+
+    // ニューラルネットワーク入力用
+    if (bit & 0b10000) {
+        cout << (int)previousMove.first << " " << (int)previousMove.second << " " << (int)teban << endl;
+        rep (i, 1, BOARDSIZE + 1) {
+            rep (j, 1, BOARDSIZE + 1) {
+                cout << (int)board[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
 };
+
+string goBoard::ToJson() {
+    vector<vector<char>> v = board;
+    vector<char> tmp = {teban, previousMove.first, previousMove.second};
+    v.push_back(tmp);
+    nlohmann::json j(v);
+
+    return j.dump();
+}
 
 int goBoard::CountLiberties(int y, int x)
 {
@@ -265,7 +286,7 @@ int goBoard::CountLiberties(int y, int x)
 
 int goBoard::IsLegalMove(int y, int x, char color)
 {
-    assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (color == 0b01 || color == 0b10) || color == 0);
+    assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (color == 0b01 || color == 0b10) || (x == 0 && y == 0 && color == 0));
 
     if (isEnded) {
         return 5;
@@ -470,15 +491,16 @@ tuple<char, char, char> goBoard::GenRandomMove() {
         }
         int x = i % BOARDSIZE + 1;
         int y = i / BOARDSIZE + 1;
-        if (!IsLegalMove(y, x, color)) {
-            return {y, x, color};
+        if (!IsLegalMove(y, x, teban)) {
+            return {y, x, teban};
         }
         else if (debugFlag & 0b100) {
-            print(x, y, IsLegalMove(y, x, color));
+            print(x, y, IsLegalMove(y, x, teban));
         }
     }
 
-    return {1, 1, 0};
+    // パス
+    return {0, 0, 0};
 };
 
 double goBoard::CountResult() {
@@ -541,7 +563,10 @@ int main()
             break;
         }
         testboard = testboard->PutStone(y, x, z);
+    print(testboard->ToJson());
     }
+
+    print(testboard->ToJson());
 
     print(g_node_cnt);
 

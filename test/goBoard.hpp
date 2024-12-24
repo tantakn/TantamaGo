@@ -3,6 +3,11 @@
 #define myMacro_INCLUDED
 #endif
 
+#ifndef json_INCLUDED
+#include "json.hpp"
+#define json_INCLUDED
+#endif
+
 
 constexpr int debugFlag = 0b11;
 
@@ -42,10 +47,10 @@ vector<vector<int>> rawIdBoard = []()
  */
 struct goBoard {
     /// @brief 現在の手番。0b01: 黒, 0b10: 白
-    char color;
+    char teban;
 
-    /// @brief 直前の手がパスかどうか
-    bool isPreviousPass = false;
+    /// @brief 直前の着手。-1は初期状態、0はパス。make_pair(y, x)
+    pair<char, char> previousMove = make_pair(-1, -1);
 
     /// @brief 終局図かどうか
     bool isEnded = false;
@@ -117,6 +122,8 @@ struct goBoard {
      */
     void PrintBoard(char bit);
 
+    string ToJson();
+
     /**
      * @brief 呼吸点の数を数える。壁はINFを返す
      *
@@ -154,7 +161,7 @@ struct goBoard {
     void DeleteString(int y, int x);
 
     /**
-     * @brief
+     * @brief 子ノードに石を置く
      *
      * @param y
      * @param x
