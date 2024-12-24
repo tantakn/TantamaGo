@@ -1,10 +1,17 @@
 import json
 import numpy as np
 
+import os
+
 
 from nn.utility import load_network, load_DualNet_128_12, choose_network
 
 from nn.network.dual_net import DualNet
+
+from monitoring import display_train_monitoring_worker
+
+
+import threading, time, datetime
 
 BOARD_SIZE = 9
 data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,1,1,1,0,1,0,1,0,3],[3,0,1,0,1,1,1,1,1,1,3],[3,1,1,1,1,1,1,1,1,1,3],[3,1,1,2,2,1,2,2,2,1,3],[3,1,2,0,2,2,2,2,1,1,3],[3,1,2,2,2,2,2,1,1,1,3],[3,0,1,2,0,2,2,1,2,1,3],[3,1,1,1,2,2,0,2,2,1,3],[3,1,0,1,2,2,2,0,2,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,0,0]]"
@@ -47,10 +54,16 @@ else:
 
 print(input_np)######
 
+
 network_name1 = "DualNet"
 model_file_path = "model/sl-model_default.bin"
 use_gpu = True
 gpu_num = 1
+
+# ハードウェア使用率の監視スレッドを起動
+monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 10, os.getpid()), daemon=True)
+monitoring_worker.start()
+
 network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_num)
 
 network.training = False
