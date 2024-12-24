@@ -9,6 +9,8 @@ import numpy as np
 
 import os
 
+import torch
+
 
 from nn.utility import load_network, load_DualNet_128_12, choose_network
 
@@ -61,8 +63,11 @@ else:
 print(input_np)######
 
 
+input_planes = torch.tensor(input_np)
+
+
 network_name1 = "DualNet"
-model_file_path = "model_def/sl-model_default.bin"
+model_file_path = "/home0/y2024/u2424004/igo/TantamaGo/model_def/sl-model_default.bin"
 use_gpu = True
 gpu_num = 1
 
@@ -74,10 +79,12 @@ network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_nu
 
 network.training = False
 
-print(network.forward)
+raw_policy, value_data = network.forward(input_planes)
 
+print(raw_policy)######
+print(value_data)######
 
-
+# raw_policy, value_data = self.network.inference(input_planes)
 
 
 
