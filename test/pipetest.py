@@ -1,3 +1,9 @@
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
 import json
 import numpy as np
 
@@ -48,7 +54,7 @@ else:
 print(input_np)######
 
 network_name1 = "DualNet"
-model_file_path = "model/sl-model_default.bin"
+model_file_path = "model_def/sl-model_default.bin"
 use_gpu = True
 gpu_num = 1
 network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_num)
