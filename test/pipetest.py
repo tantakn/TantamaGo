@@ -1,71 +1,13 @@
-import os
+import os, sys, psutil, torch, threading, time, datetime, json
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
-import json
 import numpy as np
-
-import os
-
-import torch
-
-
 from nn.utility import load_network, load_DualNet_128_12, choose_network
-
 from nn.network.dual_net import DualNet
-
 from monitoring import display_train_monitoring_worker
 
 
-import threading, time, datetime
-
 BOARD_SIZE = 9
-data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,1,1,1,0,1,0,1,0,3],[3,0,1,0,1,1,1,1,1,1,3],[3,1,1,1,1,1,1,1,1,1,3],[3,1,1,2,2,1,2,2,2,1,3],[3,1,2,0,2,2,2,2,1,1,3],[3,1,2,2,2,2,2,1,1,1,3],[3,0,1,2,0,2,2,1,2,1,3],[3,1,1,1,2,2,0,2,2,1,3],[3,1,0,1,2,2,2,0,2,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,0,0]]"
-data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,2,2,0,2,2,2,2,0,2,3],[3,2,0,2,2,0,2,2,1,2,3],[3,2,2,2,2,2,2,0,2,2,3],[3,2,2,2,2,2,2,2,2,1,3],[3,1,2,1,1,1,1,2,1,1,3],[3,1,1,1,0,1,1,1,1,1,3],[3,1,1,1,1,0,1,1,0,1,3],[3,1,1,0,1,1,0,1,1,1,3],[3,1,1,1,1,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,2,6]]"
-input_raw = json.loads(data)
-
-
-input_np = np.zeros((6, BOARD_SIZE, BOARD_SIZE), dtype=np.float32)
-
-print(input_np)######
-
-for i in range(1, BOARD_SIZE + 1):
-    for j in range(1, BOARD_SIZE + 1):
-        if input_raw[i][j] == 0:
-            input_np[0][i - 1][j - 1] = 1
-        elif input_raw[i][j] == 1:
-            input_np[1][i - 1][j - 1] = 1
-        elif input_raw[i][j] == 2:
-            input_np[2][i - 1][j - 1] = 1
-
-color = input_raw[BOARD_SIZE + 2][0]
-y = input_raw[BOARD_SIZE + 2][1]
-x = input_raw[BOARD_SIZE + 2][2]
-
-if y != 0:
-    input_np[3][y - 1][x - 1] = 1
-else:
-    for i in range(BOARD_SIZE):
-        for j in range(BOARD_SIZE):
-            input_np[4][i][j] = 1
-
-if color == 1:
-    for i in range(BOARD_SIZE):
-        for j in range(BOARD_SIZE):
-            input_np[5][i][j] = 1
-else:
-    for i in range(BOARD_SIZE):
-        for j in range(BOARD_SIZE):
-            input_np[5][i][j] = -1
-
-print(input_np)######
-
-
-input_planes = torch.tensor(input_np)
-
-
 network_name1 = "DualNet"
 model_file_path = "/home0/y2024/u2424004/igo/TantamaGo/model_def/sl-model_default.bin"
 use_gpu = True
@@ -79,10 +21,99 @@ network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_nu
 
 network.training = False
 
-raw_policy, value_data = network.forward(input_planes)
+
+def tmp_load_data_set(npz_path, rank=0):
+    def check_memory_usage():
+        if not psutil.virtual_memory().percent < 90:
+            print(f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
+            assert True
+
+    check_memory_usage()
+
+    data = np.load(npz_path)
+
+    check_memory_usage()
+
+    plane_data = data["input"]
+    policy_data = data["policy"].astype(np.float32)
+    value_data = data["value"].astype(np.int64)
+
+    check_memory_usage()
+
+    plane_data = torch.tensor(plane_data)
+    policy_data = torch.tensor(policy_data)
+    value_data = torch.tensor(value_data)
+
+    return plane_data, policy_data, value_data
+
+
+
+
+
+# data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,1,1,1,0,1,0,1,0,3],[3,0,1,0,1,1,1,1,1,1,3],[3,1,1,1,1,1,1,1,1,1,3],[3,1,1,2,2,1,2,2,2,1,3],[3,1,2,0,2,2,2,2,1,1,3],[3,1,2,2,2,2,2,1,1,1,3],[3,0,1,2,0,2,2,1,2,1,3],[3,1,1,1,2,2,0,2,2,1,3],[3,1,0,1,2,2,2,0,2,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,0,0]]"
+# data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,2,2,0,2,2,2,2,0,2,3],[3,2,0,2,2,0,2,2,1,2,3],[3,2,2,2,2,2,2,0,2,2,3],[3,2,2,2,2,2,2,2,2,1,3],[3,1,2,1,1,1,1,2,1,1,3],[3,1,1,1,0,1,1,1,1,1,3],[3,1,1,1,1,0,1,1,0,1,3],[3,1,1,0,1,1,0,1,1,1,3],[3,1,1,1,1,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,2,6]]"
+# input_raw = json.loads(data)
+
+# input_np = np.zeros((6, BOARD_SIZE, BOARD_SIZE), dtype=np.float32)
+
+# print(input_np)######
+
+# for i in range(1, BOARD_SIZE + 1):
+#     for j in range(1, BOARD_SIZE + 1):
+#         if input_raw[i][j] == 0:
+#             input_np[0][i - 1][j - 1] = 1
+#         elif input_raw[i][j] == 1:
+#             input_np[1][i - 1][j - 1] = 1
+#         elif input_raw[i][j] == 2:
+#             input_np[2][i - 1][j - 1] = 1
+
+# color = input_raw[BOARD_SIZE + 2][0]
+# y = input_raw[BOARD_SIZE + 2][1]
+# x = input_raw[BOARD_SIZE + 2][2]
+
+# if y != 0:
+#     input_np[3][y - 1][x - 1] = 1
+# else:
+#     for i in range(BOARD_SIZE):
+#         for j in range(BOARD_SIZE):
+#             input_np[4][i][j] = 1
+
+# if color == 1:
+#     for i in range(BOARD_SIZE):
+#         for j in range(BOARD_SIZE):
+#             input_np[5][i][j] = 1
+# else:
+#     for i in range(BOARD_SIZE):
+#         for j in range(BOARD_SIZE):
+#             input_np[5][i][j] = -1
+
+# print(input_np)######
+
+
+# input_planes = torch.tensor(input_np)
+# print(input_planes)######
+# print(input_planes.size())######
+# print(input_planes.size(0))######
+
+
+
+tmp_npz = tmp_load_data_set("/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz")
+
+input_t = tmp_npz[0][0].unsqueeze(0)  # バッチ次元を追加
+# input_t = tmp_npz[0][0]
+print(input_t)######
+print(input_t.shape)######
+
+raw_policy, value_data = network.inference(input_t)
 
 print(raw_policy)######
 print(value_data)######
+
+
+# raw_policy, value_data = network.inference(input_planes)
+
+# print(raw_policy)######
+# print(value_data)######
 
 # raw_policy, value_data = self.network.inference(input_planes)
 
