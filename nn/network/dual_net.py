@@ -127,3 +127,50 @@ def make_common_blocks(num_blocks: int, num_filters: int) -> torch.nn.Sequential
     """
     blocks = [ResidualBlock(num_filters) for _ in range(num_blocks)]
     return nn.Sequential(*blocks)
+
+
+
+
+
+"""
+def tmp_load_data_set(npz_path, rank=0):
+    def check_memory_usage():
+        if not psutil.virtual_memory().percent < 90:
+            print(f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
+            assert True
+
+    check_memory_usage()
+
+    data = np.load(npz_path)
+
+    check_memory_usage()
+
+    plane_data = data["input"]
+    policy_data = data["policy"].astype(np.float32)
+    value_data = data["value"].astype(np.int64)
+
+    check_memory_usage()
+
+    plane_data = torch.tensor(plane_data)
+    policy_data = torch.tensor(policy_data)
+    value_data = torch.tensor(value_data)
+
+
+tmp_npz = tmp_load_data_set("/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz")
+
+input_t = tmp_npz[0][1234].unsqueeze(0).to(device)  # バッチ次元を追加。1234番目の局面を取得
+print(input_t.shape)######
+print(input_t)######
+
+policy_data, value_data = network.inference(input_t)
+
+policy_data = policy_data.numpy()
+print(np.sum(policy_data))######
+policy_data = json.dumps(policy_data.tolist())
+print(policy_data)######
+
+value_data = value_data.numpy()
+print(np.sum(value_data))######
+value_data = json.dumps(value_data.tolist())
+print(value_data)######
+"""
