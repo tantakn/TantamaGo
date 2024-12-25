@@ -11,7 +11,8 @@ BOARD_SIZE = 9
 network_name1 = "DualNet"
 model_file_path = "/home0/y2024/u2424004/igo/TantamaGo/model_def/sl-model_default.bin"
 use_gpu = True
-gpu_num = 1
+gpu_num = 0
+device = torch.device("cuda:0" if use_gpu else "cpu")
 
 # ハードウェア使用率の監視スレッドを起動
 monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 10, os.getpid()), daemon=True)
@@ -20,6 +21,8 @@ monitoring_worker.start()
 network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_num)
 
 network.training = False
+
+network.to(device)
 
 
 def tmp_load_data_set(npz_path, rank=0):
@@ -50,64 +53,84 @@ def tmp_load_data_set(npz_path, rank=0):
 
 
 
-# data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,1,1,1,0,1,0,1,0,3],[3,0,1,0,1,1,1,1,1,1,3],[3,1,1,1,1,1,1,1,1,1,3],[3,1,1,2,2,1,2,2,2,1,3],[3,1,2,0,2,2,2,2,1,1,3],[3,1,2,2,2,2,2,1,1,1,3],[3,0,1,2,0,2,2,1,2,1,3],[3,1,1,1,2,2,0,2,2,1,3],[3,1,0,1,2,2,2,0,2,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,0,0]]"
-# data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,2,2,0,2,2,2,2,0,2,3],[3,2,0,2,2,0,2,2,1,2,3],[3,2,2,2,2,2,2,0,2,2,3],[3,2,2,2,2,2,2,2,2,1,3],[3,1,2,1,1,1,1,2,1,1,3],[3,1,1,1,0,1,1,1,1,1,3],[3,1,1,1,1,0,1,1,0,1,3],[3,1,1,0,1,1,0,1,1,1,3],[3,1,1,1,1,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,2,6]]"
-# input_raw = json.loads(data)
+data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,1,1,1,0,1,0,1,0,3],[3,0,1,0,1,1,1,1,1,1,3],[3,1,1,1,1,1,1,1,1,1,3],[3,1,1,2,2,1,2,2,2,1,3],[3,1,2,0,2,2,2,2,1,1,3],[3,1,2,2,2,2,2,1,1,1,3],[3,0,1,2,0,2,2,1,2,1,3],[3,1,1,1,2,2,0,2,2,1,3],[3,1,0,1,2,2,2,0,2,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,0,0]]"
+data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,2,2,0,2,2,2,2,0,2,3],[3,2,0,2,2,0,2,2,1,2,3],[3,2,2,2,2,2,2,0,2,2,3],[3,2,2,2,2,2,2,2,2,1,3],[3,1,2,1,1,1,1,2,1,1,3],[3,1,1,1,0,1,1,1,1,1,3],[3,1,1,1,1,0,1,1,0,1,3],[3,1,1,0,1,1,0,1,1,1,3],[3,1,1,1,1,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,2,6]]"
+input_raw = json.loads(data)
 
-# input_np = np.zeros((6, BOARD_SIZE, BOARD_SIZE), dtype=np.float32)
+input_np = np.zeros((6, BOARD_SIZE, BOARD_SIZE), dtype=np.float32)
 
-# print(input_np)######
+for i in range(1, BOARD_SIZE + 1):
+    for j in range(1, BOARD_SIZE + 1):
+        if input_raw[i][j] == 0:
+            input_np[0][i - 1][j - 1] = 1
+        elif input_raw[i][j] == 1:
+            input_np[1][i - 1][j - 1] = 1
+        elif input_raw[i][j] == 2:
+            input_np[2][i - 1][j - 1] = 1
 
-# for i in range(1, BOARD_SIZE + 1):
-#     for j in range(1, BOARD_SIZE + 1):
-#         if input_raw[i][j] == 0:
-#             input_np[0][i - 1][j - 1] = 1
-#         elif input_raw[i][j] == 1:
-#             input_np[1][i - 1][j - 1] = 1
-#         elif input_raw[i][j] == 2:
-#             input_np[2][i - 1][j - 1] = 1
+color = input_raw[BOARD_SIZE + 2][0]
+y = input_raw[BOARD_SIZE + 2][1]
+x = input_raw[BOARD_SIZE + 2][2]
 
-# color = input_raw[BOARD_SIZE + 2][0]
-# y = input_raw[BOARD_SIZE + 2][1]
-# x = input_raw[BOARD_SIZE + 2][2]
+if y != 0:
+    input_np[3][y - 1][x - 1] = 1
+else:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[4][i][j] = 1
 
-# if y != 0:
-#     input_np[3][y - 1][x - 1] = 1
-# else:
-#     for i in range(BOARD_SIZE):
-#         for j in range(BOARD_SIZE):
-#             input_np[4][i][j] = 1
+if color == 1:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[5][i][j] = 1
+else:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[5][i][j] = -1
 
-# if color == 1:
-#     for i in range(BOARD_SIZE):
-#         for j in range(BOARD_SIZE):
-#             input_np[5][i][j] = 1
-# else:
-#     for i in range(BOARD_SIZE):
-#         for j in range(BOARD_SIZE):
-#             input_np[5][i][j] = -1
-
-# print(input_np)######
+print(input_np)######
 
 
-# input_planes = torch.tensor(input_np)
-# print(input_planes)######
-# print(input_planes.size())######
-# print(input_planes.size(0))######
+input_planes = torch.tensor(input_np)
+print(input_planes)######
 
+input_planes = input_planes.unsqueeze(0).to(device)  # バッチ次元を追加
 
+print(input_planes.shape)######
+print(input_planes)######
 
-tmp_npz = tmp_load_data_set("/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz")
+policy_data, value_data = network.inference(input_planes)
 
-input_t = tmp_npz[0][0].unsqueeze(0)  # バッチ次元を追加
-# input_t = tmp_npz[0][0]
-print(input_t)######
-print(input_t.shape)######
+policy_data = policy_data.numpy()
+print(np.sum(policy_data))######
+policy_data = json.dumps(policy_data.tolist())
+print(policy_data)######
 
-raw_policy, value_data = network.inference(input_t)
-
-print(raw_policy)######
+value_data = value_data.numpy()
+print(np.sum(value_data))######
+value_data = json.dumps(value_data.tolist())
 print(value_data)######
+
+
+
+# tmp_npz = tmp_load_data_set("/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz")
+
+# input_t = tmp_npz[0][5000].unsqueeze(0).to(device)  # バッチ次元を追加
+# print(input_t.shape)######
+# print(input_t)######
+
+# policy_data, value_data = network.inference(input_t)
+
+# policy_data = policy_data.numpy()
+# print(np.sum(policy_data))######
+# policy_data = json.dumps(policy_data.tolist())
+# print(policy_data)######
+
+# value_data = value_data.numpy()
+# print(np.sum(value_data))######
+# value_data = json.dumps(value_data.tolist())
+# print(value_data)######
+
 
 
 # raw_policy, value_data = network.inference(input_planes)
