@@ -11,7 +11,8 @@ BOARD_SIZE = 9
 network_name1 = "DualNet"
 model_file_path = "/home0/y2024/u2424004/igo/TantamaGo/model_def/sl-model_default.bin"
 use_gpu = True
-gpu_num = 1
+gpu_num = 0
+device = torch.device("cuda:0" if use_gpu else "cpu")
 
 # ハードウェア使用率の監視スレッドを起動
 monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 10, os.getpid()), daemon=True)
@@ -20,6 +21,8 @@ monitoring_worker.start()
 network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_num)
 
 network.training = False
+
+network.to(device)
 
 
 def tmp_load_data_set(npz_path, rank=0):
@@ -99,7 +102,7 @@ def tmp_load_data_set(npz_path, rank=0):
 
 tmp_npz = tmp_load_data_set("/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz")
 
-input_t = tmp_npz[0][0].unsqueeze(0)  # バッチ次元を追加
+input_t = tmp_npz[0][0].unsqueeze(0).to(device)  # バッチ次元を追加
 # input_t = tmp_npz[0][0]
 print(input_t)######
 print(input_t.shape)######
@@ -108,6 +111,17 @@ raw_policy, value_data = network.inference(input_t)
 
 print(raw_policy)######
 print(value_data)######
+raw_policy2, value_data2 = network.forward(input_t)
+
+print(raw_policy2)######
+print(value_data2)######
+raw_policy3, value_data3 = network.forward_with_softmax(input_t)
+
+print(raw_policy3)######
+print(value_data3)######
+
+raw_policy4 = raw_policy.detach().cpu().numpy()
+print(np.sum(raw_policy4))######
 
 
 # raw_policy, value_data = network.inference(input_planes)
