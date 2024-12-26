@@ -174,6 +174,8 @@ struct goBoard {
 
     double CountResult();
 
+    bool TestPipe();
+
     goBoard();
 
     goBoard(goBoard &inputparent, int y, int x, char putcolor);
