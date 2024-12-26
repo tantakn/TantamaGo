@@ -547,6 +547,18 @@ double goBoard::CountResult() {
     return blackScore - whiteScore - komi;
 }
 
+bool goBoard::TestPipe() {
+    char data[bufsize] = {};
+
+    FILE *fp = popen("python3 ./pipetest.py", "w");
+    fputs(self.ToJson(), fp);
+    fgets(data, bufsize , fp);
+    std::cout << data << std::endl;
+    pclose(fp);
+
+    return(0);
+}
+
 
 
 int main()
