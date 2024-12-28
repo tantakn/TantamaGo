@@ -59,6 +59,15 @@ std::vector<int> totalCounts;
 std::vector<long long> totalTimesum;
 std::string serializePath("/var/tmp/multi_gpu_bench.bin");
 
+/*
+minst_sample と比べて
+using namespace nvinfer1;
+がない
+using samplesCommon::SampleUniquePtr;
+は下に少し違うのがある
+*/
+
+// なにこれ
 std::string addProfileSuffix(const std::string &name, int profile)
 {
     std::ostringstream oss;
@@ -71,11 +80,14 @@ std::string addProfileSuffix(const std::string &name, int profile)
     return oss.str();
 }
 
+// なにこれ
 bool checkSerializedFile()
 {
     ifstream f(serializePath, ios::in | ios::binary);
     return f.is_open();
 }
+
+
 
 //! \brief  The ShogiOnnx class implements the ONNX MNIST sample
 //!
@@ -88,7 +100,7 @@ class ShogiOnnx
 
 public:
     ShogiOnnx()
-        : mEngine(nullptr)
+        : mEngine(nullptr) // , mRuntime(nullptr), mEngine(nullptr) がない
     {
     }
 
@@ -97,7 +109,7 @@ public:
     //!
     bool build();
 
-    bool serialize();
+    bool serialize(); // なにこれ
 
     //!
     //! \brief Function deserialize the network engine from file
@@ -110,6 +122,7 @@ public:
     bool infer(int batchSize);
 
 private:
+    /*入力１、出力２になってる*/
     nvinfer1::Dims mInputDims;        //!< The dimensions of the input to the network.
     nvinfer1::Dims mOutputPolicyDims; //!< The dimensions of the output to the network.
     nvinfer1::Dims mOutputValueDims;  //!< The dimensions of the output to the network.
@@ -128,12 +141,12 @@ private:
     //!
     //! \brief Reads the input  and stores the result in a managed buffer
     //!
-    bool processInput(const samplesCommon::BufferManager &buffers, int batchSize);
+    bool processInput(const samplesCommon::BufferManager &buffers, int batchSize); // int batchSize が追加されている
 
     //!
     //! \brief Classifies digits and verify result
     //!
-    bool verifyOutput(const samplesCommon::BufferManager &buffers, int batchSize);
+    bool verifyOutput(const samplesCommon::BufferManager &buffers, int batchSize); // int batchSize が追加されている
 };
 
 //!
@@ -152,8 +165,9 @@ bool ShogiOnnx::build()
         return false;
     }
 
-    const auto explicitBatch = 1U << static_cast<uint32_t>(NetworkDefinitionCreationFlag::kEXPLICIT_BATCH);
-    auto network = SampleUniquePtr<nvinfer1::INetworkDefinition>(builder->createNetworkV2(explicitBatch));
+    const auto explicitBatch = 1U << static_cast<uint32_t>(NetworkDefinitionCreationFlag::kEXPLICIT_BATCH); // なにこれ
+
+    auto network = SampleUniquePtr<nvinfer1::INetworkDefinition>(builder->createNetworkV2(explicitBatch)); // 0 -> explicitBatch
     if (!network)
     {
         return false;
@@ -176,6 +190,7 @@ bool ShogiOnnx::build()
     {
         return false;
     }
+    /*追加。profileStream の代わり？*/
     if (!profileBatchSizeRange.length())
     {
         auto profile = builder->createOptimizationProfile();
@@ -201,6 +216,19 @@ bool ShogiOnnx::build()
         while (iss >> bs_opt_s >> bs_max_s) {
             bs_opt = atoi(bs_opt_s.c_str());
             bs_max = atoi(bs_max_s.c_str());
+            /*TensorRTはモデルとGPUの組み合わせに対して実行計画を最適化しますが、バッチサイズによって適切な実行計画は異なる可能性があります。そのため、複数の実行計画（プロファイル）を使い分ける機能が搭載されています。 プロファイルは、(最小バッチサイズ, 最適バッチサイズ, 最大バッチサイズ)という3つの数値の組を与えて生成します。最適バッチサイズの入力が与えられたときの実行速度が最大となるように実行計画が最適化されます。 小さいバッチサイズに対して、大きいサイズとは別のプロファイルを作成するほうが小さいバッチサイズでの性能が高くなることが期待できます。実験結果については別の記事で書きたいと思いますが、指定方法は以下のようになります。
+            OptProfileSelector::kMINでプロファイルが対応する最小バッチサイズ(厳密には、バッチサイズ以外の次元も含めたテンソルの最小サイズ)、OptProfileSelector::kOPTが最適バッチサイズ、OptProfileSelector::kMAXが最大バッチサイズの指定となります。これらを指定したのちconfig->addOptimizationProfileを呼び出すことでプロファイルが登録され、プロファイル番号が得られます。この番号は推論時に必要になりますので、バッチサイズごとにどのプロファイル番号を使用するかを配列に保存しています。
+
+            このソースコードでは何やら文字列のパースと絡めていますが、次のような指定ができるようにしています。
+
+            profileBatchSizeRange: opt1-max1-opt2-max2...
+
+            profileBatchSizeRange=="10-20-100-200"のとき、
+
+                ・バッチサイズ1~20について、バッチサイズ10に最適化したプロファイルを作成
+                ・バッチサイズ21~200について、バッチサイズ100に最適化したプロファイルを作成
+
+            なお、プロファイルは必ずしも複数作る必要はなく、最小バッチサイズ～最大バッチサイズをカバーする1つのプロファイルだけでも十分動作します。*/
             auto profile = builder->createOptimizationProfile();
             profile->setDimensions(inputTensorNames[0].c_str(), OptProfileSelector::kMIN, Dims4{lastbs + 1, 119, 9, 9});
             profile->setDimensions(inputTensorNames[0].c_str(), OptProfileSelector::kOPT, Dims4{bs_opt, 119, 9, 9});
@@ -222,6 +250,7 @@ bool ShogiOnnx::build()
     }
 
     // different context for each profile is needed (switching causes error on setBindingDimensions)
+    /*エンジンをビルドした後、推論に必要な「コンテキスト」を作成する必要があります。コンテキストはプロファイルごとに作成する必要があります。1つのコンテキストに対してsetOptimizationProfileを毎回呼び出して対象プロファイルを切り替えるという操作はエラーとなるようです。*/
     for (int i = 0; i < mEngine->getNbOptimizationProfiles(); i++)
     {
         auto ctx = std::shared_ptr<nvinfer1::IExecutionContext>(mEngine->createExecutionContext(), samplesCommon::InferDeleter());
@@ -246,8 +275,10 @@ bool ShogiOnnx::build()
     return true;
 }
 
+/*エンジンのシリアライズ*/
 bool ShogiOnnx::serialize()
 {
+    /*実行してみると分かりますが、エンジンのビルドには数十秒～数分かかります。ビルド中に様々な実行計画の候補を比較検討しているのだと予想されます。アプリケーション起動時に毎回待たされるのは困るので、ビルド済みのエンジンをファイルに保存して再利用することができます。*/
     IHostMemory *serializedModel = mEngine->serialize();
 
     ofstream serializedModelFile(serializePath, ios::binary);
@@ -258,6 +289,9 @@ bool ShogiOnnx::serialize()
 
 bool ShogiOnnx::load()
 {
+    /*シリアライズされたエンジンのロードは以下のように行います。ちょっと煩雑に見えますが、ファイルサイズをチェックした後、単にファイル全体をfdataに読み込んで、runtime->deserializeCudaEngineに渡しているだけです。
+    
+    なお、エンジンはGPUの機種に固有のものなので、シリアライズしたものを別のマシンに持っていっても動くとは限りません。*/
     ifstream serializedModelFile(serializePath, ios::in | ios::binary);
     serializedModelFile.seekg(0, ios_base::end);
     size_t fsize = serializedModelFile.tellg();
@@ -324,11 +358,13 @@ bool ShogiOnnx::load()
 //!
 //! \param builder Pointer to the engine builder
 //!
+/*ONNXモデルからエンジンをビルドする*/
 bool ShogiOnnx::constructNetwork(SampleUniquePtr<nvinfer1::IBuilder> &builder,
                                  SampleUniquePtr<nvinfer1::INetworkDefinition> &network, SampleUniquePtr<nvinfer1::IBuilderConfig> &config,
                                  SampleUniquePtr<nvonnxparser::IParser> &parser)
 {
     // [W] [TRT] Calling isShapeTensor before the entire network is constructed may result in an inaccurate result.
+    /*onnxモデルファイルを読み込みます。*/
     auto parsed = parser->parseFromFile(
         "data/trt/model.onnx", static_cast<int>(gLogger.getReportableSeverity()));
     if (!parsed)
@@ -336,18 +372,21 @@ bool ShogiOnnx::constructNetwork(SampleUniquePtr<nvinfer1::IBuilder> &builder,
         return false;
     }
 
+    /*使用する最大バッチサイズを指定しておく必要があります。*/
     builder->setMaxBatchSize(batchSizeMax);
     config->setMaxWorkspaceSize(1024_MiB);
 
     if (fp8)
     {
         gLogInfo << "INT8 mode (scale is not correctly set!)" << std::endl;
+        /*計算を8bitで量子化された状態で行う場合はこのオプションを指定します。ただ、量子化するためのスケール値を適切に指定しないと誤差が大きすぎて使用できません。私が今回使う予定のV100(GPUの型番)では8bit演算コアがないようなので、このオプションは使用していません。*/
         config->setFlag(BuilderFlag::kINT8);
         samplesCommon::setAllTensorScales(network.get(), 127.0f, 127.0f);
     }
     else if (fp16)
     {
         gLogInfo << "FP16 mode" << std::endl;
+        /*計算を16bit浮動小数点数で行うオプションです。V100ではこれを指定すると(デフォルトの32bitと比べて)倍速以上の速度が出る場合があります。ただし計算誤差が出ます。*/
         config->setFlag(BuilderFlag::kFP16);
     }
     else
@@ -366,8 +405,14 @@ bool ShogiOnnx::constructNetwork(SampleUniquePtr<nvinfer1::IBuilder> &builder,
 //! \details This function is the main execution function of the sample. It allocates the buffer,
 //!          sets inputs and executes the engine.
 //!
+/*推論*/
 bool ShogiOnnx::infer(int batchSize)
 {
+    /*CPUとGPUでデータをやり取りするための入出力バッファを作成します。
+    
+    まずバッチサイズに対応するコンテキストを取り出します。次に、コンテキストにバッチサイズを教えるための手順があります。プロファイルが複数ある場合にこれがトリッキーで、プロファイル0の場合は入力テンソル名(ONNXのエクスポート時に指定した'input')をgetBindingIndexに与えればいいのですが、プロファイル1以降では'input [profile 1]'のようなプロファイル番号を組み合わせた入力テンソル名を与える必要があります。かなり不可解な仕様ですが、これをやると動きます。参考
+
+    ここから先はデータのやり取りと実行ですが、特に変なことはありません。samplesCommon::BufferManagerを使えば容易です。*/
     auto mContext = mContextForProfile.at(profileForBatchSize[batchSize]);
     std::string inputBindingName = addProfileSuffix(inputTensorNames[0], profileForBatchSize[batchSize]);
     int bidx = mEngine->getBindingIndex(inputBindingName.c_str());
@@ -499,6 +544,11 @@ void threadMain(int device, int threadInDevice)
     }
     std::shuffle(batchSizeSequence.begin(), batchSizeSequence.end(), rndEngine);
 
+
+    /*
+    使用するGPU番号を指定する
+    cudaSetDeviceで使用するGPUを選択します。0~GPU数-1の整数です。このAPIはTensorRTのものではなくてCUDAを直接叩くことになります。これを呼び出したスレッドで使うGPU番号の指定となります。
+    */
     if (cudaSetDevice(device) != cudaSuccess)
     {
         gLogError << "cudaSetDevice failed" << std::endl;
@@ -612,6 +662,9 @@ int main(int argc, char **argv)
     if (suppressStdout)
     {
         // TensorRTから発生するメッセージを抑制(gLogError << "")
+        /*標準出力の抑制
+
+        TensorRTは何かとデバッグメッセージが標準出力・標準エラー出力に吐き出されるのですが、将棋AIでは標準入出力を指し手のやり取りに使うので邪魔になりますのでこれを抑制します。*/
         setReportableSeverity(Logger::Severity::kINTERNAL_ERROR);
     }
     inputTensorNames.push_back("input");

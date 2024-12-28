@@ -1,117 +1,126 @@
-import json
-data = input()
-result = json.loads(data)
-print(f'Python got data and parsed {result["hoge"]}\n')
+# import json
+# data = input()
+# result = json.loads(data)
+# print(f'Python got data and parsed {result["hoge"]}\n')
 
 
 
-# import os, sys, psutil, torch, threading, time, datetime, json
-# os.chdir(os.path.dirname(os.path.abspath(__file__)))
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-# import numpy as np
-# from nn.utility import load_network, load_DualNet_128_12, choose_network
-# from nn.network.dual_net import DualNet
-# from monitoring import display_train_monitoring_worker
+import os, sys, psutil, torch, threading, time, datetime, json
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import numpy as np
+from nn.utility import load_network, load_DualNet_128_12, choose_network
+from nn.network.dual_net import DualNet
+from monitoring import display_train_monitoring_worker
 
 
-# BOARD_SIZE = 9
-# network_name1 = "DualNet"
-# model_file_path = "/home0/y2024/u2424004/igo/TantamaGo/model_def/sl-model_default.bin"
-# use_gpu = True
-# gpu_num = 0
-# device = torch.device("cuda:0" if use_gpu else "cpu")
+BOARD_SIZE = 9
+network_name1 = "DualNet"
+model_file_path = "/home/tantakn/code/TantamaGo/model/sl-model_20241020_214243_Ep:14.bin"
+use_gpu = True
+gpu_num = 0
+device = torch.device("cuda:0" if use_gpu else "cpu")
 
-# # # ハードウェア使用率の監視スレッドを起動
-# # monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 10, os.getpid()), daemon=True)
-# # monitoring_worker.start()
+print("gpu_num: ", gpu_num)###############
 
-# network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_num)
+# # ハードウェア使用率の監視スレッドを起動
+# monitoring_worker = threading.Thread(target=display_train_monitoring_worker, args=(use_gpu, True, 10, os.getpid()), daemon=True)
+# monitoring_worker.start()
 
-# network.training = False
+network = choose_network(network_name1, model_file_path, use_gpu, gpu_num=gpu_num)
 
-# network.to(device)
+network.training = False
 
-
-# # def tmp_load_data_set(npz_path, rank=0):
-# #     def check_memory_usage():
-# #         if not psutil.virtual_memory().percent < 90:
-# #             print(f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
-# #             assert True
-
-# #     check_memory_usage()
-
-# #     data = np.load(npz_path)
-
-# #     check_memory_usage()
-
-# #     plane_data = data["input"]
-# #     policy_data = data["policy"].astype(np.float32)
-# #     value_data = data["value"].astype(np.int64)
-
-# #     check_memory_usage()
-
-# #     plane_data = torch.tensor(plane_data)
-# #     policy_data = torch.tensor(policy_data)
-# #     value_data = torch.tensor(value_data)
-
-# #     return plane_data, policy_data, value_data
+network.to(device)
 
 
+def tmp_load_data_set(npz_path, rank=0):
+    def check_memory_usage():
+        if not psutil.virtual_memory().percent < 90:
+            print(f"memory usage is too high. mem_use: {psutil.virtual_memory().percent}% [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}]")
+            assert True
+
+    check_memory_usage()
+
+    data = np.load(npz_path)
+
+    check_memory_usage()
+
+    plane_data = data["input"]
+    policy_data = data["policy"].astype(np.float32)
+    value_data = data["value"].astype(np.int64)
+
+    check_memory_usage()
+
+    plane_data = torch.tensor(plane_data)
+    policy_data = torch.tensor(policy_data)
+    value_data = torch.tensor(value_data)
+
+    return plane_data, policy_data, value_data
 
 
 
-# # data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,1,1,1,0,1,0,1,0,3],[3,0,1,0,1,1,1,1,1,1,3],[3,1,1,1,1,1,1,1,1,1,3],[3,1,1,2,2,1,2,2,2,1,3],[3,1,2,0,2,2,2,2,1,1,3],[3,1,2,2,2,2,2,1,1,1,3],[3,0,1,2,0,2,2,1,2,1,3],[3,1,1,1,2,2,0,2,2,1,3],[3,1,0,1,2,2,2,0,2,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,0,0]]"
-# # data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,2,2,0,2,2,2,2,0,2,3],[3,2,0,2,2,0,2,2,1,2,3],[3,2,2,2,2,2,2,0,2,2,3],[3,2,2,2,2,2,2,2,2,1,3],[3,1,2,1,1,1,1,2,1,1,3],[3,1,1,1,0,1,1,1,1,1,3],[3,1,1,1,1,0,1,1,0,1,3],[3,1,1,0,1,1,0,1,1,1,3],[3,1,1,1,1,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,2,6]]"
+
+
+data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,1,1,1,0,1,0,1,0,3],[3,0,1,0,1,1,1,1,1,1,3],[3,1,1,1,1,1,1,1,1,1,3],[3,1,1,2,2,1,2,2,2,1,3],[3,1,2,0,2,2,2,2,1,1,3],[3,1,2,2,2,2,2,1,1,1,3],[3,0,1,2,0,2,2,1,2,1,3],[3,1,1,1,2,2,0,2,2,1,3],[3,1,0,1,2,2,2,0,2,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,0,0]]"
+data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,2,2,0,2,2,2,2,0,2,3],[3,2,0,2,2,0,2,2,1,2,3],[3,2,2,2,2,2,2,0,2,2,3],[3,2,2,2,2,2,2,2,2,1,3],[3,1,2,1,1,1,1,2,1,1,3],[3,1,1,1,0,1,1,1,1,1,3],[3,1,1,1,1,0,1,1,0,1,3],[3,1,1,0,1,1,0,1,1,1,3],[3,1,1,1,1,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,2,6]]"
 
 
 # data = input()
-# result = json.loads(data)
+result = json.loads(data)
 
-# input_raw = json.loads(data)
+input_raw = json.loads(data)
 
-# input_np = np.zeros((6, BOARD_SIZE, BOARD_SIZE), dtype=np.float32)
+input_np = np.zeros((6, BOARD_SIZE, BOARD_SIZE), dtype=np.float32)
 
-# for i in range(1, BOARD_SIZE + 1):
-#     for j in range(1, BOARD_SIZE + 1):
-#         if input_raw[i][j] == 0:
-#             input_np[0][i - 1][j - 1] = 1
-#         elif input_raw[i][j] == 1:
-#             input_np[1][i - 1][j - 1] = 1
-#         elif input_raw[i][j] == 2:
-#             input_np[2][i - 1][j - 1] = 1
+for i in range(1, BOARD_SIZE + 1):
+    for j in range(1, BOARD_SIZE + 1):
+        if input_raw[i][j] == 0:
+            input_np[0][i - 1][j - 1] = 1
+        elif input_raw[i][j] == 1:
+            input_np[1][i - 1][j - 1] = 1
+        elif input_raw[i][j] == 2:
+            input_np[2][i - 1][j - 1] = 1
 
-# color = input_raw[BOARD_SIZE + 2][0]
-# y = input_raw[BOARD_SIZE + 2][1]
-# x = input_raw[BOARD_SIZE + 2][2]
+color = input_raw[BOARD_SIZE + 2][0]
+y = input_raw[BOARD_SIZE + 2][1]
+x = input_raw[BOARD_SIZE + 2][2]
 
-# if y != 0:
-#     input_np[3][y - 1][x - 1] = 1
-# else:
-#     for i in range(BOARD_SIZE):
-#         for j in range(BOARD_SIZE):
-#             input_np[4][i][j] = 1
+if y != 0:
+    input_np[3][y - 1][x - 1] = 1
+else:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[4][i][j] = 1
 
-# if color == 1:
-#     for i in range(BOARD_SIZE):
-#         for j in range(BOARD_SIZE):
-#             input_np[5][i][j] = 1
-# else:
-#     for i in range(BOARD_SIZE):
-#         for j in range(BOARD_SIZE):
-#             input_np[5][i][j] = -1
+if color == 1:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[5][i][j] = 1
+else:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[5][i][j] = -1
 
-# # print(input_np)######
+# print(input_np)######
+
+input_np, _, _ = tmp_load_data_set("/home/tantakn/code/TantamaGo/data/sl_data_0.npz")
 
 
-# input_planes = torch.tensor(input_np)
-# # print(input_planes)######
+input_planes = torch.tensor(input_np)
+# print(input_planes)######
 
+input_planes = input_planes.to(device)  # バッチ次元を追加
 # input_planes = input_planes.unsqueeze(0).to(device)  # バッチ次元を追加
 
-# # print(input_planes.shape)######
-# # print(input_planes)######
+# print(input_planes.shape)######
+# print(input_planes)######
 
-# policy_data, value_data = network.inference(input_planes)
+policy_data, value_data = network.inference(input_planes)
+
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
 
 # policy_data = policy_data.numpy()
 # # print(np.sum(policy_data))######
@@ -126,23 +135,23 @@ print(f'Python got data and parsed {result["hoge"]}\n')
 # value_data = value_data.tolist()
 # policy_data = policy_data.tolist()
 
-# s = "qwer"
-# # s = json.dumps(value_data)
+# # s = "qwer"
+# s = json.dumps(value_data)
 
 # print(s, file=sys.stderr)
 
 # print(s)
 
-# # data = {"policy": policy_data, "value": value_data}
+# data = {"policy": policy_data, "value": value_data}
 
-# # print(data, file=sys.stderr)
+# print(data, file=sys.stderr)
 
-# # data = json.dumps(data)
+# data = json.dumps(data)
 
 
-# # print(data, file=sys.stderr)
+# print(data, file=sys.stderr)
 
-# # print(data)
+# print(data)
 
 
 

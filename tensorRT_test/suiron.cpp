@@ -38,6 +38,12 @@
 #include <stdexcept>
 #include <array>
 
+#include "NvInferRuntimeCommon.h"
+#include "NvInfer.h"
+#include "NvOnnxParser.h"
+#include "int8_calibrator.h"
+
+
 #include <bits/stdc++.h>
 
 using namespace nvinfer1;
