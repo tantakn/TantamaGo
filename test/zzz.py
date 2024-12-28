@@ -8,24 +8,13 @@ import psutil
 import threading
 import torch
 
+import json
 
-n = np.array([[1, 2, 3], [4, 5, 6]])
-print(n)
-# [[1 2 3]
-#  [4 5 6]]
-print(n.shape)
-# (2, 3)
-print(n.dtype)
-# int64
+s = "zzpy"
 
-t = torch.tensor(n)
-print(t)
-# tensor([[1, 2, 3],
-#         [4, 5, 6]])
-print(t.shape)
-# torch.Size([2, 3])
-print(t.dtype)
-# torch.int64
+with open('testpipe', 'r') as fifo:
+    s = fifo.read()
+    print(s, file=sys.stderr)
+    s += "py"
+    fifo.write(s)
 
-t.cuda(0)
-print(t)
