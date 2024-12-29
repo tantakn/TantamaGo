@@ -109,12 +109,12 @@ public:
     //!
     bool build();
 
-    bool serialize(); // なにこれ
+    bool serialize(); // ビルドしたものの保存
 
     //!
     //! \brief Function deserialize the network engine from file
     //!
-    bool load();
+    bool load(); // ビルドしたものの読み込み
 
     //!
     //! \brief Runs the TensorRT inference engine for this sample
@@ -135,8 +135,8 @@ private:
     //! \brief Parses an ONNX model for MNIST and creates a TensorRT network
     //!
     bool constructNetwork(SampleUniquePtr<nvinfer1::IBuilder> &builder,
-                          SampleUniquePtr<nvinfer1::INetworkDefinition> &network, SampleUniquePtr<nvinfer1::IBuilderConfig> &config,
-                          SampleUniquePtr<nvonnxparser::IParser> &parser);
+        SampleUniquePtr<nvinfer1::INetworkDefinition> &network, SampleUniquePtr<nvinfer1::IBuilderConfig> &config,
+        SampleUniquePtr<nvonnxparser::IParser> &parser);
 
     //!
     //! \brief Reads the input  and stores the result in a managed buffer
@@ -159,6 +159,7 @@ private:
 //!
 bool ShogiOnnx::build()
 {
+    /*多分、mRuntime*/
     auto builder = SampleUniquePtr<nvinfer1::IBuilder>(nvinfer1::createInferBuilder(gLogger.getTRTLogger()));
     if (!builder)
     {
@@ -243,7 +244,7 @@ bool ShogiOnnx::build()
     }
 
     mEngine = std::shared_ptr<nvinfer1::ICudaEngine>(
-        builder->buildEngineWithConfig(*network, *config), samplesCommon::InferDeleter());
+        builder->buildEngineWithConfig(*network, *config), samplesCommon::InferDeleter()); // deserializeCudaEngine(plan->data(), plan->size()) から buildEngineWithConfig(*network, *config) に変わってる。たぶん、実行計画について指定してる？
     if (!mEngine)
     {
         return false;
@@ -266,6 +267,7 @@ bool ShogiOnnx::build()
     mInputDims = network->getInput(0)->getDimensions();
     assert(mInputDims.nbDims == 4);
 
+    // 出力が2つあるからその分ここが増えてる？
     assert(network->getNbOutputs() == 2);
     mOutputPolicyDims = network->getOutput(0)->getDimensions();
     assert(mOutputPolicyDims.nbDims == 2);
@@ -360,13 +362,12 @@ bool ShogiOnnx::load()
 //!
 /*ONNXモデルからエンジンをビルドする*/
 bool ShogiOnnx::constructNetwork(SampleUniquePtr<nvinfer1::IBuilder> &builder,
-                                 SampleUniquePtr<nvinfer1::INetworkDefinition> &network, SampleUniquePtr<nvinfer1::IBuilderConfig> &config,
-                                 SampleUniquePtr<nvonnxparser::IParser> &parser)
+    SampleUniquePtr<nvinfer1::INetworkDefinition> &network, SampleUniquePtr<nvinfer1::IBuilderConfig> &config,
+    SampleUniquePtr<nvonnxparser::IParser> &parser)
 {
     // [W] [TRT] Calling isShapeTensor before the entire network is constructed may result in an inaccurate result.
     /*onnxモデルファイルを読み込みます。*/
-    auto parsed = parser->parseFromFile(
-        "data/trt/model.onnx", static_cast<int>(gLogger.getReportableSeverity()));
+    auto parsed = parser->parseFromFile("data/trt/model.onnx", static_cast<int>(gLogger.getReportableSeverity())); // パスを直接指定してる。
     if (!parsed)
     {
         return false;
@@ -421,7 +422,7 @@ bool ShogiOnnx::infer(int batchSize)
     samplesCommon::BufferManager buffers(mEngine, batchSize, mContext.get());
 
     // Read the input data into the managed buffers
-    assert(inputTensorNames.size() == 1);
+    assert(inputTensorNames.size() == 1); // mParams を宣言しなくても使えてる？
     if (!processInput(buffers, batchSize))
     {
         return false;
