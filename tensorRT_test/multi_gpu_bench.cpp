@@ -38,7 +38,9 @@
 #include "common.h"
 #include "buffers.h"
 
-static string profileBatchSizeRange;
+using namespace std;
+
+static std::string profileBatchSizeRange;
 static int batchSizeMin = 1;
 static int batchSizeMax = 16;
 static int nGPU = 1;
@@ -418,8 +420,9 @@ bool ShogiOnnx::infer(int batchSize)
     std::string inputBindingName = addProfileSuffix(inputTensorNames[0], profileForBatchSize[batchSize]);
     int bidx = mEngine->getBindingIndex(inputBindingName.c_str());
     mContext->setBindingDimensions(bidx, Dims4{batchSize, 119, 9, 9});
+
     // Create RAII buffer manager object
-    samplesCommon::BufferManager buffers(mEngine, batchSize, mContext.get());
+    samplesCommon::BufferManager buffers(mEngine, batchSize, mContext.get()); // batchSize, mContext.get() が追加されている
 
     // Read the input data into the managed buffers
     assert(inputTensorNames.size() == 1); // mParams を宣言しなくても使えてる？
@@ -441,7 +444,7 @@ bool ShogiOnnx::infer(int batchSize)
     buffers.copyOutputToHost();
 
     // Verify results
-    if (!verifyOutput(buffers, batchSize))
+    if (!verifyOutput(buffers, batchSize)) // batchSize が追加されている
     {
         return false;
     }
@@ -461,7 +464,7 @@ bool ShogiOnnx::processInput(const samplesCommon::BufferManager &buffers, int ba
     std::string inputName = addProfileSuffix(inputTensorNames[0], profileForBatchSize[batchSize]);
 
     float *hostDataBuffer = static_cast<float *>(buffers.getHostBuffer(inputName));
-    if (verifyMode)
+    if (verifyMode) // false だった。
     {
         ifstream fin("data/trt/inputs.bin", ios::in | ios::binary);
         fin.seekg(inputC * inputH * inputW * sizeof(float) * skipSample);
@@ -469,7 +472,7 @@ bool ShogiOnnx::processInput(const samplesCommon::BufferManager &buffers, int ba
     }
     else
     {
-        memset(hostDataBuffer, 0, inputC * inputH * inputW * sizeof(float) * batchSize);
+        memset(hostDataBuffer, 0, inputC * inputH * inputW * sizeof(float) * batchSize); // メモリの確保
     }
 
     return true;

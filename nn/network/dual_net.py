@@ -132,7 +132,83 @@ def make_common_blocks(num_blocks: int, num_filters: int) -> torch.nn.Sequential
 
 
 
+""" 簡単な実行例1
+# 0: 空点, 1: 黒石, 2: 白石。最後の3つは、手番の色、手のy座標、手のx座標。
+data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,0,1,1,0,1,1,1,1,3],[3,0,1,1,0,1,1,1,2,0,3],[3,1,1,1,1,1,1,0,1,2,3],[3,1,1,1,1,1,1,1,2,2,3],[3,2,2,1,2,1,1,1,1,1,3],[3,2,2,2,2,1,0,1,1,1,3],[3,0,2,0,2,2,1,1,1,0,3],[3,2,2,2,0,2,1,1,1,1,3],[3,2,2,0,2,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,4,8]]"
+
+input_raw = json.loads(data)
+
+input_np = np.zeros((6, BOARD_SIZE, BOARD_SIZE), dtype=np.float32)
+
+for i in range(1, BOARD_SIZE + 1):
+    for j in range(1, BOARD_SIZE + 1):
+        if input_raw[i][j] == 0:
+            input_np[0][i - 1][j - 1] = 1
+        elif input_raw[i][j] == 1:
+            input_np[1][i - 1][j - 1] = 1
+        elif input_raw[i][j] == 2:
+            input_np[2][i - 1][j - 1] = 1
+
+color = input_raw[BOARD_SIZE + 2][0]
+y = input_raw[BOARD_SIZE + 2][1]
+x = input_raw[BOARD_SIZE + 2][2]
+
+if y != 0:
+    input_np[3][y - 1][x - 1] = 1
+else:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[4][i][j] = 1
+
+if color == 1:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[5][i][j] = 1
+else:
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            input_np[5][i][j] = -1
+
+print(input_np)######
+
+# input_np, _, _ = tmp_load_data_set("/home/tantakn/code/TantamaGo/data/sl_data_0.npz") # npzファイルからデータをロード
+
+
+input_planes = torch.tensor(input_np)
+# print(input_planes)######
+
+input_planes = input_planes.unsqueeze(0).to(device)  # バッチ次元を追加
+
+# print(input_planes.shape)######
+# print(input_planes)######
+
+policy_data, value_data = network(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.forward(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.forward_for_sl(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.forward_with_softmax(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.inference(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.inference_with_policy_logits(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
 """
+
+
+""" 簡単な実行例2
 def tmp_load_data_set(npz_path, rank=0):
     def check_memory_usage():
         if not psutil.virtual_memory().percent < 90:

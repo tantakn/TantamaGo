@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+#pragma once
 #include "logger.h"
 #include "ErrorRecorder.h"
 #include "logging.h"

@@ -1,19 +1,24 @@
-#ifndef myMacro_INCLUDED
+#define goBoard_hpp_INCLUDED
+
+
+#ifndef myMacro_hpp_INCLUDED
 #include "myMacro.hpp"
-#define myMacro_INCLUDED
+#define myMacro_hpp_INCLUDED
 #endif
 
-#ifndef json_INCLUDED
+#ifndef json_hpp_INCLUDED
 #include "json.hpp"
-#define json_INCLUDED
+#define json_hpp_INCLUDED
 #endif
 
 
-constexpr int debugFlag = 0b11;
 
 constexpr int BOARDSIZE = 9;
 
 constexpr double komi = 7.5;
+
+
+constexpr ll debugFlag = 0b11;
 
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
@@ -175,6 +180,8 @@ struct goBoard {
     double CountResult();
 
     bool TestPipe();
+
+    vector<vector<vector<double>>> MakeInputPlane();
 
     goBoard();
 

@@ -1,6 +1,8 @@
-#ifndef goBoard_INCLUDED
+#define goBoard_cpp_INCLUDED
+
+#ifndef goBoard_hpp_INCLUDED
 #include "goBoard.hpp"
-#define goBoard_INCLUDED
+#define goBoard_hpp_INCLUDED
 #endif
 
 #define dbg_flag
@@ -12,7 +14,8 @@ ll g_node_cnt = 0;
 mt19937 mt(random_device{}());
 
 
-goBoard::goBoard() : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr)
+goBoard::goBoard()
+    : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr)
 {
     libs[-1] = INF;
 }
@@ -40,14 +43,14 @@ goBoard::goBoard(vector<vector<char>> inputBoard)
     }
 }
 
-goBoard::goBoard(goBoard &inputparent, int y, int x, char putcolor)
+goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
     : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), teban(1), previousMove(make_pair(y, x))
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
 
-    #ifdef dbg_flag
+#ifdef dbg_flag
     g_node_cnt++;
-    #endif
+#endif
 
     if (putcolor == 0) {
         if (parent->previousMove == make_pair((char)0, (char)0)) {
@@ -125,7 +128,7 @@ vector<vector<char>> goBoard::InputBoardFromVec(vector<vector<char>> input)
     return tmp;
 };
 
-void goBoard::PrintBoard(char bit=0b1)
+void goBoard::PrintBoard(char bit = 0b1)
 {
     // if (opt == "int") {
     //     rep (i, 1, board.size() - 1) {
@@ -136,7 +139,7 @@ void goBoard::PrintBoard(char bit=0b1)
     //     }
     // }
     if (bit & 0b0001) {
-        cout << (int)previousMove.first << " " << (int)previousMove.second << " " << (int)teban << endl;////////////////
+        cout << (int)previousMove.first << " " << (int)previousMove.second << " " << (int)teban << endl;  ////////////////
         cout << "turn: " << (int)teban << endl;
         cout << "   1 2 3 4 5 6 7 8 9" << endl;
         rep (i, board.size()) {
@@ -227,7 +230,8 @@ void goBoard::PrintBoard(char bit=0b1)
     }
 };
 
-string goBoard::ToJson() {
+string goBoard::ToJson()
+{
     vector<vector<char>> v = board;
     vector<char> tmp = {teban, previousMove.first, previousMove.second};
     v.push_back(tmp);
@@ -473,7 +477,8 @@ goBoard* goBoard::PutStone(int y, int x, char color)
     // return *newBoard;
 };
 
-tuple<char, char, char> goBoard::GenRandomMove() {
+tuple<char, char, char> goBoard::GenRandomMove()
+{
     if (isEnded) {
         return {-1, -1, -1};
     }
@@ -503,7 +508,8 @@ tuple<char, char, char> goBoard::GenRandomMove() {
     return {0, 0, 0};
 };
 
-double goBoard::CountResult() {
+double goBoard::CountResult()
+{
     int blackScore = 0;
     int whiteScore = 0;
 
@@ -547,94 +553,158 @@ double goBoard::CountResult() {
     return blackScore - whiteScore - komi;
 }
 
-bool goBoard::TestPipe() {
-    char data[bufsize] = {};
+// bool goBoard::TestPipe() {
+//     char data[bufsize] = {};
 
-    FILE *fp = popen("python3 ./pipetest.py", "w");
-    fputs(self.ToJson(), fp);
-    fgets(data, bufsize , fp);
-    std::cout << data << std::endl;
-    pclose(fp);
+//     FILE *fp = popen("python3 ./pipetest.py", "w");
+//     fputs(self.ToJson(), fp);
+//     fgets(data, bufsize , fp);
+//     std::cout << data << std::endl;
+//     pclose(fp);
 
-    return(0);
+//     return(0);
+// }
+
+vector<vector<vector<double>>> goBoard::MakeInputPlane()
+{
+    vector<vector<vector<double>>> inputPlane(6, vector<vector<double>>(BOARDSIZE, vector<double>(BOARDSIZE, 0)));
+
+    rep (i, BOARDSIZE) {
+        rep (j, BOARDSIZE) {
+            if (board[i + 1][j + 1] == 0) {
+                inputPlane[0][i][j] = 1;
+            }
+            else if (board[i + 1][j + 1] == teban) {
+                inputPlane[1][i][j] = 1;
+            }
+            else if (board[i + 1][j + 1] != teban) {
+                inputPlane[2][i][j] = 1;
+            }
+        }
+    }
+
+    if (previousMove.first != -1 && previousMove.first != 0) {
+        inputPlane[3][previousMove.first - 1][previousMove.second - 1] = 1;
+    }
+    else if (previousMove.first == 0) {
+        rep (i, BOARDSIZE) {
+            rep (j, BOARDSIZE) {
+                inputPlane[4][i][j] = 1;
+            }
+        }
+    }
+
+    if (teban == 1) {
+        rep (i, BOARDSIZE) {
+            rep (j, BOARDSIZE) {
+                inputPlane[5][i][j] = 1;
+            }
+        }
+    }
+    else {
+        rep (i, BOARDSIZE) {
+            rep (j, BOARDSIZE) {
+                inputPlane[5][i][j] = -1;
+            }
+        }
+    }
+
+    if (debugFlag & 0b1000) {
+        for (auto plane : inputPlane) {
+            for (auto row : plane) {
+                for (auto col : row) {
+                    cout << col << " ";
+                }
+                cout << endl;
+            }
+            cout << endl;
+        }
+    }
+
+    return inputPlane;
 }
 
 
 
 int main()
 {
+    ofstream ofs("planejson.txt");
+
     goBoard* testboard(new goBoard());
 
     testboard->PrintBoard();
 
     while (true) {
-        auto[y, x, z] = testboard->GenRandomMove();
+        auto [y, x, z] = testboard->GenRandomMove();
         if (y == -1) {
             testboard->PrintBoard(0b111111);
             print(testboard->CountResult());
             break;
         }
+        nlohmann::json j(testboard->MakeInputPlane());
+        cout << j.dump() << endl;
         testboard = testboard->PutStone(y, x, z);
-    print(testboard->ToJson());
+        print(testboard->ToJson());
     }
 
     print(testboard->ToJson());
 
+
     print(g_node_cnt);
 
 
-//     unique_ptr<goBoard> testboard(new goBoard(
-//         // clang-format off
-// {{
-// 0,1,0,0,0,0,2,1,0}, {
-// 1,1,0,0,0,0,0,2,2}, {
-// 0,1,0,1,1,1,0,0,2}, {
-// 2,1,0,1,0,1,0,2,0}, {
-// 1,1,0,1,1,0,0,0,2}, {
-// 0,0,0,0,0,0,0,0,0}, {
-// 0,0,0,0,0,2,0,0,0}, {
-// 1,0,0,0,1,0,2,0,0}, {
-// 0,1,0,0,0,2,2,0,0}}
-//         // clang-format on
-//         ));
+    //     unique_ptr<goBoard> testboard(new goBoard(
+    //         // clang-format off
+    // {{
+    // 0,1,0,0,0,0,2,1,0}, {
+    // 1,1,0,0,0,0,0,2,2}, {
+    // 0,1,0,1,1,1,0,0,2}, {
+    // 2,1,0,1,0,1,0,2,0}, {
+    // 1,1,0,1,1,0,0,0,2}, {
+    // 0,0,0,0,0,0,0,0,0}, {
+    // 0,0,0,0,0,2,0,0,0}, {
+    // 1,0,0,0,1,0,2,0,0}, {
+    // 0,1,0,0,0,2,2,0,0}}
+    //         // clang-format on
+    //         ));
 
-//     testboard->PrintBoard();
+    //     testboard->PrintBoard();
 
-//     goBoard* ptr = testboard->PutStone(8, 2, 0);
-//     while (true) {
-//         int x, y, z;
-//         cout << "x: ";
-//         cin >> x;
-//         if (x == -1) {
-//             ptr = nullptr;
-//             break;
-//         }
-//         else if (x == -2) {
-//             ptr->PrintBoard(0b111111);
-//             continue;
-//         }
-//         else if (x == -3) {
-//             auto[b, a, c] = ptr->GenRandomMove();
-//             x = a; y = b; z = c;
-//             print(x,y,z);
-//         } else {
-//             cout << "y: ";
-//             cin >> y;
-//             cout << "color: ";
-//             cin >> z;
-//         }
-//         if (x < 1 || x > BOARDSIZE || y < 1 || y > BOARDSIZE || (z != 1 && z != 2 && z != 0)) {
-//             print("Illegal Input");
-//             continue;
-//         }
-//         if (ptr->IsLegalMove(y, x, z)) {
-//             print("Illegal Move");
-//             continue;
-//         }
-//         goBoard* ptr2 = ptr->PutStone(y, x, z);
-//         ptr2->PrintBoard();
-//         ptr = ptr2;
-//     }
+    //     goBoard* ptr = testboard->PutStone(8, 2, 0);
+    //     while (true) {
+    //         int x, y, z;
+    //         cout << "x: ";
+    //         cin >> x;
+    //         if (x == -1) {
+    //             ptr = nullptr;
+    //             break;
+    //         }
+    //         else if (x == -2) {
+    //             ptr->PrintBoard(0b111111);
+    //             continue;
+    //         }
+    //         else if (x == -3) {
+    //             auto[b, a, c] = ptr->GenRandomMove();
+    //             x = a; y = b; z = c;
+    //             print(x,y,z);
+    //         } else {
+    //             cout << "y: ";
+    //             cin >> y;
+    //             cout << "color: ";
+    //             cin >> z;
+    //         }
+    //         if (x < 1 || x > BOARDSIZE || y < 1 || y > BOARDSIZE || (z != 1 && z != 2 && z != 0)) {
+    //             print("Illegal Input");
+    //             continue;
+    //         }
+    //         if (ptr->IsLegalMove(y, x, z)) {
+    //             print("Illegal Move");
+    //             continue;
+    //         }
+    //         goBoard* ptr2 = ptr->PutStone(y, x, z);
+    //         ptr2->PrintBoard();
+    //         ptr = ptr2;
+    //     }
 
 
     //     goBoard board(

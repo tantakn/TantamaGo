@@ -64,6 +64,23 @@ def tmp_load_data_set(npz_path, rank=0):
 
 data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,1,1,1,0,1,0,1,0,3],[3,0,1,0,1,1,1,1,1,1,3],[3,1,1,1,1,1,1,1,1,1,3],[3,1,1,2,2,1,2,2,2,1,3],[3,1,2,0,2,2,2,2,1,1,3],[3,1,2,2,2,2,2,1,1,1,3],[3,0,1,2,0,2,2,1,2,1,3],[3,1,1,1,2,2,0,2,2,1,3],[3,1,0,1,2,2,2,0,2,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,0,0]]"
 data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,2,2,0,2,2,2,2,0,2,3],[3,2,0,2,2,0,2,2,1,2,3],[3,2,2,2,2,2,2,0,2,2,3],[3,2,2,2,2,2,2,2,2,1,3],[3,1,2,1,1,1,1,2,1,1,3],[3,1,1,1,0,1,1,1,1,1,3],[3,1,1,1,1,0,1,1,0,1,3],[3,1,1,0,1,1,0,1,1,1,3],[3,1,1,1,1,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,2,6]]"
+"""
+turn: 1
+   1 2 3 4 5 6 7 8 9
+ 1 ● ┬ ● ● ┬ ● ● ● ● 
+ 2 ├ ● ● + ● ● ● ○ ┤ 
+ 3 ● ● ● ● ● ● + ● ○ 
+ 4 ● ● ● ● ● ● ● ○ ○ 
+ 5 ○ ○ ● ○ ● ● ● ● ● 
+ 6 ○ ○ ○ ○ ● + ● ● ● 
+ 7 ├ ○ + ○ ○ ● ● ● ┤ 
+ 8 ○ ○ ○ + ○ ● ● ● ● 
+ 9 ○ ○ ┴ ○ ● ● ● ┴ ● 
+[[3,3,3,3,3,3,3,3,3,3,3],[3,1,0,1,1,0,1,1,1,1,3],[3,0,1,1,0,1,1,1,2,0,3],[3,1,1,1,1,1,1,0,1,2,3],[3,1,1,1,1,1,1,1,2,2,3],[3,2,2,1,2,1,1,1,1,1,3],[3,2,2,2,2,1,0,1,1,1,3],[3,0,2,0,2,2,1,1,1,0,3],[3,2,2,2,0,2,1,1,1,1,3],[3,2,2,0,2,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,4,8]]
+[[[0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0],[1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0],[0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0],[1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0],[0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0]],[[1.0,0.0,1.0,1.0,0.0,1.0,1.0,1.0,1.0],[0.0,1.0,1.0,0.0,1.0,1.0,1.0,0.0,0.0],[1.0,1.0,1.0,1.0,1.0,1.0,0.0,1.0,0.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0],[0.0,0.0,1.0,0.0,1.0,1.0,1.0,1.0,1.0],[0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.0,1.0],[0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0],[0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,1.0],[0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,1.0]],[[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0],[1.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0],[1.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0],[0.0,1.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0],[1.0,1.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0],[1.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0]],[[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]],[[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]],[[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]]]
+2 9 2
+"""
+data = "[[3,3,3,3,3,3,3,3,3,3,3],[3,1,0,1,1,0,1,1,1,1,3],[3,0,1,1,0,1,1,1,2,0,3],[3,1,1,1,1,1,1,0,1,2,3],[3,1,1,1,1,1,1,1,2,2,3],[3,2,2,1,2,1,1,1,1,1,3],[3,2,2,2,2,1,0,1,1,1,3],[3,0,2,0,2,2,1,1,1,0,3],[3,2,2,2,0,2,1,1,1,1,3],[3,2,2,0,2,1,1,1,0,1,3],[3,3,3,3,3,3,3,3,3,3,3],[1,4,8]]"
 
 
 # data = input()
@@ -102,56 +119,74 @@ else:
         for j in range(BOARD_SIZE):
             input_np[5][i][j] = -1
 
-# print(input_np)######
+print(input_np)######
 
-input_np, _, _ = tmp_load_data_set("/home/tantakn/code/TantamaGo/data/sl_data_0.npz")
+# input_np, _, _ = tmp_load_data_set("/home/tantakn/code/TantamaGo/data/sl_data_0.npz") # npzファイルからデータをロード
 
 
 input_planes = torch.tensor(input_np)
 # print(input_planes)######
 
-input_planes = input_planes.to(device)  # バッチ次元を追加
-# input_planes = input_planes.unsqueeze(0).to(device)  # バッチ次元を追加
+input_planes = input_planes.unsqueeze(0).to(device)  # バッチ次元を追加
 
 # print(input_planes.shape)######
 # print(input_planes)######
 
-policy_data, value_data = network.inference(input_planes)
+policy_data, value_data = network(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
 
+policy_data, value_data = network.forward(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.forward_for_sl(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.forward_with_softmax(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.inference(input_planes)
+print(policy_data, file=sys.stderr)
+print(value_data, file=sys.stderr)
+
+policy_data, value_data = network.inference_with_policy_logits(input_planes)
 print(policy_data, file=sys.stderr)
 print(value_data, file=sys.stderr)
 
 
-# policy_data = policy_data.numpy()
-# # print(np.sum(policy_data))######
-# # policy_data = json.dumps(policy_data.tolist())
-# # print(policy_data)######
+policy_data = policy_data.numpy()
+# print(np.sum(policy_data))######
+# policy_data = json.dumps(policy_data.tolist())
+# print(policy_data)######
 
-# value_data = value_data.numpy()
-# # print(np.sum(value_data))######
-# # value_data = json.dumps(value_data.tolist())
-# # print(value_data)######
+value_data = value_data.numpy()
+# print(np.sum(value_data))######
+# value_data = json.dumps(value_data.tolist())
+# print(value_data)######
 
-# value_data = value_data.tolist()
-# policy_data = policy_data.tolist()
+value_data = value_data.tolist()
+policy_data = policy_data.tolist()
 
-# # s = "qwer"
-# s = json.dumps(value_data)
+# s = "qwer"
+s = json.dumps(value_data)
 
-# print(s, file=sys.stderr)
+print(s, file=sys.stderr)
 
-# print(s)
+print(s)
 
-# data = {"policy": policy_data, "value": value_data}
+data = {"policy": policy_data, "value": value_data}
 
-# print(data, file=sys.stderr)
+print(data, file=sys.stderr)
 
-# data = json.dumps(data)
+data = json.dumps(data)
 
 
-# print(data, file=sys.stderr)
+print(data, file=sys.stderr)
 
-# print(data)
+print(data)
 
 
 

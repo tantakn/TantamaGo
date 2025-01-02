@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import psutil
 import datetime
+import os
 
 import sys
 sys.path.append('../')
@@ -15,7 +16,8 @@ with torch.no_grad():
     # モデルをロードし、GPU に移動
     network = DualNet(device)
     network.to(device)
-    network.load_state_dict(torch.load("/home0/y2024/u2424004/igo/TantamaGo/model_def/sl-model_default.bin"))
+    network.load_state_dict(torch.load("/home/tantakn/code/TantamaGo/model/sl-model_20241020_214243_Ep:14.bin"))
+    # network.load_state_dict(torch.load("/home0/y2024/u2424004/igo/TantamaGo/model_def/sl-model_default.bin"))
     network.eval()
     torch.set_grad_enabled(False)
 
@@ -70,13 +72,23 @@ print(dummy_input[0])
 
 torch.onnx.export(model,
                   dummy_input[0].unsqueeze(0).to(device),  # バッチ次元を追加
-                  "./test.onnx", export_params=True,
-                  opset_version=8,
+                  "./test3.onnx", export_params=True,
+                  opset_version=10,
                   verbose=True, do_constant_folding=True, input_names=["input"],
                   output_names=["output_policy", "output_value"],
                   dynamic_axes={'input': {0: 'batch_size'},
                                 'output_policy': {0: 'batch_size'},
-                                'output_value': {0: 'batch_size'}})
+                                'output_value': {0: 'batch_size'}}
+                )
+# torch.onnx.export(model,
+#                   dummy_input[0].unsqueeze(0).to(device),  # バッチ次元を追加
+#                   "./test.onnx", export_params=True,
+#                   opset_version=8,
+#                   verbose=True, do_constant_folding=True, input_names=["input"],
+#                   output_names=["output_policy", "output_value"],
+#                   dynamic_axes={'input': {0: 'batch_size'},
+#                                 'output_policy': {0: 'batch_size'},
+#                                 'output_value': {0: 'batch_size'}})
 # torch.onnx.export(model,
 #                   plane[0].unsqueeze(0).to(device),  # バッチ次元を追加
 #                   "./test.onnx", export_params=True,

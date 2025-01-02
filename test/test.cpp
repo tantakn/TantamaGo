@@ -26,39 +26,20 @@ template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } retu
 // clang-format on
 
 
-#include <NvInfer.h>
-// Define TRT entrypoints used in common code
-#define DEFINE_TRT_ENTRYPOINTS 1
-#define DEFINE_TRT_LEGACY_PARSER_ENTRYPOINT 0
+#include "json.hpp"
 
-
-#include "NvInfer.h"
-#include "NvOnnxConfig.h"
-#include "NvOnnxParser.h"
-#include <cuda_runtime_api.h>
-#include <cuda_runtime.h>
-
-// // Logger for TensorRT
-// class Logger : public ILogger {
-// public:
-//     void log(ILogger::Severity severity, const char* msg) override
-//     {
-//         // suppress information level log
-//         if (severity == Severity::kINFO) return;
-//         std::cout << msg << std::endl;
-//     }
-// };
-int device_count;
-int device = 1;
-
-int main() {
-    print(cudaGetDeviceCount(&device_count));
-    // setReportableSeverity(Logger::Severity::kINTERNAL_ERROR);
-    if (cudaSetDevice(device) != cudaSuccess)
+int main()
 {
-    cout << "cudaSetDevice failed" << std::endl;
-    return 0 ;
-}
-    cout << "test4" << endl;
-    return 0;
+    // RGB色で文字を表示
+    cout << "\x1b[38;2;255;0;0m" << "Hello, World!" << "\x1b[0m" << endl; // 赤色文字
+    // RGB色で背景を表示
+
+    cout << "\x1b[48;2;0;255;0m" << "Hello, World!" << "\x1b[0m" << endl; // 緑色背景
+
+    // 両方変更
+    cout << "\x1b[38;2;0;0;255m" << "\x1b[48;2;255;255;255m" << "Hello, World!" << "\x1b[0m" << endl; // 青色文字、白色背景
+
+    cerr << "test" << endl;
+
+    wcerr << "test2" << endl;
 }

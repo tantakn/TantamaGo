@@ -22,3 +22,5 @@
 /goEnv/
 
 /tensorRT_test/TensorRT/
+
+/TensorRT-release-10.7/
