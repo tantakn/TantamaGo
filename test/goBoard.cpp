@@ -15,13 +15,13 @@ mt19937 mt(random_device{}());
 
 
 goBoard::goBoard()
-    : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr)
+    : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr), isRoot(true)
 {
     libs[-1] = INF;
 }
 
 goBoard::goBoard(vector<vector<char>> inputBoard)
-    : board(InputBoardFromVec(inputBoard)), idBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0)), teban(1)
+    : board(InputBoardFromVec(inputBoard)), idBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0)), teban(1), isRoot(true)
 {
     /// TODO: teban の扱いを考える
     rep (i, BOARDSIZE + 2) {
@@ -44,7 +44,7 @@ goBoard::goBoard(vector<vector<char>> inputBoard)
 }
 
 goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
-    : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), teban(1), previousMove(make_pair(y, x))
+    : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), teban(1), previousMove(make_pair(y, x)), isRoot(false)
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
 
@@ -89,17 +89,21 @@ goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
 
     history.insert(board);
 
+    parent->childrens[previousMove] = this;
+
+    parent->ucts.insert(make_tuple(0.0, 0, 0, previousMove));
+
     // PrintBoard(1);
 }
 
 goBoard::~goBoard()
 {
-    for (auto m : childrens) {
-        goBoard* child = m.second;
-        if (debugFlag & 0b100) print("delete child");
-        delete child;
-        child = nullptr;
-    }
+//     for (auto m : childrens) {
+//         goBoard* child = m.second;
+//         childrens.erase(m.first);
+//         if (debugFlag & 0b100) print("delete child");
+//         delete child;
+//     }
 }
 
 vector<vector<char>> goBoard::InputBoardFromVec(vector<vector<char>> input)
@@ -288,7 +292,7 @@ int goBoard::CountLiberties(int y, int x)
     return cnt;
 };
 
-int goBoard::IsLegalMove(int y, int x, char color)
+int goBoard::IsIllegalMove(int y, int x, char color)
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (color == 0b01 || color == 0b10) || (x == 0 && y == 0 && color == 0));
 
@@ -369,6 +373,23 @@ int goBoard::IsLegalMove(int y, int x, char color)
 
     return 0;
 };
+
+
+vector<tuple<char, char, char>> goBoard::GenAllLegalMoves()
+{
+    vector<tuple<char, char, char>> legalMoves(0);
+
+    rep (i, 1, BOARDSIZE + 1) {
+        rep (j, 1, BOARDSIZE + 1) {
+            if (!IsIllegalMove(i, j, teban)) {
+                legalMoves.push_back({i, j, teban});
+            }
+        }
+    }
+
+    return legalMoves;
+}
+
 
 void goBoard::ApplyString(int y, int x)
 {
@@ -456,7 +477,11 @@ goBoard* goBoard::PutStone(int y, int x, char color)
 
 
     assert(!isEnded);
-    assert(!IsLegalMove(y, x, color));
+    assert(!IsIllegalMove(y, x, color));
+
+    if (childrens.count(make_pair(y, x))) {
+        return childrens[make_pair(y, x)];
+    }
 
     // auto ptr = make_unique<goBoard>(*this, y, x, color);
     // goBoard* newBoardPtr = newBoard.get();
@@ -496,11 +521,11 @@ tuple<char, char, char> goBoard::GenRandomMove()
         }
         int x = i % BOARDSIZE + 1;
         int y = i / BOARDSIZE + 1;
-        if (!IsLegalMove(y, x, teban)) {
+        if (!IsIllegalMove(y, x, teban)) {
             return {y, x, teban};
         }
         else if (debugFlag & 0b100) {
-            print(x, y, IsLegalMove(y, x, teban));
+            print(x, y, IsIllegalMove(y, x, teban));
         }
     }
 
@@ -546,9 +571,11 @@ double goBoard::CountResult()
         }
     }
 
-    print("blackScore:", blackScore);
-    print("whiteScore:", whiteScore);
-    print("komi:", komi);
+    if (debugFlag & 0b100000) {
+        print("blackScore:", blackScore);  ///////////
+        print("whiteScore:", whiteScore);
+        print("komi:", komi);
+    }
 
     return blackScore - whiteScore - komi;
 }
@@ -624,33 +651,157 @@ vector<vector<vector<double>>> goBoard::MakeInputPlane()
     return inputPlane;
 }
 
+int cnt = 0;  ////////////
+
+bool Destruct(goBoard* ptr)
+{
+    assert(ptr != nullptr && "ptr is nullptr");
+    for (auto x : ptr->childrens) {
+        assert(x.second != nullptr && "child ptr is nullptr");
+        Destruct(x.second);
+    }
+    ptr->childrens.clear(); // ここでマップをクリア
+    delete ptr;
+    return true;
+}
+
+double dfs(goBoard* ptr)
+{
+    // print("dfs", cnt);////////////////
+    if (ptr->isEnded) {
+        return ptr->CountResult();
+    }
+
+    tuple<char, char, char> legalMove = ptr->GenRandomMove();
+
+    double tmp = dfs(ptr->PutStone(get<0>(legalMove), get<1>(legalMove), get<2>(legalMove)));
+    if (ptr->parent->isRoot) {
+        for (auto x : ptr->childrens) {
+            Destruct(x.second);
+        }
+    }
+    return tmp;
+}
 
 
 int main()
 {
     ofstream ofs("planejson.txt");
 
-    goBoard* testboard(new goBoard());
+    goBoard* root(new goBoard());
 
-    testboard->PrintBoard();
+    vector<tuple<char, char, char>> legalMoves = root->GenAllLegalMoves();
 
-    while (true) {
-        auto [y, x, z] = testboard->GenRandomMove();
-        if (y == -1) {
-            testboard->PrintBoard(0b111111);
-            print(testboard->CountResult());
-            break;
-        }
-        nlohmann::json j(testboard->MakeInputPlane());
-        cout << j.dump() << endl;
-        testboard = testboard->PutStone(y, x, z);
-        print(testboard->ToJson());
+
+
+
+    for (auto [y, x, t] : legalMoves) {
+        goBoard* tmp = root->PutStone(y, x, t);
     }
 
-    print(testboard->ToJson());
+    print(root->ucts);
+
+    for (auto x = *begin(root->ucts); get<0>(x) == 0.0; x = *begin(root->ucts)) {
+        ++cnt;  //////////
+
+        if (get<0>(x) != 0.0) break;
+
+        double rslt = dfs(root->childrens[get<3>(x)]);
+
+        // print("rslt", rslt);////////
+
+        int win = 0;
+        if (rslt > 0) {
+            win = 1;
+        }
+        else if (rslt < 0) {
+            win = 0;
+        }
+
+        int numWin = get<2>(x) + win;
+        int numVisit = get<1>(x) + 1;
+        ++root->numVisits;
+
+        // cout << "numWin: " << numWin << endl;
+        // cout << "numVisit: " << numVisit << endl;
+        // cout << "root->numVisits: " << root->numVisits << endl;
+
+        double uct = (double)numWin / (double)numVisit + sqrt(2 * log(root->numVisits) / (double)numVisit);
+
+        // print("uct", uct);
 
 
-    print(g_node_cnt);
+        root->ucts.erase(x);
+
+        root->ucts.insert(make_tuple(uct, numVisit, numWin, get<3>(x)));
+    }
+
+    for (; cnt < 3000; ++cnt) {
+        auto x = *rbegin(root->ucts);
+        auto [uct, numWin, numVisit, move] = x;
+
+        double rslt = dfs(root);
+
+        int win = 0;
+        if (rslt > 0) {
+            win = 1;
+        }
+        else if (rslt < 0) {
+            win = 0;
+        }
+
+        numWin += win;
+        numVisit += 1;
+        ++root->numVisits;
+
+        uct = (double)numWin / (double)numVisit + sqrt(2 * log(root->numVisits) / (double)numVisit);
+        root->ucts.erase(x);
+        auto tmp = make_tuple(uct, numVisit, numWin, move);
+        root->ucts.insert(tmp);
+        print(tmp);
+    }
+
+    print("end");
+    for (auto x : root->ucts) {
+        print(x);
+    }
+
+    auto ans = *rbegin(root->ucts);
+    for (auto x : root->ucts) {
+        if (get<1>(x) > get<1>(ans)) {
+            ans = x;
+        }
+    }
+    print("ans", ans);
+    // print(root->numVisits);
+
+
+
+
+
+    // ofstream ofs("planejson.txt");
+
+    // goBoard* testboard(new goBoard());
+
+    // testboard->PrintBoard();
+
+    // while (true) {
+    //     auto [y, x, z] = testboard->GenRandomMove();
+    //     if (y == -1) {
+    //         testboard->PrintBoard(0b111111);
+    //         print(testboard->CountResult());
+    //         break;
+    //     }
+    //     nlohmann::json j(testboard->MakeInputPlane());
+    //     cout << j.dump() << endl;
+    //     testboard = testboard->PutStone(y, x, z);
+    //     print(testboard->ToJson());
+    // }
+
+    // print(testboard->ToJson());
+
+
+    // print(g_node_cnt);
 
 
     //     unique_ptr<goBoard> testboard(new goBoard(
@@ -697,7 +848,7 @@ int main()
     //             print("Illegal Input");
     //             continue;
     //         }
-    //         if (ptr->IsLegalMove(y, x, z)) {
+    //         if (ptr->IsIllegalMove(y, x, z)) {
     //             print("Illegal Move");
     //             continue;
     //         }
@@ -744,7 +895,7 @@ int main()
 
     //     print("Liberties:", board.CountLiberties(y, x));
     //     print("color:", (int)board.board[y][x]);
-    //     print("IsLegalMove:", board.IsLegalMove(y, x, z));
+    //     print("IsIllegalMove:", board.IsIllegalMove(y, x, z));
 
     //     board.PrintBoard();
     // }

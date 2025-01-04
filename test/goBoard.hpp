@@ -18,7 +18,7 @@ constexpr int BOARDSIZE = 9;
 constexpr double komi = 7.5;
 
 
-constexpr ll debugFlag = 0b11;
+constexpr ll debugFlag = 0b0;
 
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
@@ -60,6 +60,8 @@ struct goBoard {
     /// @brief 終局図かどうか
     bool isEnded = false;
 
+    bool isRoot;
+
     /// 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁。
     vector<vector<char>> board;
 
@@ -81,6 +83,14 @@ struct goBoard {
 
     /// @brief 子盤面
     map<tuple<char, char>, goBoard *> childrens;
+
+    /// @brief tuple<uct, この手の探索回数, この手の勝利回数, 着手>
+    set<tuple<double, int, int, pair<char, char>>> ucts;
+    // /// @brief
+    // vector<tuple<double, int, pair<char, char>>> ucts;
+
+    /// @brief 子ノードの探索回数の合計
+    int numVisits = 0;
 
     /// @brief
     vector<vector<double>> policyBoard;
@@ -147,7 +157,14 @@ struct goBoard {
      * @return true
      * @return false
      */
-    int IsLegalMove(int y, int x, char color);
+    int IsIllegalMove(int y, int x, char color);
+
+    /**
+     * @brief 
+     * 
+     * @return vector<tuple<char, char, char>> y, x, teban
+     */
+    vector<tuple<char, char, char>> GenAllLegalMoves();
 
     /**
      * @brief idBoard[y][x] == 0 な石とつながっている石で新しい連を作る
@@ -175,6 +192,11 @@ struct goBoard {
      */
     goBoard* PutStone(int y, int x, char color);
 
+    /**
+     * @brief とりあえず、パス以外の合法手があればパス以外を選択。
+     * 
+     * @return tuple<char, char, char> y, x, teban
+     */
     tuple<char, char, char> GenRandomMove();
 
     double CountResult();

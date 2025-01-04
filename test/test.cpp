@@ -30,16 +30,5 @@ template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } retu
 
 int main()
 {
-    // RGB色で文字を表示
-    cout << "\x1b[38;2;255;0;0m" << "Hello, World!" << "\x1b[0m" << endl; // 赤色文字
-    // RGB色で背景を表示
 
-    cout << "\x1b[48;2;0;255;0m" << "Hello, World!" << "\x1b[0m" << endl; // 緑色背景
-
-    // 両方変更
-    cout << "\x1b[38;2;0;0;255m" << "\x1b[48;2;255;255;255m" << "Hello, World!" << "\x1b[0m" << endl; // 青色文字、白色背景
-
-    cerr << "test" << endl;
-
-    wcerr << "test2" << endl;
 }
