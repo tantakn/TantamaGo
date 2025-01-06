@@ -1,34 +1,77 @@
-// clang-format off
-#define _GLIBCXX_DEBUG
-#include <bits/stdc++.h>
-using namespace std;
+#include "myMacro.hpp"
 
-const int INF = 1047483647;
-using ll = int_fast64_t;
-using ull = uint_fast64_t;
-#define myall(x) (x).begin(), (x).end()
-#define MyWatch(x) (double)(clock() - (x)) / CLOCKS_PER_SEC
-#define istrue ? assert(true) : assert(false && "istrue")
-#define _rep0(a) for (uint_fast64_t _tmp_i = 0; _tmp_i < UINT_FAST64_MAX; ++_tmp_i, assert(_tmp_i < INT_MAX))
-#define _rep1(a) for (int_fast64_t _tmp_i = 0; _tmp_i < (int_fast64_t)(a); ++_tmp_i)
-#define _rep2(i, a) for (int_fast64_t i = 0; i < (int_fast64_t)(a); ++i)
-#define _rep3(i, a, b) for (int_fast64_t i = (int_fast64_t)(a); i < (int_fast64_t)(b); ++i)
-#define _print0(a) cout << endl
-#define _print1(a) cout << (a) << endl
-#define _print2(a, b) cout << (a) << ", " << (b) << endl
-#define _print3(a, b, c) cout << (a) << ", " << (b) << ", " << (c) << endl
-#define _overload(a, b, c, d, e ...) d
-#define rep(...) _overload(__VA_ARGS__ __VA_OPT__(,)  _rep3, _rep2, _rep1, _rep0)(__VA_ARGS__)
-#define print(...) _overload(__VA_ARGS__ __VA_OPT__(,)  _print3, _print2, _print1, _print0)(__VA_ARGS__)
+int cnt = 0;
+struct test {
+    test *parent;
+    map<int, test *> childrens;
 
-template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
-template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
-// clang-format on
+    vint id;
 
+    bool isRoot = false;
 
-#include "json.hpp"
+    test() : parent(nullptr) {
+        id.push_back(cnt++);
+    }
+
+    test(test *inputparent) : parent(inputparent) {
+        assert (parent != nullptr);
+        parent->childrens[rand()] = this;
+        id = parent->id;
+        id.push_back(cnt++);
+    };
+
+    test* MakeChild() {
+        return new test(this);
+    }
+
+    // ~test() {
+    //     for (auto x : childrens) {
+    //         // print("delete", x.second->id);
+    //         // print(cnt--);
+    //         delete x.second;
+    //     }
+    // }
+};
+
+// int Delete(test *p) {
+//     for (auto x : p->childrens) {
+//         Delete(x.second);
+//     }
+//     delete p;
+//     return 0;
+// }
+
+bool bfs(test *p) {
+    // print(++cnt);
+    if (!(rand() % 200)) {
+        return false;
+    }
+    bfs(p->MakeChild());
+    if (!p->isRoot) {
+        delete p;
+    }
+    return true;
+}
 
 int main()
 {
+    test *root = new test();
 
+    root->isRoot = true;
+
+    test *tmp = root;
+    rep (i, 40) {
+        print(i);
+        bfs(tmp);
+        // for (auto x : root->childrens) {
+        //     delete x.second;
+        //     // Delete(x.second);
+        // }
+    }
+
+    delete root;
+
+    print(cnt);
+
+    return 0;
 }

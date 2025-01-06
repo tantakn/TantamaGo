@@ -1,7 +1,7 @@
 #define goBoard_cpp_INCLUDED
 
 #ifndef goBoard_hpp_INCLUDED
-#include "goBoard.hpp"
+#include "___goBoard_smartptr.hpp"
 #define goBoard_hpp_INCLUDED
 #endif
 
@@ -15,7 +15,7 @@ mt19937 mt(random_device{}());
 
 
 goBoard::goBoard()
-    : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr), isRoot(true)
+    : board(rawBoard), idBoard(rawIdBoard), teban(1), isRoot(true)
 {
     libs[-1] = INF;
 }
@@ -43,8 +43,9 @@ goBoard::goBoard(vector<vector<char>> inputBoard)
     }
 }
 
-goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
-    : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), teban(1), previousMove(make_pair(y, x)), isRoot(false)
+goBoard::goBoard(shared_ptr<goBoard> &inputparent, int y, int x, char putcolor)
+    : parent(inputparent)
+    , board(inputparent->board), idBoard(inputparent->idBoard), libs(inputparent->libs), stringIdCnt(inputparent->stringIdCnt), history(inputparent->history), teban(1), previousMove(make_pair(y, x)), isRoot(false)
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
 
@@ -52,13 +53,21 @@ goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
     g_node_cnt++;
 #endif
 
+    if (auto parentPtr = parent.lock()) {
+    } else {
+        // parent が解放されている場合の処理
+        std::cerr << "Error: parent is no longer available.1" << std::endl;
+        assert(false);
+    }
+    auto parentPtr = parent.lock();
+
     if (putcolor == 0) {
-        if (parent->previousMove == make_pair((char)0, (char)0)) {
+        if (parentPtr->previousMove == make_pair((char)0, (char)0)) {
             isEnded = true;
             return;
         }
 
-        teban = 3 - parent->teban;
+        teban = 3 - parentPtr->teban;
         previousMove = make_pair(0, 0);
         return;
     }
@@ -89,44 +98,19 @@ goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
 
     history.insert(board);
 
-    parent->childrens[previousMove] = this;
-
-    parent->ucts.insert(make_tuple(0.0, 0, 0, previousMove));
+    parentPtr->ucts.insert(make_tuple(0.0, 0, 0, previousMove));
 
     // PrintBoard(1);
 }
 
 goBoard::~goBoard()
 {
-    vector<tuple<char, char, goBoard *>> tmpChildrens;
-    for (pair<pair<char, char>, goBoard *> x : childrens) {
-        tmpChildrens.push_back(make_tuple(x.first.first, x.first.second, x.second));
-    }
-    for (auto[y, x, p] : tmpChildrens) {
-        delete p;
-    }
-
-    if (!isRoot) {
-        parent->childrens.erase(previousMove);
-    }
-
-    // vector<goBoard*> tmpchildrens(0);
-    // for (auto& m : childrens) {
-    //     tmpchildrens.push_back(m.second);
-    // }
-    // childrens.clear();
-    // for (auto &x : tmpchildrens) {
-    //     delete x;
-    //     x = nullptr;
-    // }
-    // // for (auto& m : childrens) {
-    // //     goBoard* child = m.second;
-    // //     m.second = nullptr;
-    // //     childrens.erase(m.first);
-    // //     if (debugFlag & 0b1000000) print("delete child");
-    // //     print("delete child");
-    // //     delete child;
-    // // }
+//     for (auto m : childrens) {
+//         goBoard* child = m.second;
+//         childrens.erase(m.first);
+//         if (debugFlag & 0b100) print("delete child");
+//         delete child;
+//     }
 }
 
 vector<vector<char>> goBoard::InputBoardFromVec(vector<vector<char>> input)
@@ -492,7 +476,7 @@ void goBoard::DeleteString(int y, int x)
     }
 }
 
-goBoard* goBoard::PutStone(int y, int x, char color)
+shared_ptr<goBoard> goBoard::PutStone(int y, int x, char color)
 {
     /// TODO: parent とか children, history, libBoard とかの処理も書く。goBoard はポインタで返したほうがいい？
     /// TODO: goBoard はポインタで返したほうがいい？
@@ -506,14 +490,24 @@ goBoard* goBoard::PutStone(int y, int x, char color)
         return childrens[make_pair(y, x)];
     }
 
-    // auto ptr = make_unique<goBoard>(*this, y, x, color);
+    // auto p = make_shared<goBoard>(*this, y, x, color);
     // goBoard* newBoardPtr = newBoard.get();
-    goBoard* p = new goBoard(*this, y, x, color);
-    childrens[make_pair(y, x)] = p;
+    // goBoard* p = new goBoard(*this, y, x, color);
+    // childrens[make_pair(y, x)] = p;
+    // childrens[make_pair(y, x)] = make_shared<goBoard>(*this, y, x, color);
 
-    if (debugFlag & 0b10) p->PrintBoard();
+    if (isRoot) {}
+    else if (auto parentPtr = parent.lock()) {
+        childrens[make_pair(y, x)] = make_shared<goBoard>(parentPtr->childrens[previousMove], y, x, color);;
+    } else {
+        // parent が解放されている場合の処理
+        std::cerr << "Error: parent is no longer available.2" << std::endl;
+        assert(false);
+    }
 
-    return p;
+    if (debugFlag & 0b10) childrens[make_pair(y, x)]->PrintBoard();
+
+    return childrens[make_pair(y, x)];
 
 
     // goBoard* newBoard = new goBoard(*this, y, x, color);
@@ -676,29 +670,8 @@ vector<vector<vector<double>>> goBoard::MakeInputPlane()
 
 int cnt = 0;  ////////////
 
-// bool Destruct(goBoard* ptr)
-// {
-//     assert(ptr != nullptr && "ptr is nullptr");
-//     print(ptr->childrens.size());
-//     if (ptr->childrens.size() > 1000) {
-//         ptr->parent->PrintBoard(0b111111);
-//     }
-//     if (ptr->childrens.empty()) {
-//         delete ptr;
-//         print("empty_delete");
-//         return true;
-//     }
-//     for (auto x : ptr->childrens) {
-//         assert(x.second != nullptr && "child ptr is nullptr");
-//         Destruct(x.second);
-//     }
-//     ptr->childrens.clear();  // ここでマップをクリア
-//     delete ptr;
-//     print("delete");
-//     return true;
-// }
 
-double dfs(goBoard* ptr)
+double dfs(shared_ptr<goBoard> ptr)
 {
     // print("dfs", cnt);////////////////
     if (ptr->isEnded) {
@@ -708,35 +681,39 @@ double dfs(goBoard* ptr)
     tuple<char, char, char> legalMove = ptr->GenRandomMove();
 
     double tmp = dfs(ptr->PutStone(get<0>(legalMove), get<1>(legalMove), get<2>(legalMove)));
-    // if (ptr->parent->isRoot) {
-    //     for (auto x : ptr->childrens) {
-    //         delete(x.second);
-    //     }
-    // }
-    // if (!ptr->isRoot){
-    //     delete ptr;
-    // }
+    
+    if (auto parentPtr = ptr->parent.lock()) {
+    } else {
+        // parent が解放されている場合の処理
+        std::cerr << "Error: parent is no longer available.3" << std::endl;
+        assert(false);
+    }
+    auto parentPtr = ptr->parent.lock();
+    if (parentPtr->isRoot) {
+        for (auto x : ptr->childrens) {
+            x.second.reset();
+        }
+    }
     return tmp;
 }
 
-// [[0, 0, 2, 2, 2, 1, 0, 0, 0], [0, 0, 0, 2, 1, 1, 1, 0, 0], [0, 0, 2, 2, 2, 2, 1, 1, 0], [0, 0, 0, 2, 1, 2, 1, 1, 0], [0, 2, 2, 2, 1, 2, 2, 1, 2], [0, 1, 2, 1, 1, 2, 1, 2, 0], [0, 2, 1, 1, 1, 1, 1, 0, 1], [0, 2, 2, 2, 2, 2, 1, 1, 2], [0, 0, 0, 0, 0, 2, 1, 0, 0]]　これをモンテカルロで解く
-// ↓モンテカルロ関数にする。
+
 int main()
 {
     ofstream ofs("planejson.txt");
 
-    goBoard* root(new goBoard());
-
+    auto root = make_shared<goBoard>();
 
     vector<tuple<char, char, char>> legalMoves = root->GenAllLegalMoves();
 
+
+
+
     for (auto [y, x, t] : legalMoves) {
-        goBoard* tmp = root->PutStone(y, x, t);
+        shared_ptr<goBoard> tmp = root->PutStone(y, x, t);
     }
 
-
     print(root->ucts);
-
 
     for (auto x = *begin(root->ucts); get<0>(x) == 0.0; x = *begin(root->ucts)) {
         ++cnt;  //////////
@@ -777,17 +754,7 @@ int main()
         auto x = *rbegin(root->ucts);
         auto [uct, numWin, numVisit, move] = x;
 
-        goBoard *tmpp = root->PutStone(get<0>(move), get<1>(move), root->teban);
-
-        double rslt = dfs(tmpp);
-
-        // for (auto x : root->childrens[move]->childrens) {
-        //     delete x.second;
-        // }
-
-        delete root->childrens[move];
-        
-
+        double rslt = dfs(root);
 
         int win = 0;
         if (rslt > 0) {
@@ -818,19 +785,10 @@ int main()
         if (get<1>(x) > get<1>(ans)) {
             ans = x;
         }
-        else if (get<1>(x) == get<1>(ans) && get<0>(x) >= get<0>(ans)) {
-            ans = x;
-        }
     }
     print("ans", ans);
     // print(root->numVisits);
 
-    for (auto x : root->childrens) {
-        delete x.second;
-    }
-    // delete begin(root->childrens)->second;
-
-    return 0;
 
 
 

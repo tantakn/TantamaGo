@@ -13,10 +13,17 @@ from nn.utility import load_network, load_DualNet_128_12, choose_network
 from nn.network.dual_net import DualNet
 from monitoring import display_train_monitoring_worker
 
+npz_dir = "/home/tantakn/code/TantamaGo/data/sl_data_0.npz"
+# npz_dir = "/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz"
+
+
+model_file_path = "/home/tantakn/code/TantamaGo/model/sl-model_20241020_214243_Ep:14.bin"
+
+
+
 
 BOARD_SIZE = 9
 network_name1 = "DualNet"
-model_file_path = "/home/tantakn/code/TantamaGo/model/sl-model_20241020_214243_Ep:14.bin"
 use_gpu = True
 gpu_num = 0
 device = torch.device("cuda:0" if use_gpu else "cpu")
@@ -149,89 +156,101 @@ input_planes = input_planes.unsqueeze(0).to(device)  # バッチ次元を追加
 # print(input_planes)######
 
 policy_data, value_data = network(input_planes)
+print("network")
 print(policy_data, file=sys.stderr)
 print(value_data, file=sys.stderr)
 
 policy_data, value_data = network.forward(input_planes)
+print("network.forward")
 print(policy_data, file=sys.stderr)
 print(value_data, file=sys.stderr)
 
 policy_data, value_data = network.forward_for_sl(input_planes)
+print("network.forward_for_sl")
 print(policy_data, file=sys.stderr)
 print(value_data, file=sys.stderr)
 
 policy_data, value_data = network.forward_with_softmax(input_planes)
+print("network.forward_with_softmax")
 print(policy_data, file=sys.stderr)
 print(value_data, file=sys.stderr)
 
 policy_data, value_data = network.inference(input_planes)
+print("network.inference")
 print(policy_data, file=sys.stderr)
 print(value_data, file=sys.stderr)
 
 policy_data, value_data = network.inference_with_policy_logits(input_planes)
+print("network.inference_with_policy_logits")
 print(policy_data, file=sys.stderr)
 print(value_data, file=sys.stderr)
 
 
-policy_data = policy_data.numpy()
-# print(np.sum(policy_data))######
-# policy_data = json.dumps(policy_data.tolist())
-# print(policy_data)######
-
-value_data = value_data.numpy()
-# print(np.sum(value_data))######
-# value_data = json.dumps(value_data.tolist())
-# print(value_data)######
-
-value_data = value_data.tolist()
-policy_data = policy_data.tolist()
-
-# s = "qwer"
-s = json.dumps(value_data)
-
-print(s, file=sys.stderr)
-
-print(s)
-
-data = {"policy": policy_data, "value": value_data}
-
-print(data, file=sys.stderr)
-
-data = json.dumps(data)
-
-
-print(data, file=sys.stderr)
-
-print(data)
-
-
-
-# # tmp_npz = tmp_load_data_set("/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz")
-
-# # input_t = tmp_npz[0][5000].unsqueeze(0).to(device)  # バッチ次元を追加
-# # print(input_t.shape)######
-# # print(input_t)######
-
-# # policy_data, value_data = network.inference(input_t)
-
-# # policy_data = policy_data.numpy()
+# policy_data = policy_data.numpy()
 # # print(np.sum(policy_data))######
 # # policy_data = json.dumps(policy_data.tolist())
 # # print(policy_data)######
 
-# # value_data = value_data.numpy()
+# value_data = value_data.numpy()
 # # print(np.sum(value_data))######
 # # value_data = json.dumps(value_data.tolist())
 # # print(value_data)######
 
+# value_data = value_data.tolist()
+# policy_data = policy_data.tolist()
+
+# # s = "qwer"
+# s = json.dumps(value_data)
+
+# print(s, file=sys.stderr)
+
+# print(s)
+
+# data = {"policy": policy_data, "value": value_data}
+
+# print(data, file=sys.stderr)
+
+# data = json.dumps(data)
 
 
-# # raw_policy, value_data = network.inference(input_planes)
+# print(data, file=sys.stderr)
 
-# # print(raw_policy)######
-# # print(value_data)######
+# print(data)
 
-# # raw_policy, value_data = self.network.inference(input_planes)
+
+
+# input_data, _, _ = tmp_load_data_set(npz_dir)
+
+# input_plane = input_data[1234].unsqueeze(0)  # 1234番目の局面を抽出。バッチ次元を追加
+# input_plane.to(device)
+
+# print(input_plane.shape)######
+
+# print(input_plane)######
+
+# policy_data, value_data = network.inference(input_plane)
+
+# print(policy_data)######
+# print(value_data)######
+
+# policy_data = policy_data.numpy()
+# print(np.sum(policy_data))######
+# policy_data = json.dumps(policy_data.tolist())
+# print(policy_data)######
+
+# value_data = value_data.numpy()
+# print(np.sum(value_data))######
+# value_data = json.dumps(value_data.tolist())
+# print(value_data)######
+
+
+
+# raw_policy, value_data = network.inference(input_planes)
+
+# print(raw_policy)######
+# print(value_data)######
+
+# raw_policy, value_data = self.network.inference(input_planes)
 
 
 

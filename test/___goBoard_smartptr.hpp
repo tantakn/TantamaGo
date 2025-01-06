@@ -18,7 +18,7 @@ constexpr int BOARDSIZE = 9;
 constexpr double komi = 7.5;
 
 
-constexpr ll debugFlag = 0b000000;
+constexpr ll debugFlag = 0b0;
 
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
@@ -79,10 +79,12 @@ struct goBoard {
 
     /// @brief 親盤面
     /// TODO: = nullptr でいい？
-    goBoard *parent;
+    weak_ptr<goBoard> parent;
+    // goBoard *parent;
 
     /// @brief 子盤面
-    map<pair<char, char>, goBoard *> childrens;
+    map<std::tuple<char, char>, shared_ptr<goBoard>> childrens;
+    // map<tuple<char, char>, goBoard *> childrens;
 
     /// @brief tuple<uct, この手の探索回数, この手の勝利回数, 着手>
     set<tuple<double, int, int, pair<char, char>>> ucts;
@@ -190,7 +192,7 @@ struct goBoard {
      * @param color
      * @return goBoard
      */
-    goBoard* PutStone(int y, int x, char color);
+    shared_ptr<goBoard> PutStone(int y, int x, char color);
 
     /**
      * @brief とりあえず、パス以外の合法手があればパス以外を選択。
@@ -207,7 +209,7 @@ struct goBoard {
 
     goBoard();
 
-    goBoard(goBoard &inputparent, int y, int x, char putcolor);
+    goBoard(shared_ptr<goBoard> &inputparent, int y, int x, char putcolor);
 
     /// TODO: 引数なしの初期化関数を作る
     /// TODO: parent と children の処理を書く

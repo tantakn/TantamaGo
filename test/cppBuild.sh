@@ -3,7 +3,8 @@
 # コンパイルオプション
 CXX="/usr/bin/g++"
 CXXFLAGS="-std=c++2a -fdiagnostics-color=always -g -O0 -W"
-LDFLAGS="-fopenmp"
+LDFLAGS=""
+# LDFLAGS="-fopenmp"
 
 # ビルド対象のファイル
 SOURCE_FILE="$1"
