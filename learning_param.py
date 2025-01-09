@@ -30,10 +30,12 @@ LEARNING_SCHEDULE = { # default
 
 # npzファイル1つに格納するデータの個数
 # DATA_SET_SIZE = BATCH_SIZE * 4000 // 16
-DATA_SET_SIZE = BATCH_SIZE * 4000
+# DATA_SET_SIZE = BATCH_SIZE * 4000
+DATA_SET_SIZE = BATCH_SIZE * 1000
 
 # Policyのlossに対するValueのlossの重み比率
-SL_VALUE_WEIGHT = 0.02
+SL_VALUE_WEIGHT = 0.01
+# SL_VALUE_WEIGHT = 0.02
 
 # Policyのlossに対するValueのlossの重み比率
 RL_VALUE_WEIGHT = 1.0

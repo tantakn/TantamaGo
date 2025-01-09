@@ -6,11 +6,6 @@
 #define myMacro_hpp_INCLUDED
 #endif
 
-#ifndef json_hpp_INCLUDED
-#include "json.hpp"
-#define json_hpp_INCLUDED
-#endif
-
 
 
 constexpr int BOARDSIZE = 9;
@@ -46,6 +41,7 @@ vector<vector<int>> rawIdBoard = []()
     return tmpIdBoard;
 }();
 
+
 /**
  * @brief
  *
@@ -54,24 +50,25 @@ struct goBoard {
     /// @brief 現在の手番。0b01: 黒, 0b10: 白
     char teban;
 
-    /// @brief 直前の着手。-1は初期状態、0はパス。make_pair(y, x)
+    /// @brief [y, x] 直前の着手。[-1, -1] は初期状態、[0, 0] はパス。
     pair<char, char> previousMove = make_pair(-1, -1);
 
     /// @brief 終局図かどうか
     bool isEnded = false;
 
+    /// @brief ルートノードかどうか
     bool isRoot;
 
-    /// 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁。
+    /// @brief 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁。
     vector<vector<char>> board;
 
     /// @brief 連のid。0は空点、-1は壁
     vector<vector<int>> idBoard;
 
-    /// @brief 連の呼吸点の数。壁はINF
+    /// @brief <連のid, 連の呼吸点の数>。壁はINF
     map<int, int> libs;
 
-    /// @brief 超コウルール用の履歴
+    /// @brief 超コウルール用の履歴。手番の情報はない。
     set<vector<vector<char>>> history;
 
     /// @brief idBoardのstringのidのカウント
@@ -86,8 +83,6 @@ struct goBoard {
 
     /// @brief tuple<uct, この手の探索回数, この手の勝利回数, 着手>
     set<tuple<double, int, int, pair<char, char>>> ucts;
-    // /// @brief
-    // vector<tuple<double, int, pair<char, char>>> ucts;
 
     /// @brief 子ノードの探索回数の合計
     int numVisits = 0;
@@ -109,6 +104,8 @@ struct goBoard {
     // {
     //     return board[col][row] & 0b11;
     // }
+
+    goBoard* SucceedRoot(pair<char, char> move);
 
     /**
      * @brief

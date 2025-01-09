@@ -13,10 +13,16 @@ ll g_node_cnt = 0;
 
 mt19937 mt(random_device{}());
 
+/// @brief ルートノード。グローバル変数。
+goBoard* rootPtr = nullptr;
+
 
 goBoard::goBoard()
     : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr), isRoot(true)
 {
+    assert(rootPtr == nullptr);
+    rootPtr = this;
+
     libs[-1] = INF;
 }
 
@@ -24,6 +30,10 @@ goBoard::goBoard(vector<vector<char>> inputBoard)
     : board(InputBoardFromVec(inputBoard)), idBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0)), teban(1), isRoot(true)
 {
     /// TODO: teban の扱いを考える
+
+    assert(rootPtr == nullptr);
+    rootPtr = this;
+
     rep (i, BOARDSIZE + 2) {
         idBoard[0][i] = -1;
         idBoard[BOARDSIZE + 1][i] = -1;
@@ -46,6 +56,8 @@ goBoard::goBoard(vector<vector<char>> inputBoard)
 goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
     : parent(&inputparent), board(inputparent.board), idBoard(inputparent.idBoard), libs(inputparent.libs), stringIdCnt(inputparent.stringIdCnt), history(inputparent.history), teban(1), previousMove(make_pair(y, x)), isRoot(false)
 {
+    /// TODO: putcolor 要る？
+
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
 
 #ifdef dbg_flag
@@ -98,11 +110,12 @@ goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
 
 goBoard::~goBoard()
 {
-    vector<tuple<char, char, goBoard *>> tmpChildrens;
-    for (pair<pair<char, char>, goBoard *> x : childrens) {
+    // for (auto& x : childrens) とかだと壊れるみたい
+    vector<tuple<char, char, goBoard*>> tmpChildrens;
+    for (pair<pair<char, char>, goBoard*> x : childrens) {
         tmpChildrens.push_back(make_tuple(x.first.first, x.first.second, x.second));
     }
-    for (auto[y, x, p] : tmpChildrens) {
+    for (auto [y, x, p] : tmpChildrens) {
         delete p;
     }
 
@@ -128,6 +141,29 @@ goBoard::~goBoard()
     // //     delete child;
     // // }
 }
+
+goBoard* goBoard::SucceedRoot(pair<char, char> move)
+{
+    /// TODO: 最初の root を宣言したポインタが rootptr 以外だとここからは変えられないから、安全ではないのでは？
+
+    assert(isRoot);
+    assert(rootPtr == this);
+
+    if (!childrens.count(move)) {
+        PutStone(move.first, move.second, teban);
+    }
+
+
+    goBoard* tmp = childrens[move];
+    childrens.erase(move);
+    tmp->parent = nullptr;
+    tmp->isRoot = true;
+    rootPtr = tmp;
+
+    delete this;
+    return tmp;
+}
+
 
 vector<vector<char>> goBoard::InputBoardFromVec(vector<vector<char>> input)
 {
@@ -388,6 +424,7 @@ int goBoard::IsIllegalMove(int y, int x, char color)
 
         if (board[ny][nx] == 0 || board[ny][nx] == 3 - color || libs[idBoard[ny][nx]] == 1) {
             isFillEye = false;
+            /// TODO: break でいい？
         }
     }
     if (isFillEye) {
@@ -674,29 +711,9 @@ vector<vector<vector<double>>> goBoard::MakeInputPlane()
     return inputPlane;
 }
 
-int cnt = 0;  ////////////
 
-// bool Destruct(goBoard* ptr)
-// {
-//     assert(ptr != nullptr && "ptr is nullptr");
-//     print(ptr->childrens.size());
-//     if (ptr->childrens.size() > 1000) {
-//         ptr->parent->PrintBoard(0b111111);
-//     }
-//     if (ptr->childrens.empty()) {
-//         delete ptr;
-//         print("empty_delete");
-//         return true;
-//     }
-//     for (auto x : ptr->childrens) {
-//         assert(x.second != nullptr && "child ptr is nullptr");
-//         Destruct(x.second);
-//     }
-//     ptr->childrens.clear();  // ここでマップをクリア
-//     delete ptr;
-//     print("delete");
-//     return true;
-// }
+
+int cnt = 0;  ////////////
 
 double dfs(goBoard* ptr)
 {
@@ -719,13 +736,13 @@ double dfs(goBoard* ptr)
     return tmp;
 }
 
-// [[0, 0, 2, 2, 2, 1, 0, 0, 0], [0, 0, 0, 2, 1, 1, 1, 0, 0], [0, 0, 2, 2, 2, 2, 1, 1, 0], [0, 0, 0, 2, 1, 2, 1, 1, 0], [0, 2, 2, 2, 1, 2, 2, 1, 2], [0, 1, 2, 1, 1, 2, 1, 2, 0], [0, 2, 1, 1, 1, 1, 1, 0, 1], [0, 2, 2, 2, 2, 2, 1, 1, 2], [0, 0, 0, 0, 0, 2, 1, 0, 0]]　これをモンテカルロで解く
-// ↓モンテカルロ関数にする。
-int main()
-{
-    ofstream ofs("planejson.txt");
 
-    goBoard* root(new goBoard());
+int MonteCarloTreeSearch()
+{
+    json j = json::parse("[[0, 0, 2, 2, 2, 1, 0, 0, 0], [0, 0, 0, 2, 1, 1, 1, 0, 0], [0, 0, 2, 2, 2, 2, 1, 1, 0], [0, 0, 0, 2, 1, 2, 1, 1, 0], [0, 2, 2, 2, 1, 2, 2, 1, 2], [0, 1, 2, 1, 1, 2, 1, 2, 0], [0, 2, 1, 1, 1, 1, 1, 0, 1], [0, 2, 2, 2, 2, 2, 1, 1, 2], [0, 0, 0, 0, 0, 2, 1, 0, 0]]");
+    vector<vector<char>> v = j;
+
+    goBoard* root(new goBoard(v));
 
 
     vector<tuple<char, char, char>> legalMoves = root->GenAllLegalMoves();
@@ -735,10 +752,9 @@ int main()
     }
 
 
-    print(root->ucts);
 
 
-    for (auto x = *begin(root->ucts); get<0>(x) == 0.0; x = *begin(root->ucts)) {
+    for (auto x = *begin(root->ucts); get<0>(x) <= 0.0; x = *begin(root->ucts)) {
         ++cnt;  //////////
 
         if (get<0>(x) != 0.0) break;
@@ -773,20 +789,17 @@ int main()
         root->ucts.insert(make_tuple(uct, numVisit, numWin, get<3>(x)));
     }
 
-    for (; cnt < 3000; ++cnt) {
+
+    for (; cnt < 300; ++cnt) {
         auto x = *rbegin(root->ucts);
         auto [uct, numWin, numVisit, move] = x;
 
-        goBoard *tmpp = root->PutStone(get<0>(move), get<1>(move), root->teban);
+        goBoard* tmpp = root->PutStone(get<0>(move), get<1>(move), root->teban);
 
         double rslt = dfs(tmpp);
 
-        // for (auto x : root->childrens[move]->childrens) {
-        //     delete x.second;
-        // }
-
         delete root->childrens[move];
-        
+
 
 
         int win = 0;
@@ -805,15 +818,18 @@ int main()
         root->ucts.erase(x);
         auto tmp = make_tuple(uct, numVisit, numWin, move);
         root->ucts.insert(tmp);
-        print(tmp);
+        print(tmp, rslt);
     }
+
 
     print("end");
     for (auto x : root->ucts) {
         print(x);
     }
 
+
     auto ans = *rbegin(root->ucts);
+
     for (auto x : root->ucts) {
         if (get<1>(x) > get<1>(ans)) {
             ans = x;
@@ -823,18 +839,115 @@ int main()
         }
     }
     print("ans", ans);
-    // print(root->numVisits);
 
-    for (auto x : root->childrens) {
-        delete x.second;
+    root->PrintBoard(0b1);
+
+    root->SucceedRoot(get<3>(ans));
+    root = rootPtr;
+
+
+    legalMoves = root->GenAllLegalMoves();
+
+    for (auto [y, x, t] : legalMoves) {
+        goBoard* tmp = root->PutStone(y, x, t);
     }
-    // delete begin(root->childrens)->second;
+    for (auto x = *begin(root->ucts); get<0>(x) <= 0.0; x = *begin(root->ucts)) {
+        ++cnt;  //////////
+
+        if (get<0>(x) != 0.0) break;
+
+        double rslt = dfs(root->childrens[get<3>(x)]);
+
+        // print("rslt", rslt);////////
+
+        int win = 0;
+        if (rslt > 0) {
+            win = 1;
+        }
+        else if (rslt < 0) {
+            win = 0;
+        }
+
+        int numWin = get<2>(x) + win;
+        int numVisit = get<1>(x) + 1;
+        ++root->numVisits;
+
+        // cout << "numWin: " << numWin << endl;
+        // cout << "numVisit: " << numVisit << endl;
+        // cout << "root->numVisits: " << root->numVisits << endl;
+
+        double uct = (double)numWin / (double)numVisit + sqrt(2 * log(root->numVisits) / (double)numVisit);
+
+        // print("uct", uct);
+
+
+        root->ucts.erase(x);
+
+        root->ucts.insert(make_tuple(uct, numVisit, numWin, get<3>(x)));
+    }
+
+    for (; cnt < 300; ++cnt) {
+        auto x = *rbegin(root->ucts);
+        auto [uct, numWin, numVisit, move] = x;
+
+        goBoard* tmpp = root->PutStone(get<0>(move), get<1>(move), root->teban);
+
+        double rslt = dfs(tmpp);
+
+        delete root->childrens[move];
+
+
+
+        int win = 0;
+        if (rslt > 0) {
+            win = 1;
+        }
+        else if (rslt < 0) {
+            win = 0;
+        }
+
+        numWin += win;
+        numVisit += 1;
+        ++root->numVisits;
+
+        uct = (double)numWin / (double)numVisit + sqrt(2 * log(root->numVisits) / (double)numVisit);
+        root->ucts.erase(x);
+        auto tmp = make_tuple(uct, numVisit, numWin, move);
+        root->ucts.insert(tmp);
+        print(tmp, rslt);
+    }
+
+
+    print("end");
+    for (auto x : root->ucts) {
+        print(x);
+    }
+
+
+    ans = *rbegin(root->ucts);
+
+    for (auto x : root->ucts) {
+        if (get<1>(x) > get<1>(ans)) {
+            ans = x;
+        }
+        else if (get<1>(x) == get<1>(ans) && get<0>(x) >= get<0>(ans)) {
+            ans = x;
+        }
+    }
+    print("ans", ans);
+
+    root->PrintBoard(0b1);
+
+    cout << rootPtr << endl;
+    root->SucceedRoot(get<3>(ans));
+    cout << rootPtr << endl;
+
 
     return 0;
+}
 
-
-
-
+int Test()
+{
     // ofstream ofs("planejson.txt");
 
     // goBoard* testboard(new goBoard());
@@ -956,6 +1069,14 @@ int main()
     //     board.PrintBoard();
     // }
 
+    return 0;
+}
+
+
+int main()
+{
+    // Test();
+    MonteCarloTreeSearch();
     return 0;
 }
 

@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 
 
-npz_dir = "/home/tantakn/code/TantamaGo/data/sl_data_0.npz"
+npz_dir = "/home/tantakn/code/TantamaGo/data/sl_data_3.npz"
 # npz_dir = "/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz"
 
 
@@ -38,7 +38,7 @@ input_data, _, _ = tmp_load_data_set(npz_dir)
 print(input_data.shape)######
 # torch.Size([256000, 6, 9, 9])
 
-input_plane = input_data[145294].unsqueeze(0)  # 1234番目の局面を抽出。バッチ次元を追加
+input_plane = input_data[145].unsqueeze(0)  # 1234番目の局面を抽出。バッチ次元を追加
 
 print(input_plane.shape)######
 # torch.Size([1, 6, 9, 9])
