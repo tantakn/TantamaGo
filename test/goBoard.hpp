@@ -43,7 +43,7 @@ vector<vector<int>> rawIdBoard = []()
 
 
 /**
- * @brief
+ * @brief グローバル変数 goBoard* rootPtr = nullptr; が必要。
  *
  */
 struct goBoard {
@@ -81,6 +81,10 @@ struct goBoard {
     /// @brief 子盤面
     map<pair<char, char>, goBoard *> childrens;
 
+    vector<vector<float>> policys;
+
+    vector<float> values;
+
     /// @brief tuple<uct, この手の探索回数, この手の勝利回数, 着手>
     set<tuple<double, int, int, pair<char, char>>> ucts;
 
@@ -105,7 +109,21 @@ struct goBoard {
     //     return board[col][row] & 0b11;
     // }
 
+    /**
+     * @brief rootPtr を指定した手の盤面にして、自身と他の子孫を削除する。
+     * 
+     * @param move 
+     * @return goBoard* 
+     */
     goBoard* SucceedRoot(pair<char, char> move);
+
+    /**
+     * @brief 
+     * 
+     * @return true 
+     * @return false 
+     */
+    bool ExpandNode();
 
     /**
      * @brief

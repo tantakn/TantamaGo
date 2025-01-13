@@ -24,6 +24,64 @@
 //! [--useDLACore=<int>]
 //!
 
+
+
+/* 下ので動いた。buildディレクトリは作る必要なかったかも。
+(envGo) tantakn@DESKTOP-C96CIQ7:~/code/.local/mytensorrt/TensorRT-10.7.0.23/samples/sampleOnnxMNIST$ cd build/
+cmake ..
+make
+cd ..
+make
+(envGo) tantakn@DESKTOP-C96CIQ7:~/code/.local/mytensorrt/TensorRT-10.7.0.23/samples/sampleOnnxMNIST$ ../../bin/sample_onnx_mnist　mnistならこっち
+(envGo) tantakn@DESKTOP-C96CIQ7:~/code/.local/mytensorrt/TensorRT-10.7.0.23/samples/sampleOnnxMNIST$ ../../bin/sample_onnx_igo
+*/
+
+
+/*bin, data, include, lib, samples, をコピーして、makeとかしたらそこでも動いた。
+
+make VERBOSE=1 でCMakeの出力を見れるらしい。多分、一時ファイルとか作ってるから g++ コマンドがいっぱいある。
+tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/tensorRT_test/mini/samples/sampleOnnxMNIST$ make VERBOSE=1
+../Makefile.config:25: CUDA_INSTALL_DIR variable is not specified, using /usr/local/cuda by default, use CUDA_INSTALL_DIR=<cuda_directory> to change.
+../Makefile.config:45: TRT_LIB_DIR is not specified, searching ../../lib, ../../lib, ../lib by default, use TRT_LIB_DIR=<trt_lib_directory> to change.
+if [ ! -d ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST ]; then mkdir -p ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST; fi
+if [ ! -d ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common ]; then mkdir -p ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common; fi &&  if [ ! -d ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../utils ]; then mkdir -p ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../utils; fi && :
+g++ -MM -MF ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/igo.d -MP -MT ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/igo.o -Wall -Wno-deprecated-declarations -std=c++17 -I"../common" -I"../utils" -I".." -I"/usr/local/cuda/include" -I"../include" -I"../../include" -I"../../parsers/onnxOpenSource" -D_REENTRANT -DTRT_STATIC=0 igo.cpp
+Compiling: igo.cpp
+g++ -Wall -Wno-deprecated-declarations -std=c++17 -I"../common" -I"../utils" -I".." -I"/usr/local/cuda/include" -I"../include" -I"../../include" -I"../../parsers/onnxOpenSource" -D_REENTRANT -DTRT_STATIC=0 -g -c -o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/igo.o igo.cpp
+Linking: ../../bin/sample_onnx_mnist_debug
+g++ -o ../../bin/sample_onnx_mnist_debug -L"/usr/local/cuda/lib64" -Wl,-rpath-link="/usr/local/cuda/lib64" -L"../lib" -L"../../lib" -L"../../lib" -Wl,-rpath-link="../../lib"  -L"" -Wl,-rpath-link="" -L../../bin  -Wl,--start-group -lnvinfer -lnvinfer_plugin -lnvonnxparser -lcudart -lrt -ldl -lpthread  ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/igo.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/bfloat16.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/getOptions.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/logger.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleDevice.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleEngines.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleInference.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleOptions.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleReporting.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleUtils.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../utils/fileLock.o ../../bin/dchobj/sampleOnnxMNIST/sampleOnnxMNIST/../utils/timingCache.o -Wl,--end-group -Wl,--no-relax
+if [ ! -d ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST ]; then mkdir -p ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST; fi
+if [ ! -d ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common ]; then mkdir -p ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common; fi &&  if [ ! -d ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../utils ]; then mkdir -p ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../utils; fi && :
+g++ -MM -MF ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/igo.d -MP -MT ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/igo.o -Wall -Wno-deprecated-declarations -std=c++17 -I"../common" -I"../utils" -I".." -I"/usr/local/cuda/include" -I"../include" -I"../../include" -I"../../parsers/onnxOpenSource" -D_REENTRANT -DTRT_STATIC=0 igo.cpp
+Compiling: igo.cpp
+g++ -Wall -Wno-deprecated-declarations -std=c++17 -I"../common" -I"../utils" -I".." -I"/usr/local/cuda/include" -I"../include" -I"../../include" -I"../../parsers/onnxOpenSource" -D_REENTRANT -DTRT_STATIC=0 -c -o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/igo.o igo.cpp
+Linking: ../../bin/sample_onnx_igo
+g++ -o ../../bin/sample_onnx_igo -L"/usr/local/cuda/lib64" -Wl,-rpath-link="/usr/local/cuda/lib64" -L"../lib" -L"../../lib" -L"../../lib" -Wl,-rpath-link="../../lib"  -L"" -Wl,-rpath-link="" -L../../bin  -Wl,--start-group -lnvinfer -lnvinfer_plugin -lnvonnxparser -lcudart -lrt -ldl -lpthread  ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/igo.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/bfloat16.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/getOptions.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/logger.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleDevice.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleEngines.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleInference.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleOptions.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleReporting.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../common/sampleUtils.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../utils/fileLock.o ../../bin/chobj/sampleOnnxMNIST/sampleOnnxMNIST/../utils/timingCache.o -Wl,--end-group -Wl,--no-relax
+
+上のを一つにまとめるとこうなるらしい。実行ディレクトリに sample_onnx_mnist_debug が出来て動いた。
+tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/tensorRT_test/mini/samples/sampleOnnxMNIST$ g++ -Wall -Wno-deprecated-declarations -std=c++17   -I"../common"   -I"../utils"   -I".."   -I"/usr/local/cuda/include"   -I"../include"   -I"../../include"   -I"../../parsers/onnxOpenSource"   -D_REENTRANT -DTRT_STATIC=0   -g   igo.cpp   ../common/bfloat16.cpp   ../common/getOptions.cpp   ../common/logger.cpp   ../common/sampleDevice.cpp   ../common/sampleEngines.cpp   ../common/sampleInference.cpp   ../common/sampleOptions.cpp   ../common/sampleReporting.cpp   ../common/sampleUtils.cpp   ../utils/fileLock.cpp   ../utils/timingCache.cpp   -o sample_onnx_mnist_debug   -L"/usr/local/cuda/lib64"   -Wl,-rpath-link="/usr/local/cuda/lib64"   -L"../lib"   -L"../../lib"   -Wl,-rpath-link="../../lib"   -L"../../bin"   -Wl,--start-group   -lnvinfer   -lnvinfer_plugin   -lnvonnxparser   -lcudart   -lrt   -ldl   -lpthread   -Wl,--end-group   -Wl,--no-relax
+*/
+
+/* ヘッダファイルとかのフォルダをコピペしても動いた
+(envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/tensorRT_test/tiny$ tree -a -L 2
+.
+├── TensorRT
+│   ├── bin
+│   ├── common
+│   ├── data
+│   ├── include
+│   ├── lib
+│   └── utils
+├── igo.cpp
+├── json.hpp
+└── test2.onnx
+
+8 directories, 3 files
+(envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/tensorRT_test/tiny$ g++ -Wall -Wno-deprecated-declarations -std=c++17   -I"./TensorRT/common"   -I"./TensorRT/utils"   -I"./TensorRT"   -I"/usr/local/cuda/include"   -I"./TensorRT/include"   -D_REENTRANT -DTRT_STATIC=0   -g   igo.cpp   ./TensorRT/common/bfloat16.cpp   ./TensorRT/common/getOptions.cpp   ./TensorRT/common/logger.cpp   ./TensorRT/common/sampleDevice.cpp   ./TensorRT/common/sampleEngines.cpp   ./TensorRT/common/sampleInference.cpp   ./TensorRT/common/sampleOptions.cpp   ./TensorRT/common/sampleReporting.cpp   ./TensorRT/common/sampleUtils.cpp   ./TensorRT/utils/fileLock.cpp   ./TensorRT/utils/timingCache.cpp   -o tensorIgo   -L"/usr/local/cuda/lib64"   -Wl,-rpath-link="/usr/local/cuda/lib64"   -L"./TensorRT/lib"   -Wl,-rpath-link="./TensorRT/lib"   -L"./TensorRT/bin"   -Wl,--start-group   -lnvinfer   -lnvinfer_plugin   -lnvonnxparser   -lcudart   -lrt   -ldl   -lpthread   -Wl,--end-group   -Wl,--no-relax
+*/
+
+
+
 #pragma once
 
 // Define TRT entrypoints used in common code

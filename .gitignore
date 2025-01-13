@@ -23,6 +23,9 @@
 
 /tensorRT_test/TensorRT/
 /tensorRT_test/mini/
+/tensorRT_test/
+
+/cppboard/
 
 /TensorRT-release-10.7/
 

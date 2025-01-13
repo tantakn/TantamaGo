@@ -5,6 +5,11 @@
 #define goBoard_hpp_INCLUDED
 #endif
 
+#ifndef tensorIgo_cpp_INCLUDED
+#include "./tensorRT/tensorIgo.cpp"
+#define tensorIgo_cpp_INCLUDED
+#endif
+
 #define dbg_flag
 #ifdef dbg_flag
 ll g_node_cnt = 0;
@@ -148,6 +153,7 @@ goBoard* goBoard::SucceedRoot(pair<char, char> move)
 
     assert(isRoot);
     assert(rootPtr == this);
+    assert(childrens.count(move));
 
     if (!childrens.count(move)) {
         PutStone(move.first, move.second, teban);
@@ -162,6 +168,23 @@ goBoard* goBoard::SucceedRoot(pair<char, char> move)
 
     delete this;
     return tmp;
+}
+
+
+bool goBoard::ExpandNode()
+{
+    assert(childrens.size() == 0);
+
+    if (isEnded) {
+        return false;
+    }
+
+    vector<tuple<char, char, char>> moves = GenAllLegalMoves();
+    for (auto [y, x, c] : moves) {
+        childrens[make_pair(y, x)] = new goBoard(*this, y, x, c);
+    }
+
+    return true;
 }
 
 
