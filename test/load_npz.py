@@ -38,7 +38,7 @@ input_data, _, _ = tmp_load_data_set(npz_dir)
 print(input_data.shape)######
 # torch.Size([256000, 6, 9, 9])
 
-input_plane = input_data[145].unsqueeze(0)  # 1234番目の局面を抽出。バッチ次元を追加
+input_plane = input_data[1234].unsqueeze(0)  # 1234番目の局面を抽出。バッチ次元を追加
 
 print(input_plane.shape)######
 # torch.Size([1, 6, 9, 9])
@@ -118,9 +118,9 @@ print(data_json)######
 
 # 空点：0, 黒石：1, 白石：2
 banmen = []
-for i in range(9):
+for i in range(data.shape[2]):
     banmen.append([])
-    for j in range(9):
+    for j in range(data.shape[3]):
         if data[0][0][i][j] == 1.0:
             banmen[i].append(0)
         elif data[0][1][i][j] == 1.0:
@@ -130,3 +130,14 @@ for i in range(9):
 
 print(banmen)######
 # [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 2, 0, 0, 0, 0, 2, 0, 0], [0, 1, 2, 0, 0, 0, 2, 1, 0], [0, 0, 0, 1, 0, 2, 0, 1, 0], [0, 0, 1, 2, 2, 0, 0, 0, 0], [0, 0, 1, 0, 0, 1, 1, 0, 0], [0, 0, 0, 2, 2, 1, 2, 2, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0]]
+
+for x in banmen:
+    for y in x:
+        if y == 0:
+            print("  ", end="")
+        elif y == 1:
+            print("● ", end="")
+        else:
+            print("○ ", end="")
+    print()
+
