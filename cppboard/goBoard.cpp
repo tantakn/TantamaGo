@@ -70,13 +70,13 @@ goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
 {
     /// TODO: putcolor 要る？
 
-    assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10) || putcolor == 0);
+    assert((x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10)) || (x == 0 && y == 0));
 
 #ifdef dbg_flag
     g_node_cnt++;
 #endif
 
-    if (putcolor == 0) {
+    if (x == 0 && y == 0) {
         if (parent->previousMove == make_pair((char)0, (char)0)) {
             isEnded = true;
             return;
@@ -169,12 +169,17 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
     // }
 
 
-    vector<float> tmpPolicy(BOARDSIZE * BOARDSIZE, 0.0);
+    vector<float> tmpPolicy(BOARDSIZE * BOARDSIZE + 1, 0.0);
 
     tensorRT.infer(MakeInputPlane(), tmpPolicy, values);
 
     // print("tmpPolicy.size():", tmpPolicy.size());//////////////
     // print("tmpPolicy:", tmpPolicy);
+
+    // rep (i, tmpPolicy.size()) {
+    //     cout << setprecision(4) << tmpPolicy[i] << " ";
+    // }
+
     // print("values.size():", values.size());
     // print("values:", values);////////////////
 
@@ -183,6 +188,12 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
     float maxPolicy = 0.0;
 
     for (auto [y, x, t] : moves) {
+        if (x == 0 && y == 0) {
+            float tmp = tmpPolicy[BOARDSIZE * BOARDSIZE];
+            policys[make_pair(y, x)] = tmp;
+            chmax(maxPolicy, tmp);
+            continue;
+        }
         float tmp = tmpPolicy[(y - 1) * BOARDSIZE + x - 1];
         policys[make_pair(y, x)] = tmp;
         chmax(maxPolicy, tmp);
@@ -230,28 +241,60 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
     }
 
 
+    /// TODO: 1.11111 が表示されるのはおかしい。
+    vector<vector<float>> tmp(BOARDSIZE + 1, vector<float>(BOARDSIZE + 1, 1.11111));
+    for (auto [move, x] : policys) {
+        tmp[move.first][move.second] = x;
+    }
+    rep (i, 1, BOARDSIZE) {
+        rep (j, 1, BOARDSIZE) {
+            if (board[i + 1][j + 1] == 0) {
+                cout << fixed << setprecision(4) << tmp[i][j] << " ";
+            }
+            else if (board[i + 1][j + 1] == 1) {
+                cout << "###### ";
+            } else if (board[i + 1][j + 1] == 2) {
+                cout << "OOOOOO ";
+            } else {
+                cout << "?????? ";
+            }
+        }
+        cout << endl;
+    }
+    print("pass:", tmp[0][0]);//////////////
+    print("values:", values);
+    cout << resetiosflags(ios_base::floatfield);
+
+
     return tie(teban, values[0], values[1], values[2]);
 }
 
 
 bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char> inputMove)
 {
-    auto [color, win, draw, lose] = input;
+    auto [inputColor, inputWin, inputDraw, inputLose] = input;
 
-    if (color != teban) {
-        swap(win, lose);
+    print("inputColor:", inputColor);////////////
+    print("inputWin:", inputWin);
+    print("inputDraw:", inputDraw);
+    print("inputLose:", inputLose);
+    print("teban:", teban);
+
+    if (inputColor != teban) {
+        swap(inputWin, inputLose);
     }
 
     set<tuple<double, int, float, pair<char, char>>> tmpUcts;
 
     ++numVisits;
 
-    for (auto [uct, cnt, winrate, uctMove] : ucts) {
+    for (auto [uct, cnt, winSum, uctMove] : ucts) {
         if (inputMove == uctMove) {
-            ++cnt;
+            tmpUcts.insert(make_tuple(inputWin + sqrt(2 * log(numVisits) / cnt + 1), cnt + 1, winSum + inputWin, uctMove));
+            continue;
         }
 
-        tmpUcts.insert(make_tuple(win + sqrt(2 * log(numVisits) / cnt), cnt, winrate + win, uctMove));
+        tmpUcts.insert(make_tuple(winSum / cnt + sqrt(2 * log(numVisits) / cnt), cnt, winSum, uctMove));
     }
 
     ucts = tmpUcts;
@@ -441,13 +484,13 @@ int goBoard::CountLiberties(int y, int x)
 
 int goBoard::IsIllegalMove(int y, int x, char color)
 {
-    assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (color == 0b01 || color == 0b10) || (x == 0 && y == 0 && color == 0));
+    assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (color == 0b01 || color == 0b10) || (x == 0 && y == 0));
 
     if (isEnded) {
         return 5;
     }
 
-    if (color == 0) {
+    if (x == 0 && y == 0) {
         return 0;
     }
 
@@ -525,6 +568,8 @@ int goBoard::IsIllegalMove(int y, int x, char color)
 
 vector<tuple<char, char, char>> goBoard::GenAllLegalMoves()
 {
+    assert(!isEnded);
+
     vector<tuple<char, char, char>> legalMoves(0);
 
     rep (i, 1, BOARDSIZE + 1) {
@@ -534,6 +579,8 @@ vector<tuple<char, char, char>> goBoard::GenAllLegalMoves()
             }
         }
     }
+
+    legalMoves.push_back({0, 0, 0});
 
     return legalMoves;
 }
@@ -625,6 +672,10 @@ goBoard* goBoard::PutStone(int y, int x, char color)
 
 
     assert(!isEnded);
+    if (IsIllegalMove(y, x, color)) {///////////////
+        print(y, x, color);
+        print(IsIllegalMove(y, x, color));
+    }
     assert(!IsIllegalMove(y, x, color));
 
     if (childrens.count(make_pair(y, x))) {
@@ -1023,6 +1074,9 @@ int MonteCarloTreeSearch()
     return 0;
 }
 
+
+int PutStoneCnt = 0;
+
 int Test()
 {
     samplesCommon::Args args;
@@ -1056,8 +1110,21 @@ int Test()
         pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
 
         if (!ptr->childrens.count(nextMove)) {
-            print("cnt", ++cnt);
+            print("PutStoneCnt", ++PutStoneCnt);
             goBoard *nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+                
+            int nextColor = nextPtr->teban;
+
+            if (nextPtr->isEnded) {
+                double rslt = nextPtr->CountResult();
+                if (rslt == 0) {
+                    return make_tuple(nextColor, 0.0, 1.0, 0.0);
+                }
+                if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
+                    return make_tuple(nextColor, 1.0, 0.0, 0.0);
+                }
+                return make_tuple(nextColor, 0.0, 0.0, 1.0);
+            }
 
             return nextPtr->ExpandNode(tensorRT);
         }
@@ -1091,10 +1158,26 @@ int Test()
 
     print("ucts:", rootPtr->ucts);
 
+    int saikiCnt = 0;
     rep (100) {
+        print("saikiCnt:", saikiCnt++);////////////////
         saiki(saiki, rootPtr);
     }
     print("ucts:", rootPtr->ucts);
+
+    pair<char, char> ans;
+    int ansCnt = -1;
+    for (auto x : rootPtr->ucts) {
+        if (get<1>(x) >= ansCnt) {
+            if (get<1>(x) == ansCnt && get<0>(x) < get<0>(ans)) {
+                continue;
+            }
+            ansCnt = get<1>(x);
+            ans = get<3>(x);
+        }
+    }
+
+    print("ans:", ans);
 
     return 0;
 }

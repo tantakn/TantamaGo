@@ -169,7 +169,7 @@ struct goBoard {
     int CountLiberties(int y, int x);
 
     /**
-     * @brief
+     * @brief y == 0 && x == 0 でパスのはず。
      *
      * @param y
      * @param x
@@ -180,7 +180,7 @@ struct goBoard {
     int IsIllegalMove(int y, int x, char color);
 
     /**
-     * @brief 
+     * @brief y == 0 && x == 0 でパス
      * 
      * @return vector<tuple<char, char, char>> y, x, teban
      */

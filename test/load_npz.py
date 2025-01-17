@@ -33,6 +33,45 @@ def tmp_load_data_set(npz_path, rank=0):
     return plane_data, policy_data, value_data
 
 
+def print_board_npz (a, b, dir, SIZE=9):
+    """
+    a: int npzのa~b番目のデータを見る
+    b: int npzのa~b番目のデータを見る
+    dir: str npzのディレクトリ
+    SIZE: int 碁盤のサイズ
+    """
+    aaa, tmp, _ = tmp_load_data_set("/home/tantakn/code/TantamaGo/backup/data_Q50000/sl_data_0.npz")
+    tmp = tmp.numpy()
+    aaa = aaa.numpy()
+
+    for i in range(a, b, 8):
+        print("i: ", i)
+        for j in range(SIZE):
+            for k in range(SIZE):
+                print(tmp[i][j * SIZE + k], end=" ")
+            print()
+        print(tmp[i][SIZE**2])
+        for j in range(SIZE):
+            for k in range(SIZE):
+                if i / 8 % 2 == 0:
+                    if (aaa[i][1][j][k] == 1):
+                        print("●", end=" ")
+                    elif (aaa[i][2][j][k] == 1):
+                        print("○", end=" ")
+                    else:
+                        print("_", end=" ")
+                else:
+                    if (aaa[i][1][j][k] == 1):
+                        print("○", end=" ")
+                    elif (aaa[i][2][j][k] == 1):
+                        print("●", end=" ")
+                    else:
+                        print("_", end=" ")
+            print()
+        print()
+
+
+
 input_data, _, _ = tmp_load_data_set(npz_dir)
 
 print(input_data.shape)######
@@ -141,3 +180,36 @@ for x in banmen:
             print("○ ", end="")
     print()
 
+
+
+
+
+
+    #         # 624
+    #         # 1032
+    #         # 1048
+    #         # 1056
+    #         # 1768
+    #         # 2624
+    #         # 2656
+    #         # 3400
+    #         # 3408
+    #         # 3936
+    #         # 3952
+    #         # 3968
+    #         # 3976
+    #         # 4352
+    #         # 4360
+    #         # 4872
+    #         # 4880
+    #         # 7752
+    #         # 7760
+    #         # 8128
+    #         # 8136
+    #         # 9160
+    #         # 9168
+    #         # 9184
+lis = [624, 1032, 1048, 1056, 1768, 2624, 2656, 3400, 3408, 3936, 3952, 3968, 3976, 4352, 4360, 4872, 4880, 7752, 7760, 8128, 8136, 9160, 9168, 9184]
+
+for i in range(len(lis) - 1):
+    print_board_npz(lis[i]- 40, lis[i] + 40, "/home/tantakn/code/TantamaGo/backup/data_Q50000/sl_data_0.npz", SIZE=9)
