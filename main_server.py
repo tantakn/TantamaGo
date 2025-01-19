@@ -9,7 +9,7 @@ from mcts.time_manager import TimeControl
 from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
 
 
-default_model_path = os.path.join("model_def", "sl-model_default.bin")
+default_model_path = os.path.join("model_def", "sl-model_q50k_DualNet.bin")
 
 
 @click.command()

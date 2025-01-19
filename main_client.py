@@ -1,3 +1,16 @@
+# サーバーを以下のように起動して。
+# (env) (base) u2424004@g14:~/igo/TantamaGo$ python3 main_server.py --password ****
+# serverip:  **サーバー側で表示された serverip のip**
+# サーバーが起動しました。
+
+# ローカルでこのコードを起動して、name コマンドで確認する。
+# PS C:\code\TantamaGo> python .\main_client.py --password **** --ip **サーバー側で表示された serverip のip** --size 9 
+# name
+# = TantamaGo
+
+# か、goguiの新規プログラムで
+# python C:\code\TantamaGo\main_client.py --password **** --ip **サーバー側で表示された serverip のip** --size 9
+
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import socket, json
