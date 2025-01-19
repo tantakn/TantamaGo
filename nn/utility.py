@@ -162,7 +162,7 @@ def load_network(model_file_path: str, use_gpu: bool, gpu_num: int=-1) -> DualNe
     try:
         network.load_state_dict(torch.load(model_file_path))
     except Exception as e: # pylint: disable=W0702
-        print(f"Failed to load_network {model_file_path}.")
+        print(f"👺Failed to load_network {model_file_path}.")
         raise("Failed to load_network.")
     network.eval()
     torch.set_grad_enabled(False)

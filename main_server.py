@@ -1,3 +1,6 @@
+# (env) (base) u2424004@g14:~/igo/TantamaGo$ python3 main_server.py --password ****
+
+
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # import sys
@@ -9,13 +12,13 @@ from mcts.time_manager import TimeControl
 from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
 
 
-default_model_path = os.path.join("model_def", "sl-model_default.bin")
+default_model_path = os.path.join("model_def", "sl-model_q50k_DualNet.bin")
 
 
 @click.command()
 @click.option('--password', type=click.STRING, help="パスワード。")
-@click.option('--ip', type=click.STRING, help="ip", default="0.0.0.0")
-# @click.option('--ip', type=click.STRING, help="ip", default="")
+# @click.option('--ip', type=click.STRING, help="ip", default="0.0.0.0")
+@click.option('--ip', type=click.STRING, help="ip", default="")
 @click.option('--port', type=click.INT, help="port", default=51111)
 def InetServer(password: str, ip: str="", port: int=51111):
     print("serverip: ", socket.gethostbyname(socket.gethostname()))
@@ -91,6 +94,8 @@ def InetServer(password: str, ip: str="", port: int=51111):
                     data["batch_size"] = NN_BATCH_SIZE
                 if data["tree_size"] == -1:
                     data["tree_size"] = MCTS_TREE_SIZE
+                if data["net"] == "":
+                    data["net"] = "DualNet"
 
                 mode = TimeControl.CONSTANT_PLAYOUT
 

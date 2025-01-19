@@ -9,7 +9,7 @@ from board.constant import BOARD_SIZE
 from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
 from mcts.time_manager import TimeControl
 
-default_model_path = os.path.join("model", "model.bin")
+default_model_path = os.path.join("model_def", "sl-model_q50k_DualNet.bin")
 
 # pylint: disable=R0913, R0914
 
