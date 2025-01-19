@@ -10,11 +10,67 @@ import torch
 
 import json
 
-s = "zzpy"
+print("zzz.py started", file=sys.stderr)
 
-with open('testpipe', 'r') as fifo:
-    s = fifo.read()
-    print(s, file=sys.stderr)
-    s += "py"
-    fifo.write(s)
+time.sleep(2)
+
+fifo1 = open('testpipe1', 'w')
+
+fifo1.write("zzpy")
+fifo1.close()
+
+
+
+
+
+
+
+
+
+
+
+# s = "zzpy"
+
+
+# fifo1 = open('testpipe1', 'r')
+
+
+# s = fifo1.read()
+# fifo1.close()
+
+# print(s, file=sys.stderr)
+# s += "py"
+
+
+# fifo2 = open('testpipe2', 'w')
+
+# fifo2.write(s)
+# fifo2.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+# with open('testpipe1', 'r') as fifo1:
+#     s = fifo1.read()
+
+# print(s, file=sys.stderr)
+# s += "py"
+
+    
+# time.sleep(2)
+
+# with open('testpipe2', 'w') as fifo2:
+#     fifo2.write(s)
+#     fifo2.close()
+
+
 
