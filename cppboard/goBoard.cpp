@@ -290,7 +290,8 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 
     for (auto [uct, cnt, winSum, uctMove] : ucts) {
         if (inputMove == uctMove) {
-            tmpUcts.insert(make_tuple(inputWin + sqrt(2 * log(numVisits) / cnt + 1), cnt + 1, winSum + inputWin, uctMove));
+            tmpUcts.insert(make_tuple((winSum + inputWin) / (cnt + 1) + sqrt(2 * log(numVisits) / cnt + 1), cnt + 1, winSum + inputWin, uctMove));
+            // tmpUcts.insert(make_tuple(inputWin + sqrt(2 * log(numVisits) / cnt + 1), cnt + 1, winSum + inputWin, uctMove));
             continue;
         }
 
@@ -1159,7 +1160,7 @@ int Test()
     print("ucts:", rootPtr->ucts);
 
     int saikiCnt = 0;
-    rep (100) {
+    rep (100000) {
         print("saikiCnt:", saikiCnt++);////////////////
         saiki(saiki, rootPtr);
     }

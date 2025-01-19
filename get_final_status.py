@@ -37,7 +37,8 @@ def get_gnugo_judgment(filename: str, is_japanese_rule: bool) -> str:
     ]
 
     gnugo_command = [
-        "./gnugo-3.8/interface/gnugo",
+        "gnugo", # 自宅デスクトップ用
+        # "./gnugo-3.8/interface/gnugo",
         "--mode",
         "gtp",
         "--level",

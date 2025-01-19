@@ -14,9 +14,12 @@ default_model_path = os.path.join("model_def", "sl-model_default.bin")
 
 @click.command()
 @click.option('--password', type=click.STRING, help="パスワード。")
-@click.option('--ip', type=click.STRING, help="ip", default="")
+@click.option('--ip', type=click.STRING, help="ip", default="0.0.0.0")
+# @click.option('--ip', type=click.STRING, help="ip", default="")
 @click.option('--port', type=click.INT, help="port", default=51111)
 def InetServer(password: str, ip: str="", port: int=51111):
+    print("serverip: ", socket.gethostbyname(socket.gethostname()))
+
     if ip == "":
         ip = socket.gethostbyname(socket.gethostname())
 
