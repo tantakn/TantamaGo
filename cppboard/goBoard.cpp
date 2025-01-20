@@ -724,6 +724,19 @@ tuple<char, char, char> goBoard::GenRandomMove()
 
 double goBoard::CountResult()
 {
+    /// TODO: 日本ルール用の暫定措置。どうにかしたい。白黒が隣り合っているところでラインを引いて地を数える？中国ルールで最後までプレイしてみる？
+    if (1) {
+        assert(value.size());
+        if (teban == 1) {
+            return values[0];
+        }
+        else {
+            return values[2];
+        }
+    }
+
+
+
     int blackScore = 0;
     int whiteScore = 0;
 
@@ -1113,7 +1126,7 @@ int Test()
         if (!ptr->childrens.count(nextMove)) {
             print("PutStoneCnt", ++PutStoneCnt);
             goBoard *nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
-                
+
             int nextColor = nextPtr->teban;
 
             if (nextPtr->isEnded) {
