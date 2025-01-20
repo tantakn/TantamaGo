@@ -463,8 +463,8 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             input_gtp_command = command_list[0]
 
             
-        print("input_gtp_command: ", input_gtp_command)##########
-        print(type(input_gtp_command))##########
+        # print("input_gtp_command: ", input_gtp_command)##########
+        # print(type(input_gtp_command))##########
 
         if input_gtp_command == "version":
             return _version()

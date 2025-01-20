@@ -59,9 +59,10 @@ def InetServer(password: str, ip: str="", port: int=51111):
             data = client_socket.recv(1024)
 
             if is_gtp == False and data != b'':
+                print(f"受信データ（初期化中）「「\n{data}\n」」\n")#######
                 data = f.decrypt(data)
                 data = data.decode()
-                print('復号化したデータ:', data)
+                print(f"復号した受信データ（初期化中）「「\n{data}\n」」\n")#######
 
                 data = json.loads(data)
                 print("data['model']: ", data["model"])
@@ -114,18 +115,18 @@ def InetServer(password: str, ip: str="", port: int=51111):
                 continue
 
             if is_gtp == True and data != b'':
-                print("data: ", data)#######
+                print(f"受信データ「「\n{data}\n」」\n")#######
                 data = f.decrypt(data)
                 data = data.decode()
-                print('復号化したデータ:', data)#######
+                print(f'復号した受信データ「「\n{data}\n」」\n')#######
                 if data == "exit" or data == "quit":
                     break
 
                 output = client.run(data)
-                print("output: ", output)
+                print(f"送信データ「「\n{output}\n」」\n")
                 output = f.encrypt(output.encode())
                 client_socket.send(output)
-                print("output: ", output)
+                print(f"暗号化した送信データ「「\n{output}\n」」\n")
             
             time.sleep(1)
 
