@@ -184,7 +184,10 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
         cerr << fixed << setprecision(4) << tmpPolicy[BOARDSIZE * BOARDSIZE] << endl;
         print("values.size():", values.size());
         print("values:", values);                     ////////////////
-        cerr << resetiosflags(ios_base::floatfield);  // デフォルトに戻るらしい。未検証
+        cerr << resetiosflags(std::ios::floatfield);  // 浮動小数点の書式をリセット
+        cerr << resetiosflags(std::ios::showpoint);   // showpoint をリセット
+        cerr << resetiosflags(std::ios::showpos);     // showpos をリセット
+        cerr << std::defaultfloat; 
     }
 
 
@@ -1303,13 +1306,13 @@ int suiron()
 
         int y = 123, x = 123;
         while (!tmp->childrens.count({y, x})) {
-            cerr << "y: ";
+            cerr << "input y: ";
             cin >> y;
             if (y == -1) {
                 tmp = tmp->parent;
                 goto PASS;
             }
-            cerr << "x: ";
+            cerr << "input x: ";
             cin >> x;
             if (x == -1) {
                 goto END;
