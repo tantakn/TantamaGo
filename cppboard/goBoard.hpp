@@ -4,13 +4,6 @@
 /// TODO: avxを使ってみる。19路だと難しい？
 
 
-constexpr int BOARDSIZE = 9;
-
-constexpr double komi = 7.5;
-
-
-// constexpr ll debugFlag = 0;
-constexpr ll debugFlag = ll(1)<<31 | ll(1)<<29 | ll(1)<<30;
 
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
@@ -82,7 +75,7 @@ struct goBoard {
     /// @brief 子盤面
     map<pair<char, char>, goBoard *> childrens;
 
-    /// @brief 推論の結果にsoftmaxを適用したもののうちの合法手のみのマップ。座標は盤外あり。y == 0 && x == 0 はパス。policy値はvalue値から計算された勝率。
+    /// @brief 推論の結果にsoftmaxを適用したもののうちの合法手のみのマップ。座標は盤外あり。y == 0 && x == 0 がパス。policy値はvalue値から計算された勝率。
     map<pair<char, char>, float> policys;
 
     /// @brief 推論の結果にsoftmaxを適用したもの、多分 [相手の手番の勝率（例：初期局面なら白の勝率）, 引き分けの確率, 現在の勝率]

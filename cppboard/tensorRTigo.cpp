@@ -231,9 +231,9 @@ bool TensorRTOnnxIgo::build()
     }
 
     auto profile = builder->createOptimizationProfile();////
-    profile->setDimensions("input", OptProfileSelector::kMIN, nvinfer1::Dims4(1, 6, 9, 9));
-    profile->setDimensions("input", OptProfileSelector::kOPT, nvinfer1::Dims4(1, 6, 9, 9));
-    profile->setDimensions("input", OptProfileSelector::kMAX, nvinfer1::Dims4(1, 6, 9, 9));
+    profile->setDimensions("input", OptProfileSelector::kMIN, nvinfer1::Dims4(1, 6, BOARDSIZE, BOARDSIZE));
+    profile->setDimensions("input", OptProfileSelector::kOPT, nvinfer1::Dims4(1, 6, BOARDSIZE, BOARDSIZE));
+    profile->setDimensions("input", OptProfileSelector::kMAX, nvinfer1::Dims4(1, 6, BOARDSIZE, BOARDSIZE));
     config->addOptimizationProfile(profile);
 
     mRuntime = std::shared_ptr<nvinfer1::IRuntime>(createInferRuntime(sample::gLogger.getTRTLogger()));
@@ -533,15 +533,17 @@ samplesCommon::OnnxSampleParams initializeSampleParams(const samplesCommon::Args
     samplesCommon::OnnxSampleParams params;
     if (args.dataDirs.empty()) // Use default directories if user hasn't provided directory paths
     { // ここにモデルを置く。
-        params.dataDirs.push_back("data/mnist/");
-        params.dataDirs.push_back("data/samples/mnist/");
+        // params.dataDirs.push_back("data/mnist/");
+        // params.dataDirs.push_back("data/samples/mnist/");
         params.dataDirs.push_back(".");
     }
     else // Use the data directory provided by the user
     {
         params.dataDirs = args.dataDirs;
     }
-    params.onnxFileName = "test2.onnx"; // ここでモデルを指定する。
+    params.onnxFileName = model; // ここでモデルを指定する。
+    // params.onnxFileName = "test19_2.onnx"; // ここでモデルを指定する。
+    // params.onnxFileName = "test2.onnx"; // ここでモデルを指定する。
     // params.onnxFileName = "mnist.onnx";
     params.inputTensorNames.push_back("Input3");
     params.outputTensorNames.push_back("Plus214_Output_0");

@@ -105,18 +105,18 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             # generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
 
 
-    if rl:
-        if use_gpu:
-            train_with_gumbel_alphazero_on_gpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE, rl_num=rl_num, rl_datetime=rl_datetime, network_name=network_name)
-        else:
-            train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
-    else:
-        if use_gpu and ddp:
-            train_on_gpu_ddp(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
-        elif use_gpu:
-            train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
-        else:
-            train_on_cpu(program_dir=program_dir,board_size=size, batch_size=BATCH_SIZE, epochs=EPOCHS)
+    # if rl:
+    #     if use_gpu:
+    #         train_with_gumbel_alphazero_on_gpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE, rl_num=rl_num, rl_datetime=rl_datetime, network_name=network_name)
+    #     else:
+    #         train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
+    # else:
+    #     if use_gpu and ddp:
+    #         train_on_gpu_ddp(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
+    #     elif use_gpu:
+    #         train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
+    #     else:
+    #         train_on_cpu(program_dir=program_dir,board_size=size, batch_size=BATCH_SIZE, epochs=EPOCHS)
 
 
 

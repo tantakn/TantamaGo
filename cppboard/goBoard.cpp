@@ -1,12 +1,25 @@
 // g++ -Wall -Wno-deprecated-declarations -std=c++17   -I"./TensorRT/common"   -I"./TensorRT/utils"   -I"./TensorRT"   -I"/usr/local/cuda/include"   -I"./TensorRT/include"   -D_REENTRANT -DTRT_STATIC=0   -g  goBoard.cpp   ./TensorRT/common/bfloat16.cpp   ./TensorRT/common/getOptions.cpp   ./TensorRT/common/logger.cpp   ./TensorRT/common/sampleDevice.cpp   ./TensorRT/common/sampleEngines.cpp   ./TensorRT/common/sampleInference.cpp   ./TensorRT/common/sampleOptions.cpp   ./TensorRT/common/sampleReporting.cpp   ./TensorRT/common/sampleUtils.cpp   ./TensorRT/utils/fileLock.cpp   ./TensorRT/utils/timingCache.cpp   -o tensorRTIgo   -L"/usr/local/cuda/lib64"   -Wl,-rpath-link="/usr/local/cuda/lib64"   -L"./TensorRT/lib"   -Wl,-rpath-link="./TensorRT/lib"   -L"./TensorRT/bin"   -Wl,--start-group   -lnvinfer   -lnvinfer_plugin   -lnvonnxparser   -lcudart   -lrt   -ldl   -lpthread   -Wl,--end-group   -Wl,--no-relax
 
 
-#define goBoard_cpp_INCLUDED
+
 
 #ifndef myMacro_hpp_INCLUDED
 #include "myMacro.hpp"
 #define myMacro_hpp_INCLUDED
 #endif
+
+
+constexpr int BOARDSIZE = 9;
+// constexpr int BOARDSIZE = 9;
+
+constexpr double komi = 7.5;
+
+// constexpr ll debugFlag = 0;
+constexpr ll debugFlag = ll(1)<<25;
+// constexpr ll debugFlag = ll(1)<<31 | ll(1)<<29 | ll(1)<<30;
+
+const string tensorRTModelPath = "./test4.onnx";
+
 
 #ifndef tensorRTigo_cpp_INCLUDED
 #include "./tensorRTigo.cpp"
@@ -173,7 +186,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
 
 
     tensorRT.infer(MakeInputPlane(), tmpPolicy, values);
-    if (debugFlag & ll(1) << 29) {
+    if (debugFlag & ll(1) << 25) {
         print("tmpPolicy.size():", tmpPolicy.size());  //////////////
         rep (i, BOARDSIZE) {
             rep (j, BOARDSIZE) {
@@ -1197,7 +1210,7 @@ int suiron()
     args.runInFp16 = false;
     args.runInBf16 = false;
 
-    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, "test2.onnx"));
+    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
 
     tensorRT.build();
 
@@ -1271,7 +1284,7 @@ int suiron()
     print("ucts:", rootPtr->ucts);
 
     int saikiCnt = 0;
-    rep (1000) {
+    rep (1) {
         print("saikiCnt:", saikiCnt++);  ////////////////
         saiki(saiki, rootPtr);
     }
@@ -1336,7 +1349,7 @@ int Test()
     args.runInFp16 = false;
     args.runInBf16 = false;
 
-    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, "test2.onnx"));
+    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
 
     tensorRT.build();
     json j = json::parse("[[0, 0, 2, 2, 2, 1, 0, 0, 0], [0, 0, 0, 2, 1, 1, 1, 0, 0], [0, 0, 2, 2, 2, 2, 1, 1, 0], [0, 0, 0, 2, 1, 2, 1, 1, 0], [0, 2, 2, 2, 1, 2, 2, 1, 2], [0, 1, 2, 1, 1, 2, 1, 2, 0], [0, 2, 1, 1, 1, 1, 1, 0, 1], [0, 2, 2, 2, 2, 2, 1, 1, 2], [0, 0, 0, 0, 0, 2, 1, 0, 0]]");
