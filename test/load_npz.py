@@ -4,7 +4,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 
 
-npz_dir = "/home/tantakn/code/TantamaGo/data/sl_data_3.npz"
+npz_dir = "/home/tantakn/code/TantamaGo/backup/kgs-19-2019-04/sl_data_0.npz"
+# npz_dir = "/home/tantakn/code/TantamaGo/data/sl_data_3.npz"
 # npz_dir = "/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz"
 
 
@@ -40,7 +41,7 @@ def print_board_npz (a, b, dir, SIZE=9):
     dir: str npzのディレクトリ
     SIZE: int 碁盤のサイズ
     """
-    aaa, tmp, _ = tmp_load_data_set("/home/tantakn/code/TantamaGo/backup/data_Q50000/sl_data_0.npz")
+    aaa, tmp, _ = tmp_load_data_set(dir)
     tmp = tmp.numpy()
     aaa = aaa.numpy()
 
@@ -212,4 +213,4 @@ for x in banmen:
 lis = [624, 1032, 1048, 1056, 1768, 2624, 2656, 3400, 3408, 3936, 3952, 3968, 3976, 4352, 4360, 4872, 4880, 7752, 7760, 8128, 8136, 9160, 9168, 9184]
 
 for i in range(len(lis) - 1):
-    print_board_npz(lis[i]- 40, lis[i] + 40, "/home/tantakn/code/TantamaGo/backup/data_Q50000/sl_data_0.npz", SIZE=9)
+    print_board_npz(lis[i]- 40, lis[i] + 40, npz_dir, SIZE=19)

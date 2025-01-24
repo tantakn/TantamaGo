@@ -1,3 +1,5 @@
+# (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo$ python3 main.py --size 19 --use-gpu true --model model_def/sl-model_20250110_031407_19.bin --net DualNet_256_24 --time 1
+
 #!/usr/bin/python3
 """GTPクライアントのエントリーポイント。
 """
