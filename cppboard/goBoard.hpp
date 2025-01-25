@@ -109,7 +109,7 @@ struct goBoard {
      * @param move 
      * @return goBoard* 
      */
-    goBoard* SucceedRoot(pair<char, char> move);
+    goBoard* SucceedRoot(goBoard* rootPtr, pair<char, char> move);
 
     /**
      * @brief debugFlag & 1<<31 & 1<<29 で推論の結果を表示する。

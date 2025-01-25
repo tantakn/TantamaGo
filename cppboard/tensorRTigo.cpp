@@ -178,6 +178,9 @@ private:
 //!
 bool TensorRTOnnxIgo::build()
 {
+    // sample::gLogger のセビティを設定
+    sample::gLogger.setReportableSeverity(nvinfer1::ILogger::Severity::kERROR);
+
     // TensorRTのビルダーとネットワークの作成
     auto builder = SampleUniquePtr<nvinfer1::IBuilder>(nvinfer1::createInferBuilder(sample::gLogger.getTRTLogger()));
     if (!builder)

@@ -1,4 +1,105 @@
-// g++ -Wall -Wno-deprecated-declarations -std=c++17   -I"./TensorRT/common"   -I"./TensorRT/utils"   -I"./TensorRT"   -I"/usr/local/cuda/include"   -I"./TensorRT/include"   -D_REENTRANT -DTRT_STATIC=0   -g  goBoard.cpp   ./TensorRT/common/bfloat16.cpp   ./TensorRT/common/getOptions.cpp   ./TensorRT/common/logger.cpp   ./TensorRT/common/sampleDevice.cpp   ./TensorRT/common/sampleEngines.cpp   ./TensorRT/common/sampleInference.cpp   ./TensorRT/common/sampleOptions.cpp   ./TensorRT/common/sampleReporting.cpp   ./TensorRT/common/sampleUtils.cpp   ./TensorRT/utils/fileLock.cpp   ./TensorRT/utils/timingCache.cpp   -o goBoard   -L"/usr/local/cuda/lib64"   -Wl,-rpath-link="/usr/local/cuda/lib64"   -L"./TensorRT/lib"   -Wl,-rpath-link="./TensorRT/lib"   -L"./TensorRT/bin"   -Wl,--start-group   -lnvinfer   -lnvinfer_plugin   -lnvonnxparser   -lcudart   -lrt   -ldl   -lpthread   -Wl,--end-group   -Wl,--no-relax
+// (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/cppboard/TensorRT$ tree -L 2
+// .
+// ├── bin
+// │   ├── chobj
+// │   ├── dchobj
+// │   ├── sample_onnx_igo
+// │   ├── sample_onnx_mnist
+// │   ├── sample_onnx_mnist_debug
+// │   └── trtexec
+// ├── common
+// │   ├── BatchStream.h
+// │   ├── EntropyCalibrator.h
+// │   ├── ErrorRecorder.h
+// │   ├── argsParser.h
+// │   ├── bfloat16.cpp
+// │   ├── bfloat16.h
+// │   ├── buffers.h
+// │   ├── common.h
+// │   ├── dumpTFWts.py
+// │   ├── getOptions.cpp
+// │   ├── getOptions.h
+// │   ├── getopt.c
+// │   ├── getoptWin.h
+// │   ├── half.h
+// │   ├── logger.cpp
+// │   ├── logger.h
+// │   ├── logging.h
+// │   ├── parserOnnxConfig.h
+// │   ├── safeCommon.h
+// │   ├── sampleConfig.h
+// │   ├── sampleDevice.cpp
+// │   ├── sampleDevice.h
+// │   ├── sampleEngines.cpp
+// │   ├── sampleEngines.h
+// │   ├── sampleEntrypoints.h
+// │   ├── sampleInference.cpp
+// │   ├── sampleInference.h
+// │   ├── sampleOptions.cpp
+// │   ├── sampleOptions.h
+// │   ├── sampleReporting.cpp
+// │   ├── sampleReporting.h
+// │   ├── sampleUtils.cpp
+// │   ├── sampleUtils.h
+// │   └── streamReader.h
+// ├── data
+// │   ├── char-rnn
+// │   ├── int8_api
+// │   ├── mnist
+// │   └── resnet50
+// ├── include
+// │   ├── NvInfer.h
+// │   ├── NvInferImpl.h
+// │   ├── NvInferLegacyDims.h
+// │   ├── NvInferPlugin.h
+// │   ├── NvInferPluginBase.h
+// │   ├── NvInferPluginUtils.h
+// │   ├── NvInferRuntime.h
+// │   ├── NvInferRuntimeBase.h
+// │   ├── NvInferRuntimeCommon.h
+// │   ├── NvInferRuntimePlugin.h
+// │   ├── NvInferVersion.h
+// │   ├── NvOnnxConfig.h
+// │   └── NvOnnxParser.h
+// ├── lib
+// │   ├── libnvinfer.so -> libnvinfer.so.10.7.0
+// │   ├── libnvinfer.so.10 -> libnvinfer.so.10.7.0
+// │   ├── libnvinfer.so.10.7.0
+// │   ├── libnvinfer_builder_resource.so.10.7.0
+// │   ├── libnvinfer_builder_resource_win.so.10.7.0
+// │   ├── libnvinfer_dispatch.so -> libnvinfer_dispatch.so.10.7.0
+// │   ├── libnvinfer_dispatch.so.10 -> libnvinfer_dispatch.so.10.7.0
+// │   ├── libnvinfer_dispatch.so.10.7.0
+// │   ├── libnvinfer_dispatch_static.a
+// │   ├── libnvinfer_lean.so -> libnvinfer_lean.so.10.7.0
+// │   ├── libnvinfer_lean.so.10 -> libnvinfer_lean.so.10.7.0
+// │   ├── libnvinfer_lean.so.10.7.0
+// │   ├── libnvinfer_lean_static.a
+// │   ├── libnvinfer_plugin.so -> libnvinfer_plugin.so.10.7.0
+// │   ├── libnvinfer_plugin.so.10 -> libnvinfer_plugin.so.10.7.0
+// │   ├── libnvinfer_plugin.so.10.7.0
+// │   ├── libnvinfer_plugin_static.a
+// │   ├── libnvinfer_static.a
+// │   ├── libnvinfer_vc_plugin.so -> libnvinfer_vc_plugin.so.10.7.0
+// │   ├── libnvinfer_vc_plugin.so.10 -> libnvinfer_vc_plugin.so.10.7.0
+// │   ├── libnvinfer_vc_plugin.so.10.7.0
+// │   ├── libnvinfer_vc_plugin_static.a
+// │   ├── libnvonnxparser.so -> libnvonnxparser.so.10
+// │   ├── libnvonnxparser.so.10 -> libnvonnxparser.so.10.7.0
+// │   ├── libnvonnxparser.so.10.7.0
+// │   ├── libnvonnxparser_static.a
+// │   ├── libonnx_proto.a
+// │   └── stubs
+// └── utils
+//     ├── fileLock.cpp
+//     ├── fileLock.h
+//     ├── timingCache.cpp
+//     └── timingCache.h
+
+// 14 directories, 82 files
+
+
+// (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/cppboard$ g++ -Wall -Wno-deprecated-declarations -std=c++17   -I"./TensorRT/common"   -I"./TensorRT/utils"   -I"./TensorRT"   -I"/usr/local/cuda/include"   -I"./TensorRT/include"   -D_REENTRANT -DTRT_STATIC=0   -g  goBoard.cpp   ./TensorRT/common/bfloat16.cpp   ./TensorRT/common/getOptions.cpp   ./TensorRT/common/logger.cpp   ./TensorRT/common/sampleDevice.cpp   ./TensorRT/common/sampleEngines.cpp   ./TensorRT/common/sampleInference.cpp   ./TensorRT/common/sampleOptions.cpp   ./TensorRT/common/sampleReporting.cpp   ./TensorRT/common/sampleUtils.cpp   ./TensorRT/utils/fileLock.cpp   ./TensorRT/utils/timingCache.cpp   -o goBoard   -L"/usr/local/cuda/lib64"   -Wl,-rpath-link="/usr/local/cuda/lib64"   -L"./TensorRT/lib"   -Wl,-rpath-link="./TensorRT/lib"   -L"./TensorRT/bin"   -Wl,--start-group   -lnvinfer   -lnvinfer_plugin   -lnvonnxparser   -lcudart   -lrt   -ldl   -lpthread   -Wl,--end-group   -Wl,--no-relax
 
 
 
@@ -14,11 +115,12 @@ constexpr int BOARDSIZE = 19;
 
 constexpr double komi = 7.5;
 
-// constexpr ll debugFlag = 0;
-constexpr ll debugFlag = ll(1)<<25;
+constexpr ll debugFlag = 0;
+// constexpr ll debugFlag = ll(1)<<25;
 // constexpr ll debugFlag = ll(1)<<31 | ll(1)<<29 | ll(1)<<30;
 
-const string tensorRTModelPath = "./test19_2.onnx";
+const string tensorRTModelPath = "./19ro.onnx";
+// const string tensorRTModelPath = "./test19_2.onnx";
 
 
 #ifndef tensorRTigo_cpp_INCLUDED
@@ -147,7 +249,7 @@ goBoard::~goBoard()
     }
 }
 
-goBoard* goBoard::SucceedRoot(pair<char, char> move)
+goBoard* goBoard::SucceedRoot(goBoard* rootPtr, pair<char, char> move)
 {
     /// TODO: 最初の root を宣言したポインタが rootptr 以外だとここからは変えられないから、安全ではないのでは？
 
@@ -200,7 +302,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
         cerr << resetiosflags(std::ios::floatfield);  // 浮動小数点の書式をリセット
         cerr << resetiosflags(std::ios::showpoint);   // showpoint をリセット
         cerr << resetiosflags(std::ios::showpos);     // showpos をリセット
-        cerr << std::defaultfloat; 
+        cerr << std::defaultfloat;
     }
 
 
@@ -267,12 +369,13 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 {
     auto [inputColor, inputWin, inputDraw, inputLose] = input;
 
-    print("inputColor:", inputColor);  ////////////
-    print("inputWin:", inputWin);
-    print("inputDraw:", inputDraw);
-    print("inputLose:", inputLose);
-    print("teban:", teban);
+    // print("inputColor:", inputColor);  ////////////
+    // print("inputWin:", inputWin);
+    // print("inputDraw:", inputDraw);
+    // print("inputLose:", inputLose);
+    // print("teban:", teban);
 
+    /// TODO: npz作るときに逆になってることがある？多分、== が正しい？
     if (inputColor == teban) {
         swap(inputWin, inputLose);
     }
@@ -481,20 +584,72 @@ void goBoard::PrintBoard(ll bit = 0b1)
             }
         }
         cerr << "ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+        cerr << "以下の表は uct値 * 10 を表示" << endl;
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << fixed << setprecision(2) << showpoint << tmp[i][j] << " ";
+                cerr << fixed << setprecision(1) << showpoint << tmp[i][j] * 10 << " ";
             }
             cerr << endl;
         }
         cerr << "pass: " << tmp[0][0] << endl;
-        cerr << "ans: [" << int(maxMove.first) << ", " << int(maxMove.second) <<"]"<< endl;
+        cerr << "ans: [" << int(maxMove.first) << ", " << int(maxMove.second) << "]" << endl;
+    }
+
+    // visitの表示
+    if (bit & 1 << 28) {
+        vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
+        pair<char, char> maxMove;
+        for (auto [uct, cnt, winSum, move] : ucts) {
+            tmp[move.first][move.second] = cnt;
+        }
+        cerr << "visitの表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+        rep (i, 1, BOARDSIZE + 1) {
+            rep (j, 1, BOARDSIZE + 1) {
+                cerr << setw(4) << setfill(' ')  << int(tmp[i][j]) << " ";
+            }
+            cerr << endl;
+        }
+        cerr << "pass: " << setw(4) << setfill(' ')  << tmp[0][0] << endl;
+    }
+
+    // 勝率の表示
+    if (bit & 1 << 27) {
+        vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
+        pair<char, char> maxMove;
+        for (auto [uct, cnt, winSum, move] : ucts) {
+            tmp[move.first][move.second] = winSum / cnt;
+        }
+        cerr << "勝率の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+        rep (i, 1, BOARDSIZE + 1) {
+            rep (j, 1, BOARDSIZE + 1) {
+                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " ";
+            }
+            cerr << endl;
+        }
+        cerr << "pass: " << setw(4) << setfill(' ')  << int(tmp[0][0] * 100) << endl;
+    }
+
+    // ペナルティの表示
+    if (bit & 1 << 27) {
+        vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
+        pair<char, char> maxMove;
+        for (auto [uct, cnt, winSum, move] : ucts) {
+            tmp[move.first][move.second] = sqrt(2 * log(numVisits) / (cnt));
+        }
+        cerr << "ペナルティの表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+        rep (i, 1, BOARDSIZE + 1) {
+            rep (j, 1, BOARDSIZE + 1) {
+                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " ";
+            }
+            cerr << endl;
+        }
+        cerr << "pass: " << setw(4) << setfill(' ')  << int(tmp[0][0] * 100) << endl;
     }
 
     cerr << resetiosflags(std::ios::floatfield);  // 浮動小数点の書式をリセット
     cerr << resetiosflags(std::ios::showpoint);   // showpoint をリセット
     cerr << resetiosflags(std::ios::showpos);     // showpos をリセット
-    cerr << std::defaultfloat; 
+    cerr << std::defaultfloat;
 };
 
 string goBoard::ToJson()
@@ -1095,7 +1250,7 @@ int MonteCarloTreeSearch()
 
     root->PrintBoard(0b1);
 
-    root->SucceedRoot(get<3>(ans));
+    root->SucceedRoot(rootPtr, get<3>(ans));
     root = rootPtr;
 
 
@@ -1192,7 +1347,7 @@ int MonteCarloTreeSearch()
     root->PrintBoard(0b1);
 
     cerr << rootPtr << endl;
-    root->SucceedRoot(get<3>(ans));
+    root->SucceedRoot(rootPtr, get<3>(ans));
     cerr << rootPtr << endl;
 
 
@@ -1214,9 +1369,11 @@ int suiron(int n)
 
     tensorRT.build();
 
+    print("build end");  ////////////////////
+
     auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
     {
-        print("moveCnt", ptr->moveCnt);  ////////////////
+        // print("moveCnt", ptr->moveCnt);  ////////////////
         int color = ptr->teban;
 
         if (ptr->isEnded) {
@@ -1235,7 +1392,7 @@ int suiron(int n)
         pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
 
         if (!ptr->childrens.count(nextMove)) {
-            print("PutStoneCnt", ++PutStoneCnt);
+            // print("PutStoneCnt", ++PutStoneCnt);
             goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
 
             int nextColor = nextPtr->teban;
@@ -1266,55 +1423,60 @@ int suiron(int n)
 
     rootPtr->ExpandNode(tensorRT);
 
-    print(rootPtr->policys);
-    print(rootPtr->values);
+    // print(rootPtr->policys);
+    // print(rootPtr->values);
 
     float sum = 0.0;
     for (auto x : rootPtr->policys) {
         sum += x.second;
     }
-    print("policyssum:", sum);
+    // print("policyssum:", sum);
 
     sum = 0.0;
     for (auto x : rootPtr->values) {
         sum += x;
     }
-    print("valuessum:", sum);
+    // print("valuessum:", sum);
 
-    print("ucts:", rootPtr->ucts);
+    // print("ucts:", rootPtr->ucts);
 
     int saikiCnt = 0;
     rep (n) {
-        print("saikiCnt:", saikiCnt++);  ////////////////
+        // print("saikiCnt:", saikiCnt++);  ////////////////
         saiki(saiki, rootPtr);
     }
-    print("ucts:", rootPtr->ucts);
-
-    pair<char, char> ans;
-    int ansCnt = -1;
-    for (auto x : rootPtr->ucts) {
-        if (get<1>(x) >= ansCnt) {
-            if (get<1>(x) == ansCnt && get<0>(x) < get<0>(ans)) {
-                continue;
-            }
-            ansCnt = get<1>(x);
-            ans = get<3>(x);
-        }
-    }
-
-    print("ans:", ans);
 
 
+    // print("ucts:", rootPtr->ucts);
 
-    goBoard *tmp = rootPtr;
+    // pair<char, char> ans;
+    // int ansCnt = -1;
+    // for (auto x : rootPtr->ucts) {
+    //     if (get<1>(x) >= ansCnt) {
+    //         if (get<1>(x) == ansCnt && get<0>(x) < get<0>(ans)) {
+    //             continue;
+    //         }
+    //         ansCnt = get<1>(x);
+    //         ans = get<3>(x);
+    //     }
+    // }
+    // print("ans:", ans);
+
+
+
+    goBoard* tmp = rootPtr;
     while (true) {
         tmp->PrintBoard(0b1);
         print();
-        tmp->PrintBoard(1<<31);
+        tmp->PrintBoard(1 << 31);
         print();
-        tmp->PrintBoard(1<<30);
+        tmp->PrintBoard(1 << 30);
         print();
-        tmp->PrintBoard(1<<29);
+        tmp->PrintBoard(1 << 29);
+        print();
+        tmp->PrintBoard(1 << 28);
+        print();
+        tmp->PrintBoard(1 << 27);
         print();
 
         int y = 123, x = 123;
@@ -1332,10 +1494,10 @@ int suiron(int n)
             }
         }
         tmp = tmp->childrens[{y, x}];
-        PASS:;
+    PASS:;
     }
 
-    END:;
+END:;
 
 
     return 0;
@@ -1363,7 +1525,122 @@ int Test()
 }
 
 
-int main(int argc, char *argv[])
+
+// ループを制御するためのフラグ
+std::atomic<bool> running(true);
+
+void SearchLoop(TensorRTOnnxIgo& tensorRT)
+{
+    auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
+    {
+        int color = ptr->teban;
+
+        if (ptr->isEnded) {
+            double rslt = ptr->CountResult();
+            if (rslt == 0) {
+                return make_tuple(color, 0.0, 1.0, 0.0);
+            }
+            if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
+                return make_tuple(color, 1.0, 0.0, 0.0);
+            }
+            return make_tuple(color, 0.0, 0.0, 1.0);
+        }
+
+        assert(ptr->ucts.size());
+
+        pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
+
+        if (!ptr->childrens.count(nextMove)) {
+            goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+
+            int nextColor = nextPtr->teban;
+
+            if (nextPtr->isEnded) {
+                double rslt = nextPtr->CountResult();
+                if (rslt == 0) {
+                    return make_tuple(nextColor, 0.0, 1.0, 0.0);
+                }
+                if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
+                    return make_tuple(nextColor, 1.0, 0.0, 0.0);
+                }
+                return make_tuple(nextColor, 0.0, 0.0, 1.0);
+            }
+
+            return nextPtr->ExpandNode(tensorRT);
+        }
+
+
+        tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
+
+        ptr->UpdateUcts(returnData, nextMove);
+
+        return returnData;
+    };
+
+
+    while (running.load()) {
+        saiki(saiki, rootPtr);
+    }
+}
+
+int Gpt()
+{
+    samplesCommon::Args args;
+
+    args.runInInt8 = false;
+    args.runInFp16 = false;
+    args.runInBf16 = false;
+
+    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
+
+    tensorRT.build();
+
+
+    rootPtr = new goBoard();
+
+    rootPtr->ExpandNode(tensorRT);
+
+    int saikiCnt = 0;
+
+    // 探索用のスレッドを開始
+    std::thread searchThread(SearchLoop, std::ref(tensorRT));
+
+    std::string input;
+    // 標準入力を監視
+    while (std::getline(std::cin, input)) {
+        // vector<string> inputs = split(input, ' ');
+        if (input == "list_commands") {
+            
+        }
+        else if (input == "boardsize") {
+            
+        }
+        else if (input == "clear_board") {
+
+        }
+        else if (input == "komi") {
+
+        }
+        else if (input == "play") {
+
+        }
+        else if (input == "genmove") {
+
+        }
+        else if (input == "quit") {
+            break;
+        }
+
+    }
+
+    // ループを停止
+    running.store(false);
+    // スレッドの終了を待機
+    searchThread.join();
+}
+
+
+int main(int argc, char* argv[])
 {
     int n = 1000;
     if (argc == 2) n = stoi(argv[1]);
@@ -1410,43 +1687,41 @@ int main(int argc, char *argv[])
 
 
 
-
-
 // "legalMoves.size():", 78
 // pass: O
-// _ O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O _ _ O O O O 
-// O O O O _ O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
+// _ O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O _ _ O O O O
+// O O O O _ O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
 // [01/22/2025-01:11:22] [I] [TRT] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +0, now: CPU 0, GPU 1 (MiB)
 // "tmpPolicy.size():", 82
-// -3.0643 -2.5386 -0.6482 -1.9070 -1.9800 -1.7157 -2.3123 -2.8675 -2.1690 
-// -1.6564 +2.0302 +0.2747 -0.3175 -0.6484 -1.2339 -1.6391 -1.0966 -2.2894 
-// -0.9973 +0.5675 +2.7738 +4.3787 +2.9279 +3.2399 +4.2932 -1.0965 -1.6416 
-// -1.9561 -0.5473 +2.6993 +7.6882 +8.4930 +1.6248 +3.7076 -0.1639 -1.8169 
-// -1.4363 -0.9100 +1.4575 +0.2655 +2.3247 +0.8941 +3.2148 +1.4013 -1.8689 
-// -1.7469 -1.0087 +3.7042 +7.8111 +0.4135 +0.2033 +3.8415 -1.0274 -1.8955 
-// -1.8853 -1.6004 +4.9563 +0.5469 +0.9036 +3.8731 +4.1513 -1.6426 -2.0869 
-// -2.4943 -1.5963 -1.7056 -1.0420 +1.8147 -0.8280 -0.9790 -1.6516 -2.0485 
-// -2.1292 -2.7262 -2.3229 -2.4141 -2.1758 -1.7866 -1.9552 -2.8590 -1.3960 
+// -3.0643 -2.5386 -0.6482 -1.9070 -1.9800 -1.7157 -2.3123 -2.8675 -2.1690
+// -1.6564 +2.0302 +0.2747 -0.3175 -0.6484 -1.2339 -1.6391 -1.0966 -2.2894
+// -0.9973 +0.5675 +2.7738 +4.3787 +2.9279 +3.2399 +4.2932 -1.0965 -1.6416
+// -1.9561 -0.5473 +2.6993 +7.6882 +8.4930 +1.6248 +3.7076 -0.1639 -1.8169
+// -1.4363 -0.9100 +1.4575 +0.2655 +2.3247 +0.8941 +3.2148 +1.4013 -1.8689
+// -1.7469 -1.0087 +3.7042 +7.8111 +0.4135 +0.2033 +3.8415 -1.0274 -1.8955
+// -1.8853 -1.6004 +4.9563 +0.5469 +0.9036 +3.8731 +4.1513 -1.6426 -2.0869
+// -2.4943 -1.5963 -1.7056 -1.0420 +1.8147 -0.8280 -0.9790 -1.6516 -2.0485
+// -2.1292 -2.7262 -2.3229 -2.4141 -2.1758 -1.7866 -1.9552 -2.8590 -1.3960
 // -0.1663
 // "values.size():", 3
 // "values:", [3.2885046005249023,-5.2117695808410645,1.8991395235061646]
 // "policys.size():", 78
-// ####   +0   +0   +0   +0   +0   +0   +0   +0 
-//   +0   +1   +0   +0   +0   +0   +0   +0   +0 
-//   +0   +0   +2  +13   +3   +4  +12   +0   +0 
-//   +0   +0   +2 +357 +800   +0   +6   +0   +0 
-//   +0   +0   +0 #### @@@@   +0   +4   +0   +0 
-//   +0   +0   +6 +404 @@@@   +0   +7   +0   +0 
-//   +0   +0  +23   +0   +0   +7  +10   +0   +0 
-//   +0   +0   +0   +0   +1   +0   +0   +0   +0 
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
+// ####   +0   +0   +0   +0   +0   +0   +0   +0
+//   +0   +1   +0   +0   +0   +0   +0   +0   +0
+//   +0   +0   +2  +13   +3   +4  +12   +0   +0
+//   +0   +0   +2 +357 +800   +0   +6   +0   +0
+//   +0   +0   +0 #### @@@@   +0   +4   +0   +0
+//   +0   +0   +6 +404 @@@@   +0   +7   +0   +0
+//   +0   +0  +23   +0   +0   +7  +10   +0   +0
+//   +0   +0   +0   +0   +1   +0   +0   +0   +0
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
 // "pass:", 0.00013886754459235817
 // "values:", [0.8003605008125305,0.00016280340787488967,0.19947664439678192]
 // "inputColor:", 1
@@ -1469,50 +1744,50 @@ int main(int argc, char *argv[])
 // -1 -1 +1
 // moveCnt: +0, teban: +1
 //    1 2 3 4 5 6 7 8 9
-// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐ 
-// +2 ├ + + + + + + + ┤ 
-// +3 ├ + + + + + + + ┤ 
-// +4 ├ + + + + + + + ┤ 
-// +5 ├ + + + + + + + ┤ 
-// +6 ├ + + + + + + + ┤ 
-// +7 ├ + + + + + + + ┤ 
-// +8 ├ + + + + + + + ┤ 
-// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘ 
+// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
+// +2 ├ + + + + + + + ┤
+// +3 ├ + + + + + + + ┤
+// +4 ├ + + + + + + + ┤
+// +5 ├ + + + + + + + ┤
+// +6 ├ + + + + + + + ┤
+// +7 ├ + + + + + + + ┤
+// +8 ├ + + + + + + + ┤
+// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
 
 // "policys.size():", 82
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
-//   +0   +1   +0   +0   +0   +0   +0   +0   +0 
-//   +0   +0  +12  +26   +9  +25  +12   +0   +0 
-//   +0   +0  +26  +97 +103  +95  +26   +0   +0 
-//   +0   +0   +9 +103 +512 +103   +9   +0   +0 
-//   +0   +0  +25  +94 +101  +95  +26   +0   +0 
-//   +0   +0  +11  +25   +9  +24  +11   +0   +0 
-//   +0   +1   +0   +0   +0   +0   +0   +1   +0 
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
+//   +0   +1   +0   +0   +0   +0   +0   +0   +0
+//   +0   +0  +12  +26   +9  +25  +12   +0   +0
+//   +0   +0  +26  +97 +103  +95  +26   +0   +0
+//   +0   +0   +9 +103 +512 +103   +9   +0   +0
+//   +0   +0  +25  +94 +101  +95  +26   +0   +0
+//   +0   +0  +11  +25   +9  +24  +11   +0   +0
+//   +0   +1   +0   +0   +0   +0   +0   +1   +0
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
 // "pass:", 0.00010275642125634477
 // "values:", [0.5129799842834473,0.0004004337824881077,0.4866195619106293]
 
 // "childrens.size():", 82
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
 
 // "ucts.size():", 82
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
+// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
 // pass: +0.61
 
 // y:  5
@@ -1520,50 +1795,50 @@ int main(int argc, char *argv[])
 // +5 +5 +2
 // moveCnt: +1, teban: +2
 //    1 2 3 4 5 6 7 8 9
-// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐ 
-// +2 ├ + + + + + + + ┤ 
-// +3 ├ + + + + + + + ┤ 
-// +4 ├ + + + + + + + ┤ 
-// +5 ├ + + + ● + + + ┤ 
-// +6 ├ + + + + + + + ┤ 
-// +7 ├ + + + + + + + ┤ 
-// +8 ├ + + + + + + + ┤ 
-// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘ 
+// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
+// +2 ├ + + + + + + + ┤
+// +3 ├ + + + + + + + ┤
+// +4 ├ + + + + + + + ┤
+// +5 ├ + + + ● + + + ┤
+// +6 ├ + + + + + + + ┤
+// +7 ├ + + + + + + + ┤
+// +8 ├ + + + + + + + ┤
+// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
 
 // "policys.size():", 81
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
-//   +0   +0   +0   +0   +1   +0   +0   +0   +0 
-//   +0   +0  +46  +80 +524  +78  +47   +0   +0 
-//   +0   +0  +82  +12  +23  +12  +82   +0   +0 
-//   +0   +1 +540  +23 ####  +24 +520   +1   +0 
-//   +0   +0  +77  +12  +24  +15  +80   +0   +0 
-//   +0   +0  +50  +82 +519  +82  +51   +0   +0 
-//   +0   +0   +0   +0   +1   +0   +0   +0   +0 
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
+//   +0   +0   +0   +0   +1   +0   +0   +0   +0
+//   +0   +0  +46  +80 +524  +78  +47   +0   +0
+//   +0   +0  +82  +12  +23  +12  +82   +0   +0
+//   +0   +1 +540  +23 ####  +24 +520   +1   +0
+//   +0   +0  +77  +12  +24  +15  +80   +0   +0
+//   +0   +0  +50  +82 +519  +82  +51   +0   +0
+//   +0   +0   +0   +0   +1   +0   +0   +0   +0
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
 // "pass:", 0.00042700927588157356
 // "values:", [0.5404638648033142,0.0004166991566307843,0.45911943912506104]
 
 // "childrens.size():", 81
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O X O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
-// O O O O O O O O O 
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O X O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
+// O O O O O O O O O
 
 // "ucts.size():", 81
-// +0.97 +0.98 +0.97 +0.98 +0.98 +0.98 +0.98 +0.98 +0.97 
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.97 +0.98 +0.98 
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 
-// +0.98 +0.98 +0.98 +0.98 +0.00 +0.98 +0.98 +0.98 +0.98 
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 
-// +0.98 +0.98 +0.97 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 
-// +0.97 +0.98 +0.98 +0.98 +0.98 +0.97 +0.98 +0.98 +0.98 
+// +0.97 +0.98 +0.97 +0.98 +0.98 +0.98 +0.98 +0.98 +0.97
+// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.97 +0.98 +0.98
+// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
+// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
+// +0.98 +0.98 +0.98 +0.98 +0.00 +0.98 +0.98 +0.98 +0.98
+// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
+// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
+// +0.98 +0.98 +0.97 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
+// +0.97 +0.98 +0.98 +0.98 +0.98 +0.97 +0.98 +0.98 +0.98
 // pass: +0.97
 
 // y: 3
@@ -1571,50 +1846,50 @@ int main(int argc, char *argv[])
 // +3 +5 +1
 // moveCnt: +2, teban: +1
 //    1 2 3 4 5 6 7 8 9
-// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐ 
-// +2 ├ + + + + + + + ┤ 
-// +3 ├ + + + ○ + + + ┤ 
-// +4 ├ + + + + + + + ┤ 
-// +5 ├ + + + ● + + + ┤ 
-// +6 ├ + + + + + + + ┤ 
-// +7 ├ + + + + + + + ┤ 
-// +8 ├ + + + + + + + ┤ 
-// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘ 
+// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
+// +2 ├ + + + + + + + ┤
+// +3 ├ + + + ○ + + + ┤
+// +4 ├ + + + + + + + ┤
+// +5 ├ + + + ● + + + ┤
+// +6 ├ + + + + + + + ┤
+// +7 ├ + + + + + + + ┤
+// +8 ├ + + + + + + + ┤
+// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
 
 // "policys.size():", 80
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
-//   +0   +0   +0   +0  +30   +0   +0   +0   +0 
-//   +0   +0   +4 +524 @@@@ +538   +5   +0   +0 
-//   +0   +0 +177  +70  +12  +66 +181   +0   +0 
-//   +0   +0  +85   +0 ####   +0  +86   +0   +0 
-//   +0   +0   +7   +1   +0   +2   +6   +0   +0 
-//   +0   +0   +0  +52 +428  +49   +0   +0   +0 
-//   +0   +0   +0   +0   +9   +0   +0   +0   +0 
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
+//   +0   +0   +0   +0  +30   +0   +0   +0   +0
+//   +0   +0   +4 +524 @@@@ +538   +5   +0   +0
+//   +0   +0 +177  +70  +12  +66 +181   +0   +0
+//   +0   +0  +85   +0 ####   +0  +86   +0   +0
+//   +0   +0   +7   +1   +0   +2   +6   +0   +0
+//   +0   +0   +0  +52 +428  +49   +0   +0   +0
+//   +0   +0   +0   +0   +9   +0   +0   +0   +0
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
 // "pass:", 0.0002202322648372501
 // "values:", [0.5387895703315735,0.0005389123107306659,0.4606715142726898]
 
 // "childrens.size():", 65
-// X X O O O O O X X 
-// O O O O O O O O X 
-// O O O O X O O O X 
-// O O O O O O O O X 
-// O O O O X O O O O 
-// O O O O O O O O O 
-// X O O O O O O O O 
-// X X O O O O O X O 
-// X X X O O O O X O 
+// X X O O O O O X X
+// O O O O O O O O X
+// O O O O X O O O X
+// O O O O O O O O X
+// O O O O X O O O O
+// O O O O O O O O O
+// X O O O O O O O O
+// X X O O O O O X O
+// X X X O O O O X O
 
 // "ucts.size():", 80
-// +2.89 +2.89 +2.22 +2.24 +2.25 +2.17 +2.16 +2.89 +2.89 
-// +2.16 +2.22 +2.24 +2.21 +2.27 +2.23 +2.19 +2.17 +2.89 
-// +2.17 +2.22 +2.23 +2.56 +0.00 +2.55 +2.23 +2.16 +2.89 
-// +2.17 +2.23 +2.35 +2.38 +2.34 +2.35 +2.34 +2.18 +2.89 
-// +2.17 +2.18 +2.32 +2.24 +0.00 +2.25 +2.33 +2.19 +2.15 
-// +2.17 +2.18 +2.24 +2.27 +2.23 +2.24 +2.20 +2.19 +2.16 
-// +2.89 +2.16 +2.17 +2.24 +2.51 +2.24 +2.18 +2.15 +2.89 
-// +2.89 +2.89 +2.22 +2.21 +2.23 +2.23 +2.14 +2.89 +2.16 
-// +2.89 +2.89 +2.89 +2.14 +2.14 +2.16 +2.14 +2.89 +2.13 
+// +2.89 +2.89 +2.22 +2.24 +2.25 +2.17 +2.16 +2.89 +2.89
+// +2.16 +2.22 +2.24 +2.21 +2.27 +2.23 +2.19 +2.17 +2.89
+// +2.17 +2.22 +2.23 +2.56 +0.00 +2.55 +2.23 +2.16 +2.89
+// +2.17 +2.23 +2.35 +2.38 +2.34 +2.35 +2.34 +2.18 +2.89
+// +2.17 +2.18 +2.32 +2.24 +0.00 +2.25 +2.33 +2.19 +2.15
+// +2.17 +2.18 +2.24 +2.27 +2.23 +2.24 +2.20 +2.19 +2.16
+// +2.89 +2.16 +2.17 +2.24 +2.51 +2.24 +2.18 +2.15 +2.89
+// +2.89 +2.89 +2.22 +2.21 +2.23 +2.23 +2.14 +2.89 +2.16
+// +2.89 +2.89 +2.89 +2.14 +2.14 +2.16 +2.14 +2.89 +2.13
 // pass: +2.14
 
 // y: 3
@@ -1622,48 +1897,48 @@ int main(int argc, char *argv[])
 // +3 +4 +2
 // moveCnt: +3, teban: +2
 //    1 2 3 4 5 6 7 8 9
-// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐ 
-// +2 ├ + + + + + + + ┤ 
-// +3 ├ + + ● ○ + + + ┤ 
-// +4 ├ + + + + + + + ┤ 
-// +5 ├ + + + ● + + + ┤ 
-// +6 ├ + + + + + + + ┤ 
-// +7 ├ + + + + + + + ┤ 
-// +8 ├ + + + + + + + ┤ 
-// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘ 
+// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
+// +2 ├ + + + + + + + ┤
+// +3 ├ + + ● ○ + + + ┤
+// +4 ├ + + + + + + + ┤
+// +5 ├ + + + ● + + + ┤
+// +6 ├ + + + + + + + ┤
+// +7 ├ + + + + + + + ┤
+// +8 ├ + + + + + + + ┤
+// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
 
 // "policys.size():", 79
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
-//   +0   +0   +0 +102   +0   +0   +0   +0   +0 
-//   +0   +0   +1 #### @@@@   +0   +0   +0   +0 
-//   +0   +0   +0 +508   +3   +0   +2   +0   +0 
-//   +0   +0   +0   +0 ####   +0   +0   +0   +0 
-//   +0   +0   +1   +0   +1   +0   +0   +0   +0 
-//   +0   +0   +4  +21  +69   +5   +1   +0   +0 
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0 
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
+//   +0   +0   +0 +102   +0   +0   +0   +0   +0
+//   +0   +0   +1 #### @@@@   +0   +0   +0   +0
+//   +0   +0   +0 +508   +3   +0   +2   +0   +0
+//   +0   +0   +0   +0 ####   +0   +0   +0   +0
+//   +0   +0   +1   +0   +1   +0   +0   +0   +0
+//   +0   +0   +4  +21  +69   +5   +1   +0   +0
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
+//   +0   +0   +0   +0   +0   +0   +0   +0   +0
 // "pass:", 1.6081046851468273e-05
 // "values:", [0.5089550018310547,0.0005318978219293058,0.49051305651664734]
 
 // "childrens.size():", 1
-// X X X X X X X X X 
-// X X X X X X X X X 
-// X X X X X X X X X 
-// X X X O X X X X X 
-// X X X X X X X X X 
-// X X X X X X X X X 
-// X X X X X X X X X 
-// X X X X X X X X X 
-// X X X X X X X X X 
+// X X X X X X X X X
+// X X X X X X X X X
+// X X X X X X X X X
+// X X X O X X X X X
+// X X X X X X X X X
+// X X X X X X X X X
+// X X X X X X X X X
+// X X X X X X X X X
+// X X X X X X X X X
 
 // "ucts.size():", 79
-// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 
-// +2.96 +2.96 +2.96 +3.06 +2.96 +2.96 +2.96 +2.96 +2.96 
-// +2.96 +2.96 +2.96 +0.00 +0.00 +2.96 +2.96 +2.96 +2.96 
-// +2.96 +2.96 +2.96 +3.47 +2.96 +2.96 +2.96 +2.96 +2.96 
-// +2.96 +2.96 +2.96 +2.96 +0.00 +2.96 +2.96 +2.96 +2.96 
-// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 
-// +2.96 +2.96 +2.96 +2.98 +3.03 +2.96 +2.96 +2.96 +2.96 
-// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 
-// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 
+// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96
+// +2.96 +2.96 +2.96 +3.06 +2.96 +2.96 +2.96 +2.96 +2.96
+// +2.96 +2.96 +2.96 +0.00 +0.00 +2.96 +2.96 +2.96 +2.96
+// +2.96 +2.96 +2.96 +3.47 +2.96 +2.96 +2.96 +2.96 +2.96
+// +2.96 +2.96 +2.96 +2.96 +0.00 +2.96 +2.96 +2.96 +2.96
+// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96
+// +2.96 +2.96 +2.96 +2.98 +3.03 +2.96 +2.96 +2.96 +2.96
+// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96
+// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96
 // pass: +2.96
