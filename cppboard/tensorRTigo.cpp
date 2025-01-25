@@ -178,6 +178,7 @@ private:
 //!
 bool TensorRTOnnxIgo::build()
 {
+    // TensorRTのビルダーとネットワークの作成
     auto builder = SampleUniquePtr<nvinfer1::IBuilder>(nvinfer1::createInferBuilder(sample::gLogger.getTRTLogger()));
     if (!builder)
     {
@@ -190,6 +191,7 @@ bool TensorRTOnnxIgo::build()
         return false;
     }
 
+    // ビルダー設定の作成
     auto config = SampleUniquePtr<nvinfer1::IBuilderConfig>(builder->createBuilderConfig());
     if (!config)
     {
@@ -230,7 +232,9 @@ bool TensorRTOnnxIgo::build()
             sample::gLogger.getTRTLogger(), mParams.timingCacheFile, timingCache.get(), *builder);
     }
 
+    // 最適化プロファイルの作成
     auto profile = builder->createOptimizationProfile();////
+    // 最小、最適、最大のシェイプを設定
     profile->setDimensions("input", OptProfileSelector::kMIN, nvinfer1::Dims4(1, 6, BOARDSIZE, BOARDSIZE));
     profile->setDimensions("input", OptProfileSelector::kOPT, nvinfer1::Dims4(1, 6, BOARDSIZE, BOARDSIZE));
     profile->setDimensions("input", OptProfileSelector::kMAX, nvinfer1::Dims4(1, 6, BOARDSIZE, BOARDSIZE));
@@ -250,6 +254,7 @@ bool TensorRTOnnxIgo::build()
     }
 
     ASSERT(network->getNbInputs() == 1);
+    // 入力テンソルの取得
     mInputDims = network->getInput(0)->getDimensions();
     ASSERT(mInputDims.nbDims == 4);
 
@@ -274,6 +279,7 @@ bool TensorRTOnnxIgo::constructNetwork(SampleUniquePtr<nvinfer1::IBuilder>& buil
     SampleUniquePtr<nvinfer1::INetworkDefinition>& network, SampleUniquePtr<nvinfer1::IBuilderConfig>& config,
     SampleUniquePtr<nvonnxparser::IParser>& parser, SampleUniquePtr<nvinfer1::ITimingCache>& timingCache)
 {
+    // ONNXモデルの読み込み
     auto parsed = parser->parseFromFile(locateFile(mParams.onnxFileName, mParams.dataDirs).c_str(),
         static_cast<int>(sample::gLogger.getReportableSeverity()));
     if (!parsed)
