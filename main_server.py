@@ -27,13 +27,13 @@ def InetServer(password: str, ip: str="", port: int=51111):
         ip = socket.gethostbyname(socket.gethostname())
 
 
-    key = password
-    for _ in range(32-len(key)):
-        key += "0"
-    key = key.encode()
-    import base64
-    key = base64.urlsafe_b64encode(key)
-    f = Fernet(key)
+    # key = password
+    # for _ in range(32-len(key)):
+    #     key += "0"
+    # key = key.encode()
+    # import base64
+    # key = base64.urlsafe_b64encode(key)
+    # f = Fernet(key)
 
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -56,11 +56,11 @@ def InetServer(password: str, ip: str="", port: int=51111):
             #     print("data: ", data)#######
             #     msg = b''
             # print("test1")#######
-            data = client_socket.recv(1024)
+            data = client_socket.recv(2048)
 
             if is_gtp == False and data != b'':
                 print(f"受信データ（初期化中）「「\n{data}\n」」\n")#######
-                data = f.decrypt(data)
+                # data = f.decrypt(data)
                 data = data.decode()
                 print(f"復号した受信データ（初期化中）「「\n{data}\n」」\n")#######
 
@@ -116,15 +116,18 @@ def InetServer(password: str, ip: str="", port: int=51111):
 
             if is_gtp == True and data != b'':
                 print(f"受信データ「「\n{data}\n」」\n")#######
-                data = f.decrypt(data)
+                # data = f.decrypt(data)
                 data = data.decode()
                 print(f'復号した受信データ「「\n{data}\n」」\n')#######
                 if data == "exit" or data == "quit":
                     break
 
                 output = client.run(data)
+                if output is None:
+                    break
                 print(f"送信データ「「\n{output}\n」」\n")
-                output = f.encrypt(output.encode())
+                output = output.encode()
+                # output = f.encrypt(output)
                 client_socket.send(output)
                 print(f"暗号化した送信データ「「\n{output}\n」」\n")
             
@@ -140,8 +143,8 @@ def InetServer(password: str, ip: str="", port: int=51111):
 
 
 
-    # データを送信
-    client_socket.send('こんにちは、クライアント！'.encode('utf-8'))
+    # # データを送信
+    # client_socket.send('こんにちは、クライアント！'.encode('utf-8'))
 
 
     # ソケットを閉じる
