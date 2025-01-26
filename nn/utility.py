@@ -197,7 +197,7 @@ def load_DualNet_128_12(model_file_path: str, use_gpu: bool, gpu_num: int) -> Du
 
 
 def load_DualNet_256_24(model_file_path: str, use_gpu: bool, gpu_num: int) -> DualNet_128_12:
-    """ニューラルネットワークをロードして取得する。DualNet_128_12 版。
+    """ニューラルネットワークをロードして取得する。DualNet_128_24 版。
 
     Args:
         model_file_path (str): ニューラルネットワークのパラメータファイルパス。
