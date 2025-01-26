@@ -77,13 +77,13 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
         cgos_mode (bool): 全ての石を打ち上げるまでパスしないモード設定。デフォルトはFalse。
     """
 
-    key = password
-    for _ in range(32-len(key)):
-        key += "0"
-    key = key.encode()
-    import base64
-    key = base64.urlsafe_b64encode(key)
-    f = Fernet(key)
+    # key = password
+    # for _ in range(32-len(key)):
+    #     key += "0"
+    # key = key.encode()
+    # import base64
+    # key = base64.urlsafe_b64encode(key)
+    # f = Fernet(key)
 
     # ソケットを作成
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -112,25 +112,25 @@ def InerClient(password: str, size: int, superko: bool, model:str, use_gpu: bool
 
     data_json = json.dumps(data)
     data_bytes = data_json.encode()
-    encrypted_data = f.encrypt(data_bytes)
+    # encrypted_data = f.encrypt(data_bytes)
 
     # print(f"🐾encrypted_data: {encrypted_data}")
-    client_socket.send(encrypted_data)
+    client_socket.send(data_bytes)
 
     while True:
         data = input()
 
         data_bytes = data.encode()
-        encrypted_data = f.encrypt(data_bytes)
+        # encrypted_data = f.encrypt(data_bytes)
         
         # print(f"🐾encrypted_data: {encrypted_data}")
-        client_socket.send(encrypted_data)
+        client_socket.send(data_bytes)
 
         if data == "exit" or data == "quit":
             break
 
-        data = client_socket.recv(1024)
-        data = f.decrypt(data)
+        data = client_socket.recv(2048)
+        # data = f.decrypt(data)
         data = data.decode()
         print(data)
 
