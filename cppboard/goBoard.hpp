@@ -109,7 +109,7 @@ struct goBoard {
      * @param move 
      * @return goBoard* 
      */
-    goBoard* SucceedRoot(goBoard* rootPtr, pair<char, char> move);
+    goBoard* SucceedRoot(goBoard*& rootPtr, pair<char, char> move);
 
     /**
      * @brief debugFlag & 1<<31 & 1<<29 で推論の結果を表示する。
@@ -131,6 +131,13 @@ struct goBoard {
      * 
      */
     bool UpdateUcts(tuple<int, float, float, float> input, pair<char, char> move);
+
+    /**
+     * @brief Get the Ans object
+     * 
+     * @return pair<char, char> move(y, x)
+     */
+    pair<char, char> GetAns();
 
     /**
      * @brief goBoard::goBoard(vector<vector<char>> inputBoard) で使う。内蔵すべき？

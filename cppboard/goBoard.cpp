@@ -115,6 +115,8 @@ constexpr int BOARDSIZE = 19;
 
 constexpr double komi = 7.5;
 
+constexpr bool isJapaneseRule = true;
+
 constexpr ll debugFlag = 0;
 // constexpr ll debugFlag = ll(1)<<25;
 // constexpr ll debugFlag = ll(1)<<31 | ll(1)<<29 | ll(1)<<30;
@@ -249,26 +251,25 @@ goBoard::~goBoard()
     }
 }
 
-goBoard* goBoard::SucceedRoot(goBoard* rootPtr, pair<char, char> move)
+goBoard* goBoard::SucceedRoot(goBoard*& rootPtr, pair<char, char> move)
 {
-    /// TODO: 最初の root を宣言したポインタが rootptr 以外だとここからは変えられないから、安全ではないのでは？
-
-    assert(isRoot);
+    assert(this->isRoot);
     assert(rootPtr == this);
-    assert(childrens.count(move));
+    assert(this->childrens.count(move));
 
     if (!childrens.count(move)) {
         PutStone(move.first, move.second, teban);
     }
 
 
-    goBoard* tmp = childrens[move];
-    childrens.erase(move);
+    goBoard* tmp = this->childrens[move];
+    this->childrens.erase(move);
     tmp->parent = nullptr;
     tmp->isRoot = true;
     rootPtr = tmp;
 
     delete this;
+
     return tmp;
 }
 
@@ -347,7 +348,8 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
 
     // policys の最大が values[2] になるように調整
     for (auto [move, x] : policys) {
-        policys[move] = values[2] * x / maxPolicy2;
+        policys[move] = values[0] * x / maxPolicy2;
+        // policys[move] = values[2] * x / maxPolicy2;//////////////////////
     }
 
 
@@ -367,7 +369,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
 
 bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char> inputMove)
 {
-    auto [inputColor, inputWin, inputDraw, inputLose] = input;
+    auto [inputColor, inputWinValue, inputDrawValue, inputLoseValue] = input;
 
     // print("inputColor:", inputColor);  ////////////
     // print("inputWin:", inputWin);
@@ -377,7 +379,8 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 
     /// TODO: npz作るときに逆になってることがある？多分、== が正しい？
     if (inputColor == teban) {
-        swap(inputWin, inputLose);
+        // if (inputColor != teban) {/////////////////////////
+        swap(inputWinValue, inputLoseValue);
     }
 
     set<tuple<double, int, float, pair<char, char>>> tmpUcts;
@@ -386,9 +389,9 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 
     for (auto [uct, cnt, winSum, uctMove] : ucts) {
         if (inputMove == uctMove) {
-            tmpUcts.insert(make_tuple((winSum + inputWin) / (cnt + 1) + sqrt(2 * log(numVisits) / (cnt + 1)),
+            tmpUcts.insert(make_tuple((winSum + inputWinValue) / (cnt + 1) + sqrt(2 * log(numVisits) / (cnt + 1)),
                                       cnt + 1,
-                                      winSum + inputWin,
+                                      winSum + inputWinValue,
                                       uctMove));
             // tmpUcts.insert(make_tuple(inputWin + sqrt(2 * log(numVisits) / cnt + 1), cnt + 1, winSum + inputWin, uctMove));
             continue;
@@ -402,6 +405,26 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
     return 0;
 }
 
+
+pair<char, char> goBoard::GetAns()
+{
+    assert(childrens.size() > 0);
+
+    double maxVisit = -INF;
+    pair<char, char> ans;
+
+    for (auto [uct, visit, winSum, move] : ucts) {
+        if (maxVisit < visit) {
+            maxVisit = visit;
+            ans = move;
+        }
+        else if (maxVisit == visit && policys[ans] < policys[move]) {
+            ans = move;
+        }
+    }
+
+    return ans;
+}
 
 
 vector<vector<char>> goBoard::InputBoardFromVec(vector<vector<char>> input)
@@ -433,49 +456,54 @@ vector<vector<char>> goBoard::InputBoardFromVec(vector<vector<char>> input)
 void goBoard::PrintBoard(ll bit = 0b1)
 {
     if (bit & 0b0001) {
+        // print("board: ", board);
         cerr << (int)previousMove.first << " " << (int)previousMove.second << " " << (int)teban << endl;  ////////////////
         cerr << "moveCnt: " << (int)moveCnt << ", teban: " << (int)teban << endl;
-        cerr << "   1 2 3 4 5 6 7 8 9" << endl;
+        cerr << "   " << flush;
+        rep (i, 1, BOARDSIZE + 1) {
+            cerr << setw(2) << setfill(' ') << i << flush;
+        }
+        cerr << endl;
         rep (i, board.size()) {
             if (i == 0 || i == BOARDSIZE + 1) {
                 continue;
             }
-            cerr << setw(2) << setfill(' ') << i << " ";
+            cerr << setw(2) << setfill(' ') << i << " " << flush;
             rep (j, board.size()) {
                 if (board[i][j] == 3) {
                 }
                 else if (board[i][j] == 1) {
-                    cerr << "● ";
+                    cerr << " ●" << flush;
                 }
                 else if (board[i][j] == 2) {
-                    cerr << "○ ";
+                    cerr << " ○" << flush;
                 }
                 else if (i == 1 && j == 1) {
-                    cerr << "┌ ";
+                    cerr << " ┌" << flush;
                 }
                 else if (i == BOARDSIZE && j == 1) {
-                    cerr << "└ ";
+                    cerr << " └" << flush;
                 }
                 else if (i == 1 && j == BOARDSIZE) {
-                    cerr << "┐ ";
+                    cerr << " ┐" << flush;
                 }
                 else if (i == BOARDSIZE && j == BOARDSIZE) {
-                    cerr << "┘ ";
+                    cerr << " ┘" << flush;
                 }
                 else if (i == 1) {
-                    cerr << "┬ ";
+                    cerr << " ┬" << flush;
                 }
                 else if (i == BOARDSIZE) {
-                    cerr << "┴ ";
+                    cerr << " ┴" << flush;
                 }
                 else if (j == 1) {
-                    cerr << "├ ";
+                    cerr << " ├" << flush;
                 }
                 else if (j == BOARDSIZE) {
-                    cerr << "┤ ";
+                    cerr << " ┤" << flush;
                 }
                 else {
-                    cerr << "+ ";
+                    cerr << " +" << flush;
                 }
             }
             cerr << endl;
@@ -485,7 +513,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
     if (bit & 0b010) {
         rep (i, BOARDSIZE + 2) {
             rep (j, BOARDSIZE + 2) {
-                cerr << (int)board[i][j] << " ";
+                cerr << (int)board[i][j] << " " << flush;
             }
             cerr << endl;
         }
@@ -495,7 +523,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
     if (bit & 0b100) {
         rep (i, BOARDSIZE + 2) {
             rep (j, BOARDSIZE + 2) {
-                cerr << setw(3) << setfill(' ') << idBoard[i][j] << " ";
+                cerr << setw(3) << setfill(' ') << idBoard[i][j] << " " << flush;
             }
             cerr << endl;
         }
@@ -505,7 +533,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
     if (bit & 0b1000) {
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << setw(3) << setfill(' ') << libs[idBoard[i][j]] << " ";
+                cerr << setw(3) << setfill(' ') << libs[idBoard[i][j]] << " " << flush;
             }
             cerr << endl;
         }
@@ -517,7 +545,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
         cerr << (int)previousMove.first << " " << (int)previousMove.second << " " << (int)teban << endl;
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << (int)board[i][j] << " ";
+                cerr << (int)board[i][j] << " " << flush;
             }
             cerr << endl;
         }
@@ -525,7 +553,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // 推論の結果。softmax後。
     if (bit & 1 << 31) {
-        print("policys.size():", policys.size());
+        print("policys勝率*1000 policys.size():", policys.size());
         vector<vector<float>> tmp(BOARDSIZE + 2, vector<float>(BOARDSIZE + 2, 1.11111));
         for (auto [move, x] : policys) {
             // print(move, x);
@@ -534,17 +562,17 @@ void goBoard::PrintBoard(ll bit = 0b1)
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
                 if (board[i][j] == 0) {
-                    cerr << setw(4) << setfill(' ') << static_cast<int>((tmp[i][j] - floor(tmp[i][j])) * 1000) << " ";
+                    cerr << setw(4) << setfill(' ') << static_cast<int>((tmp[i][j] - floor(tmp[i][j])) * 1000) << " " << flush;
                     // cerr << fixed << setprecision(4) << tmp[i][j] << " ";
                 }
                 else if (board[i][j] == 1) {
-                    cerr << "#### ";
+                    cerr << "#### " << flush;
                 }
                 else if (board[i][j] == 2) {
-                    cerr << "@@@@ ";
+                    cerr << "@@@@ " << flush;
                 }
                 else {
-                    cerr << "???? ";
+                    cerr << "???? " << flush;
                 }
                 // cerr << fixed << setprecision(4) << tmp[i][j] << " ";
             }
@@ -561,10 +589,10 @@ void goBoard::PrintBoard(ll bit = 0b1)
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
                 if (childrens.count(make_pair(i, j))) {
-                    cerr << "O ";
+                    cerr << "O " << flush;
                 }
                 else {
-                    cerr << "X ";
+                    cerr << "X " << flush;
                 }
             }
             cerr << endl;
@@ -573,6 +601,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // uctの表示
     if (bit & 1 << 29) {
+        cerr << "uct値*100 を表示 ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
         int maxCnt = 0;
         pair<char, char> maxMove;
@@ -582,12 +611,16 @@ void goBoard::PrintBoard(ll bit = 0b1)
                 maxCnt = cnt;
                 maxMove = move;
             }
+            /// TODO: uct ではなく勝率で比較したい
+            else if (cnt == maxCnt && uct > tmp[maxMove.first][maxMove.second]) {
+                maxCnt = cnt;
+                maxMove = move;
+            }
         }
-        cerr << "ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
-        cerr << "以下の表は uct値 * 10 を表示" << endl;
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << fixed << setprecision(1) << showpoint << tmp[i][j] * 10 << " ";
+                cerr << setw(4) << setfill(' ') << int(tmp[i][j]) * 100 << " " << flush;
+                // cerr << fixed << setprecision(1) << showpoint << tmp[i][j] * 10 << " ";
             }
             cerr << endl;
         }
@@ -597,53 +630,53 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // visitの表示
     if (bit & 1 << 28) {
+        cerr << "visitの表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
         pair<char, char> maxMove;
         for (auto [uct, cnt, winSum, move] : ucts) {
             tmp[move.first][move.second] = cnt;
         }
-        cerr << "visitの表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << setw(4) << setfill(' ')  << int(tmp[i][j]) << " ";
+                cerr << setw(4) << setfill(' ') << int(tmp[i][j]) << " " << flush;
             }
             cerr << endl;
         }
-        cerr << "pass: " << setw(4) << setfill(' ')  << tmp[0][0] << endl;
+        cerr << "pass: " << setw(4) << setfill(' ') << tmp[0][0] << endl;
     }
 
     // 勝率の表示
     if (bit & 1 << 27) {
+        cerr << "勝率*100 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
         pair<char, char> maxMove;
         for (auto [uct, cnt, winSum, move] : ucts) {
             tmp[move.first][move.second] = winSum / cnt;
         }
-        cerr << "勝率の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " ";
+                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " " << flush;
             }
             cerr << endl;
         }
-        cerr << "pass: " << setw(4) << setfill(' ')  << int(tmp[0][0] * 100) << endl;
+        cerr << "pass: " << setw(4) << setfill(' ') << int(tmp[0][0] * 100) << endl;
     }
 
     // ペナルティの表示
     if (bit & 1 << 27) {
+        cerr << "ペナルティ*100 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
         pair<char, char> maxMove;
         for (auto [uct, cnt, winSum, move] : ucts) {
             tmp[move.first][move.second] = sqrt(2 * log(numVisits) / (cnt));
         }
-        cerr << "ペナルティの表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " ";
+                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " " << flush;
             }
             cerr << endl;
         }
-        cerr << "pass: " << setw(4) << setfill(' ')  << int(tmp[0][0] * 100) << endl;
+        cerr << "pass: " << setw(4) << setfill(' ') << int(tmp[0][0] * 100) << endl;
     }
 
     cerr << resetiosflags(std::ios::floatfield);  // 浮動小数点の書式をリセット
@@ -978,9 +1011,10 @@ tuple<char, char, char> goBoard::GenRandomMove()
 double goBoard::CountResult()
 {
     /// TODO: 日本ルール用の暫定措置。どうにかしたい。白黒が隣り合っているところでラインを引いて地を数える？中国ルールで最後までプレイしてみる？
-    if (1) {
+    if (isJapaneseRule) {
         if (values.size()) {
-            if (teban == 2) {
+            if (teban != 2) {
+                // if (teban == 2) {///////////////////
                 return values[0];
             }
             else {
@@ -988,7 +1022,8 @@ double goBoard::CountResult()
             }
         }
         else if (parent->values.size()) {
-            if (parent->teban == 2) {
+            if (parent->teban != 2) {
+                // if (parent->teban == 2) {
                 return parent->values[0];
             }
             else {
@@ -1426,16 +1461,16 @@ int suiron(int n)
     // print(rootPtr->policys);
     // print(rootPtr->values);
 
-    float sum = 0.0;
-    for (auto x : rootPtr->policys) {
-        sum += x.second;
-    }
+    // float sum = 0.0;
+    // for (auto x : rootPtr->policys) {
+    //     sum += x.second;
+    // }
     // print("policyssum:", sum);
 
-    sum = 0.0;
-    for (auto x : rootPtr->values) {
-        sum += x;
-    }
+    // sum = 0.0;
+    // for (auto x : rootPtr->values) {//??????
+    //     sum += x;
+    // }
     // print("valuessum:", sum);
 
     // print("ucts:", rootPtr->ucts);
@@ -1466,7 +1501,9 @@ int suiron(int n)
 
     goBoard* tmp = rootPtr;
     while (true) {
-        tmp->PrintBoard(0b1);
+        tmp->PrintBoard(1 << 28);
+        print();
+        tmp->PrintBoard(1 << 27);
         print();
         tmp->PrintBoard(1 << 31);
         print();
@@ -1474,9 +1511,7 @@ int suiron(int n)
         print();
         tmp->PrintBoard(1 << 29);
         print();
-        tmp->PrintBoard(1 << 28);
-        print();
-        tmp->PrintBoard(1 << 27);
+        tmp->PrintBoard(0b1);
         print();
 
         int y = 123, x = 123;
@@ -1494,10 +1529,59 @@ int suiron(int n)
             }
         }
         tmp = tmp->childrens[{y, x}];
-    PASS:;
+        PASS:;
     }
 
-END:;
+    END:;
+
+
+
+
+
+    cerr << "scceed" << endl;
+    int x, y;
+    cerr << "input y: ";
+    cin >> y;
+    cerr << "input x: ";
+    cin >> x;
+
+    rootPtr->SucceedRoot(rootPtr, {y, x});
+
+    tmp = rootPtr;
+    while (true) {
+        tmp->PrintBoard(1 << 28);
+        print();
+        tmp->PrintBoard(1 << 27);
+        print();
+        tmp->PrintBoard(1 << 31);
+        print();
+        tmp->PrintBoard(1 << 30);
+        print();
+        tmp->PrintBoard(1 << 29);
+        print();
+        tmp->PrintBoard(0b1);
+        print();
+
+        int y = 123, x = 123;
+        while (!tmp->childrens.count({y, x})) {
+            cerr << "input y: ";
+            cin >> y;
+            if (y == -1) {
+                tmp = tmp->parent;
+                goto PASS2;
+            }
+            cerr << "input x: ";
+            cin >> x;
+            if (x == -1) {
+                goto END2;
+            }
+        }
+        tmp = tmp->childrens[{y, x}];
+        PASS2:;
+    }
+
+    END2:;
+
 
 
     return 0;
@@ -1560,6 +1644,7 @@ void SearchLoop(TensorRTOnnxIgo& tensorRT)
                 if (rslt == 0) {
                     return make_tuple(nextColor, 0.0, 1.0, 0.0);
                 }
+                /// TODO: 正しいか確認
                 if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
                     return make_tuple(nextColor, 1.0, 0.0, 0.0);
                 }
@@ -1603,34 +1688,131 @@ int Gpt()
     int saikiCnt = 0;
 
     // 探索用のスレッドを開始
-    std::thread searchThread(SearchLoop, std::ref(tensorRT));
+    thread searchThread(SearchLoop, ref(tensorRT));
 
-    std::string input;
+    string input;
+    string output = "";
     // 標準入力を監視
-    while (std::getline(std::cin, input)) {
-        // vector<string> inputs = split(input, ' ');
-        if (input == "list_commands") {
-            
-        }
-        else if (input == "boardsize") {
-            
-        }
-        else if (input == "clear_board") {
+    while (getline(cin, input)) {
+        stringstream ss{input};
+        string s;
+        vector<string> commands;
 
+        // スペース（' '）で区切って，vに格納
+        while (getline(ss, s, ' ')) {
+            commands.push_back(s);
         }
-        else if (input == "komi") {
 
+        if (commands[0] == "list_commands") {
+            output = "=list_commands\nboardsize\nclear_board\nkomi\nplay\ngenmove\nquit";
         }
-        else if (input == "play") {
+        else if (commands[0] == "boardsize") {
+            output = "=";
+        }
+        else if (commands[0] == "clear_board") {
+            delete rootPtr;
+            rootPtr = new goBoard();
+            rootPtr->ExpandNode(tensorRT);
+            output = "=";
+        }
+        else if (commands[0] == "komi") {
+            output = "=";
+        }
+        else if (commands[0] == "play") {
+            char y, x;
 
-        }
-        else if (input == "genmove") {
+            print(commands[1]);/////////////////////
+            print(commands[2]);/////////////////////
 
+            if (commands[2][0] >= 'a' && commands[2][0] < 'a' + BOARDSIZE) {
+                x = commands[2][0] - 'a' + 1;
+            }
+            else if (commands[2][0] >= 'A' && commands[2][0] << 'A' + BOARDSIZE) {
+                x = commands[2][0] - 'A' + 1;
+            }
+            else {
+                output = "dismatch_boardsize";
+                continue;
+            }
+
+            if (commands[2].size() == 2) {
+                y = commands[2][1] - '0';
+            }
+            else if (commands[2].size() == 3) {
+                y = (commands[2][1] - '0') * 10 + commands[2][2] - '0';
+            }
+            else {
+                output = "unknown_command";
+                continue;
+            }
+            if (y < 1 || y > BOARDSIZE) {
+                output = "dismatch_boardsize";
+                continue;
+            }
+
+            if (commands[1] == "black" || commands[1] == "b") {
+                if (rootPtr->teban != 1) {
+                    output = "dismatch_color";
+                    continue;
+                }
+            }
+            else if (commands[1] == "white" || commands[1] == "w") {
+                if (rootPtr->teban != 2) {
+                    output = "dismatch_color";
+                    continue;
+                }
+            }
+            else {
+                output = "unknown_command";
+                continue;
+            }
+
+            print("y:", y);/////////////////////
+            print("x:", x);/////////////////////
+
+            running.store(false);
+
+            searchThread.join();
+
+            rootPtr->SucceedRoot(rootPtr, {y, x});
+            if (rootPtr->childrens.size() == 0) {
+                rootPtr->ExpandNode(tensorRT);
+            }
+
+            searchThread = thread(SearchLoop, ref(tensorRT));
+
+            output = "=";
         }
-        else if (input == "quit") {
+        else if (commands[0] == "genmove") {
+            sleep(5);
+            running.store(false);
+            searchThread.join();
+
+            pair<char, char> move = rootPtr->GetAns();
+            print("move:", move);///////////////
+
+            if (move.first == 0 && move.second == 0) {
+                output = "=pass";
+            }
+            else {
+                output = "=";
+                output += char(move.second - 1 + 'A');
+                output += to_string(move.first);
+            }
+
+            searchThread = thread(SearchLoop, ref(tensorRT));
+        }
+        else if (commands[0] == "quit") {
             break;
         }
+        else if (commands[0] == "name") {
+            output = "=TantamaGo";
+        }
+        else {
+            output = "unknown_command";
+        }
 
+        cout << output << endl;
     }
 
     // ループを停止
@@ -1647,6 +1829,8 @@ int main(int argc, char* argv[])
     // MonteCarloTreeSearch();
     suiron(n);
     // Test();
+
+    // Gpt();
 
     return 0;
 }
