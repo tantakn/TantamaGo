@@ -69,10 +69,10 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             "load_sgf",
             "fixed_handicap",
             "gogui-analyze_commands",
-            "lz-analyze",
-            "lz-genmove_analyze",
-            "cgos-analyze",
-            "cgos-genmove_analyze"
+            # "lz-analyze",
+            # "lz-genmove_analyze",
+            # "cgos-analyze",
+            # "cgos-genmove_analyze"
         ]
         self.superko = superko
         self.board = GoBoard(board_size=board_size, komi=komi, check_superko=superko)
@@ -547,7 +547,8 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             self._analyze("cgos", command_list[1:])
             print("")
         elif input_gtp_command == "cgos-genmove_analyze":
-            self._genmove_analyze("cgos", command_list[1:])
+            return self._genmove(command_list[1])
+            # self._genmove_analyze("cgos", command_list[1:])
         elif input_gtp_command == "hash_record":
             print_err(self.board.record.get_hash_history())
             respond_success("")

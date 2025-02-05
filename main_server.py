@@ -124,14 +124,14 @@ def InetServer(password: str, ip: str="", port: int=51111):
 
                 output = client.run(data)
                 if output is None:
-                    break
+                    output = "= \n"
                 print(f"送信データ「「\n{output}\n」」\n")
                 output = output.encode()
                 # output = f.encrypt(output)
                 client_socket.send(output)
                 print(f"暗号化した送信データ「「\n{output}\n」」\n")
             
-            time.sleep(1)
+            time.sleep(0.1)
 
     except KeyboardInterrupt:
         print("サーバーを終了します")
