@@ -1805,14 +1805,7 @@ int Gpt()
         else if (commands[0] == "quit") {
             break;
         }
-        else if (commands[0] == "name") {
-            output = "=TantamaGo";
-        }
-        else {
-            output = "unknown_command";
-        }
 
-        cout << output << endl;
     }
 
     // ループを停止
