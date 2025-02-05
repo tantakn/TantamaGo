@@ -1609,6 +1609,9 @@ int Gpt()
     // 標準入力を監視
     while (std::getline(std::cin, input)) {
         // vector<string> inputs = split(input, ' ');
+
+        string output = "";
+
         if (input == "list_commands") {
             
         }
@@ -1630,6 +1633,8 @@ int Gpt()
         else if (input == "quit") {
             break;
         }
+
+        cout << output << endl;
 
     }
 
