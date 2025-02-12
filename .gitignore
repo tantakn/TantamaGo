@@ -29,6 +29,7 @@
 !/cppboard/*.cpp
 !/cppboard/*.hpp
 !/cppboard/*.sh
+!/cppboard/*.py
 
 
 /TensorRT-release-10.7/
