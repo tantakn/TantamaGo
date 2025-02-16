@@ -1,5 +1,3 @@
-// testqwerasdf
-
 // (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/cppboard/TensorRT$ tree -L 2
 // .
 // ├── bin
@@ -101,7 +99,7 @@
 // 14 directories, 82 files
 
 
-// (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/cppboard$ g++ -Wall -Wno-deprecated-declarations -std=c++17   -I"./TensorRT/common"   -I"./TensorRT/utils"   -I"./TensorRT"   -I"/usr/local/cuda/include"   -I"./TensorRT/include"   -D_REENTRANT -DTRT_STATIC=0   -g  goBoard.cpp   ./TensorRT/common/bfloat16.cpp   ./TensorRT/common/getOptions.cpp   ./TensorRT/common/logger.cpp   ./TensorRT/common/sampleDevice.cpp   ./TensorRT/common/sampleEngines.cpp   ./TensorRT/common/sampleInference.cpp   ./TensorRT/common/sampleOptions.cpp   ./TensorRT/common/sampleReporting.cpp   ./TensorRT/common/sampleUtils.cpp   ./TensorRT/utils/fileLock.cpp   ./TensorRT/utils/timingCache.cpp   -o goBoard   -L"/usr/local/cuda/lib64"   -Wl,-rpath-link="/usr/local/cuda/lib64"   -L"./TensorRT/lib"   -Wl,-rpath-link="./TensorRT/lib"   -L"./TensorRT/bin"   -Wl,--start-group   -lnvinfer   -lnvinfer_plugin   -lnvonnxparser   -lcudart   -lrt   -ldl   -lpthread   -Wl,--end-group   -Wl,--no-relax
+// (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/cppboard$ g++ -w -Wno-deprecated-declarations -std=c++17   -I"./TensorRT/common"   -I"./TensorRT/utils"   -I"./TensorRT"   -I"/usr/local/cuda/include"   -I"./TensorRT/include"   -D_REENTRANT -DTRT_ST ATIC=0   -g  goBoard.cpp   ./TensorRT/common/bfloat16.cpp   ./TensorRT/common/getOptions.cpp   ./TensorRT/common/logger.cpp   ./TensorRT/common/sampleDevice.cpp   ./TensorRT/common/sampleEngines.cpp   ./TensorRT/common/sampleInference.cpp   ./TensorRT/common/sampleOptions.cpp   ./TensorRT/common/sampleReporting.cpp   ./TensorRT/common/sampleUtils.cpp   ./TensorRT/utils/fileLock.cpp   ./TensorRT/utils/timingCache.cpp   -o goBoard   -L"/usr/local/cuda/lib64"   -Wl,-rpath-link="/usr/local/cuda/ lib64"   -L"./TensorRT/lib"   -Wl,-rpath-link="./TensorRT/lib"   -L"./TensorRT/bin"   -Wl,--start-group   -lnvinfer   -lnvinfer_plugin   -lnvonnxparser   -lcudart   -lrt   -ldl   -lpthread   -Wl,--end-group   -Wl,--no-relax
 
 
 
@@ -136,6 +134,13 @@ const string tensorRTModelPath = "./19ro.onnx";
 #include "goBoard.hpp"
 #define goBoard_hpp_INCLUDED
 #endif
+
+// ソケット通信用
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 
 #define dbg_flag
@@ -193,13 +198,11 @@ goBoard::goBoard(goBoard& inputparent, int y, int x, char putcolor)
 
     assert((x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE && (putcolor == 0b01 || putcolor == 0b10)) || (x == 0 && y == 0));
 
-#ifdef dbg_flag
-    g_node_cnt++;
-#endif
-
     if (x == 0 && y == 0) {
         if (parent->previousMove == make_pair((char)0, (char)0)) {
             isEnded = true;
+            teban = 3 - parent->teban;
+            previousMove = make_pair(0, 0);
             return;
         }
 
@@ -458,12 +461,12 @@ vector<vector<char>> goBoard::InputBoardFromVec(vector<vector<char>> input)
 void goBoard::PrintBoard(ll bit = 0b1)
 {
     if (bit & 0b0001) {
-        // print("board: ", board);
+        print("board: ", board);
         cerr << (int)previousMove.first << " " << (int)previousMove.second << " " << (int)teban << endl;  ////////////////
-        cerr << "moveCnt: " << (int)moveCnt << ", teban: " << (int)teban << endl;
+        cerr << "moveCnt: " << (int)moveCnt << ", teban@: " << (int)teban << endl;
         cerr << "   " << flush;
         rep (i, 1, BOARDSIZE + 1) {
-            cerr << setw(2) << setfill(' ') << i << flush;
+            cerr << ' ' << char('A' + i - 1) << flush;
         }
         cerr << endl;
         rep (i, board.size()) {
@@ -1394,6 +1397,96 @@ int MonteCarloTreeSearch()
 
 int PutStoneCnt = 0;
 
+
+
+int Test()
+{
+    samplesCommon::Args args;
+
+    args.runInInt8 = false;
+    args.runInFp16 = false;
+    args.runInBf16 = false;
+
+    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
+
+    tensorRT.build();
+    json j = json::parse("[[0, 0, 2, 2, 2, 1, 0, 0, 0], [0, 0, 0, 2, 1, 1, 1, 0, 0], [0, 0, 2, 2, 2, 2, 1, 1, 0], [0, 0, 0, 2, 1, 2, 1, 1, 0], [0, 2, 2, 2, 1, 2, 2, 1, 2], [0, 1, 2, 1, 1, 2, 1, 2, 0], [0, 2, 1, 1, 1, 1, 1, 0, 1], [0, 2, 2, 2, 2, 2, 1, 1, 2], [0, 0, 0, 0, 0, 2, 1, 0, 0]]");
+    vector<vector<char>> v = j;
+
+    rootPtr = new goBoard(v, 1);
+
+    rootPtr->PrintBoard(0b1);
+    rootPtr->ExpandNode(tensorRT);
+
+
+    return 0;
+}
+
+
+
+// ループを制御するためのフラグ
+std::atomic<bool> running(true);
+
+void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
+{
+    auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
+    {
+
+        #ifdef dbg_flag
+        g_node_cnt++;
+        #endif
+        int color = ptr->teban;
+
+        if (ptr->isEnded) {
+            double rslt = ptr->CountResult();
+            if (rslt == 0) {
+                return make_tuple(color, 0.0, 1.0, 0.0);
+            }
+            if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
+                return make_tuple(color, 1.0, 0.0, 0.0);
+            }
+            return make_tuple(color, 0.0, 0.0, 1.0);
+        }
+
+        assert(ptr->ucts.size());
+
+        pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
+
+        if (!ptr->childrens.count(nextMove)) {
+            goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+
+            int nextColor = nextPtr->teban;
+
+            if (nextPtr->isEnded) {
+                double rslt = nextPtr->CountResult();
+                if (rslt == 0) {
+                    return make_tuple(nextColor, 0.0, 1.0, 0.0);
+                }
+                /// TODO: 正しいか確認
+                if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
+                    return make_tuple(nextColor, 1.0, 0.0, 0.0);
+                }
+                return make_tuple(nextColor, 0.0, 0.0, 1.0);
+            }
+
+            return nextPtr->ExpandNode(tensorRT);
+        }
+
+
+        tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
+
+        ptr->UpdateUcts(returnData, nextMove);
+
+        return returnData;
+    };
+
+
+    while (running.load()) {
+        saiki(saiki, rootPtr);
+    }
+}
+
+
 int suiron(int n)
 {
     samplesCommon::Args args;
@@ -1478,11 +1571,18 @@ int suiron(int n)
     // print("ucts:", rootPtr->ucts);
 
     int saikiCnt = 0;
-    rep (n) {
-        // print("saikiCnt:", saikiCnt++);  ////////////////
-        saiki(saiki, rootPtr);
-    }
+    // rep (n) {
+    //     // print("saikiCnt:", saikiCnt++);  ////////////////
+    //     saiki(saiki, rootPtr);
+    // }
 
+    
+    // 探索用のスレッドを開始
+    thread searchThread(SearchLoop, rootPtr, ref(tensorRT));
+
+    sleep(100);
+    running.store(false);
+    searchThread.join();
 
     // print("ucts:", rootPtr->ucts);
 
@@ -1531,13 +1631,10 @@ int suiron(int n)
             }
         }
         tmp = tmp->childrens[{y, x}];
-        PASS:;
+    PASS:;
     }
 
-    END:;
-
-
-
+END:;
 
 
     cerr << "scceed" << endl;
@@ -1579,98 +1676,169 @@ int suiron(int n)
             }
         }
         tmp = tmp->childrens[{y, x}];
-        PASS2:;
+    PASS2:;
     }
 
-    END2:;
-
-
+END2:;
 
     return 0;
 }
 
-int Test()
+
+string Gpt(const string input, goBoard *&rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread)
 {
-    samplesCommon::Args args;
+    stringstream ss{input};
+    string s;
+    vector<string> commands;
 
-    args.runInInt8 = false;
-    args.runInFp16 = false;
-    args.runInBf16 = false;
-
-    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
-
-    tensorRT.build();
-    json j = json::parse("[[0, 0, 2, 2, 2, 1, 0, 0, 0], [0, 0, 0, 2, 1, 1, 1, 0, 0], [0, 0, 2, 2, 2, 2, 1, 1, 0], [0, 0, 0, 2, 1, 2, 1, 1, 0], [0, 2, 2, 2, 1, 2, 2, 1, 2], [0, 1, 2, 1, 1, 2, 1, 2, 0], [0, 2, 1, 1, 1, 1, 1, 0, 1], [0, 2, 2, 2, 2, 2, 1, 1, 2], [0, 0, 0, 0, 0, 2, 1, 0, 0]]");
-    vector<vector<char>> v = j;
-
-    rootPtr = new goBoard(v, 1);
-
-    rootPtr->PrintBoard(0b1);
-    rootPtr->ExpandNode(tensorRT);
-    return 0;
-}
-
-
-
-// ループを制御するためのフラグ
-std::atomic<bool> running(true);
-
-void SearchLoop(TensorRTOnnxIgo& tensorRT)
-{
-    auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
-    {
-        int color = ptr->teban;
-
-        if (ptr->isEnded) {
-            double rslt = ptr->CountResult();
-            if (rslt == 0) {
-                return make_tuple(color, 0.0, 1.0, 0.0);
-            }
-            if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
-                return make_tuple(color, 1.0, 0.0, 0.0);
-            }
-            return make_tuple(color, 0.0, 0.0, 1.0);
-        }
-
-        assert(ptr->ucts.size());
-
-        pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
-
-        if (!ptr->childrens.count(nextMove)) {
-            goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
-
-            int nextColor = nextPtr->teban;
-
-            if (nextPtr->isEnded) {
-                double rslt = nextPtr->CountResult();
-                if (rslt == 0) {
-                    return make_tuple(nextColor, 0.0, 1.0, 0.0);
-                }
-                /// TODO: 正しいか確認
-                if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
-                    return make_tuple(nextColor, 1.0, 0.0, 0.0);
-                }
-                return make_tuple(nextColor, 0.0, 0.0, 1.0);
-            }
-
-            return nextPtr->ExpandNode(tensorRT);
-        }
-
-
-        tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
-
-        ptr->UpdateUcts(returnData, nextMove);
-
-        return returnData;
-    };
-
-
-    while (running.load()) {
-        saiki(saiki, rootPtr);
+    string output;
+    // スペース（' '）で区切って，vに格納
+    while (getline(ss, s, ' ')) {
+        commands.push_back(s);
     }
+
+    if (commands[0] == "list_commands") {
+        output = "=list_commands\nname\nboardsize\nclear_board\nkomi\nplay\ngenmove\nquit\nshowboard\n";
+    }
+    else if (commands[0] == "name") {
+        output = "=TantamaGo";
+    }
+    else if (commands[0] == "boardsize") {
+        output = "=";
+    }
+    else if (commands[0] == "clear_board") {
+        delete rootPtr;
+        rootPtr = new goBoard();
+        rootPtr->ExpandNode(tensorRT);
+        output = "=";
+    }
+    else if (commands[0] == "komi") {
+        output = "=";
+    }
+    else if (commands[0] == "play") {
+        if (commands.size() != 3) {
+            output = "unknown_command";
+        }
+        else {
+            char y, x;
+
+            print(commands[1]);  /////////////////////
+            print(commands[2]);  /////////////////////
+
+            if (commands[2][0] >= 'a' && commands[2][0] < 'a' + BOARDSIZE) {
+                x = commands[2][0] - 'a' + 1;
+            }
+            else if (commands[2][0] >= 'A' && commands[2][0] < 'A' + BOARDSIZE) {
+                x = commands[2][0] - 'A' + 1;
+            }
+            else {
+                output = "dismatch_boardsize";
+                goto GOTO_GPT_SEND;
+            }
+
+            if (commands[2].size() == 2) {
+                y = commands[2][1] - '0';
+            }
+            else if (commands[2].size() == 3) {
+                y = (commands[2][1] - '0') * 10 + commands[2][2] - '0';
+            }
+            else {
+                output = "unknown_command";
+                goto GOTO_GPT_SEND;
+            }
+            if (y < 1 || y > BOARDSIZE) {
+                output = "dismatch_boardsize";
+                goto GOTO_GPT_SEND;
+            }
+
+            if (commands[1] == "black" || commands[1] == "b") {
+                if (rootPtr->teban != 1) {
+                    output = "dismatch_color";
+                    goto GOTO_GPT_SEND;
+                }
+            }
+            else if (commands[1] == "white" || commands[1] == "w") {
+                if (rootPtr->teban != 2) {
+                    output = "dismatch_color";
+                    goto GOTO_GPT_SEND;
+                }
+            }
+            else {
+                output = "unknown_command";
+                goto GOTO_GPT_SEND;
+            }
+
+            // print("y:", y);  /////////////////////
+            // print("x:", x);  /////////////////////
+
+            running.store(false);
+            searchThread.join();
+
+            rootPtr = rootPtr->SucceedRoot(rootPtr, {y, x});
+            if (rootPtr->isEnded) {
+                goto GOTO_GPT_SEND;
+            }
+
+            running.store(true);
+            searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+
+            output = "=";
+        }
+    }
+    else if (commands[0] == "genmove") {
+        sleep(1);///////////////
+        running.store(false);
+        searchThread.join();
+
+        pair<char, char> move = rootPtr->GetAns();
+        // print("move:", move);///////////////
+
+        if (move.first == 0 && move.second == 0) {
+            output = "=pass";
+        }
+        else {
+            output = "=";
+            output += char(move.second - 1 + 'A');
+            output += to_string(move.first);
+        }
+
+        rootPtr = rootPtr->SucceedRoot(rootPtr, move);
+        if (rootPtr->isEnded) {
+            goto GOTO_GPT_SEND;
+        }
+
+        running.store(true);
+        searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+    }
+    else if (commands[0] == "quit") {
+        // ループを停止
+        running.store(false);
+        // スレッドの終了を待機
+        searchThread.join();
+
+        output = "exit";
+        goto GOTO_GPT_SEND;
+    }
+    else if (commands[0] == "showboard") {
+        running.store(false);
+        searchThread.join();
+
+        output = "=";
+        rootPtr->PrintBoard(0b1);
+
+        running.store(true);
+        searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+    }
+    else {
+        output = "unknown_command";
+    }
+
+    GOTO_GPT_SEND:;
+
+    return output;
 }
 
-int Gpt()
+int PlayWithGpt()
 {
     samplesCommon::Args args;
 
@@ -1690,131 +1858,120 @@ int Gpt()
     int saikiCnt = 0;
 
     // 探索用のスレッドを開始
-    thread searchThread(SearchLoop, ref(tensorRT));
+    thread searchThread(SearchLoop, rootPtr, ref(tensorRT));
 
     string input;
     string output = "";
     // 標準入力を監視
     while (getline(cin, input)) {
-        stringstream ss{input};
-        string s;
-        vector<string> commands;
-
-        // スペース（' '）で区切って，vに格納
-        while (getline(ss, s, ' ')) {
-            commands.push_back(s);
+        output = Gpt(input, rootPtr, tensorRT, searchThread);
+        cout << output << endl;
+        if (output == "exit") {
+            break;
         }
+    }
 
-        if (commands[0] == "list_commands") {
-            output = "=list_commands\nboardsize\nclear_board\nkomi\nplay\ngenmove\nquit";
-        }
-        else if (commands[0] == "boardsize") {
-            output = "=";
-        }
-        else if (commands[0] == "clear_board") {
-            delete rootPtr;
-            rootPtr = new goBoard();
-            rootPtr->ExpandNode(tensorRT);
-            output = "=";
-        }
-        else if (commands[0] == "komi") {
-            output = "=";
-        }
-        else if (commands[0] == "play") {
-            char y, x;
+    return 0;
+}
 
-            print(commands[1]);/////////////////////
-            print(commands[2]);/////////////////////
 
-            if (commands[2][0] >= 'a' && commands[2][0] < 'a' + BOARDSIZE) {
-                x = commands[2][0] - 'a' + 1;
-            }
-            else if (commands[2][0] >= 'A' && commands[2][0] << 'A' + BOARDSIZE) {
-                x = commands[2][0] - 'A' + 1;
-            }
-            else {
-                output = "dismatch_boardsize";
-                continue;
-            }
+int GptSoket()
+{
+    samplesCommon::Args args;
 
-            if (commands[2].size() == 2) {
-                y = commands[2][1] - '0';
-            }
-            else if (commands[2].size() == 3) {
-                y = (commands[2][1] - '0') * 10 + commands[2][2] - '0';
-            }
-            else {
-                output = "unknown_command";
-                continue;
-            }
-            if (y < 1 || y > BOARDSIZE) {
-                output = "dismatch_boardsize";
-                continue;
-            }
+    args.runInInt8 = false;
+    args.runInFp16 = false;
+    args.runInBf16 = false;
 
-            if (commands[1] == "black" || commands[1] == "b") {
-                if (rootPtr->teban != 1) {
-                    output = "dismatch_color";
-                    continue;
-                }
-            }
-            else if (commands[1] == "white" || commands[1] == "w") {
-                if (rootPtr->teban != 2) {
-                    output = "dismatch_color";
-                    continue;
-                }
-            }
-            else {
-                output = "unknown_command";
-                continue;
-            }
+    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
 
-            print("y:", y);/////////////////////
-            print("x:", x);/////////////////////
+    tensorRT.build();
 
-            running.store(false);
 
-            searchThread.join();
+    rootPtr = new goBoard();
 
-            rootPtr->SucceedRoot(rootPtr, {y, x});
-            if (rootPtr->childrens.size() == 0) {
-                rootPtr->ExpandNode(tensorRT);
-            }
+    rootPtr->ExpandNode(tensorRT);
 
-            searchThread = thread(SearchLoop, ref(tensorRT));
+    int saikiCnt = 0;
 
-            output = "=";
-        }
-        else if (commands[0] == "genmove") {
-            sleep(5);
-            running.store(false);
-            searchThread.join();
+    // 探索用のスレッドを開始
+    thread searchThread(SearchLoop, rootPtr, ref(tensorRT));
 
-            pair<char, char> move = rootPtr->GetAns();
-            print("move:", move);///////////////
 
-            if (move.first == 0 && move.second == 0) {
-                output = "=pass";
-            }
-            else {
-                output = "=";
-                output += char(move.second - 1 + 'A');
-                output += to_string(move.first);
-            }
 
-            searchThread = thread(SearchLoop, ref(tensorRT));
-        }
-        else if (commands[0] == "quit") {
+    // ソケット通信
+    int sockfd, client_sockfd;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+
+    char buf[1024] = {0};
+
+    // ソケットの作成
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+        perror("socket failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // アドレスの準備
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(8000);
+
+    // ソケットにアドレスを割り当て
+    if (bind(sockfd, (struct sockaddr*)&address, sizeof(address)) < 0) {
+        perror("bind failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // ソケットをリッスン状態にする
+    if (listen(sockfd, 3) < 0) {
+        perror("listen");
+        exit(EXIT_FAILURE);
+    }
+
+    // 新しい接続の受け入れ
+    if ((client_sockfd = accept(sockfd, (struct sockaddr*)&address, (socklen_t*)&addrlen)) < 0) {
+        perror("accept");
+        exit(EXIT_FAILURE);
+    }
+
+
+    print("start");  ////////////////////
+
+
+    // 受信
+    string input;
+    string output = "";
+    int rsize;
+    while (true) {
+        rsize = recv(client_sockfd, buf, sizeof(buf), 0);
+
+        if (rsize == 0) {
             break;
         }
 
+        output = Gpt(buf, rootPtr, tensorRT, searchThread);
+
+        print(output);  /////////////////////
+
+        write(client_sockfd, output.c_str(), output.length());
+
+        // Clear the buffer after sending the data
+        memset(buf, 0, sizeof(buf));
     }
 
-    // ループを停止
+
+    // ソケットクローズ
+    close(client_sockfd);
+    close(sockfd);
+
     running.store(false);
-    // スレッドの終了を待機
     searchThread.join();
+
+    return 0;
 }
+
+
 
 
 int main(int argc, char* argv[])
@@ -1822,10 +1979,12 @@ int main(int argc, char* argv[])
     int n = 1000;
     if (argc == 2) n = stoi(argv[1]);
     // MonteCarloTreeSearch();
-    suiron(n);
+    // suiron(n);
     // Test();
 
-    // Gpt();
+    // PlayWithGpt();
+
+    GptSoket();
 
     return 0;
 }
