@@ -22,7 +22,7 @@ client_socket.connect(('172.27.178.95', 8000))
 # サーバーにメッセージを送信しています。
 # 'こんにちは、サーバー！'という文字列をencode('utf-8')でバイト列に変換します。
 # client_socket.send()メソッドはバイト列を送信するため、エンコードが必要です。
-client_socket.send('name'.encode('utf-8'))
+# client_socket.send('name'.encode('utf-8'))
 
 
 # データを受信
@@ -44,6 +44,7 @@ while True:
     client_socket.send(s.encode('utf-8'))
     data = client_socket.recv(1024).decode('utf-8')
     print(data)
+    # print('\n')
     if data == 'exit':
         break
 
