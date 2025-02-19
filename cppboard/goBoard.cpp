@@ -1934,7 +1934,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
         // スレッドの終了を待機
         searchThread.join();
 
-        output = "exit";
+        output = "";
         goto GOTO_GPT_SEND;
     }
     else if (commands[0] == "showboard") {
