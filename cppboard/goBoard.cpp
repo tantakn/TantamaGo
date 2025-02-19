@@ -110,8 +110,8 @@
 #endif
 
 
-constexpr int BOARDSIZE = 19;
-// constexpr int BOARDSIZE = 9;
+// constexpr int BOARDSIZE = 19;
+constexpr int BOARDSIZE = 9;
 
 constexpr double komi = 7.5;
 
@@ -121,8 +121,9 @@ constexpr ll debugFlag = 0;
 // constexpr ll debugFlag = ll(1)<<25;
 // constexpr ll debugFlag = ll(1)<<31 | ll(1)<<29 | ll(1)<<30;
 
-const string tensorRTModelPath = "./19ro.onnx";
+// const string tensorRTModelPath = "./19ro.onnx";
 // const string tensorRTModelPath = "./test19_2.onnx";
+const string tensorRTModelPath = "./test9_2.onnx";
 
 
 #ifndef tensorRTigo_cpp_INCLUDED
@@ -351,7 +352,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
     }
 
 
-    // policys の最大が values[2] になるように調整
+    // policys の最大が values[0] になるように調整
     for (auto [move, x] : policys) {
         policys[move] = values[0] * x / maxPolicy2;
         // policys[move] = values[2] * x / maxPolicy2;//////////////////////
@@ -394,11 +395,17 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 
     for (auto [uct, cnt, winSum, uctMove] : ucts) {
         if (inputMove == uctMove) {
-            tmpUcts.insert(make_tuple((winSum + inputWinValue) / (cnt + 1) + sqrt(2 * log(numVisits) / (cnt + 1)),
-                                      cnt + 1,
-                                      winSum + inputWinValue,
-                                      uctMove));
+            int newCnt = cnt + 1;
+            float newWinSum = winSum + inputWinValue;
+            double newUct = newWinSum / newCnt + sqrt(2 * log(numVisits) / newCnt);
+
+            tmpUcts.insert(make_tuple(newUct, newCnt, newWinSum, uctMove));
+            // tmpUcts.insert(make_tuple((winSum + inputWinValue) / (cnt + 1) + sqrt(2 * log(numVisits) / (cnt + 1)),
+            //                           cnt + 1,
+            //                           winSum + inputWinValue,
+            //                           uctMove));
             // tmpUcts.insert(make_tuple(inputWin + sqrt(2 * log(numVisits) / cnt + 1), cnt + 1, winSum + inputWin, uctMove));
+
             continue;
         }
 
@@ -415,18 +422,28 @@ pair<char, char> goBoard::GetAns()
 {
     assert(childrens.size() > 0);
 
-    double maxVisit = -INF;
+    double maxWRate = -INF;
     pair<char, char> ans;
 
     for (auto [uct, visit, winSum, move] : ucts) {
-        if (maxVisit < visit) {
-            maxVisit = visit;
-            ans = move;
-        }
-        else if (maxVisit == visit && policys[ans] < policys[move]) {
+        if (maxWRate < winSum / visit) {
+            maxWRate = winSum / visit;
             ans = move;
         }
     }
+
+    // double maxVisit = -INF;
+    // pair<char, char> ans;
+
+    // for (auto [uct, visit, winSum, move] : ucts) {
+    //     if (maxVisit < visit) {
+    //         maxVisit = visit;
+    //         ans = move;
+    //     }
+    //     else if (maxVisit == visit && policys[ans] < policys[move]) {
+    //         ans = move;
+    //     }
+    // }
 
     return ans;
 }
@@ -610,27 +627,36 @@ void goBoard::PrintBoard(ll bit = 0b1)
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
         int maxCnt = 0;
         pair<char, char> maxMove;
+        double maxUct = -INF;
+        int maxVisit = 0;
+        double maxWinSum = 0;
         for (auto [uct, cnt, winSum, move] : ucts) {
             tmp[move.first][move.second] = uct;
             if (cnt > maxCnt) {
                 maxCnt = cnt;
                 maxMove = move;
+                maxUct = uct;
+                maxVisit = cnt;
+                maxWinSum = winSum;
             }
             /// TODO: uct ではなく勝率で比較したい
             else if (cnt == maxCnt && uct > tmp[maxMove.first][maxMove.second]) {
                 maxCnt = cnt;
                 maxMove = move;
+                maxUct = uct;
+                maxVisit = cnt;
+                maxWinSum = winSum;
             }
         }
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << setw(4) << setfill(' ') << int(tmp[i][j]) * 100 << " " << flush;
+                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " " << flush;
                 // cerr << fixed << setprecision(1) << showpoint << tmp[i][j] * 10 << " ";
             }
             cerr << endl;
         }
         cerr << "pass: " << tmp[0][0] << endl;
-        cerr << "ans: [" << int(maxMove.first) << ", " << int(maxMove.second) << "]" << endl;
+        cerr << "ans: [" << int(maxMove.first) << ", " << int(maxMove.second) << "]" << ", uct: " << maxUct << ", visit: " << maxVisit << ", winrate:" << maxWinSum / maxVisit << endl;
     }
 
     // visitの表示
@@ -652,7 +678,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // 勝率の表示
     if (bit & 1 << 27) {
-        cerr << "勝率*100 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+        cerr << "勝率*1000 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
         pair<char, char> maxMove;
         for (auto [uct, cnt, winSum, move] : ucts) {
@@ -660,11 +686,11 @@ void goBoard::PrintBoard(ll bit = 0b1)
         }
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
-                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " " << flush;
+                cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 1000) << " " << flush;
             }
             cerr << endl;
         }
-        cerr << "pass: " << setw(4) << setfill(' ') << int(tmp[0][0] * 100) << endl;
+        cerr << "pass: " << setw(4) << setfill(' ') << int(tmp[0][0] * 1000) << endl;
     }
 
     // ペナルティの表示
@@ -1399,29 +1425,6 @@ int PutStoneCnt = 0;
 
 
 
-int Test()
-{
-    samplesCommon::Args args;
-
-    args.runInInt8 = false;
-    args.runInFp16 = false;
-    args.runInBf16 = false;
-
-    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
-
-    tensorRT.build();
-    json j = json::parse("[[0, 0, 2, 2, 2, 1, 0, 0, 0], [0, 0, 0, 2, 1, 1, 1, 0, 0], [0, 0, 2, 2, 2, 2, 1, 1, 0], [0, 0, 0, 2, 1, 2, 1, 1, 0], [0, 2, 2, 2, 1, 2, 2, 1, 2], [0, 1, 2, 1, 1, 2, 1, 2, 0], [0, 2, 1, 1, 1, 1, 1, 0, 1], [0, 2, 2, 2, 2, 2, 1, 1, 2], [0, 0, 0, 0, 0, 2, 1, 0, 0]]");
-    vector<vector<char>> v = j;
-
-    rootPtr = new goBoard(v, 1);
-
-    rootPtr->PrintBoard(0b1);
-    rootPtr->ExpandNode(tensorRT);
-
-
-    return 0;
-}
-
 
 
 // ループを制御するためのフラグ
@@ -1432,9 +1435,9 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
     auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
     {
 
-        #ifdef dbg_flag
+#ifdef dbg_flag
         g_node_cnt++;
-        #endif
+#endif
         int color = ptr->teban;
 
         if (ptr->isEnded) {
@@ -1443,9 +1446,9 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                 return make_tuple(color, 0.0, 1.0, 0.0);
             }
             if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
-                return make_tuple(color, 1.0, 0.0, 0.0);
+                return make_tuple(color, 0.0, 0.0, 1.0);
             }
-            return make_tuple(color, 0.0, 0.0, 1.0);
+            return make_tuple(color, 1.0, 0.0, 0.0);
         }
 
         assert(ptr->ucts.size());
@@ -1464,9 +1467,9 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                 }
                 /// TODO: 正しいか確認
                 if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
-                    return make_tuple(nextColor, 1.0, 0.0, 0.0);
+                    return make_tuple(color, 0.0, 0.0, 1.0);
                 }
-                return make_tuple(nextColor, 0.0, 0.0, 1.0);
+                return make_tuple(color, 1.0, 0.0, 0.0);
             }
 
             return nextPtr->ExpandNode(tensorRT);
@@ -1576,11 +1579,11 @@ int suiron(int n)
     //     saiki(saiki, rootPtr);
     // }
 
-    
+
     // 探索用のスレッドを開始
     thread searchThread(SearchLoop, rootPtr, ref(tensorRT));
 
-    sleep(100);
+    sleep(n);
     running.store(false);
     searchThread.join();
 
@@ -1685,7 +1688,50 @@ END2:;
 }
 
 
-string Gpt(const string input, goBoard *&rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread)
+int ConvertChar(char s)
+{
+    if (s >= 'a' && s <= 'z') {
+        if (s < 'i') {
+            return s - 'a' + 1;
+        }
+        else if (s > 'i') {
+            return s - 'a';
+        }
+        else {
+            return -1;
+        }
+    }
+    else if (s >= 'A' && s <= 'Z') {
+        if (s < 'I') {
+            return s - 'A' + 1;
+        }
+        else if (s > 'I') {
+            return s - 'A';
+        }
+        else {
+            return -1;
+        }
+    }
+    else {
+        return -1;
+    }
+}
+
+char ConvertInt(int n)
+{
+    if (n >= 1 && n <= 8) {
+        return n + 'a' - 1;
+    }
+    else if (n > 9) {
+        return n + 'a' - 2;
+    }
+    else {
+        return -1;
+    }
+}
+
+
+string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime = 1)
 {
     stringstream ss{input};
     string s;
@@ -1697,19 +1743,41 @@ string Gpt(const string input, goBoard *&rootPtr, TensorRTOnnxIgo& tensorRT, thr
         commands.push_back(s);
     }
 
+    if (rootPtr->isEnded) {
+        if (commands[0] != "clear_board") {
+            output = "game has already ended";
+            goto GOTO_GPT_SEND;
+        }
+    }
+
     if (commands[0] == "list_commands") {
         output = "=list_commands\nname\nboardsize\nclear_board\nkomi\nplay\ngenmove\nquit\nshowboard\n";
     }
     else if (commands[0] == "name") {
         output = "=TantamaGo";
     }
+    else if (commands[0] == "protocol_version") {
+        output = "=2";
+    }
+    else if (commands[0] == "version") {
+        output = "=0.1";
+    }
     else if (commands[0] == "boardsize") {
+        if (stoi(commands[1]) != BOARDSIZE) {
+            output = "dismatch_boardsize";
+            goto GOTO_GPT_SEND;
+        }
         output = "=";
     }
     else if (commands[0] == "clear_board") {
+        running.store(false);
+        searchThread.join();
         delete rootPtr;
+        rootPtr = nullptr;
         rootPtr = new goBoard();
         rootPtr->ExpandNode(tensorRT);
+        running.store(true);
+        searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
         output = "=";
     }
     else if (commands[0] == "komi") {
@@ -1722,51 +1790,101 @@ string Gpt(const string input, goBoard *&rootPtr, TensorRTOnnxIgo& tensorRT, thr
         else {
             char y, x;
 
-            print(commands[1]);  /////////////////////
-            print(commands[2]);  /////////////////////
+            // print(commands[1]);  /////////////////////
+            // print(commands[2]);  /////////////////////
 
-            if (commands[2][0] >= 'a' && commands[2][0] < 'a' + BOARDSIZE) {
-                x = commands[2][0] - 'a' + 1;
-            }
-            else if (commands[2][0] >= 'A' && commands[2][0] < 'A' + BOARDSIZE) {
-                x = commands[2][0] - 'A' + 1;
+            if (commands[2] == "pass" || commands[2] == "PASS") {
+                y = x = 0;
             }
             else {
-                output = "dismatch_boardsize";
-                goto GOTO_GPT_SEND;
-            }
+                x = ConvertChar(commands[2][0]);
+                if (x == -1) {
+                    output = "dismatch_boardsize";
+                    goto GOTO_GPT_SEND;
+                }
 
-            if (commands[2].size() == 2) {
-                y = commands[2][1] - '0';
-            }
-            else if (commands[2].size() == 3) {
-                y = (commands[2][1] - '0') * 10 + commands[2][2] - '0';
-            }
-            else {
-                output = "unknown_command";
-                goto GOTO_GPT_SEND;
-            }
-            if (y < 1 || y > BOARDSIZE) {
-                output = "dismatch_boardsize";
-                goto GOTO_GPT_SEND;
-            }
+                if (commands[2].size() == 2) {
+                    y = commands[2][1] - '0';
+                }
+                else if (commands[2].size() == 3) {
+                    y = (commands[2][1] - '0') * 10 + commands[2][2] - '0';
+                }
+                else {
+                    output = "unknown_command";
+                    goto GOTO_GPT_SEND;
+                }
 
-            if (commands[1] == "black" || commands[1] == "b") {
-                if (rootPtr->teban != 1) {
-                    output = "dismatch_color";
+
+                if (y < 1 || y > BOARDSIZE) {
+                    output = "dismatch_boardsize";
+                    goto GOTO_GPT_SEND;
+                }
+
+                if (commands[1] == "black" || commands[1] == "b" || commands[1] == "B") {
+                    if (rootPtr->teban != 1) {
+                        output = "dismatch_color";
+                        goto GOTO_GPT_SEND;
+                    }
+                }
+                else if (commands[1] == "white" || commands[1] == "w" || commands[1] == "W") {
+                    if (rootPtr->teban != 2) {
+                        output = "dismatch_color";
+                        goto GOTO_GPT_SEND;
+                    }
+                }
+                else {
+                    output = "unknown_command";
                     goto GOTO_GPT_SEND;
                 }
             }
-            else if (commands[1] == "white" || commands[1] == "w") {
-                if (rootPtr->teban != 2) {
-                    output = "dismatch_color";
-                    goto GOTO_GPT_SEND;
-                }
-            }
-            else {
-                output = "unknown_command";
-                goto GOTO_GPT_SEND;
-            }
+            // if (commands[2] == "pass") {
+            //     y = x = 0;
+            // }
+            // else {
+            //     if (commands[2][0] >= 'a' && commands[2][0] < 'a' + BOARDSIZE) {
+            //         x = commands[2][0] - 'a' + 1;
+            //     }
+            //     else if (commands[2][0] >= 'A' && commands[2][0] < 'A' + BOARDSIZE) {
+            //         x = commands[2][0] - 'A' + 1;
+            //     }
+            //     else {
+            //         output = "dismatch_boardsize";
+            //         goto GOTO_GPT_SEND;
+            //     }
+
+            //     if (commands[2].size() == 2) {
+            //         y = commands[2][1] - '0';
+            //     }
+            //     else if (commands[2].size() == 3) {
+            //         y = (commands[2][1] - '0') * 10 + commands[2][2] - '0';
+            //     }
+            //     else {
+            //         output = "unknown_command";
+            //         goto GOTO_GPT_SEND;
+            //     }
+            // }
+
+            // if (y < 1 || y > BOARDSIZE) {
+            //     output = "dismatch_boardsize";
+            //     goto GOTO_GPT_SEND;
+            // }
+
+            // if (commands[1] == "black" || commands[1] == "b" || commands[1] == "B") {
+            //     if (rootPtr->teban != 1) {
+            //         output = "dismatch_color";
+            //         goto GOTO_GPT_SEND;
+            //     }
+            // }
+            // else if (commands[1] == "white" || commands[1] == "w" || commands[1] == "W") {
+            //     if (rootPtr->teban != 2) {
+            //         output = "dismatch_color";
+            //         goto GOTO_GPT_SEND;
+            //     }
+            // }
+            // else {
+            //     output = "unknown_command";
+            //     goto GOTO_GPT_SEND;
+            // }
 
             // print("y:", y);  /////////////////////
             // print("x:", x);  /////////////////////
@@ -1786,7 +1904,7 @@ string Gpt(const string input, goBoard *&rootPtr, TensorRTOnnxIgo& tensorRT, thr
         }
     }
     else if (commands[0] == "genmove") {
-        sleep(1);///////////////
+        sleep(thinkTime);  ///////////////
         running.store(false);
         searchThread.join();
 
@@ -1798,7 +1916,7 @@ string Gpt(const string input, goBoard *&rootPtr, TensorRTOnnxIgo& tensorRT, thr
         }
         else {
             output = "=";
-            output += char(move.second - 1 + 'A');
+            output += ConvertInt(move.second);
             output += to_string(move.first);
         }
 
@@ -1829,11 +1947,26 @@ string Gpt(const string input, goBoard *&rootPtr, TensorRTOnnxIgo& tensorRT, thr
         running.store(true);
         searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
     }
+    else if (commands[0] == "_print") {
+        rootPtr->PrintBoard(1 << 28);
+        print();
+        rootPtr->PrintBoard(1 << 27);
+        print();
+        rootPtr->PrintBoard(1 << 31);
+        print();
+        rootPtr->PrintBoard(1 << 30);
+        print();
+        rootPtr->PrintBoard(1 << 29);
+        print();
+        rootPtr->PrintBoard(0b1);
+        print();
+        output = "=";
+    }
     else {
         output = "unknown_command";
     }
 
-    GOTO_GPT_SEND:;
+GOTO_GPT_SEND:;
 
     return output;
 }
@@ -1875,6 +2008,7 @@ int PlayWithGpt()
 }
 
 
+
 int GptSoket()
 {
     samplesCommon::Args args;
@@ -1887,6 +2021,8 @@ int GptSoket()
 
     tensorRT.build();
 
+    print("build end");  ////////////////////
+
 
     rootPtr = new goBoard();
 
@@ -1897,6 +2033,7 @@ int GptSoket()
     // 探索用のスレッドを開始
     thread searchThread(SearchLoop, rootPtr, ref(tensorRT));
 
+    print("thread start");  ////////////////////
 
 
     // ソケット通信
@@ -1913,9 +2050,12 @@ int GptSoket()
     }
 
     // アドレスの準備
+    int port;
+    cout << "port << ";
+    cin >> port;
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(8000);
+    address.sin_port = htons(port);
 
     // ソケットにアドレスを割り当て
     if (bind(sockfd, (struct sockaddr*)&address, sizeof(address)) < 0) {
@@ -1935,8 +2075,7 @@ int GptSoket()
         exit(EXIT_FAILURE);
     }
 
-
-    print("start");  ////////////////////
+    print("server start");  ////////////////////
 
 
     // 受信
@@ -1950,14 +2089,31 @@ int GptSoket()
             break;
         }
 
-        output = Gpt(buf, rootPtr, tensorRT, searchThread);
+        print("recv data: ", buf);  /////////////////////
 
-        print(output);  /////////////////////
+        output = Gpt(buf, rootPtr, tensorRT, searchThread, 1) + "\n";
+
+        print("send data: ", output);  /////////////////////
 
         write(client_sockfd, output.c_str(), output.length());
 
+        rootPtr->PrintBoard(1 << 28);//////////////////
+        print();
+        rootPtr->PrintBoard(1 << 27);
+        print();
+        rootPtr->PrintBoard(1 << 31);
+        print();
+        rootPtr->PrintBoard(1 << 30);
+        print();
+        rootPtr->PrintBoard(1 << 29);
+        print();
+        rootPtr->PrintBoard(0b1);
+        print();
+
         // Clear the buffer after sending the data
         memset(buf, 0, sizeof(buf));
+
+        sleep(0.1);
     }
 
 
@@ -1972,14 +2128,63 @@ int GptSoket()
 }
 
 
+int Test()
+{
+    string s;
+    int teban;
+    cerr << "input teban << ";
+    getline(cin, s);
+    teban = stoi(s);
+    cerr << "input s << ";
+    getline(cin, s);
+    print("teban: ", teban);  ////////////////////
+    print("s: ", s);          ////////////////////
+
+    samplesCommon::Args args;
+
+    args.runInInt8 = false;
+    args.runInFp16 = false;
+    args.runInBf16 = false;
+
+    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
+
+    tensorRT.build();
+    json j = json::parse(s);
+    vector<vector<char>> v = j;
+
+    rootPtr = new goBoard(v, teban);
+
+    rootPtr->PrintBoard(0b1);
+    rootPtr->ExpandNode(tensorRT);
+    int saikiCnt = 0;
+
+    // 探索用のスレッドを開始
+    thread searchThread(SearchLoop, rootPtr, ref(tensorRT));
+
+    string input;
+    string output = "";
+    // 標準入力を監視
+    while (getline(cin, input)) {
+        output = Gpt(input, rootPtr, tensorRT, searchThread);
+        cout << output << endl;
+        if (output == "exit") {
+            break;
+        }
+    }
+
+    return 0;
+}
+
 
 
 int main(int argc, char* argv[])
 {
-    int n = 1000;
-    if (argc == 2) n = stoi(argv[1]);
     // MonteCarloTreeSearch();
+
+    // int n = 10;
+    // if (argc == 2) n = stoi(argv[1]);
     // suiron(n);
+
     // Test();
 
     // PlayWithGpt();
@@ -1988,295 +2193,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
-
-
-
-
-//    1 2 3 4 5 6 7 8 9
-//  1 ┌ ● ┬ ┬ ┬ ┬ ○ ● ┐
-//  2 ● ● + + + + + ○ ○
-//  3 ├ ● + ● ● ● + + ○
-//  4 ○ ● + ● + ● + ○ ┤
-//  5 ● ● + ● ● + + + ○
-//  6 ├ + + + + + + + ┤
-//  7 ├ + + + + ○ + + ┤
-//  8 ● + + + ● + ○ + ┤
-//  9 └ ● ┴ ┴ ┴ ○ ○ ┴ ┘
-
-
-// Move : 3
-// Prisoner(Black) : 0
-// Prisoner(White) : 0
-//     A B C D E F G H J
-//   +-------------------+
-//  9| + + + + + + + + + |
-//  8| + + + + + + + + + |
-//  7| + + + + + + + + + |
-//  6| + + + + + + + + + |
-//  5| + + + O + @ + + + |
-//  4| + + + + + + + + + |
-//  3| + + + + + + + + + |
-//  2| + + + + + + + + + |
-//  1| + + + + + + + + + |
-//   +-------------------+
-
-
-
-
-
-// "legalMoves.size():", 78
-// pass: O
-// _ O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O _ _ O O O O
-// O O O O _ O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// [01/22/2025-01:11:22] [I] [TRT] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +0, now: CPU 0, GPU 1 (MiB)
-// "tmpPolicy.size():", 82
-// -3.0643 -2.5386 -0.6482 -1.9070 -1.9800 -1.7157 -2.3123 -2.8675 -2.1690
-// -1.6564 +2.0302 +0.2747 -0.3175 -0.6484 -1.2339 -1.6391 -1.0966 -2.2894
-// -0.9973 +0.5675 +2.7738 +4.3787 +2.9279 +3.2399 +4.2932 -1.0965 -1.6416
-// -1.9561 -0.5473 +2.6993 +7.6882 +8.4930 +1.6248 +3.7076 -0.1639 -1.8169
-// -1.4363 -0.9100 +1.4575 +0.2655 +2.3247 +0.8941 +3.2148 +1.4013 -1.8689
-// -1.7469 -1.0087 +3.7042 +7.8111 +0.4135 +0.2033 +3.8415 -1.0274 -1.8955
-// -1.8853 -1.6004 +4.9563 +0.5469 +0.9036 +3.8731 +4.1513 -1.6426 -2.0869
-// -2.4943 -1.5963 -1.7056 -1.0420 +1.8147 -0.8280 -0.9790 -1.6516 -2.0485
-// -2.1292 -2.7262 -2.3229 -2.4141 -2.1758 -1.7866 -1.9552 -2.8590 -1.3960
-// -0.1663
-// "values.size():", 3
-// "values:", [3.2885046005249023,-5.2117695808410645,1.8991395235061646]
-// "policys.size():", 78
-// ####   +0   +0   +0   +0   +0   +0   +0   +0
-//   +0   +1   +0   +0   +0   +0   +0   +0   +0
-//   +0   +0   +2  +13   +3   +4  +12   +0   +0
-//   +0   +0   +2 +357 +800   +0   +6   +0   +0
-//   +0   +0   +0 #### @@@@   +0   +4   +0   +0
-//   +0   +0   +6 +404 @@@@   +0   +7   +0   +0
-//   +0   +0  +23   +0   +0   +7  +10   +0   +0
-//   +0   +0   +0   +0   +1   +0   +0   +0   +0
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-// "pass:", 0.00013886754459235817
-// "values:", [0.8003605008125305,0.00016280340787488967,0.19947664439678192]
-// "inputColor:", 1
-// "inputWin:", 0.8003605008125305
-// "inputDraw:", 0.00016280340787488967
-// "inputLose:", 0.19947664439678192
-// "teban:", 1
-// "inputColor:", 1
-// "inputWin:", 0.8003605008125305
-// "inputDraw:", 0.00016280340787488967
-// "inputLose:", 0.19947664439678192
-// "teban:", 2
-// "inputColor:", 1
-// "inputWin:", 0.8003605008125305
-// "inputDraw:", 0.00016280340787488967
-// "inputLose:", 0.19947664439678192
-// "teban:", 1
-// "ucts:", [[0.6092992646916244,372,134.11196899414063,[3,9]],[0.6093166666034534,423,159.05331420898438,[1,4]],[0.6093407986958637,333,115.34868621826172,[9,6]],[0.6094098131440249,484,189.39048767089844,[8,3]],[0.6094275614198674,322,110.13223266601563,[4,1]],[0.6094289947593488,338,117.77027893066406,[3,1]],[0.6094729396226544,407,151.2522735595703,[8,1]],[0.6094737355597452,312,105.39991760253906,[9,4]],[0.609493521319866,301,100.20916748046875,[7,1]],[0.6095109982676179,377,136.618408203125,[1,3]],[0.6095430656354879,349,123.0898208618164,[6,1]],[0.6095765063190435,384,140.04916381835938,[2,9]],[0.6095810383268967,455,175.0069122314453,[1,2]],[0.6096364926603808,287,93.67635345458984,[9,7]],[0.6096478916951087,347,122.1643295288086,[0,0]],[0.6096686226672854,447,171.07321166992188,[1,5]],[0.6096755980209374,575,235.50291442871094,[7,2]],[0.6096955445873538,383,139.60769653320313,[1,6]],[0.609698120237273,369,132.80517578125,[2,1]],[0.6096995967409444,535,215.2029571533203,[2,7]],[0.6097373252628113,424,159.7244110107422,[4,9]],[0.6097451041631885,464,179.56195068359375,[2,8]],[0.6097492988791426,901,405.35345458984375,[6,2]],[0.6097570167000657,403,149.40573120117188,[8,8]],[0.6097677749938692,447,171.11753845214844,[8,9]],[0.6097689734376743,489,192.06930541992188,[2,2]],[0.6097771025996042,359,127.99408721923828,[7,9]],[0.6097951834633637,812,358.42156982421875,[6,8]],[0.6097961579189812,564,229.97036743164063,[8,4]],[0.6097995001412649,1146,536.3932495117188,[3,7]],[0.6098347675112261,287,93.7332534790039,[1,9]],[0.6098420271976313,591,243.76622009277344,[3,8]],[0.609846414594648,486,190.60362243652344,[3,2]],[0.6098495429715789,364,130.43841552734375,[5,1]],[0.6098508341498048,377,136.74652099609375,[9,8]],[0.609852830109735,336,116.95521545410156,[9,3]],[0.6098545473161895,3298,1735.7392578125,[3,5]],[0.6098586778497359,479,187.10513305664063,[5,9]],[0.609865531170848,368,132.38206481933594,[9,2]],[0.6098691087468326,870,389.054931640625,[4,8]],[0.6098713133164543,378,137.24063110351563,[1,7]],[0.6098735461045286,420,157.80982971191406,[8,2]],[0.6098768288611798,341,119.36064910888672,[9,5]],[0.6098779013295872,1127,526.2476196289063,[2,5]],[0.6098832343181111,2426,1243.236328125,[4,3]],[0.609886790275616,324,111.23289489746094,[9,9]],[0.6098923286356993,4228,2266.620849609375,[5,4]],[0.6098926617777454,2796,1451.5361328125,[5,7]],[0.6098936892372784,414,154.86386108398438,[1,8]],[0.6099063210888318,2397,1227.0218505859375,[4,7]],[0.6099127252373407,844,375.36602783203125,[2,4]],[0.6099158187841274,3640,1930.59716796875,[6,4]],[0.6099162592891505,4297,2306.270751953125,[4,5]],[0.6099194190492148,2187,1109.496826171875,[6,7]],[0.6099203477008661,591,243.8125,[7,8]],[0.6099205406865276,387,141.6444549560547,[6,9]],[0.6099257661952737,898,403.92266845703125,[2,6]],[0.6099288695098688,626,261.7606201171875,[2,3]],[0.6099293294766515,4215,2259.328125,[5,6]],[0.6099319482281041,1397,672.7293090820313,[5,8]],[0.609934388628046,3342,1761.0074462890625,[6,6]],[0.6099355806320299,754,328.133056640625,[4,2]],[0.6099400594716415,2996,1564.7388916015625,[5,3]],[0.609941793243402,1135,530.62841796875,[3,3]],[0.6099462165735812,4693,2533.763916015625,[5,5]],[0.6099466172258136,2740,1420.0836181640625,[3,4]],[0.609947604185979,282,91.42710876464844,[1,1]],[0.6099490094837969,2035,1024.7877197265625,[7,4]],[0.6099500259319357,2612,1347.956298828125,[3,6]],[0.6099514513918534,455,175.1754608154297,[8,7]],[0.6099516056217734,2125,1074.953857421875,[7,6]],[0.6099562107257968,990,452.8798828125,[5,2]],[0.6099563569077573,2824,1467.5257568359375,[7,5]],[0.6099567673480758,956,434.757080078125,[7,7]],[0.6099579623292359,3980,2124.91748046875,[6,5]],[0.6099606234066246,2439,1250.72119140625,[6,3]],[0.6099706514236913,3594,1904.5731201171875,[4,6]],[0.6099730601074095,3808,2026.6756591796875,[4,4]],[0.609973765479847,1063,491.9580078125,[8,5]],[0.6099749389925556,961,437.4368591308594,[7,3]],[0.6099765023750792,627,262.3045654296875,[8,6]],[0.6099790554441333,391,143.6204376220703,[9,1]]]
-// "ans:", [5,5]
-// -1 -1 +1
-// moveCnt: +0, teban: +1
-//    1 2 3 4 5 6 7 8 9
-// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
-// +2 ├ + + + + + + + ┤
-// +3 ├ + + + + + + + ┤
-// +4 ├ + + + + + + + ┤
-// +5 ├ + + + + + + + ┤
-// +6 ├ + + + + + + + ┤
-// +7 ├ + + + + + + + ┤
-// +8 ├ + + + + + + + ┤
-// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
-
-// "policys.size():", 82
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-//   +0   +1   +0   +0   +0   +0   +0   +0   +0
-//   +0   +0  +12  +26   +9  +25  +12   +0   +0
-//   +0   +0  +26  +97 +103  +95  +26   +0   +0
-//   +0   +0   +9 +103 +512 +103   +9   +0   +0
-//   +0   +0  +25  +94 +101  +95  +26   +0   +0
-//   +0   +0  +11  +25   +9  +24  +11   +0   +0
-//   +0   +1   +0   +0   +0   +0   +0   +1   +0
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-// "pass:", 0.00010275642125634477
-// "values:", [0.5129799842834473,0.0004004337824881077,0.4866195619106293]
-
-// "childrens.size():", 82
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-
-// "ucts.size():", 82
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61 +0.61
-// pass: +0.61
-
-// y:  5
-// x: 5
-// +5 +5 +2
-// moveCnt: +1, teban: +2
-//    1 2 3 4 5 6 7 8 9
-// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
-// +2 ├ + + + + + + + ┤
-// +3 ├ + + + + + + + ┤
-// +4 ├ + + + + + + + ┤
-// +5 ├ + + + ● + + + ┤
-// +6 ├ + + + + + + + ┤
-// +7 ├ + + + + + + + ┤
-// +8 ├ + + + + + + + ┤
-// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
-
-// "policys.size():", 81
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-//   +0   +0   +0   +0   +1   +0   +0   +0   +0
-//   +0   +0  +46  +80 +524  +78  +47   +0   +0
-//   +0   +0  +82  +12  +23  +12  +82   +0   +0
-//   +0   +1 +540  +23 ####  +24 +520   +1   +0
-//   +0   +0  +77  +12  +24  +15  +80   +0   +0
-//   +0   +0  +50  +82 +519  +82  +51   +0   +0
-//   +0   +0   +0   +0   +1   +0   +0   +0   +0
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-// "pass:", 0.00042700927588157356
-// "values:", [0.5404638648033142,0.0004166991566307843,0.45911943912506104]
-
-// "childrens.size():", 81
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O X O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-// O O O O O O O O O
-
-// "ucts.size():", 81
-// +0.97 +0.98 +0.97 +0.98 +0.98 +0.98 +0.98 +0.98 +0.97
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.97 +0.98 +0.98
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
-// +0.98 +0.98 +0.98 +0.98 +0.00 +0.98 +0.98 +0.98 +0.98
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
-// +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
-// +0.98 +0.98 +0.97 +0.98 +0.98 +0.98 +0.98 +0.98 +0.98
-// +0.97 +0.98 +0.98 +0.98 +0.98 +0.97 +0.98 +0.98 +0.98
-// pass: +0.97
-
-// y: 3
-// x: 5
-// +3 +5 +1
-// moveCnt: +2, teban: +1
-//    1 2 3 4 5 6 7 8 9
-// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
-// +2 ├ + + + + + + + ┤
-// +3 ├ + + + ○ + + + ┤
-// +4 ├ + + + + + + + ┤
-// +5 ├ + + + ● + + + ┤
-// +6 ├ + + + + + + + ┤
-// +7 ├ + + + + + + + ┤
-// +8 ├ + + + + + + + ┤
-// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
-
-// "policys.size():", 80
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-//   +0   +0   +0   +0  +30   +0   +0   +0   +0
-//   +0   +0   +4 +524 @@@@ +538   +5   +0   +0
-//   +0   +0 +177  +70  +12  +66 +181   +0   +0
-//   +0   +0  +85   +0 ####   +0  +86   +0   +0
-//   +0   +0   +7   +1   +0   +2   +6   +0   +0
-//   +0   +0   +0  +52 +428  +49   +0   +0   +0
-//   +0   +0   +0   +0   +9   +0   +0   +0   +0
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-// "pass:", 0.0002202322648372501
-// "values:", [0.5387895703315735,0.0005389123107306659,0.4606715142726898]
-
-// "childrens.size():", 65
-// X X O O O O O X X
-// O O O O O O O O X
-// O O O O X O O O X
-// O O O O O O O O X
-// O O O O X O O O O
-// O O O O O O O O O
-// X O O O O O O O O
-// X X O O O O O X O
-// X X X O O O O X O
-
-// "ucts.size():", 80
-// +2.89 +2.89 +2.22 +2.24 +2.25 +2.17 +2.16 +2.89 +2.89
-// +2.16 +2.22 +2.24 +2.21 +2.27 +2.23 +2.19 +2.17 +2.89
-// +2.17 +2.22 +2.23 +2.56 +0.00 +2.55 +2.23 +2.16 +2.89
-// +2.17 +2.23 +2.35 +2.38 +2.34 +2.35 +2.34 +2.18 +2.89
-// +2.17 +2.18 +2.32 +2.24 +0.00 +2.25 +2.33 +2.19 +2.15
-// +2.17 +2.18 +2.24 +2.27 +2.23 +2.24 +2.20 +2.19 +2.16
-// +2.89 +2.16 +2.17 +2.24 +2.51 +2.24 +2.18 +2.15 +2.89
-// +2.89 +2.89 +2.22 +2.21 +2.23 +2.23 +2.14 +2.89 +2.16
-// +2.89 +2.89 +2.89 +2.14 +2.14 +2.16 +2.14 +2.89 +2.13
-// pass: +2.14
-
-// y: 3
-// x: 4
-// +3 +4 +2
-// moveCnt: +3, teban: +2
-//    1 2 3 4 5 6 7 8 9
-// +1 ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
-// +2 ├ + + + + + + + ┤
-// +3 ├ + + ● ○ + + + ┤
-// +4 ├ + + + + + + + ┤
-// +5 ├ + + + ● + + + ┤
-// +6 ├ + + + + + + + ┤
-// +7 ├ + + + + + + + ┤
-// +8 ├ + + + + + + + ┤
-// +9 └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
-
-// "policys.size():", 79
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-//   +0   +0   +0 +102   +0   +0   +0   +0   +0
-//   +0   +0   +1 #### @@@@   +0   +0   +0   +0
-//   +0   +0   +0 +508   +3   +0   +2   +0   +0
-//   +0   +0   +0   +0 ####   +0   +0   +0   +0
-//   +0   +0   +1   +0   +1   +0   +0   +0   +0
-//   +0   +0   +4  +21  +69   +5   +1   +0   +0
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-//   +0   +0   +0   +0   +0   +0   +0   +0   +0
-// "pass:", 1.6081046851468273e-05
-// "values:", [0.5089550018310547,0.0005318978219293058,0.49051305651664734]
-
-// "childrens.size():", 1
-// X X X X X X X X X
-// X X X X X X X X X
-// X X X X X X X X X
-// X X X O X X X X X
-// X X X X X X X X X
-// X X X X X X X X X
-// X X X X X X X X X
-// X X X X X X X X X
-// X X X X X X X X X
-
-// "ucts.size():", 79
-// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96
-// +2.96 +2.96 +2.96 +3.06 +2.96 +2.96 +2.96 +2.96 +2.96
-// +2.96 +2.96 +2.96 +0.00 +0.00 +2.96 +2.96 +2.96 +2.96
-// +2.96 +2.96 +2.96 +3.47 +2.96 +2.96 +2.96 +2.96 +2.96
-// +2.96 +2.96 +2.96 +2.96 +0.00 +2.96 +2.96 +2.96 +2.96
-// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96
-// +2.96 +2.96 +2.96 +2.98 +3.03 +2.96 +2.96 +2.96 +2.96
-// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96
-// +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96 +2.96
-// pass: +2.96
