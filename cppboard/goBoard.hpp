@@ -5,6 +5,7 @@
 
 
 
+
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
 vector<vector<char>> rawBoard = []()
@@ -31,6 +32,9 @@ vector<vector<int>> rawIdBoard = []()
     return tmpIdBoard;
 }();
 
+
+const string GPTALPHABET("ABCDEFGHJKLMNOPQRST");
+const string GPTAlapabet("abcdefghjklmnopqrst");
 
 
 /**
@@ -94,6 +98,8 @@ struct goBoard {
     /// @brief 推論の結果にsoftmaxを適用したもの、多分 [相手の手番の勝率（例：初期局面なら白の勝率）, 引き分けの確率, 現在の勝率]
     vector<float> values;
 
+    recursive_mutex uctsMutex;
+    // mutex uctsMutex;
 
     /// @brief <uct, この手の探索回数, この手の勝率の合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->ucts) みたく使う。
     /// uct = この手の勝率の合計 / この手の探索回数 + sqrt(2 * log(現局面の総探索回数) / この手の探索回数)
@@ -297,3 +303,24 @@ struct goBoard {
 
     ~goBoard();
 };
+
+
+
+/// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、char型の文字をint型の数字に変換する
+/// @param s 
+/// @return 変換後の数値
+int ConvertChar(char s);
+
+
+/// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、int型の数字をchar型の文字に変換する
+/// @param n 
+/// @return 変換後の文字
+char ConvertInt(int n);
+
+
+
+string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime);
+
+void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT);
+
+

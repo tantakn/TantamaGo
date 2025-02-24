@@ -3,6 +3,8 @@ import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import socket, random, json, time
 
+secret = json.load(open("gitignore_it.json"))
+
 
 # ソケットを作成
 # client_socketというソケットオブジェクトを作成しています。
@@ -15,7 +17,7 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # サーバーに接続
 # 接続先は'localhost'（自分自身のマシン）で、ポート番号は8000です。
 # サーバー側でserver_socket.accept()が実行され、接続待ちの状態である必要があります。
-client_socket.connect(('172.27.178.95', 8000))
+client_socket.connect((secret["ip_desk_ubuntu"], secret["port"]))
 
 
 # データを送信

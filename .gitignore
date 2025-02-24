@@ -35,3 +35,6 @@
 
 /TensorRT-release-10.7/
 
+**/gitignore_it.*
+# gitignore_it.json
+cppboard/gitignor_it.json
