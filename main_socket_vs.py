@@ -3,7 +3,13 @@ import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import socket, random, json, time
 
+
+from board.constant import BOARD_SIZE
+from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
+
 secret = json.load(open("gitignore_it.json"))
+
+
 
 
 # ソケットを作成
@@ -34,6 +40,33 @@ client_socket2.send('name'.encode('utf-8'))
 data = client_socket1.recv(1024).decode('utf-8')
 data = client_socket2.recv(1024).decode('utf-8')
 # print('受信したデータ:', data)
+
+# 送信するデータ
+data = {
+    "size": BOARD_SIZE,
+    "superko": "Ture",
+    "model": "/home/tantakn/code/TantamaGo/model_def/sl-model_q50k_DualNet_256_24.bin",
+    "use_gpu": "True",
+    "policy_move": "False",
+    "sequential_halving": "False",
+    "komi": "7",
+    "visits": "1000",
+    "const_time": "10",
+    "time": "",
+    "batch_size": "-1",
+    "tree_size": "-1",
+    "cgos_mode": "False",
+    "net": "DualNet_256_24"
+}
+
+data_json = json.dumps(data)
+data_bytes = data_json.encode()
+# encrypted_data = f.encrypt(data_bytes)
+
+# print(f"🐾encrypted_data: {encrypted_data}")
+client_socket2.send(data_bytes)
+
+
 
 GPTALPHABET = "ABCDEFGHJKLMNOPQRST"
 GPTAlapabet = "abcdefghjklmnopqrst"
