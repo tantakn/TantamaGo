@@ -1266,6 +1266,9 @@ vector<vector<vector<float>>> goBoard::MakeInputPlane()
 int cnt = 0;  ////////////
 
 
+const string GPTALPHABET("ABCDEFGHJKLMNOPQRST");
+const string GPTAlapabet("abcdefghjklmnopqrst");
+
 int ConvertChar(char s)
 {
     int output = GPTALPHABET.find(s);
@@ -1890,6 +1893,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 x = ConvertChar(commands[2][0]);
                 if (x == -1) {
                     output = "dismatch_boardsize";
+                    print("x, y: ", x, y);//////////////
                     goto GOTO_GPT_SEND;
                 }
 
@@ -1907,6 +1911,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
 
                 if (y < 1 || y > BOARDSIZE) {
                     output = "dismatch_boardsize";
+                    print("x, y: ", x, y);//////////////
                     goto GOTO_GPT_SEND;
                 }
 

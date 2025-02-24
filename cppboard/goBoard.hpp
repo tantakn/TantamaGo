@@ -33,10 +33,6 @@ vector<vector<int>> rawIdBoard = []()
 }();
 
 
-const string GPTALPHABET("ABCDEFGHJKLMNOPQRST");
-const string GPTAlapabet("abcdefghjklmnopqrst");
-
-
 /**
  * @brief グローバル変数 goBoard* rootPtr = nullptr; が必要。
  * 

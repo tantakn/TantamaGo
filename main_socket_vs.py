@@ -25,7 +25,7 @@ client_socket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # 接続先は'localhost'（自分自身のマシン）で、ポート番号は8000です。
 # サーバー側でserver_socket.accept()が実行され、接続待ちの状態である必要があります。
 client_socket1.connect((secret["ip_desk_ubuntu"], int(secret["port"])))
-client_socket2.connect((secret["ip_desk_ubuntu"], int(secret["port2"])))
+client_socket2.connect((secret["ip_desk_win"], int(secret["port2"])))
 
 
 # データを送信
@@ -33,12 +33,12 @@ client_socket2.connect((secret["ip_desk_ubuntu"], int(secret["port2"])))
 # 'こんにちは、サーバー！'という文字列をencode('utf-8')でバイト列に変換します。
 # client_socket.send()メソッドはバイト列を送信するため、エンコードが必要です。
 client_socket1.send('name'.encode('utf-8'))
-client_socket2.send('name'.encode('utf-8'))
+# client_socket2.send('name'.encode('utf-8'))
 
 
 # データを受信
 data = client_socket1.recv(1024).decode('utf-8')
-data = client_socket2.recv(1024).decode('utf-8')
+# data = client_socket2.recv(1024).decode('utf-8')
 # print('受信したデータ:', data)
 
 # 送信するデータ
@@ -49,12 +49,12 @@ data = {
     "use_gpu": "True",
     "policy_move": "False",
     "sequential_halving": "False",
-    "komi": "7",
-    "visits": "1000",
-    "const_time": "10",
-    "time": "",
-    "batch_size": "-1",
-    "tree_size": "-1",
+    "komi": 7,
+    "visits": 1000,
+    "const_time": 10,
+    "time": None,
+    "batch_size": -1,
+    "tree_size": -1,
     "cgos_mode": "False",
     "net": "DualNet_256_24"
 }
@@ -114,29 +114,48 @@ while True:
 
     # s = "qqwer"
 
-    input = s.split(' ')
+    inputs = s.split(' ')
 
-    if input[0] == "genmove":
-        if Is_black(input[1]):
+    if inputs[0] == "genmove":
+        if Is_black(inputs[1]):
             client_socket1.send(s.encode('utf-8'))
+            # print(f"socket1_send[{s}]")##########
             data1 = client_socket1.recv(1024).decode('utf-8')
+            # print(f"socet1_recv[{data1}]")##########
+    
             client_socket2.send(f"play B {data1.split('=')[1]}".encode('utf-8'))
+            # print(f"socket2_send[play B {data1.split('=')[1]}]")##########
             data2 = client_socket2.recv(1024).decode('utf-8')
-            assert(data2 == "=")
+            # print(f"socket2_recv[{data2}]")############
+
+            # assert(data2 == "=\n")
             print(data1)
         else:
             client_socket2.send(s.encode('utf-8'))
+            # print(f"socket2_send[{s}]")##############
             data2 = client_socket2.recv(1024).decode('utf-8')
-            client_socket1.send(f"play W {data2.split('=')[1]}".encode('utf-8'))
+            # print(f"socket2_recv[{data2}]")############
+
+            client_socket1.send(f"play W {data2.split('=')[1].split(' ')[1].split('\n')[0]}".encode('utf-8'))
+            # print(f"socket1_send[play W {data2.split('=')[1].split(' ')[1].split('\n')[0]}]")############
             data1 = client_socket1.recv(1024).decode('utf-8')
-            assert(data1 == "=")
+            # print(f"socket1_recv[{data1}]")###########
+
+            # assert(data1 == "=\n")
             print(data2)
     else:
             client_socket1.send(s.encode('utf-8'))
+            # print(f"socket1_send[{s}]")##########
             client_socket2.send(s.encode('utf-8'))
+            # print(f"socket2_send[{s}]")###############
+
             data1 = client_socket1.recv(1024).decode('utf-8')
+            # print(f"socket1_recv[{data1}]")##############
             data2 = client_socket2.recv(1024).decode('utf-8')
-            print(data1)
+            # print(f"socket2_recv[{data2}]")###############
+
+            print(data2)
+
 
 
 
