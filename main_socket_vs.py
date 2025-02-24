@@ -7,7 +7,7 @@ import socket, random, json, time
 from board.constant import BOARD_SIZE
 from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
 
-secret = json.load(open("gitignore_it.json"))
+secret = json.load(open("./cppboard/gitignore_it.json"))
 
 
 
@@ -24,8 +24,8 @@ client_socket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # サーバーに接続
 # 接続先は'localhost'（自分自身のマシン）で、ポート番号は8000です。
 # サーバー側でserver_socket.accept()が実行され、接続待ちの状態である必要があります。
-client_socket1.connect((secret["ip_desk_ubuntu"], secret["port"]))
-client_socket2.connect((secret["ip_desk_ubuntu"], secret["port2"]))
+client_socket1.connect((secret["ip_desk_ubuntu"], int(secret["port"])))
+client_socket2.connect((secret["ip_desk_ubuntu"], int(secret["port2"])))
 
 
 # データを送信
