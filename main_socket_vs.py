@@ -7,7 +7,7 @@ import socket, random, json, time
 from board.constant import BOARD_SIZE
 from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
 
-secret = json.load(open("gitignore_it.json"))
+secret = json.load(open("/home/tantakn/code/TantamaGo/cppboard/gitignor_it.json"))
 
 
 

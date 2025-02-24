@@ -8,9 +8,26 @@ import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import json
 
-secret = json.load(open("gitignore_it.json"))
+secret = json.load(open("/home/tantakn/code/TantamaGo/cppboard/gitignor_it.json"))
 
 print(secret["ip_desk_ubuntu"])
+
+import socket
+# ソケットを作成
+# client_socketというソケットオブジェクトを作成しています。
+# socket.AF_INETはIPv4アドレスファミリを指定します。
+# socket.SOCK_STREAMはTCPプロトコル（ストリームベースの通信）を指定します。
+# これにより、IPv4のTCPソケットが生成されます。
+client_socket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+
+# サーバーに接続
+# 接続先は'localhost'（自分自身のマシン）で、ポート番号は8000です。
+# サーバー側でserver_socket.accept()が実行され、接続待ちの状態である必要があります。
+client_socket1.connect((secret["ip_desk_ubuntu"], int(secret["port"])))
+client_socket2.connect((secret["ip_desk_ubuntu"], secret["port2"]))
+
 
 
 # # onnx_model_path = "./test9_2.onnx"
