@@ -143,15 +143,13 @@
 
 mt19937 mt(random_device{}());
 
-/// @brief ルートノード。グローバル変数。
-goBoard* rootPtr = nullptr;
-
+// goBoard* rootPtr = nullptr; //rootPtrグローバル廃止
 
 goBoard::goBoard()
     : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr), isRoot(true), moveCnt(0)
 {
-    assert(rootPtr == nullptr);
-    rootPtr = this;
+    // assert(rootPtr == nullptr); //rootPtrグローバル廃止
+    // rootPtr = this;
 
     libs[-1] = INF;
 }
@@ -161,8 +159,8 @@ goBoard::goBoard(vector<vector<char>> inputBoard, char inputTeban)
 {
     /// TODO: teban の扱いを考える
 
-    assert(rootPtr == nullptr);
-    rootPtr = this;
+    // assert(rootPtr == nullptr); //rootPtrグローバル廃止
+    // rootPtr = this;
 
     rep (i, BOARDSIZE + 2) {
         idBoard[0][i] = -1;
@@ -402,7 +400,7 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 }
 
 
-pair<char, char> goBoard::GetAns()
+pair<char, char> goBoard::GetBestMove()
 {
     assert(childrens.size() > 0);
 
@@ -938,32 +936,6 @@ vector<tuple<char, char, char>> goBoard::GenAllLegalMoves()
     }
 
     legalMoves.push_back({0, 0, 0});
-
-
-    if (debugFlag & 1 << 30) {
-        print("legalMoves.size():", legalMoves.size());
-
-        cerr << "pass: ";
-        if (count(legalMoves.begin(), legalMoves.end(), make_tuple(0, 0, 0))) {
-            cerr << "O" << endl;
-        }
-        else {
-            cerr << "X" << endl;
-        }
-
-        rep (i, 1, BOARDSIZE + 1) {
-            rep (j, 1, BOARDSIZE + 1) {
-                if (count(legalMoves.begin(), legalMoves.end(), make_tuple(i, j, this->teban))) {
-                    cerr << "O ";
-                }
-                else {
-                    cerr << "_ ";
-                }
-            }
-            cerr << endl;
-        }
-    }
-
 
     return legalMoves;
 }
@@ -1608,212 +1580,6 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
     return;
 }
 
-
-int suiron(int n)
-{
-    samplesCommon::Args args;
-
-    args.runInInt8 = false;
-    args.runInFp16 = false;
-    args.runInBf16 = false;
-
-    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
-
-    tensorRT.build();
-
-    print("build end");  ////////////////////
-
-    auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
-    {
-        // print("moveCnt", ptr->moveCnt);  ////////////////
-        int color = ptr->teban;
-
-        if (ptr->isEnded) {
-            double rslt = ptr->CountResult();
-            if (rslt == 0) {
-                return make_tuple(color, 0.0, 1.0, 0.0);
-            }
-            if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
-                return make_tuple(color, 1.0, 0.0, 0.0);
-            }
-            return make_tuple(color, 0.0, 0.0, 1.0);
-        }
-
-        lock_guard<recursive_mutex> lock(ptr->uctsMutex);
-
-        assert(ptr->ucts.size());
-
-        pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
-
-        if (!ptr->childrens.count(nextMove)) {
-            // print("PutStoneCnt", ++PutStoneCnt);
-            goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
-
-            int nextColor = nextPtr->teban;
-
-            if (nextPtr->isEnded) {
-                double rslt = nextPtr->CountResult();
-                if (rslt == 0) {
-                    return make_tuple(nextColor, 0.0, 1.0, 0.0);
-                }
-                if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
-                    return make_tuple(nextColor, 1.0, 0.0, 0.0);
-                }
-                return make_tuple(nextColor, 0.0, 0.0, 1.0);
-            }
-
-            return nextPtr->ExpandNode(tensorRT);
-        }
-
-
-        tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
-
-        ptr->UpdateUcts(returnData, nextMove);
-
-        return returnData;
-    };
-
-    rootPtr = new goBoard();
-
-    rootPtr->ExpandNode(tensorRT);
-
-    // print(rootPtr->policys);
-    // print(rootPtr->values);
-
-    // float sum = 0.0;
-    // for (auto x : rootPtr->policys) {
-    //     sum += x.second;
-    // }
-    // print("policyssum:", sum);
-
-    // sum = 0.0;
-    // for (auto x : rootPtr->values) {//??????
-    //     sum += x;
-    // }
-    // print("valuessum:", sum);
-
-    // print("ucts:", rootPtr->ucts);
-
-    int saikiCnt = 0;
-    // rep (n) {
-    //     // print("saikiCnt:", saikiCnt++);  ////////////////
-    //     saiki(saiki, rootPtr);
-    // }
-
-
-    // 探索用のスレッドを開始
-    thread searchThread(SearchLoop, rootPtr, ref(tensorRT));
-
-    sleep(n);
-    running.store(false);
-    searchThread.join();
-
-    // print("ucts:", rootPtr->ucts);
-
-    // pair<char, char> ans;
-    // int ansCnt = -1;
-    // for (auto x : rootPtr->ucts) {
-    //     if (get<1>(x) >= ansCnt) {
-    //         if (get<1>(x) == ansCnt && get<0>(x) < get<0>(ans)) {
-    //             continue;
-    //         }
-    //         ansCnt = get<1>(x);
-    //         ans = get<3>(x);
-    //     }
-    // }
-    // print("ans:", ans);
-
-
-
-    goBoard* tmp = rootPtr;
-    while (true) {
-        tmp->PrintBoard(1 << 28);
-        print();
-        tmp->PrintBoard(1 << 27);
-        print();
-        tmp->PrintBoard(1 << 31);
-        print();
-        tmp->PrintBoard(1 << 30);
-        print();
-        tmp->PrintBoard(1 << 29);
-        print();
-        tmp->PrintBoard(0b1);
-        print();
-
-        int y = 123, x = 123;
-        while (!tmp->childrens.count({y, x})) {
-            cerr << "input y: ";
-            cin >> y;
-            if (y == -1) {
-                tmp = tmp->parent;
-                goto PASS;
-            }
-            cerr << "input x: ";
-            cin >> x;
-            if (x == -1) {
-                goto END;
-            }
-        }
-        tmp = tmp->childrens[{y, x}];
-    PASS:;
-    }
-
-END:;
-
-
-    cerr << "scceed" << endl;
-    int x, y;
-    cerr << "input y: ";
-    cin >> y;
-    cerr << "input x: ";
-    cin >> x;
-
-    if (rootPtr->childrens.size() == 0) {
-        rootPtr->ExpandNode(tensorRT);
-    }
-    rootPtr->SucceedRoot(rootPtr, {y, x});
-
-    tmp = rootPtr;
-    while (true) {
-        tmp->PrintBoard(1 << 28);
-        print();
-        tmp->PrintBoard(1 << 27);
-        print();
-        tmp->PrintBoard(1 << 31);
-        print();
-        tmp->PrintBoard(1 << 30);
-        print();
-        tmp->PrintBoard(1 << 29);
-        print();
-        tmp->PrintBoard(0b1);
-        print();
-
-        int y = 123, x = 123;
-        while (!tmp->childrens.count({y, x})) {
-            cerr << "input y: ";
-            cin >> y;
-            if (y == -1) {
-                tmp = tmp->parent;
-                goto PASS2;
-            }
-            cerr << "input x: ";
-            cin >> x;
-            if (x == -1) {
-                goto END2;
-            }
-        }
-        tmp = tmp->childrens[{y, x}];
-    PASS2:;
-    }
-
-END2:;
-
-    return 0;
-}
-
-
-
-
 string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime = 1, bool ponder = true)
 {
     // cerr << "Gpt input: " << input << endl;  /////////////////////
@@ -1969,7 +1735,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
         running.store(false);
         searchThread.join();
 
-        pair<char, char> move = rootPtr->GetAns();
+        pair<char, char> move = rootPtr->GetBestMove();
         // cerr << "move: " << (int)move.first << " " << (int)move.second << endl;////////////////
 
         if (move.first == 0 && move.second == 0) {
@@ -2038,6 +1804,129 @@ GOTO_GPT_SEND:;
     return output;
 }
 
+
+int suiron(int n)
+{
+    samplesCommon::Args args;
+
+    args.runInInt8 = false;
+    args.runInFp16 = false;
+    args.runInBf16 = false;
+
+    TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
+
+    tensorRT.build();
+
+    print("build end");  ////////////////////
+
+
+    goBoard* rootPtr = nullptr;
+    rootPtr = new goBoard();
+
+    rootPtr->ExpandNode(tensorRT);
+
+
+    int saikiCnt = 0;
+
+    // 探索用のスレッドを開始
+    thread searchThread(SearchLoop, rootPtr, ref(tensorRT));
+
+    sleep(n);
+    running.store(false);
+    searchThread.join();
+
+
+    goBoard* tmp = rootPtr;
+    while (true) {
+        tmp->PrintBoard(1 << 28);
+        print();
+        tmp->PrintBoard(1 << 27);
+        print();
+        tmp->PrintBoard(1 << 31);
+        print();
+        tmp->PrintBoard(1 << 30);
+        print();
+        tmp->PrintBoard(1 << 29);
+        print();
+        tmp->PrintBoard(0b1);
+        print();
+
+        int y = 123, x = 123;
+        while (!tmp->childrens.count({y, x})) {
+            cerr << "input y: ";
+            cin >> y;
+            if (y == -1) {
+                tmp = tmp->parent;
+                goto PASS;
+            }
+            cerr << "input x: ";
+            cin >> x;
+            if (x == -1) {
+                goto END;
+            }
+        }
+        tmp = tmp->childrens[{y, x}];
+    PASS:;
+    }
+
+END:;
+
+
+    cerr << "scceed" << endl;
+    int x, y;
+    cerr << "input y: ";
+    cin >> y;
+    cerr << "input x: ";
+    cin >> x;
+
+    if (rootPtr->childrens.size() == 0) {
+        rootPtr->ExpandNode(tensorRT);
+    }
+    rootPtr->SucceedRoot(rootPtr, {y, x});
+
+    tmp = rootPtr;
+    while (true) {
+        tmp->PrintBoard(1 << 28);
+        print();
+        tmp->PrintBoard(1 << 27);
+        print();
+        tmp->PrintBoard(1 << 31);
+        print();
+        tmp->PrintBoard(1 << 30);
+        print();
+        tmp->PrintBoard(1 << 29);
+        print();
+        tmp->PrintBoard(0b1);
+        print();
+
+        int y = 123, x = 123;
+        while (!tmp->childrens.count({y, x})) {
+            cerr << "input y: ";
+            cin >> y;
+            if (y == -1) {
+                tmp = tmp->parent;
+                goto PASS2;
+            }
+            cerr << "input x: ";
+            cin >> x;
+            if (x == -1) {
+                goto END2;
+            }
+        }
+        tmp = tmp->childrens[{y, x}];
+    PASS2:;
+    }
+
+END2:;
+
+    return 0;
+}
+
+
+
+
+
+
 int PlayWithGpt()
 {
     samplesCommon::Args args;
@@ -2051,6 +1940,7 @@ int PlayWithGpt()
     tensorRT.build();
 
 
+    goBoard* rootPtr = nullptr;
     rootPtr = new goBoard();
 
     rootPtr->ExpandNode(tensorRT);
@@ -2099,6 +1989,7 @@ int GptSoket()
     print("build end");  ////////////////////
 
 
+    goBoard* rootPtr = nullptr;
     rootPtr = new goBoard();
 
     rootPtr->ExpandNode(tensorRT);
@@ -2184,7 +2075,7 @@ int GptSoket()
 
         cerr << "recv data: " << buf << endl;  /////////////////////
 
-        output = Gpt(buf, rootPtr, tensorRT, searchThread, thinkTime);
+        output = Gpt(buf, rootPtr, tensorRT, searchThread, thinkTime, false);
 
         if (output == "quit") {
             output = "=";
@@ -2209,7 +2100,9 @@ int GptSoket()
     close(sockfd);
 
     running.store(false);
-    searchThread.join();
+    if (searchThread.joinable()) {
+        searchThread.join();
+    }
 
     return 0;
 }
@@ -2240,6 +2133,7 @@ int Test()
     json j = json::parse(s);
     vector<vector<char>> v = j;
 
+    goBoard* rootPtr = nullptr;
     rootPtr = new goBoard(v, teban);
 
     rootPtr->PrintBoard(0b1);

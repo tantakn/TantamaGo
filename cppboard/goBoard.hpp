@@ -169,7 +169,7 @@ struct goBoard {
      * 
      * @return pair<char, char> move(y, x)
      */
-    pair<char, char> GetAns();
+    pair<char, char> GetBestMove();
 
 
     /**
