@@ -1625,8 +1625,10 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
         rootPtr = new goBoard();
         rootPtr->ExpandNode(tensorRT);
 
-        running.store(true);
-        searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+        if (ponder) {
+            running.store(true);
+            searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+        }
 
         output = "=";
     }
@@ -1657,8 +1659,8 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 x = ConvertChar(commands[2][0]);
                 if (x == -1) {
                     output = "dismatch_boardsize";
-                    cout << "commands[2]==[" << commands[2] << "]" << endl;////////////////////
-                    print("x, y: ", x, y);//////////////
+                    cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
+                    print("x, y: ", x, y);                                   //////////////
                     goto GOTO_GPT_SEND;
                 }
 
@@ -1675,41 +1677,43 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 }
                 else {
                     output = "unknown_command";
-                    cout << "commands[2]==[" << commands[2] << "]" << endl;////////////////////
+                    cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                     goto GOTO_GPT_SEND;
                 }
 
 
                 if (y < 1 || y > BOARDSIZE) {
                     output = "dismatch_boardsize";
-                    cout << "commands[2]==[" << commands[2] << "]" << endl;////////////////////
-                    print("x, y: ", x, y);//////////////
+                    cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
+                    print("x, y: ", x, y);                                   //////////////
                     goto GOTO_GPT_SEND;
                 }
 
                 if (commands[1] == "black" || commands[1] == "b" || commands[1] == "B") {
                     if (rootPtr->teban != 1) {
-                        cout << "commands[2]==[" << commands[2] << "]" << endl;////////////////////
+                        cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                         output = "dismatch_color";
                         goto GOTO_GPT_SEND;
                     }
                 }
                 else if (commands[1] == "white" || commands[1] == "w" || commands[1] == "W") {
                     if (rootPtr->teban != 2) {
-                        cout << "commands[2]==[" << commands[2] << "]" << endl;////////////////////
+                        cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                         output = "dismatch_color";
                         goto GOTO_GPT_SEND;
                     }
                 }
                 else {
                     output = "unknown_command";
-                    cout << "commands[2]==[" << commands[2] << "]" << endl;////////////////////
+                    cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                     goto GOTO_GPT_SEND;
                 }
             }
 
             running.store(false);
-            searchThread.join();
+            if (searchThread.joinable()) {
+                searchThread.join();
+            }
 
             if (rootPtr->childrens.size() == 0) {
                 rootPtr->ExpandNode(tensorRT);
@@ -1719,8 +1723,10 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 goto GOTO_GPT_SEND;
             }
 
-            running.store(true);
-            searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+            if (ponder) {
+                running.store(true);
+                searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+            }
 
             output = "=";
         }
@@ -1731,9 +1737,19 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             goto GOTO_GPT_SEND;
         }
 
+
+        if (!ponder) {
+            running.store(true);
+            searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+        }
+
         sleep(thinkTime);  ///////////////
+
         running.store(false);
-        searchThread.join();
+        if (searchThread.joinable()) {
+            searchThread.join();
+        }
+
 
         pair<char, char> move = rootPtr->GetBestMove();
         // cerr << "move: " << (int)move.first << " " << (int)move.second << endl;////////////////
@@ -1755,8 +1771,10 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             goto GOTO_GPT_SEND;
         }
 
-        running.store(true);
-        searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+        if (ponder) {
+            running.store(true);
+            searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+        }
     }
     else if (commands[0] == "quit") {
         running.store(false);
@@ -1769,13 +1787,17 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
     }
     else if (commands[0] == "showboard") {
         running.store(false);
-        searchThread.join();
+        if (searchThread.joinable()) {
+            searchThread.join();
+        }
 
         output = "=";
         rootPtr->PrintBoard(0b1);
 
-        running.store(true);
-        searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+        if (ponder) {
+            running.store(true);
+            searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
+        }
     }
     else if (commands[0] == "_print") {
         rootPtr->PrintBoard(1 << 28);
@@ -1833,7 +1855,9 @@ int suiron(int n)
 
     sleep(n);
     running.store(false);
-    searchThread.join();
+    if (searchThread.joinable()) {
+        searchThread.join();
+    }
 
 
     goBoard* tmp = rootPtr;
@@ -1926,7 +1950,6 @@ END2:;
 
 
 
-
 int PlayWithGpt()
 {
     samplesCommon::Args args;
@@ -1979,8 +2002,11 @@ int GptSoket()
     samplesCommon::Args args;
 
     args.runInInt8 = false;
-    args.runInFp16 = false;
-    args.runInBf16 = false;
+    args.runInFp16 = true;
+    args.runInBf16 = true;
+    // args.runInInt8 = false;
+    // args.runInFp16 = false;
+    // args.runInBf16 = false;
 
     TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
 
@@ -2075,10 +2101,12 @@ int GptSoket()
 
         cerr << "recv data: " << buf << endl;  /////////////////////
 
-        output = Gpt(buf, rootPtr, tensorRT, searchThread, thinkTime, false);
+        output = Gpt(buf, rootPtr, tensorRT, searchThread, thinkTime, true);
 
         if (output == "quit") {
             output = "=";
+            cerr << "send data: " << output << endl;  /////////////////////
+            output += "\n";
             write(client_sockfd, output.c_str(), output.length());
             break;
         }
