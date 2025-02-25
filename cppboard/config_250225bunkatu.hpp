@@ -3,10 +3,6 @@
 #define myMacro_hpp_INCLUDED
 #endif
 
-#define dbg_flag////////////////////
-#ifdef dbg_flag
-ll g_node_cnt = 0;
-#endif
 
 
 // constexpr int BOARDSIZE = 19;
