@@ -1,4 +1,21 @@
 """深層学習の実装。
+
+python3 train.py --size 13 --use-ddp true --net DualNet_256_24
+
+
+[20250226_170831] learn
+epoch 0, data-0 : loss = 4.722960, time = 419.1 [s].
+        policy loss : 4.715367
+        value loss  : 0.759278
+[20250226_171151] monitoring
+cpu: 8.9% [5.5, 72.4, 1.1, 0.4, 1.1, 23.8, 0.5, 0.3, 0.7, 0.3, 0.6, 0.6] 
+mem: 26.8% 🔥
+NVIDIA GeForce RTX 3060, 0, 98 %, 6635 MiB, 154.06 W 🔥
+
+[20250226_171533] learn
+epoch 0, data-1 : loss = 3.384733, time = 420.3 [s].
+        policy loss : 3.376641
+        value loss  : 0.809221
 """
 import glob
 import os
@@ -605,7 +622,7 @@ def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs:
         print(f"    torch.cuda.get_device_capability({i}): ", torch.cuda.get_device_capability(i))
     # print("    torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
     # if torch.cuda.device_count() > 1:##########
-        print("    torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
+        # print("    torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
     print("    torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
 
     # train_dataset, val_dataset = getMyDataset()
@@ -619,7 +636,8 @@ def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs:
     os.environ['MASTER_ADDR'] = 'localhost'
     os.environ['MASTER_PORT'] = '50000'
     os.environ['TORCH_DISTRIBUTED_DEBUG'] = 'DETAIL'
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
+    # os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
 
     torch.multiprocessing.spawn(train_on_gpu_ddp_worker, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir), nprocs = torch.cuda.device_count(), join = True)
 
