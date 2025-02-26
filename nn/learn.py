@@ -576,6 +576,14 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
             torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
             # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
 
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': dual_net.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'policy_loss': policy_loss,
+                'value_loss': value_loss,
+                }, os.path.join("model", f"checkpoint_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
+
     # save_model(dual_net, os.path.join("model", "sl-model.bin"))
 
     torch.distributed.destroy_process_group()
