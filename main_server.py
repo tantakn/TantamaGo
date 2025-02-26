@@ -21,10 +21,15 @@ default_model_path = os.path.join("model_def", "sl-model_q50k_DualNet.bin")
 @click.option('--ip', type=click.STRING, help="ip", default="")
 @click.option('--port', type=click.INT, help="port", default=51111)
 def InetServer(password: str, ip: str="", port: int=51111):
+    port = 8001
     print("serverip: ", socket.gethostbyname(socket.gethostname()))
 
+    # if ip == "":
+    #     ip = socket.gethostbyname(socket.gethostname())
+
+    # ipが未指定の場合、0.0.0.0で待ち受けるように設定
     if ip == "":
-        ip = socket.gethostbyname(socket.gethostname())
+        ip = "0.0.0.0"
 
 
     # key = password
