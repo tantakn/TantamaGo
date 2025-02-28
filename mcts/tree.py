@@ -178,7 +178,8 @@ class MCTSTree: # pylint: disable=R0902
             root = self.node[self.current_root]
             mode = analysis_query.get("mode", "lz")
             if mode == "lz":#######################
-                sys.stderr.write(root.get_analysis(board, mode, self.get_pv_lists))
+                # sys.stderr.write(root.get_analysis(board, mode, self.get_pv_lists))
+                pass
             else:
                 sys.stdout.write(root.get_analysis(board, mode, self.get_pv_lists))
             sys.stdout.flush()
