@@ -554,6 +554,7 @@ class GtpClient: # pylint: disable=R0902,R0903
                 self._analyze("lz", command_list[1:])
                 print("")
             elif input_gtp_command == "lz-genmove_analyze":
+                # lz の場合はは標準出力でなく、標準エラー出力にanalyzeの内容を出力するよう変更。mcst/tree.py の search の最後の方で変更した。
                 self._genmove_analyze("lz", command_list[1:])
             elif input_gtp_command == "cgos-analyze":
                 self._analyze("cgos", command_list[1:])

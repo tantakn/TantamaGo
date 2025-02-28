@@ -110,7 +110,7 @@
 
 
 #ifndef myMacro_hpp_INCLUDED
-#include "myMacro.hpp"
+#include "../myMacro.hpp"
 #define myMacro_hpp_INCLUDED
 #endif
 
@@ -284,22 +284,6 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
 
 
     tensorRT.infer(MakeInputPlane(), tmpPolicy, values);
-    if (debugFlag & ll(1) << 25) {
-        print("tmpPolicy.size():", tmpPolicy.size());  //////////////
-        rep (i, BOARDSIZE) {
-            rep (j, BOARDSIZE) {
-                cerr << showpos << fixed << setprecision(4) << tmpPolicy[i * BOARDSIZE + j] << " ";
-            }
-            cerr << endl;
-        }
-        cerr << fixed << setprecision(4) << tmpPolicy[BOARDSIZE * BOARDSIZE] << endl;
-        print("values.size():", values.size());
-        print("values:", values);                     ////////////////
-        cerr << resetiosflags(std::ios::floatfield);  // 浮動小数点の書式をリセット
-        cerr << resetiosflags(std::ios::showpoint);   // showpoint をリセット
-        cerr << resetiosflags(std::ios::showpos);     // showpos をリセット
-        cerr << std::defaultfloat;
-    }
 
 
     // softmaxで使う変数
@@ -367,7 +351,6 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 {
     auto [inputColor, inputLoseValue, inputDrawValue, inputWinValue] = input;
 
-    /// TODO: npz作るときに逆になってることがある？多分、== が正しい？
     if (inputColor != teban) {
         // if (inputColor != teban) {/////////////////////////
         swap(inputWinValue, inputLoseValue);
@@ -380,24 +363,42 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 
     ++numVisits;
 
-    for (auto [uct, cnt, winSum, uctMove] : ucts) {
-        if (inputMove == uctMove) {
-            int newCnt = cnt + 1;
-            float newWinSum = winSum + inputWinValue;
-            double newUct = newWinSum / newCnt + sqrt(2 * log(numVisits) / newCnt);
+    if (IS_PUCT) {
+        // puct の場合
+        for (auto [puct, cnt, valueSum, puctMove] : ucts) {
+            if (inputMove == puctMove) {
+                cnt += 1;
+                valueSum += inputWinValue;
+            }
 
-            tmpUcts.insert(make_tuple(newUct, newCnt, newWinSum, uctMove));
+            double newUct = valueSum / cnt + PUCB_SECOND_TERM_WEIGHT * sqrt(log(numVisits)) / (1 + cnt);
+            // double newUct = valueSum / cnt + PUCB_SECOND_TERM_WEIGHT * sqrt(log(cnt)) / (1 + numVisits);  // 多分逆
 
-            continue;
+            tmpUcts.insert(make_tuple(newUct, cnt, valueSum, puctMove));
         }
+    }
+    else {
+        // uct の場合
+        for (auto [uct, cnt, winSum, uctMove] : ucts) {
+            if (inputMove == uctMove) {
+                int newCnt = cnt + 1;
+                float newWinSum = winSum + inputWinValue;
+                double newUct = newWinSum / newCnt + sqrt(2 * log(numVisits) / newCnt);
 
-        tmpUcts.insert(make_tuple(winSum / cnt + sqrt(2 * log(numVisits) / cnt), cnt, winSum, uctMove));
+                tmpUcts.insert(make_tuple(newUct, newCnt, newWinSum, uctMove));
+
+                continue;
+            }
+
+            tmpUcts.insert(make_tuple(winSum / cnt + sqrt(2 * log(numVisits) / cnt), cnt, winSum, uctMove));
+        }
     }
 
     ucts = tmpUcts;
 
     return 0;
 }
+
 
 
 pair<char, char> goBoard::GetBestMove()
@@ -908,9 +909,9 @@ int goBoard::IsIllegalMove(int y, int x, char color)
         int nx = x + dir.first;
         int ny = y + dir.second;
 
-        if (board[ny][nx] == 0 || board[ny][nx] == 3 - color || libs[idBoard[ny][nx]] == 1) {
+        if (board[ny][nx] == 0 || board[ny][nx] == 3 - color || libs[idBoard[ny][nx]] <= 1) {
             isFillEye = false;
-            /// TODO: break でいい？
+            break;
         }
     }
     if (isFillEye) {
@@ -1719,6 +1720,9 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 rootPtr->ExpandNode(tensorRT);
             }
             rootPtr = rootPtr->SucceedRoot(rootPtr, {y, x});
+            if (rootPtr->childrens.size() == 0 && !rootPtr->isEnded) {
+                rootPtr->ExpandNode(tensorRT);
+            }
             if (rootPtr->isEnded) {
                 goto GOTO_GPT_SEND;
             }
@@ -1745,6 +1749,25 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
 
         sleep(thinkTime);  ///////////////
 
+        if (debugFlag & 1 << 5) {
+            cout << "\n--------------------\n"
+                 << "rootPtr: " << rootPtr << endl;  //////////////////////////
+            print();
+            // rootPtr->PrintBoard(1 << 26);  //////////////////
+            // print();
+            // rootPtr->PrintBoard(1 << 28);  //////////////////
+            // print();
+            // rootPtr->PrintBoard(1 << 31);
+            // print();
+            rootPtr->PrintBoard(1 << 27);
+            print();
+            // rootPtr->PrintBoard(1 << 29);
+            // print();
+            // rootPtr->PrintBoard(0b1);
+            // print();
+        }
+
+
         running.store(false);
         if (searchThread.joinable()) {
             searchThread.join();
@@ -1767,6 +1790,9 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             rootPtr->ExpandNode(tensorRT);
         }
         rootPtr = rootPtr->SucceedRoot(rootPtr, move);
+        if (rootPtr->childrens.size() == 0 && !rootPtr->isEnded) {
+            rootPtr->ExpandNode(tensorRT);
+        }
         if (rootPtr->isEnded) {  ////////////????
             goto GOTO_GPT_SEND;
         }
@@ -1906,7 +1932,10 @@ END:;
     if (rootPtr->childrens.size() == 0) {
         rootPtr->ExpandNode(tensorRT);
     }
-    rootPtr->SucceedRoot(rootPtr, {y, x});
+    rootPtr = rootPtr->SucceedRoot(rootPtr, {y, x});
+    if (rootPtr->childrens.size() == 0 && !rootPtr->isEnded) {
+        rootPtr->ExpandNode(tensorRT);
+    }
 
     tmp = rootPtr;
     while (true) {
@@ -2001,12 +2030,12 @@ int GptSoket()
 
     samplesCommon::Args args;
 
-    args.runInInt8 = false;
-    args.runInFp16 = true;
-    args.runInBf16 = true;
     // args.runInInt8 = false;
-    // args.runInFp16 = false;
-    // args.runInBf16 = false;
+    // args.runInFp16 = true;
+    // args.runInBf16 = true;
+    args.runInInt8 = false;
+    args.runInFp16 = false;
+    args.runInBf16 = false;
 
     TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
 
@@ -2080,28 +2109,30 @@ int GptSoket()
             break;
         }
 
-        if (input.substr(0, 4) == "genm" || input.substr(0, 4) == "play") {
-            cout << "\n--------------------\n"
-                 << "rootPtr: " << rootPtr << endl;  //////////////////////////
-            print();
-            rootPtr->PrintBoard(1 << 26);  //////////////////
-            print();
-            rootPtr->PrintBoard(1 << 28);  //////////////////
-            print();
-            rootPtr->PrintBoard(1 << 31);
-            print();
-            rootPtr->PrintBoard(1 << 27);
-            print();
-            rootPtr->PrintBoard(1 << 29);
-            print();
-            rootPtr->PrintBoard(0b1);
-            print();
-        }
-
 
         cerr << "recv data: " << buf << endl;  /////////////////////
 
-        output = Gpt(buf, rootPtr, tensorRT, searchThread, thinkTime, true);
+        output = Gpt(buf, rootPtr, tensorRT, searchThread, thinkTime, false);
+
+
+        // if (input.substr(0, 4) == "genm" || input.substr(0, 4) == "play") {
+        //     cout << "\n--------------------\n"
+        //          << "rootPtr: " << rootPtr << endl;  //////////////////////////
+        //     print();
+        //     rootPtr->PrintBoard(1 << 26);  //////////////////
+        //     print();
+        //     rootPtr->PrintBoard(1 << 28);  //////////////////
+        //     print();
+        //     rootPtr->PrintBoard(1 << 31);
+        //     print();
+        //     rootPtr->PrintBoard(1 << 27);
+        //     print();
+        //     rootPtr->PrintBoard(1 << 29);
+        //     print();
+        //     rootPtr->PrintBoard(0b1);
+        //     print();
+        // }
+
 
         if (output == "quit") {
             output = "=";
