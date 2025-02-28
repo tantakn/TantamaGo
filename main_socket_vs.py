@@ -138,6 +138,7 @@ while True:
             # assert(data2 == "=\n")
             print(data1)
         else:
+            s = "lz-genmove_analyze W"##############
             client_socket2.send(s.encode('utf-8'))
             # print(f"socket2_send[{s}]")##############
             data2 = client_socket2.recv(1024).decode('utf-8')

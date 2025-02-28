@@ -24,8 +24,12 @@ def InetServer(password: str, ip: str="", port: int=51111):
     port = 8001
     print("serverip: ", socket.gethostbyname(socket.gethostname()))
 
+    # if ip == "":
+    #     ip = socket.gethostbyname(socket.gethostname())
+
+    # ipが未指定の場合、0.0.0.0で待ち受けるように設定
     if ip == "":
-        ip = socket.gethostbyname(socket.gethostname())
+        ip = "0.0.0.0"
 
 
     # key = password
@@ -126,6 +130,14 @@ def InetServer(password: str, ip: str="", port: int=51111):
                 output = client.run(data)
                 if output is None:
                     output = "= \n"
+                if output == "quit":
+                    output = "= \n"
+                    print(f"送信データ「「\n{output}\n」」\n")
+                    output = output.encode()
+                    # output = f.encrypt(output)
+                    client_socket.send(output)
+                    print(f"暗号化した送信データ「「\n{output}\n」」\n")
+                    sys.exit(0)
                 print(f"送信データ「「\n{output}\n」」\n")
                 output = output.encode()
                 # output = f.encrypt(output)

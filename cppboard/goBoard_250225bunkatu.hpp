@@ -8,29 +8,9 @@
 
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
-vector<vector<char>> rawBoard = []()
-{
-    vector<vector<char>> tmpBoard(BOARDSIZE + 2, vector<char>(BOARDSIZE + 2, 0b0));
-    rep (i, BOARDSIZE + 2) {
-        rawBoard[0][i] = 0b11;
-        rawBoard[BOARDSIZE + 1][i] = 0b11;
-        rawBoard[i][0] = 0b11;
-        rawBoard[i][BOARDSIZE + 1] = 0b11;
-    }
-    return tmpBoard;
-}();
+extern vector<vector<char>> rawBoard;
 
-vector<vector<int>> rawIdBoard = []() 
-{
-    vector<vector<int>> tmpIdBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0));
-    rep (i, BOARDSIZE + 2) {
-        rawIdBoard[0][i] = -1;
-        rawIdBoard[BOARDSIZE + 1][i] = -1;
-        rawIdBoard[i][0] = -1;
-        rawIdBoard[i][BOARDSIZE + 1] = -1;
-    }
-    return tmpIdBoard;
-}();
+extern vector<vector<int>> rawIdBoard;
 
 
 /**
@@ -105,9 +85,12 @@ struct goBoard {
     // set<tuple<double, int, int, pair<char, char>>> ucts;
 
 
-    /// @brief <puct, この手の探索回数, この手のvalueの合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->pucts) みたく使う。
-    /// 授業で教わった定義：Valueの平均値 + PUCT_C * sqrt(log(この手の探索回数)) / (1 + 現局面の総探索回数)
-    /// ネットで見つけた定義：puct = (log((1 + この手の探索回数 + PUCT_C_BASE) / PUCT_C_BASE) + PUCT_C_INIT) * この手の勝率の合計 / この手の探索回数 + sqrt(2 * log(現局面の総探索回数) / この手の探索回数)
+    const float PUCT_C_BASE = 20403.9803;
+    const float PUCT_C_INIT = 0.70598003;
+
+
+    /// @brief <puct, この手の探索回数, この手の勝率の合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->pucts) みたく使う。
+    /// puct = (log((1 + この手の探索回数 + PUCT_C_BASE) / PUCT_C_BASE) + PUCT_C_INIT) * この手の勝率の合計 / この手の探索回数 + sqrt(2 * log(現局面の総探索回数) / この手の探索回数)
     set<tuple<double, int, float, pair<char, char>>> pucts;
 
 
@@ -137,12 +120,12 @@ struct goBoard {
     goBoard* SucceedRoot(goBoard*& rootPtr, pair<char, char> move);
 
 
-    /**
-     * @brief debugFlag & 1<<31 & 1<<29 で推論の結果を表示する。
-     * 
-     * @return tuple<int, float, float, float> color、colorが負ける確率、引き分けの確率、colortが勝つ確率
-     */
-    tuple<int, float, float, float> ExpandNode();
+    // /**　なにこれ
+    //  * @brief debugFlag & 1<<31 & 1<<29 で推論の結果を表示する。
+    //  * 
+    //  * @return tuple<int, float, float, float> color、colorが負ける確率、引き分けの確率、colortが勝つ確率
+    //  */
+    // tuple<int, float, float, float> ExpandNode();
 
 
     /**
@@ -151,7 +134,7 @@ struct goBoard {
      * @param tensorRT 
      * @return tuple<int, float, float, float> color、colortが勝つ確率、引き分けの確率、colorが負ける確率
      */
-    tuple<int, float, float, float> ExpandNode(TensorRTOnnxIgo tensorRT);
+    tuple<int, float, float, float> ExpandNode(pair<vector<float>, vector<float>> input);
 
 
     /**
@@ -312,8 +295,8 @@ char ConvertInt(int n);
 
 
 
-string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime);
+// string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, atomic<bool>& running, int thinkTime = 1, bool ponder = true);
 
-void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT);
+// void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT, atomic<bool>& running);
 
 
