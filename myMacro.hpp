@@ -25428,4 +25428,50 @@ using vvint = vector<vector<int>>;
 
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
+
+
+#define _DEBUG
+// あると便利なアサート https://qiita.com/go_astrayer/items/369b463142860d441c96
+#ifdef _DEBUG
+
+namespace internal { // 内部実装
+
+// 停止(戻り値が必要なので、独自に定義)
+int abort() {
+	::abort();
+	return 1;
+}
+
+} // namespace internal
+
+// 自作アサート
+#define my_assert(expr,...) \
+	(!(expr) && printf("%s(%d): my_assert failed: "#expr"\n", __FILE__, __LINE__, __VA_ARGS__) && internal::abort())
+
+#else
+
+// 自作アサート(Release 時は無効)
+#define my_assert(...)
+
+#endif
+
+// ------------------------------------------------------------------
+// いろんな assert
+// ------------------------------------------------------------------
+
+// 「値が範囲外だよ！！」
+#define my_assert_range(value, min, max) \
+	my_assert((min <= value) && (value <= max) && "(%d <= [%d] <= %d)", min, value, max)
+
+// 「配列外アクセスだよ！！」
+#define my_assert_array(index, max) \
+	my_assert((0 <= index) && (index < max) && "(0 <= [%d] < %d)", index, max)
+
+// 「ここに来ちゃだめだよ！！」
+#define my_assert_must_not_happen() \
+	my_assert(false && "(must not happen.)")
+
+// 「NULL アクセスだよ！！」
+#define my_assert_null(ptr) \
+	my_assert(ptr != NULL && "(null access.)");
 // clang-format on

@@ -105,12 +105,9 @@ struct goBoard {
     // set<tuple<double, int, int, pair<char, char>>> ucts;
 
 
-    const float PUCT_C_BASE = 20403.9803;
-    const float PUCT_C_INIT = 0.70598003;
-
-
-    /// @brief <puct, この手の探索回数, この手の勝率の合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->pucts) みたく使う。
-    /// puct = (log((1 + この手の探索回数 + PUCT_C_BASE) / PUCT_C_BASE) + PUCT_C_INIT) * この手の勝率の合計 / この手の探索回数 + sqrt(2 * log(現局面の総探索回数) / この手の探索回数)
+    /// @brief <puct, この手の探索回数, この手のvalueの合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->pucts) みたく使う。
+    /// 授業で教わった定義：Valueの平均値 + PUCT_C * sqrt(log(この手の探索回数)) / (1 + 現局面の総探索回数)
+    /// ネットで見つけた定義：puct = (log((1 + この手の探索回数 + PUCT_C_BASE) / PUCT_C_BASE) + PUCT_C_INIT) * この手の勝率の合計 / この手の探索回数 + sqrt(2 * log(現局面の総探索回数) / この手の探索回数)
     set<tuple<double, int, float, pair<char, char>>> pucts;
 
 

@@ -473,7 +473,7 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
         elif input_gtp_command == "name":
             return _name()
         elif input_gtp_command == "quit":
-            _quit()
+            return _quit()
         elif input_gtp_command == "known_command":
             return self._known_command(command_list[1])
         elif input_gtp_command == "list_commands":
@@ -547,8 +547,8 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             self._analyze("cgos", command_list[1:])
             print("")
         elif input_gtp_command == "cgos-genmove_analyze":
-            return self._genmove(command_list[1])
-            # self._genmove_analyze("cgos", command_list[1:])
+            # return self._genmove(command_list[1])
+            self._genmove_analyze("cgos", command_list[1:])
         elif input_gtp_command == "hash_record":
             print_err(self.board.record.get_hash_history())
             respond_success("")
@@ -596,5 +596,7 @@ def _quit() -> NoReturn:
     """quitコマンドを処理する。
     プログラムを終了する。
     """
-    respond_success("")
+    return respond_success("quit")
     sys.exit(0)
+    # respond_success("")
+    # sys.exit(0)
