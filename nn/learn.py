@@ -1,21 +1,4 @@
 """深層学習の実装。
-
-python3 train.py --size 13 --use-ddp true --net DualNet_256_24
-
-
-[20250226_170831] learn
-epoch 0, data-0 : loss = 4.722960, time = 419.1 [s].
-        policy loss : 4.715367
-        value loss  : 0.759278
-[20250226_171151] monitoring
-cpu: 8.9% [5.5, 72.4, 1.1, 0.4, 1.1, 23.8, 0.5, 0.3, 0.7, 0.3, 0.6, 0.6] 
-mem: 26.8% 🔥
-NVIDIA GeForce RTX 3060, 0, 98 %, 6635 MiB, 154.06 W 🔥
-
-[20250226_171533] learn
-epoch 0, data-1 : loss = 3.384733, time = 420.3 [s].
-        policy loss : 3.376641
-        value loss  : 0.809221
 """
 import glob
 import os
@@ -371,7 +354,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
             state_dict = dual_net_copy.state_dict()
 
         # モデルの保存
-        torch.save(state_dict, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
+        torch.save(state_dict, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep{epoch:0>2}.bin"))
         # torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
         # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
 
@@ -382,7 +365,7 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
 
 
-def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data") -> None: # pylint: disable=R0914,R0915
+def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data", checkpoint_dir: str = None) -> None: # pylint: disable=R0914,R0915
     """教師あり学習を実行し、学習したモデルを保存する。
 
     Args:
@@ -412,17 +395,37 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
     else:
         print(f"👺network_name: {network_name} is not defined.")
         raise(f"network_name is not defined.")
+    
+    if checkpoint_dir is not None:
+        checkpoint = torch.load(checkpoint_dir)
+        state_dict = checkpoint['model_state_dict']
+        
+        # DataParallelで保存されたモデルのstate_dictを修正
+        from collections import OrderedDict
+        new_state_dict = OrderedDict()
+        for k, v in state_dict.items():
+            if k.startswith('module.'):
+                name = k[7:] # module.を取り除く
+                new_state_dict[name] = v
+            else:
+                new_state_dict[k] = v
+        
+        dual_net.load_state_dict(new_state_dict)
+        policy_loss = checkpoint['policy_loss']
+        value_loss = checkpoint['value_loss']
 
     print(f"🐾device: ", rank)#############
     dual_net = dual_net.to(rank)
     dual_net = torch.nn.parallel.DistributedDataParallel(dual_net, device_ids = [rank], output_device = rank, find_unused_parameters=False)
-
 
     optimizer = torch.optim.SGD(dual_net.parameters(),
                                 lr=SL_LEARNING_RATE,
                                 momentum=MOMENTUM,
                                 weight_decay=WEIGHT_DECAY,
                                 nesterov=True)
+
+    if checkpoint_dir is not None:
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
 
     scaler = torch.cuda.amp.GradScaler()
     """勾配消失とかいうのを防ぐやつらしい"""
@@ -590,7 +593,7 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
         if int(rank) == 0:
             # たぶん、save_model すると変更が入るので、ディープコピーを作ってそれを保存する。
             dual_net_copy = copy.deepcopy(dual_net)######
-            torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
+            torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep{epoch:0>2}.bin"))
             # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
 
             torch.save({
@@ -599,7 +602,7 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
                 'optimizer_state_dict': optimizer.state_dict(),
                 'policy_loss': policy_loss,
                 'value_loss': value_loss,
-                }, os.path.join("model", f"checkpoint_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))
+                }, os.path.join("model", f"checkpoint_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep{epoch:0>2}.bin"))
 
     # save_model(dual_net, os.path.join("model", "sl-model.bin"))
 
@@ -607,7 +610,7 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
 
 
 
-def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data") -> None: # pylint: disable=R0914,R0915
+def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data", chckpoint_dir: str = None) -> None: # pylint: disable=R0914,R0915
 
     print(f"🐾train_on_gpu_ddp {dt_now}")###########
     print(f"    [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
@@ -639,7 +642,7 @@ def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs:
     os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
     # os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
 
-    torch.multiprocessing.spawn(train_on_gpu_ddp_worker, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir), nprocs = torch.cuda.device_count(), join = True)
+    torch.multiprocessing.spawn(train_on_gpu_ddp_worker, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir, chckpoint_dir), nprocs = torch.cuda.device_count(), join = True)
 
 
 
