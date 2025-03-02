@@ -275,9 +275,11 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
     assert(!isEnded);
 
 
-    ++numVisits;
+    // ++numVisits;
 
     vector<tuple<char, char, char>> legalMoves = GenAllLegalMoves();
+
+    numVisits = legalMoves.size();
 
     /// 推論の結果を一時保存する配列。tmpPolicy[BOARDSIZE * BOARDSIZE] はパス。
     vector<float> tmpPolicy(BOARDSIZE * BOARDSIZE + 1, 0.0);
@@ -1894,6 +1896,8 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
             if (ptr->isRoot) {
                 break;
             }
+
+            lock_guard<recursive_mutex> lock(ptr->uctsMutex);
 
             ptr->UpdateUcts(leafRslt, nextMove);
             nextMove = ptr->previousMove;

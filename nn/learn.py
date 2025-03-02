@@ -461,6 +461,8 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
 
     for epoch in range(epochs):
 
+        npz_cnt = 0
+
         # npz ループ
         for data_index, train_npz_path in enumerate(train_npz_paths):
 
@@ -527,6 +529,19 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
 
             if int(rank) == 0:
                 print_learning_process(train_loss, epoch, data_index, iteration, epoch_time)
+                npz_cnt += 1
+                if npz_cnt % 10 == 0:
+                    dual_net_copy = copy.deepcopy(dual_net)######
+                    torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_{npz_cnt:0>3}.bin"))
+                    # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
+
+                    torch.save({
+                        'epoch': epoch,
+                        'model_state_dict': dual_net.state_dict(),
+                        'optimizer_state_dict': optimizer.state_dict(),
+                        'policy_loss': policy_loss,
+                        'value_loss': value_loss,
+                        }, os.path.join("model", f"checkpoint_{dt_now.strftime('%Y%m%d_%H%M%S')}_{npz_cnt:0>3}.bin"))
 
 
         test_loss = {

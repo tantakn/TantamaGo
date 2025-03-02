@@ -31,7 +31,7 @@ import click
 from learning_param import BATCH_SIZE, EPOCHS
 from board.constant import BOARD_SIZE
 from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, train_with_gumbel_alphazero_on_cpu,  train_on_gpu_ddp
-from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data
+from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data, generate_supervised_learning_data_mt
 
 import threading, time, datetime
 from monitoring import display_train_monitoring_worker
@@ -129,7 +129,8 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             generate_reinforcement_learning_data(program_dir=program_dir, kifu_dir_list=kifu_dir_list, board_size=size, input_opt=input_opt)
         else:
             # こっちの kifu_dir は kifu_dir/*.sgf
-            generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
+            generate_supervised_learning_data_mt(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
+            # generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
             # generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
 
     if npz_dir is not None:###############

@@ -33,8 +33,6 @@ def timeout_handler(signum, frame):
     raise TimeoutException("処理がタイムアウトしました。")
 
 
-
-
 def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndarray, value_data: np.ndarray, kifu_counter: int) -> None:
     """学習データをnpzファイルとして出力する。引数のnp配列それぞれの辞書として保存する。
 
@@ -565,6 +563,177 @@ def generate_supervised_learning_data2(program_dir: str, kifu_dir: str, num_work
 
 
 
+
+
+import threading
+from concurrent.futures import ThreadPoolExecutor
+from queue import Queue
+import time
+
+def generate_supervised_learning_data_mt(program_dir: str=None, kifu_dir: str=None, board_size: int=9, opt: str="", n_threads: int=10) -> None:
+    """マルチスレッドで教師あり学習のデータを生成して保存する。
+
+    Args:
+        program_dir (str): プログラムのホームディレクトリのパス。
+        kifu_dir (str): SGFファイルを格納しているディレクトリのパス。{kifu_dir}/*.sgf。* は 1 始まり。
+        board_size (int, optional): 碁盤のサイズ. Defaults to 9.
+        opt (str, optional): 追加オプション. Defaults to "".
+        n_threads (int, optional): 使用するスレッド数. Defaults to 4.
+    """
+    assert kifu_dir is not None, "kifu_dir is None."
+    assert program_dir is not None, "program_dir is None."
+
+    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_data_mt start (threads: {n_threads})")
+    print(f"    BATCH_SIZE: {BATCH_SIZE}")
+    print(f"    DATA_SET_SIZE: {DATA_SET_SIZE}")
+
+    # 棋譜ファイルのリストを取得
+    kifu_files = sorted(glob.glob(os.path.join(kifu_dir, "*.sgf")))
+    kifu_num = len(kifu_files)
+    print(f"    kifu_num: {kifu_num}")
+    
+    # スレッド間で共有するカウンターとロック
+    data_counter_lock = threading.Lock()
+    data_counter = [0]  # リストで包むことでミュータブルにする
+    processed_files_counter = [0]
+    
+    # 処理済みの棋譜をカウントする関数
+    def increment_processed_counter():
+        with data_counter_lock:
+            processed_files_counter[0] += 1
+            return processed_files_counter[0]
+    
+    # データを保存する関数（スレッドセーフ）
+    def save_data_thread_safe(input_data, policy_data, value_data, kifu_counter):
+        with data_counter_lock:
+            save_file_path = os.path.join(program_dir, "data", f"sl_data_{data_counter[0]}")
+            _save_data(save_file_path, input_data, policy_data, value_data, kifu_counter)
+            data_counter[0] += 1
+            return data_counter[0] - 1
+    
+    # 各スレッドで実行される関数
+    def process_kifu_batch(kifu_batch):
+        board = GoBoard(board_size=board_size)
+        input_data = []
+        policy_data = []
+        value_data = []
+        kifu_counter = 0
+        dt_watch = datetime.datetime.now()
+
+        for kifu_path in kifu_batch:
+            kifu_counter += 1
+            bk_input_data = input_data.copy()
+            bk_policy_data = policy_data.copy()
+            bk_value_data = value_data.copy()
+            
+            board.clear()
+            
+            # タイムアウト処理用のフラグと変数
+            timeout_occurred = [False]
+            processing_done = [False]
+            
+            def handle_timeout():
+                if not processing_done[0]:
+                    timeout_occurred[0] = True
+                    logging.error(f"処理がタイムアウトしました: {kifu_path}")
+            
+            # タイマーを設定（秒）
+            timeout_seconds = 1
+            timer = threading.Timer(timeout_seconds, handle_timeout)
+            timer.start()
+            
+            try:
+                # ここで勝敗とかも取得してる
+                sgf = SGFReader(kifu_path, board_size)
+                color = Stone.BLACK
+                value_label = sgf.get_value_label()
+                
+                # 手のループ
+                for pos in sgf.get_moves():
+                    # タイムアウトチェック
+                    if timeout_occurred[0]:
+                        # データを元に戻す
+                        input_data = bk_input_data.copy()
+                        policy_data = bk_policy_data.copy()
+                        value_data = bk_value_data.copy()
+                        break
+                    
+                    # 対称形でかさ増し
+                    for sym in range(8):
+                        input_data.append(generate_input_planes(board, color, sym, opt))
+                        policy_data.append(generate_target_data(board, pos, sym))
+                        value_data.append(value_label)
+
+                    # 手を一手進める
+                    board.put_stone(pos, color)
+                    color = Stone.get_opponent_color(color)
+                    # Valueのラベルを入れ替える
+                    value_label = 2 - value_label
+                    
+            except Exception as e:
+                logging.error(f"処理中にエラーが発生しました: {kifu_path}, {str(e)}")
+                # データを元に戻す
+                input_data = bk_input_data.copy()
+                policy_data = bk_policy_data.copy()
+                value_data = bk_value_data.copy()
+                
+            finally:
+                # 処理完了フラグを立てる
+                processing_done[0] = True
+                # タイマーをキャンセル
+                timer.cancel()
+            
+            # タイムアウトが発生した場合は次のファイルへ
+            if timeout_occurred[0]:
+                continue
+            
+            # 処理済みファイル数を更新
+            processed = increment_processed_counter()
+            if processed % 100 == 0:
+                print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] 処理済み: {processed}/{kifu_num} 棋譜")
+
+            # データセットのサイズを超えたら保存
+            if len(value_data) >= DATA_SET_SIZE:
+                saved_counter = save_data_thread_safe(input_data, policy_data, value_data, kifu_counter)
+                print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_npz")
+                print(f"    saved: sl_data_{saved_counter}.npz ({datetime.datetime.now() - dt_watch})")
+                print(f"    処理済み: {processed}/{kifu_num}棋譜")
+                
+                # 保存したデータを削除
+                input_data = input_data[DATA_SET_SIZE:]
+                policy_data = policy_data[DATA_SET_SIZE:]
+                value_data = value_data[DATA_SET_SIZE:]
+                kifu_counter = 0
+                dt_watch = datetime.datetime.now()
+
+        # 端数の出力。BATCH_SIZE で割り切れる数だけデータを保存する。他は捨てる。
+        n_batches = len(value_data) // BATCH_SIZE
+        if n_batches > 0:
+            save_data_thread_safe(input_data[0:n_batches*BATCH_SIZE], 
+                                policy_data[0:n_batches*BATCH_SIZE], 
+                                value_data[0:n_batches*BATCH_SIZE], 
+                                kifu_counter)
+
+    # 棋譜ファイルをスレッド数に応じて分割
+    kifu_batches = []
+    batch_size = (len(kifu_files) + n_threads - 1) // n_threads
+    
+    for i in range(0, len(kifu_files), batch_size):
+        kifu_batches.append(kifu_files[i:i + batch_size])
+    
+    # ThreadPoolExecutorを使って並列処理
+    with ThreadPoolExecutor(max_workers=n_threads) as executor:
+        futures = []
+        for batch in kifu_batches:
+            futures.append(executor.submit(process_kifu_batch, batch))
+        
+        # 全てのスレッドが完了するのを待つ
+        for future in futures:
+            future.result()
+    
+    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_data_mt finished")
+    print(f"    全ての棋譜処理完了: {processed_files_counter[0]}/{kifu_num}")
+    print(f"    生成されたデータセット数: {data_counter[0]}")
 
 
 
