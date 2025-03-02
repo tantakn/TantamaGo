@@ -2,7 +2,7 @@
 """
 
 # 教師あり学習実行時の学習率
-SL_LEARNING_RATE = 0.01
+SL_LEARNING_RATE = 0.02
 
 # 強化学習実行時の学習率
 RL_LEARNING_RATE = 0.01

@@ -7,7 +7,8 @@ import socket, random, json, time
 from board.constant import BOARD_SIZE
 from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
 
-secret = json.load(open("/home/tantakn/code/TantamaGo/cppboard/gitignor_it.json"))
+secret = json.load(open(r"C:\code\TantamaGo\cppboard\gitignore_it.json"))
+# secret = json.load(open("/home/tantakn/code/TantamaGo/cppboard/gitignor_it.json"))
 
 
 
@@ -25,7 +26,8 @@ client_socket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # 接続先は'localhost'（自分自身のマシン）で、ポート番号は8000です。
 # サーバー側でserver_socket.accept()が実行され、接続待ちの状態である必要があります。
 client_socket1.connect((secret["ip_desk_ubuntu"], int(secret["port"])))
-client_socket2.connect((secret["ip_desk_win"], int(secret["port2"])))
+client_socket2.connect((secret["ip_desk_ubuntu"], int(secret["port2"])))
+# client_socket2.connect((secret["ip_desk_win"], int(secret["port2"])))
 
 
 # データを送信
@@ -41,7 +43,11 @@ data = client_socket1.recv(1024).decode('utf-8')
 # data = client_socket2.recv(1024).decode('utf-8')
 # print('受信したデータ:', data)
 
-# 送信するデータ
+
+
+
+
+# tamagoならここから
 data = {
     "size": BOARD_SIZE,
     "superko": "Ture",
@@ -65,6 +71,7 @@ data_bytes = data_json.encode()
 
 # print(f"🐾encrypted_data: {encrypted_data}")
 client_socket2.send(data_bytes)
+# ここまで必要
 
 
 
@@ -123,7 +130,7 @@ while True:
             data1 = client_socket1.recv(1024).decode('utf-8')
             # print(f"socet1_recv[{data1}]")##########
     
-            client_socket2.send(f"play B {data1.split('=')[1]}".encode('utf-8'))
+            client_socket2.send(f"play B {data1.split('=')[1] if not data1.split('=')[1][0] == ' ' else data1.split('=')[1].split(' ')[1]}".encode('utf-8'))
             # print(f"socket2_send[play B {data1.split('=')[1]}]")##########
             data2 = client_socket2.recv(1024).decode('utf-8')
             # print(f"socket2_recv[{data2}]")############
@@ -137,7 +144,7 @@ while True:
             data2 = client_socket2.recv(1024).decode('utf-8')
             # print(f"socket2_recv[{data2}]")############
 
-            client_socket1.send(f"play W {data2.split('=')[1].split(' ')[1].split('\n')[0]}".encode('utf-8'))
+            client_socket1.send(f"play W {data2.split('=')[1] if not data2.split('=')[1][0] == ' ' else data2.split('=')[1].split(' ')[1]}".encode('utf-8'))
             # print(f"socket1_send[play W {data2.split('=')[1].split(' ')[1].split('\n')[0]}]")############
             data1 = client_socket1.recv(1024).decode('utf-8')
             # print(f"socket1_recv[{data1}]")###########

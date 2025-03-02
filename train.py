@@ -1,4 +1,29 @@
 """教師あり学習のエントリーポイント。
+
+npz を作るとき
+python3 train.py --size 13 --kifu-dir /home0/y2024/u2424004/igo/TantamaGo/SgfFile/13x13-record-2
+
+
+学習するとき
+python3 train.py --size 13 --use-ddp true --npz-dir data --net DualNet_256_24
+
+[20250226_170831] learn
+epoch 0, data-0 : loss = 4.722960, time = 419.1 [s].
+        policy loss : 4.715367
+        value loss  : 0.759278
+[20250226_171151] monitoring
+cpu: 8.9% [5.5, 72.4, 1.1, 0.4, 1.1, 23.8, 0.5, 0.3, 0.7, 0.3, 0.6, 0.6] 
+mem: 26.8% 🔥
+NVIDIA GeForce RTX 3060, 0, 98 %, 6635 MiB, 154.06 W 🔥
+
+[20250226_171533] learn
+epoch 0, data-1 : loss = 3.384733, time = 420.3 [s].
+        policy loss : 3.376641
+        value loss  : 0.809221
+
+
+チェックポイントから学習するとき
+python3 train.py --size 13 --use-ddp true --npz-dir data --net DualNet_256_24 --checkpoint-dir model/checkpoint_20250227_033544_Ep:00.bin
 """
 import glob
 import os
@@ -37,13 +62,15 @@ import resource
     help="ネットワーク。デフォルトは DualNet。DualNet_256_24 とかを指定する。")
 @click.option('--npz-dir', 'npz_dir', type=click.STRING, default="data", \
     help="npzがあるフォルダのパス。デフォルトは data。")
+@click.option('--checkpoint-dir', 'checkpoint_dir', type=click.STRING, default=None, \
+    help="checkpointがあるフォルダのパス。デフォルトは None。")
 @click.option('--rl-num', 'rl_num', type=click.INT, default=-1, \
     help="rl のパイプラインが何周目か。")
 @click.option('--rl-datetime', 'rl_datetime', type=click.STRING, default="", \
     help="rl のパイプラインの開始日時。")
 @click.option('--input-opt', 'input_opt', type=click.STRING, default="", \
     help="input_planes のオプション。")
-def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, ddp: bool, rl_num: int, rl_datetime: str, input_opt: str): # pylint: disable=C0103
+def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, checkpoint_dir: str, ddp: bool, rl_num: int, rl_datetime: str, input_opt: str): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 
     Args:
@@ -64,6 +91,7 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
     print(f"    window_size: {window_size}")
     print(f"    network_name: {network_name}")
     print(f"    npz_dir: {npz_dir}")
+    print(f"    checkpoint_dir: {checkpoint_dir}")
     print(f"    ddp: {ddp}")
     print(f"    rl_num: {rl_num}")
     print(f"    rl_datetime: {rl_datetime}")
@@ -104,19 +132,19 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
             # generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
 
-
-    if rl:
-        if use_gpu:
-            train_with_gumbel_alphazero_on_gpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE, rl_num=rl_num, rl_datetime=rl_datetime, network_name=network_name)
+    if npz_dir is not None:###############
+        if rl:
+            if use_gpu:
+                train_with_gumbel_alphazero_on_gpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE, rl_num=rl_num, rl_datetime=rl_datetime, network_name=network_name)
+            else:
+                train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
         else:
-            train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
-    else:
-        if use_gpu and ddp:
-            train_on_gpu_ddp(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
-        elif use_gpu:
-            train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
-        else:
-            train_on_cpu(program_dir=program_dir,board_size=size, batch_size=BATCH_SIZE, epochs=EPOCHS)
+            if use_gpu and ddp:
+                train_on_gpu_ddp(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir, chckpoint_dir=checkpoint_dir)
+            elif use_gpu:
+                train_on_gpu(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir)
+            else:
+                train_on_cpu(program_dir=program_dir,board_size=size, batch_size=BATCH_SIZE, epochs=EPOCHS)
 
 
 
