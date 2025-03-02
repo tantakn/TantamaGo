@@ -8,7 +8,7 @@ import numpy as np
 # npz_dir = "/home/tantakn/code/TantamaGo/backup/data_Q50000/sl_data_0.npz"
 npz_dir = "/home/tantakn/code/TantamaGo/data/sl_data_0.npz"
 # npz_dir = "/home0/y2024/u2424004/igo/TantamaGo/backup/data_Q50000/sl_data_0.npz"
-# npz_dir = "/home0/y2024/u2424004/igo/TantamaGo/data/sl_data_0.npz"
+npz_dir = "/home0/y2024/u2424004/igo/TantamaGo/data/sl_data_500.npz"
 
 
 def tmp_load_data_set(npz_path, rank=0):
