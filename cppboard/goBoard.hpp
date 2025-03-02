@@ -8,6 +8,7 @@
 
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
+/// @brief 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁
 vector<vector<char>> rawBoard = []()
 {
     vector<vector<char>> tmpBoard(BOARDSIZE + 2, vector<char>(BOARDSIZE + 2, 0b0));
@@ -20,6 +21,7 @@ vector<vector<char>> rawBoard = []()
     return tmpBoard;
 }();
 
+/// @brief 0は空点、-1は壁
 vector<vector<int>> rawIdBoard = []() 
 {
     vector<vector<int>> tmpIdBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0));
@@ -312,7 +314,7 @@ char ConvertInt(int n);
 
 
 
-string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime);
+string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime, bool ponder);
 
 void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT);
 

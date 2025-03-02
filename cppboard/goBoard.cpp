@@ -286,64 +286,137 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
     tensorRT.infer(MakeInputPlane(), tmpPolicy, values);
 
 
-    // softmaxで使う変数
-    float maxPolicy = 0.0;
 
     for (auto [y, x, t] : legalMoves) {
         if (x == 0 && y == 0) {
             float tmp = tmpPolicy[BOARDSIZE * BOARDSIZE];
             policys[make_pair(y, x)] = tmp;
-            chmax(maxPolicy, tmp);
             continue;
         }
         float tmp = tmpPolicy[(y - 1) * BOARDSIZE + x - 1];
         policys[make_pair(y, x)] = tmp;
-        chmax(maxPolicy, tmp);
     }
 
 
-    // valueにsoftmax
-    float bunbo = 0.0;
-    for (auto x : values) {
-        bunbo += exp(x);
+
+    if (0) {  // softmaxなし
+        for (auto [move, x] : policys) {
+            float tmpUct;
+            if (IS_PUCT) {
+                tmpUct = x + PUCB_SECOND_TERM_WEIGHT * sqrt(log(policys.size())) / 2;
+            }
+            else {
+                tmpUct = x + sqrt(2 * log(policys.size()));
+            }
+            lock_guard<recursive_mutex> lock(uctsMutex);
+            ucts.insert(make_tuple(tmpUct, 1, x, move));
+        }
+
+        if (debugFlag & 1 << 31) {
+            PrintBoard(1 << 31);
+        }
+
+        return tie(teban, values[0], values[1], values[2]);
     }
+    else if (1) {  // softmaxあり
+        // softmaxで使う変数
+        float maxPolicy = 0.0;
 
-    for (auto& x : values) {
-        x = exp(x) / bunbo;
+        for (auto [y, x, t] : legalMoves) {
+            if (x == 0 && y == 0) {
+                float tmp = tmpPolicy[BOARDSIZE * BOARDSIZE];
+                policys[make_pair(y, x)] = tmp;
+                chmax(maxPolicy, tmp);
+                continue;
+            }
+            float tmp = tmpPolicy[(y - 1) * BOARDSIZE + x - 1];
+            policys[make_pair(y, x)] = tmp;
+            chmax(maxPolicy, tmp);
+        }
+
+
+        // valueにsoftmax
+        float bunbo = 0.0;
+        for (auto x : values) {
+            bunbo += exp(x);
+        }
+
+        for (auto& x : values) {
+            x = exp(x) / bunbo;
+        }
+
+        // tmppolicyにsoftmax
+        map<std::pair<char, char>, float> tmpPolicys;
+        bunbo = 0.0;
+        for (auto [move, x] : policys) {
+            bunbo += exp(x - maxPolicy);
+        }
+
+        float maxPolicy2 = 0.0;
+        for (auto [move, x] : policys) {
+            tmpPolicys[move] = exp(x - maxPolicy) / bunbo;
+            chmax(maxPolicy2, tmpPolicys[move]);
+        }
+
+
+        // tmpPolicys の最大が values[2] + values[1] * 0.5 になるように調整
+        for (auto [move, x] : tmpPolicys) {
+            tmpPolicys[move] = (values[2] + values[1] * 0.5) * x / maxPolicy2;
+            // policys[move] = values[2] * x / maxPolicy2;
+            if (move == make_pair(char(0), char(0))) {
+                tmpPolicys[move] -= 0.5;
+            }
+        }
+        // policyにsoftmaxここまで
+
+
+        // // policyにsoftmax
+        // bunbo = 0.0;
+        // for (auto [move, x] : policys) {
+        //     bunbo += exp(x - maxPolicy);
+        // }
+
+        // float maxPolicy2 = 0.0;
+        // for (auto [move, x] : policys) {
+        //     policys[move] = exp(x - maxPolicy) / bunbo;
+        //     chmax(maxPolicy2, policys[move]);
+        // }
+
+
+        // // policys の最大が values[2] + values[1] * 0.5 になるように調整
+        // for (auto [move, x] : policys) {
+        //     policys[move] = (values[2] + values[1] * 0.5) * x / maxPolicy2;
+        //     // policys[move] = values[2] * x / maxPolicy2;
+        //     if (move == make_pair(char(0), char(0))) {
+        //         policys[move] -= 0.5;
+        //     }
+        // }
+        // // policyにsoftmaxここまで
+
+
+        for (auto [move, x] : policys) {
+            float tmpUct;
+            if (IS_PUCT) {
+                tmpUct = x + PUCB_SECOND_TERM_WEIGHT * sqrt(log(policys.size())) / 2;
+            }
+            else {
+                tmpUct = x + sqrt(2 * log(policys.size()));
+            }
+            lock_guard<recursive_mutex> lock(uctsMutex);
+            // ucts.insert(make_tuple(tmpUct, 1, x, move));
+            ucts.insert(make_tuple(tmpUct, 1, tmpPolicys[move], move));
+        }
+
+        if (debugFlag & 1 << 31) {
+            PrintBoard(1 << 31);
+        }
+
+#ifdef dbg_flag
+        chmax(deepestMoveCnt, this->moveCnt);
+#endif
+
+        return tie(teban, values[0], values[1], values[2]);
     }
-
-    // policyにsoftmax
-    bunbo = 0.0;
-    for (auto [move, x] : policys) {
-        bunbo += exp(x - maxPolicy);
-    }
-
-    float maxPolicy2 = 0.0;
-    for (auto [move, x] : policys) {
-        policys[move] = exp(x - maxPolicy) / bunbo;
-        chmax(maxPolicy2, policys[move]);
-    }
-
-
-    // policys の最大が values[2] になるように調整
-    for (auto [move, x] : policys) {
-        policys[move] = values[2] * x / maxPolicy2;
-        // policys[move] = values[2] * x / maxPolicy2;//////////////////////
-    }
-
-
-    for (auto [move, x] : policys) {
-        float tmpUct = x + sqrt(2 * log(policys.size()));
-        lock_guard<recursive_mutex> lock(uctsMutex);
-        ucts.insert(make_tuple(tmpUct, 1, x, move));
-    }
-
-    if (debugFlag & 1 << 31) {
-        PrintBoard(1 << 31);
-    }
-
-
-    return tie(teban, values[0], values[1], values[2]);
 }
 
 
@@ -355,6 +428,8 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
         // if (inputColor != teban) {/////////////////////////
         swap(inputWinValue, inputLoseValue);
     }
+
+    inputWinValue = inputWinValue + inputDrawValue * 0.5;
 
 
     lock_guard<recursive_mutex> lock(uctsMutex);
@@ -371,7 +446,7 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
                 valueSum += inputWinValue;
             }
 
-            double newUct = valueSum / cnt + PUCB_SECOND_TERM_WEIGHT * sqrt(log(numVisits)) / (1 + cnt);
+            double newUct = valueSum / cnt + PUCB_SECOND_TERM_WEIGHT * policys[puctMove] * sqrt(log(numVisits)) / (1 + cnt);
             // double newUct = valueSum / cnt + PUCB_SECOND_TERM_WEIGHT * sqrt(log(cnt)) / (1 + numVisits);  // 多分逆
 
             tmpUcts.insert(make_tuple(newUct, cnt, valueSum, puctMove));
@@ -455,7 +530,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 {
     if (bit & 0b0001) {
         // print("board: ", board);
-        cerr << (int)previousMove.first << " " << (int)previousMove.second << " " << (int)teban << endl;  ////////////////
+        cerr << "previousMove: " << (int)previousMove.first << " " << (int)previousMove.second << " " << 3 - (int)teban << endl;  ////////////////
         cerr << "moveCnt: " << (int)moveCnt << ", teban: " << (int)teban << endl;
         cerr << "   " << flush;
         rep (i, BOARDSIZE) {
@@ -563,9 +638,12 @@ void goBoard::PrintBoard(ll bit = 0b1)
                     if (tmp[i][j] == -1000000) {
                         cerr << "---- " << flush;
                     }
-                    else {
+                    else if (tmp[i][j] >= 0) {
                         cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 1000) << " " << flush;
                         // cerr << fixed << setprecision(4) << tmp[i][j] << " ";
+                    }
+                    else {
+                        cerr << setw(4) << setfill(' ') << 0 << " " << flush;
                     }
                 }
                 else if (board[i][j] == 1) {
@@ -637,9 +715,12 @@ void goBoard::PrintBoard(ll bit = 0b1)
                     if (tmp[i][j] == -1000000) {
                         cerr << "---- " << flush;
                     }
-                    else {
+                    else if (tmp[i][j] >= 0) {
                         cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 100) << " " << flush;
                         // cerr << fixed << setprecision(1) << showpoint << tmp[i][j] * 10 << " ";
+                    }
+                    else {
+                        cerr << setw(4) << setfill(' ') << 0 << " " << flush;
                     }
                 }
                 else if (board[i][j] == 1) {
@@ -697,11 +778,19 @@ void goBoard::PrintBoard(ll bit = 0b1)
     if (bit & 1 << 27) {
         lock_guard<recursive_mutex> lock(uctsMutex);
 
-        cerr << "勝率*1000 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+        cerr << "探索後勝率*1000 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+#ifdef dbg_flag
+        cout << "endCnt: " << endCnt << ", depth: " << deepestMoveCnt - this->moveCnt << endl;
+#endif
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, -1000000));
         pair<char, char> maxMove;
+        double maxWinRate = -INF;
         for (auto [uct, cnt, winSum, move] : ucts) {
             tmp[move.first][move.second] = winSum / cnt;
+            if (winSum / cnt >= maxWinRate) {
+                maxWinRate = winSum / cnt;
+                maxMove = move;
+            }
         }
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
@@ -709,8 +798,11 @@ void goBoard::PrintBoard(ll bit = 0b1)
                     if (tmp[i][j] == -1000000) {
                         cerr << "---- " << flush;
                     }
-                    else {
+                    else if (tmp[i][j] >= 0) {
                         cerr << setw(4) << setfill(' ') << int(tmp[i][j] * 1000) << " " << flush;
+                    }
+                    else {
+                        cerr << setw(4) << setfill(' ') << 0 << " " << flush;
                     }
                 }
                 else if (board[i][j] == 1) {
@@ -726,6 +818,8 @@ void goBoard::PrintBoard(ll bit = 0b1)
             cerr << endl;
         }
         cerr << "pass: " << setw(4) << setfill(' ') << int(tmp[0][0] * 1000) << endl;
+        print("maxWinRate:", maxWinRate, maxMove);
+        print("infervalues:", values);
     }
 
     // ペナルティの表示
@@ -904,19 +998,38 @@ int goBoard::IsIllegalMove(int y, int x, char color)
     }
 
     // 終局のために、2眼以上ある石の目を埋める手に良い手が無いと仮定して、その手を禁止とする。
-    bool isFillEye = true;
-    for (auto dir : directions) {
-        int nx = x + dir.first;
-        int ny = y + dir.second;
+    // とりあえず、四方を同じ連が囲っている場合に眼として、その眼を埋める手を禁止とする。
 
-        if (board[ny][nx] == 0 || board[ny][nx] == 3 - color || libs[idBoard[ny][nx]] <= 1) {
-            isFillEye = false;
-            break;
-        }
-    }
-    if (isFillEye) {
-        return 4;
-    }
+    // // 何故か動かない
+    // bool isFillEye = true;
+    // char tmpId = -2;
+    // for (auto dir : directions) {
+    //     int nx = x + dir.first;
+    //     int ny = y + dir.second;
+
+    //     if (board[ny][nx] == 0) {
+    //         isFillEye = false;
+    //         break;
+    //     }
+
+    //     if (board[ny][nx] == 3) {
+    //         continue;
+    //     }
+
+    //     if (tmpId == -2) {
+    //         tmpId = idBoard[ny][nx];
+    //         continue;
+    //     }
+
+    //     if (tmpId != idBoard[ny][nx]) {
+    //         isFillEye = false;
+    //         break;
+    //     }
+    // }
+
+    // if (isFillEye) {
+    //     return 4;
+    // }
 
     return 0;
 };
@@ -1031,6 +1144,7 @@ goBoard* goBoard::PutStone(int y, int x, char color)
     if (IsIllegalMove(y, x, color)) {  ///////////////
         print(y, x, color);
         print(IsIllegalMove(y, x, color));
+        this->PrintBoard(0b1111);
     }
     assert(!IsIllegalMove(y, x, color));
 
@@ -1080,23 +1194,43 @@ tuple<char, char, char> goBoard::GenRandomMove()
 double goBoard::CountResult()
 {
     /// TODO: 日本ルール用の暫定措置。どうにかしたい。白黒が隣り合っているところでラインを引いて地を数える？中国ルールで最後までプレイしてみる？
-    if (isJapaneseRule) {
+    if (1) {  ////////////////////
+              // if (isJapaneseRule) {
+        double tmpBlackScore;
         if (values.size()) {
-            if (teban != 2) {
-                // if (teban == 2) {///////////////////
-                return values[0];
+            if (values[0] > values[2] && values[0] > values[1]) {
+                tmpBlackScore = -1.0;
+            }
+            else if (values[1] > values[0] && values[1] > values[2]) {
+                tmpBlackScore = 0.0;
             }
             else {
-                return values[2];
+                tmpBlackScore = 1.0;
+            }
+
+            if (teban == 1) {
+                return tmpBlackScore;
+            }
+            else {
+                return tmpBlackScore * -1;
             }
         }
         else if (parent->values.size()) {
-            if (parent->teban != 2) {
-                // if (parent->teban == 2) {
-                return parent->values[0];
+            if (parent->values[0] > parent->values[2] && parent->values[0] > parent->values[1]) {
+                tmpBlackScore = -1.0;
+            }
+            else if (parent->values[1] > parent->values[0] && parent->values[1] > parent->values[2]) {
+                tmpBlackScore = 0.0;
             }
             else {
-                return parent->values[2];
+                tmpBlackScore = 1.0;
+            }
+
+            if (teban == 1) {
+                return tmpBlackScore;
+            }
+            else {
+                return tmpBlackScore * -1;
             }
         }
         else {
@@ -1107,9 +1241,57 @@ double goBoard::CountResult()
 
 
     /// TODO: セキは？味方の連の呼吸点が1になるような手は打たなくても良いことにする？
+    /// TODO:
 
     int blackScore = 0;
     int whiteScore = 0;
+
+
+    // vector<vector<char>> count_board = rawBoard;
+    // vector<vector<char>> visited_board = rawBoard;
+    // auto saiki = [&](auto self, int y, int x, char color)
+    // {
+    //     if (count_board[y][x] != 0) {
+    //         return count_board[y][x];
+    //     }
+
+    //     if (board[y][x] == 1 || board[y][x] == 2) {
+    //         if (libs[idBoard[y][x]] >= 2) {
+    //             return board[y][x];
+    //         }
+    //         else {
+    //             return char(-1);
+    //         }
+    //     }
+    //     else if (board[y][x] == 3) {
+    //         return char(-1);
+    //     }
+
+
+    //     count_board[y][x] = -1;
+
+
+    //     char tmp = -1;
+    //     for (auto dir : directions) {
+    //         int nx = x + dir.first;
+    //         int ny = y + dir.second;
+
+    //         char tmp2 = self(ny, nx, color);
+
+    //         if (tmp == -1) {
+    //             tmp = tmp2;
+    //         }
+    //         else if (tmp2 == -1) {
+
+    //         }
+    //         else if (tmp != tmp2) {
+    //             tmp = 4;
+    //         }
+    //     }
+
+    //     count_board[y][x] = tmp;
+    //     return tmp;
+    // };
 
     // return teban * 2 - 3 のところは、中国ルールで最後まで埋めていない場合、2回目にパスした側が負けたことにするための処理。
     rep (i, 1, BOARDSIZE + 1) {
@@ -1121,7 +1303,7 @@ double goBoard::CountResult()
                     int nx = j + dir.first;
                     int ny = i + dir.second;
                     if (board[ny][nx] == 1) {
-                        if (tmpColor == 2 && !IsIllegalMove(i, j, 1)) {
+                        if (tmpColor == 2 && !IsIllegalMove(i, j, teban)) {
                             return (teban * 2 - 3) / 10;
                         }
                         // assert(tmpColor != 2);
@@ -1129,7 +1311,7 @@ double goBoard::CountResult()
                         tmpColor = 1;
                     }
                     else if (board[ny][nx] == 2) {
-                        if (tmpColor == 1 && !IsIllegalMove(i, j, 1)) {
+                        if (tmpColor == 1 && !IsIllegalMove(i, j, teban)) {
                             return (teban * 2 - 3) / 10;
                         }
                         // assert(tmpColor != 1);
@@ -1153,6 +1335,49 @@ double goBoard::CountResult()
             }
         }
     }
+    // // return teban * 2 - 3 のところは、中国ルールで最後まで埋めていない場合、2回目にパスした側が負けたことにするための処理。
+    // rep (i, 1, BOARDSIZE + 1) {
+    //     rep (j, 1, BOARDSIZE + 1) {
+    //         if (board[i][j] == 0) {
+    //             /// TODO: 全部見る必要はない
+    //             char tmpColor = 0;
+    //             for (auto dir : directions) {
+    //                 int nx = j + dir.first;
+    //                 int ny = i + dir.second;
+    //                 if (board[ny][nx] == 1) {
+    //                     if (tmpColor == 2 && !IsIllegalMove(i, j, 1)) {
+    //                         return (teban * 2 - 3) / 10;
+    //                     }
+    //                     // assert(tmpColor != 2);
+
+    //                     tmpColor = 1;
+    //                 }
+    //                 else if (board[ny][nx] == 2) {
+    //                     if (tmpColor == 1 && !IsIllegalMove(i, j, 1)) {
+    //                         return (teban * 2 - 3) / 10;
+    //                     }
+    //                     // assert(tmpColor != 1);
+
+    //                     tmpColor = 2;
+    //                 }
+    //                 else return (teban * 2 - 3) / 10;
+    //             }
+    //             if (tmpColor == 1) {
+    //                 ++blackScore;
+    //             }
+    //             else if (tmpColor == 2) {
+    //                 ++whiteScore;
+    //             }
+    //         }
+    //         else if (board[i][j] == 1) {
+    //             ++blackScore;
+    //         }
+    //         else if (board[i][j] == 2) {
+    //             ++whiteScore;
+    //         }
+    //     }
+    // }
+
 
     if (debugFlag & 0b100000) {
         print("blackScore:", blackScore);  ///////////
@@ -1509,6 +1734,9 @@ double dfs(goBoard* ptr)
 // ループを制御するためのフラグ
 std::atomic<bool> running(true);
 
+// とりあえずグローバル
+int visit_Limit = 100000;
+
 void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
 {
     // (PutStone or new) -> (ExpandNode) -> (PutStone) ...
@@ -1516,72 +1744,167 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
     // ptr0 -> ... -> if !ptr3->children.count(nextMove) -> PutStone -> ExpandNode -> ptr2 の ucts を更新 -> ... -> ptr0 の ucts を更新。 という流れを繰り返す。
     // ExpandNode で 合法手に対して ucts.insert される。
     // PutStone の手が連続2回目のpassのとき isEnded = true になる。
-    auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
-    {
-
-#ifdef dbg_flag
-        g_node_cnt++;
-#endif
-        int color = ptr->teban;
-
-        if (ptr->isEnded) {
-            double rslt = ptr->CountResult();
-            if (rslt == 0) {
-                return make_tuple(color, 0.0, 1.0, 0.0);
-            }
-            if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
-                return make_tuple(color, 0.0, 0.0, 1.0);
-            }
-            return make_tuple(color, 1.0, 0.0, 0.0);
-        }
-
-        lock_guard<recursive_mutex> lock(ptr->uctsMutex);
-
-        assert(ptr->ucts.size());
-
-        pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
 
 
-        if (!ptr->childrens.count(nextMove)) {
-            goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+//     auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
+//     {
 
-            int nextColor = nextPtr->teban;
+// #ifdef dbg_flag
+//         g_node_cnt++;
+// #endif
+//         int color = ptr->teban;
 
-            if (nextPtr->isEnded) {
-                double rslt = nextPtr->CountResult();
-                if (rslt == 0) {
-                    return make_tuple(nextColor, 0.0, 1.0, 0.0);
-                }
-                /// TODO: 正しいか確認
-                if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
-                    return make_tuple(color, 0.0, 0.0, 1.0);
-                }
-                return make_tuple(color, 1.0, 0.0, 0.0);
-            }
+//         if (ptr->isEnded) {
+//             double rslt = ptr->CountResult();
+//             if (rslt == 0) {
+//                 return make_tuple(color, 0.0, 1.0, 0.0);
+//             }
+//             if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
+//                 return make_tuple(color, 0.0, 0.0, 1.0);
+//             }
+//             return make_tuple(color, 1.0, 0.0, 0.0);
+//         }
 
-            return nextPtr->ExpandNode(tensorRT);
-        }
+//         lock_guard<recursive_mutex> lock(ptr->uctsMutex);
 
+//         assert(ptr->ucts.size());
 
-        tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
-
-        ptr->UpdateUcts(returnData, nextMove);
-
-        return returnData;
-    };
+//         pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
 
 
+//         if (!ptr->childrens.count(nextMove)) {
+//             goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+
+//             int nextColor = nextPtr->teban;
+
+//             if (nextPtr->isEnded) {
+// #ifdef dbg_flag
+//                 ++endCnt;
+// #endif
+//                 double rslt = nextPtr->CountResult();
+//                 if (rslt == 0) {
+//                     return make_tuple(nextColor, 0.0, 1.0, 0.0);
+//                 }
+//                 /// TODO: 正しいか確認
+//                 if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
+//                     return make_tuple(nextColor, 0.0, 0.0, 1.0);
+//                 }
+//                 return make_tuple(nextColor, 1.0, 0.0, 0.0);
+//             }
+
+//             return nextPtr->ExpandNode(tensorRT);
+//         }
+
+
+//         tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
+
+//         ptr->UpdateUcts(returnData, nextMove);
+
+//         return returnData;
+//     };
+
+
+//     while (running.load()) {
+//         if (rootPtr->isEnded) {
+//             break;
+//         }
+//         if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
+//             sleep(0.1);
+//         }
+//         saiki(saiki, rootPtr);
+//     }
+
+//     return;
+
+
+    // 再帰なしバージョン。leaf（ExpandNode で作ったノード・isEndedのノード）ではuctの更新はしない。
     while (running.load()) {
         if (rootPtr->isEnded) {
             break;
         }
-        saiki(saiki, rootPtr);
+        if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
+            sleep(0.1);
+        }
+
+        // 潜る探索ループ
+        goBoard* ptr = rootPtr;
+        tuple<int, float, float, float> leafRslt;
+        while (true) {
+            char color = ptr->teban;
+
+            // もし終局（直前2手がパス）なら結果を leafRslt に入れてbreak
+            /// TODO: これ通ったら
+            if (ptr->isEnded) {
+                double tmpRslt = ptr->CountResult();
+                if (tmpRslt == 0) {
+                    leafRslt = make_tuple(color, 0.0, 1.0, 0.0);
+                    break;
+                }
+                if ((color == 1 && tmpRslt > 0) || (color == 2 && tmpRslt < 0)) {
+                    leafRslt = make_tuple(color, 0.0, 0.0, 1.0);
+                    break;
+                }
+                leafRslt = make_tuple(color, 1.0, 0.0, 0.0);
+                break;
+            }
+
+            lock_guard<recursive_mutex> lock(ptr->uctsMutex);
+
+            assert(ptr->ucts.size());
+
+            // uct が最大の手を取得
+            pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
+
+            // その手が未展開なら展開して結果を leafRslt に入れてbreak
+            if (!ptr->childrens.count(nextMove)) {
+                goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+
+                int nextColor = nextPtr->teban;
+
+                /// TODO: ここで終局判定する必要ある？
+                if (nextPtr->isEnded) {
+#ifdef dbg_flag
+                    ++endCnt;
+#endif
+                    double tmpRslt = nextPtr->CountResult();
+                    if (tmpRslt == 0) {
+                        leafRslt = make_tuple(nextColor, 0.0, 1.0, 0.0);
+                    }
+                    /// TODO: 正しいか確認
+                    else if ((nextColor == 1 && tmpRslt > 0) || (nextColor == 2 && tmpRslt < 0)) {
+                        leafRslt = make_tuple(nextColor, 0.0, 0.0, 1.0);
+                    }
+                    else {
+                        leafRslt = make_tuple(nextColor, 1.0, 0.0, 0.0);
+                    }
+                    break;
+                }
+
+                leafRslt = nextPtr->ExpandNode(tensorRT);
+                break;
+            }
+
+
+            ptr = ptr->childrens[nextMove];
+        }
+
+        // 浮かんでいく探索ループ
+        pair<char, char> nextMove = ptr->previousMove;
+        while (true) {
+            if (ptr->isRoot) {
+                break;
+            }
+
+            ptr->UpdateUcts(leafRslt, nextMove);
+            nextMove = ptr->previousMove;
+            ptr = ptr->parent;
+        }
     }
 
     return;
 }
 
-string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime = 1, bool ponder = true)
+string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime = 5, bool ponder = true)
 {
     // cerr << "Gpt input: " << input << endl;  /////////////////////
 
@@ -1716,6 +2039,24 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 searchThread.join();
             }
 
+            if (debugFlag & 1 << 5) {
+                cout << "\n--------------------\n"
+                     << "rootPtr: " << rootPtr << ", teban: " << int(rootPtr->teban) << ", moveCnt: " << rootPtr->moveCnt << endl;  //////////////////////////
+                print();
+                // rootPtr->PrintBoard(1 << 29);
+                // print();
+                // rootPtr->PrintBoard(1 << 26);  //////////////////
+                // print();
+                // rootPtr->PrintBoard(1 << 28);  //////////////////
+                // print();
+                // rootPtr->PrintBoard(1 << 31);
+                // print();
+                rootPtr->PrintBoard(1 << 27);
+                print();
+                rootPtr->PrintBoard(0b1);
+                print();
+            }
+
             if (rootPtr->childrens.size() == 0) {
                 rootPtr->ExpandNode(tensorRT);
             }
@@ -1751,20 +2092,22 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
 
         if (debugFlag & 1 << 5) {
             cout << "\n--------------------\n"
-                 << "rootPtr: " << rootPtr << endl;  //////////////////////////
+                 << "rootPtr: " << rootPtr << ", teban: " << int(rootPtr->teban) << ", moveCnt: " << rootPtr->moveCnt << endl;  //////////////////////////
+            print();
+            rootPtr->PrintBoard(0b100);
+            print();
+            rootPtr->PrintBoard(1 << 29);
             print();
             // rootPtr->PrintBoard(1 << 26);  //////////////////
             // print();
-            // rootPtr->PrintBoard(1 << 28);  //////////////////
-            // print();
-            // rootPtr->PrintBoard(1 << 31);
-            // print();
+            rootPtr->PrintBoard(1 << 28);  //////////////////
+            print();
+            rootPtr->PrintBoard(1 << 31);
+            print();
             rootPtr->PrintBoard(1 << 27);
             print();
-            // rootPtr->PrintBoard(1 << 29);
-            // print();
-            // rootPtr->PrintBoard(0b1);
-            // print();
+            rootPtr->PrintBoard(0b1);
+            print();
         }
 
 
@@ -1981,6 +2324,14 @@ END2:;
 
 int PlayWithGpt()
 {
+    int thinkTime = 10;
+    // cout << "thinkTime << ";
+    // cin >> thinkTime;
+    int visit_Limit = 100000;
+    // cout << "visit_Limit << ";
+    // cin >> visit_Limit;
+
+
     samplesCommon::Args args;
 
     args.runInInt8 = false;
@@ -2006,7 +2357,7 @@ int PlayWithGpt()
     string output = "";
     // 標準入力を監視
     while (getline(cin, input)) {
-        output = Gpt(input, rootPtr, tensorRT, searchThread);
+        output = Gpt(input, rootPtr, tensorRT, searchThread, thinkTime, false);
         cout << output << endl;
         if (output == "exit") {
             break;
@@ -2023,6 +2374,8 @@ int GptSoket()
     int thinkTime = 10;
     cout << "thinkTime << ";
     cin >> thinkTime;
+    cout << "visit_Limit << ";
+    cin >> visit_Limit;
     int port = 8000;
     cout << "port << ";
     cin >> port;
@@ -2150,7 +2503,7 @@ int GptSoket()
         // Clear the buffer after sending the data
         memset(buf, 0, sizeof(buf));
 
-        sleep(1);
+        sleep(0.1);
     }
 
 

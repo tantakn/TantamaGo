@@ -3,13 +3,15 @@ import numpy as np
 import psutil
 import datetime
 import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 import sys
 sys.path.append('../')
 from nn.network import DualNet
 from nn.network import DualNet_256_24
 
-model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_q50k_DualNet_256_24.bin"
+model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250227_033544_Ep00_13_1.bin"
+# model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_q50k_DualNet_256_24.bin"
 # model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250125_025418.bin"
 # model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250110_031407_19.bin"
 # model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20241020_214243_Ep:14.bin"
@@ -17,12 +19,14 @@ model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_q50k_DualNet_256_2
 # model_path = "../model_def/sl-model_default.bin"
 
 # dummy_npz_path = "../backup/kgs-19-2019-04/sl_data_0.npz"
-dummy_npz_path = "../backup/data_Q50000/sl_data_0.npz"
+dummy_npz_path = "/home/tantakn/code/TantamaGo/backup/13_2_0.npz"
+# dummy_npz_path = "../backup/data_Q50000/sl_data_0.npz"
 # dummy_npz_path = "../data/sl_data_0.npz"
 
-save_onnx_path = "./q50k_DualNet_256_24.onnx"
+save_onnx_path = "./13_1_DualNet_256_24.onnx"
 
-BOARD_SIZE = 9
+BOARD_SIZE = 13
+# BOARD_SIZE = 9
 # BOARD_SIZE = 19
 
 BATCH_SIZE = 1

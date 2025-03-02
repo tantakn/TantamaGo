@@ -95,6 +95,7 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             self.time_manager = TimeManager(mode=mode, constant_visits=visits)
         if mode is TimeControl.CONSTANT_TIME:
             self.time_manager = TimeManager(mode=mode, constant_time=const_time)
+            print("constant_time: ", const_time, file=sys.stderr)
         if mode is TimeControl.TIME_CONTROL:
             self.time_manager = TimeManager(mode=mode, remaining_time=time)
 
@@ -403,6 +404,27 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
         }
         self.mcts.ponder(self.board, to_move, analysis_query)
 
+    def _analyze(self, mode: str, arg_list: List[str]) -> NoReturn:
+        """analyzeコマンド（lz-analyze, cgos-analyze）を実行する。
+
+        Args:
+            mode (str): 解析モード。値は"lz"か"cgos"。
+            arg_list (List[str]): コマンドの引数リスト (手番の色, 更新間隔)。
+        """
+        to_move, interval = self._decode_analyze_arg(arg_list)
+        if interval < 0:
+            respond_failure(f"{mode}-analyze [color] [interval]")
+            return
+
+        respond_success("", ongoing=True)
+
+        analysis_query = {
+            "mode" : mode,
+            "interval" : interval,
+            "ponder" : True
+        }
+        self.mcts.ponder(self.board, to_move, analysis_query)
+
     def _genmove_analyze(self, mode: str, arg_list: List[str]) -> NoReturn:
         """genmove_analyzeコマンド（lz-genmove_analyze, cgos-genmove_analyze）を実行する。
 
@@ -415,7 +437,8 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             respond_failure(f"{mode}-analyze [color] [interval]")
             return
 
-        respond_success("", ongoing=True)
+        if not mode == "lz":##############
+            respond_success("", ongoing=True)
 
         if self.use_network:
             # モンテカルロ木探索で着手生成
@@ -438,7 +461,11 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
         if pos != RESIGN:
             self.board.put_stone(pos, genmove_color)
 
-        print_out(f"play {self.coordinate.convert_to_gtp_format(pos)}\n")
+        if not mode == "lz":
+            print_out(f"play {self.coordinate.convert_to_gtp_format(pos)}\n")
+        else:###########
+            return respond_success(self.coordinate.convert_to_gtp_format(pos))
+
 
 
     def run(self, command: str) -> NoReturn: # pylint: disable=R0912,R0915
@@ -542,7 +569,8 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             self._analyze("lz", command_list[1:])
             print("")
         elif input_gtp_command == "lz-genmove_analyze":
-            self._genmove_analyze("lz", command_list[1:])
+            # lz の場合はは標準出力でなく、標準エラー出力にanalyzeの内容を出力するよう変更。mcst/tree.py の search の最後の方で変更、_genmove_analyze に分岐を追加。
+            return self._genmove_analyze("lz", command_list[1:])
         elif input_gtp_command == "cgos-analyze":
             self._analyze("cgos", command_list[1:])
             print("")
