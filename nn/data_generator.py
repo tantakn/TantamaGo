@@ -113,6 +113,8 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
         board.clear()
         # ここで勝敗とかも取得してる
         sgf = SGFReader(kifu_path, board_size)
+        if sgf.size != board_size:
+            continue
         color = Stone.BLACK
         value_label = sgf.get_value_label()
         """勝ち負け。黒勝ちは2、白勝ちは0、持碁は1。"""
@@ -645,6 +647,8 @@ def generate_supervised_learning_data_mt(program_dir: str=None, kifu_dir: str=No
             try:
                 # ここで勝敗とかも取得してる
                 sgf = SGFReader(kifu_path, board_size)
+                if sgf.size != board_size:
+                    continue
                 color = Stone.BLACK
                 value_label = sgf.get_value_label()
                 

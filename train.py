@@ -60,8 +60,8 @@ import resource
     help="強化学習時のウィンドウサイズ")
 @click.option('--net', 'network_name', type=click.STRING, default="DualNet", \
     help="ネットワーク。デフォルトは DualNet。DualNet_256_24 とかを指定する。")
-@click.option('--npz-dir', 'npz_dir', type=click.STRING, default="data", \
-    help="npzがあるフォルダのパス。デフォルトは data。")
+@click.option('--npz-dir', 'npz_dir', type=click.STRING, default=None, \
+    help="npzがあるフォルダのパス。デフォルトは None。")
 @click.option('--checkpoint-dir', 'checkpoint_dir', type=click.STRING, default=None, \
     help="checkpointがあるフォルダのパス。デフォルトは None。")
 @click.option('--rl-num', 'rl_num', type=click.INT, default=-1, \
