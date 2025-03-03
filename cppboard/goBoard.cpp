@@ -106,6 +106,8 @@
 
 // (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/cppboard$ ./goBoard 2>&1 | tee -a ../zzlog/`date '+%Y%m%d_%H%M%S'`goBoard.txt
 
+// (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/cppboard$ python3 bin/cgosclient.py simple.cfg
+
 
 
 
@@ -782,7 +784,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
         cerr << "探索後勝率*1000 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
 #ifdef dbg_flag
-        cout << "endCnt: " << endCnt << ", depth: " << deepestMoveCnt - this->moveCnt << endl;
+        cerr << "endCnt: " << endCnt << ", depth: " << deepestMoveCnt - this->moveCnt << endl;
 #endif
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, -1000000));
         pair<char, char> maxMove;
@@ -1926,7 +1928,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
 
 
     if (commands[0] == "list_commands") {
-        output = "=list_commands\nname\nboardsize\nclear_board\nkomi\nplay\ngenmove\nquit\nshowboard\n";
+        output = "=list_commands\nname\nboardsize\nclear_board\nkomi\nplay\ngenmove\nquit\nshowboard";
     }
     else if (commands[0] == "name") {
         output = "=TantamaGo";
@@ -1989,7 +1991,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 x = ConvertChar(commands[2][0]);
                 if (x == -1) {
                     output = "dismatch_boardsize";
-                    cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
+                    cerr << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                     print("x, y: ", x, y);                                   //////////////
                     goto GOTO_GPT_SEND;
                 }
@@ -2007,35 +2009,35 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 }
                 else {
                     output = "unknown_command";
-                    cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
+                    cerr << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                     goto GOTO_GPT_SEND;
                 }
 
 
                 if (y < 1 || y > BOARDSIZE) {
                     output = "dismatch_boardsize";
-                    cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
+                    cerr << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                     print("x, y: ", x, y);                                   //////////////
                     goto GOTO_GPT_SEND;
                 }
 
                 if (commands[1] == "black" || commands[1] == "b" || commands[1] == "B") {
                     if (rootPtr->teban != 1) {
-                        cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
+                        cerr << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                         output = "dismatch_color";
                         goto GOTO_GPT_SEND;
                     }
                 }
                 else if (commands[1] == "white" || commands[1] == "w" || commands[1] == "W") {
                     if (rootPtr->teban != 2) {
-                        cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
+                        cerr << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                         output = "dismatch_color";
                         goto GOTO_GPT_SEND;
                     }
                 }
                 else {
                     output = "unknown_command";
-                    cout << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
+                    cerr << "commands[2]==[" << commands[2] << "]" << endl;  ////////////////////
                     goto GOTO_GPT_SEND;
                 }
             }
@@ -2046,10 +2048,10 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             }
 
             if (debugFlag & 1 << 5) {
-                cout << "\n--------------------\n"
+                cerr << "\n--------------------\n"
                      << "rootPtr: " << rootPtr << ", teban: " << int(rootPtr->teban) << ", moveCnt: " << rootPtr->moveCnt << endl;  //////////////////////////
 #ifdef dbg_flag
-                cout << "expandCnt: " << expandCnt << ", endCnt: " << endCnt << endl;
+                cerr << "expandCnt: " << expandCnt << ", endCnt: " << endCnt << endl;
 #endif
                 print();
                 // rootPtr->PrintBoard(1 << 29);
@@ -2100,10 +2102,10 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
         sleep(thinkTime);  ///////////////
 
         if (debugFlag & 1 << 5) {
-            cout << "\n--------------------\n"
+            cerr << "\n--------------------\n"
                  << "rootPtr: " << rootPtr << ", teban: " << int(rootPtr->teban) << ", moveCnt: " << rootPtr->moveCnt << endl;  //////////////////////////
 #ifdef dbg_flag
-            cout << "expandCnt: " << expandCnt << ", endCnt: " << endCnt << endl;
+            cerr << "expandCnt: " << expandCnt << ", endCnt: " << endCnt << endl;
 #endif
             print();
             rootPtr->PrintBoard(0b100);
@@ -2337,10 +2339,10 @@ END2:;
 int PlayWithGpt()
 {
     int thinkTime = 10;
-    // cout << "thinkTime << ";
+    // cerr << "thinkTime << ";
     // cin >> thinkTime;
     int visit_Limit = 100000;
-    // cout << "visit_Limit << ";
+    // cerr << "visit_Limit << ";
     // cin >> visit_Limit;
 
 
@@ -2370,10 +2372,13 @@ int PlayWithGpt()
     // 標準入力を監視
     while (getline(cin, input)) {
         output = Gpt(input, rootPtr, tensorRT, searchThread, thinkTime, false);
-        cout << output << endl;
         if (output == "exit") {
+            output += "\n";
+            cout << "=" << endl;
             break;
         }
+        output += "\n";
+        cout << output << endl;
     }
 
     return 0;
@@ -2384,12 +2389,12 @@ int PlayWithGpt()
 int GptSoket()
 {
     int thinkTime = 10;
-    cout << "thinkTime << ";
+    cerr << "thinkTime << ";
     cin >> thinkTime;
-    cout << "visit_Limit << ";
+    cerr << "visit_Limit << ";
     cin >> visit_Limit;
     int port = 8000;
-    cout << "port << ";
+    cerr << "port << ";
     cin >> port;
 
 
@@ -2481,7 +2486,7 @@ int GptSoket()
 
 
         // if (input.substr(0, 4) == "genm" || input.substr(0, 4) == "play") {
-        //     cout << "\n--------------------\n"
+        //     cerr << "\n--------------------\n"
         //          << "rootPtr: " << rootPtr << endl;  //////////////////////////
         //     print();
         //     rootPtr->PrintBoard(1 << 26);  //////////////////
@@ -2594,9 +2599,9 @@ int main(int argc, char* argv[])
 
     // Test();
 
-    // PlayWithGpt();
+    PlayWithGpt();
 
-    GptSoket();
+    // GptSoket();
 
     return 0;
 }

@@ -512,6 +512,8 @@ class EngineConnector(object):
             raise EngineConnectorError("Cannot send GTP command. Engine has terminated")
 
         self.logger.debug("Sending: " + commandString)
+        self.logger.error("Sending: " + commandString)  # 標準エラー出力にも出力
+
         self._subprocess.stdin.write(commandString + "\n")
         self._subprocess.stdin.flush()
 
@@ -534,6 +536,7 @@ class EngineConnector(object):
                 response.append(line)
 
         self.logger.debug("Response: " + str(response))
+        self.logger.error("Response: " + str(response))  # 標準エラー出力にも出力
 
         if error is not None:
             raise EngineConnectorError("GTP command rejected: " + error)

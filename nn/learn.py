@@ -364,6 +364,195 @@ def train_on_gpu(program_dir: str, board_size: int, batch_size: int, \
 
 
 
+def train_on_gpu_endless(program_dir: str, board_size: int, batch_size: int, \
+    epochs: int, network_name: str, npz_dir: str = "data", checkpoint_dir: str = None) -> None: # pylint: disable=R0914,R0915
+    """教師あり学習を実行し、学習したモデルを保存する。
+
+    Args:
+        program_dir (str): プログラムのワーキングディレクトリ。
+        board_size (int): 碁盤の大きさ。
+        batch_size (int): ミニバッチサイズ。
+        epochs (int): 実行する最大エポック数。
+    """
+
+    print(f"🐾train_on_gpu {dt_now}")###########
+    print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
+    print("torch.cuda.current_device: ", torch.cuda.current_device())
+    print("torch.cuda.device_count: ", torch.cuda.device_count())
+    print("torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
+    if torch.cuda.device_count() > 1:##########
+        print("torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
+    print("torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
+    if torch.cuda.device_count() > 1:##########
+        print("torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
+    print("torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
+
+
+
+
+    # 学習処理を行うデバイスの設定
+    device = torch.device("cuda")
+    # device = get_torch_device(use_gpu=True)######################
+
+    if network_name == "DualNet":
+        dual_net = DualNet(device=device, board_size=board_size)
+        """DualNetのインスタンス。多分、ここにニューラルネットワークのパラメタとか入ってる。"""
+    elif network_name == "DualNet_128_12":
+        dual_net = DualNet_128_12(device=device, board_size=board_size)
+    elif network_name == "DualNet_256_24":
+        dual_net = DualNet_256_24(device=device, board_size=board_size)
+    elif network_name == "DualNet_semeai":
+        dual_net = DualNet_semeai(device=device, board_size=board_size)
+    elif network_name == "DualNet_256_24_semeai":
+        dual_net = DualNet_256_24_semeai(device=device, board_size=board_size)
+    else:
+        print(f"👺network_name: {network_name} is not defined.")
+        raise(f"network_name is not defined.")
+    
+    if checkpoint_dir is not None:
+        checkpoint = torch.load(checkpoint_dir)
+        state_dict = checkpoint['model_state_dict']
+        
+        # DataParallelで保存されたモデルのstate_dictを修正
+        from collections import OrderedDict
+        new_state_dict = OrderedDict()
+        for k, v in state_dict.items():
+            if k.startswith('module.'):
+                name = k[7:] # module.を取り除く
+                new_state_dict[name] = v
+            else:
+                new_state_dict[k] = v
+        
+        dual_net.load_state_dict(new_state_dict)
+        policy_loss = checkpoint['policy_loss']
+        value_loss = checkpoint['value_loss']
+    
+
+    if torch.cuda.device_count() > 1:##########ここTrueで作ったので対局しようとするとFailed to load model/sl-model_2024のエラー出る
+        dual_net = torch.nn.DataParallel(dual_net)
+
+    dual_net.to(device)
+    print(f"🐾device: ", device)
+
+    optimizer = torch.optim.SGD(dual_net.parameters(),
+                                lr=SL_LEARNING_RATE,
+                                momentum=MOMENTUM,
+                                weight_decay=WEIGHT_DECAY,
+                                nesterov=True)
+
+    if checkpoint_dir is not None:
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+
+    scaler = torch.cuda.amp.GradScaler()
+    """勾配消失とかいうのを防ぐやつらしい"""
+
+    current_lr = SL_LEARNING_RATE
+    """学習率"""
+
+    # if device == 'cuda':###########
+    #     dual_net = torch.nn.DataParallel(dual_net) # make parallel
+    #     torch.backends.cuda.nn.benchmark = True
+
+
+    npz_cnt = 0
+
+    # npz ループ
+    while True:
+
+        sleep_cnt = 0
+        sleep_time = time.time()
+        while not os.path.isfile(os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")):
+            time.sleep(1)
+            sleep_cnt += 1
+            if time.time() - sleep_time > 3600:
+                print(f"👺No new npz file. Exit.")
+                sys.exit()
+        
+        time.sleep(1)
+
+        train_npz_path = os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")
+
+        # ファイルが実際に存在するか再度確認
+        if not os.path.isfile(train_npz_path):
+            print(f"👺File not found: {train_npz_path}")
+            sys.exit()
+
+        plane_data, policy_data, value_data = load_data_set(train_npz_path)
+
+        train_loss = {
+            "loss": 0.0,
+            "policy": 0.0,
+            "value": 0.0,
+        }
+
+        iteration = 0
+
+        # モデルを訓練モードにする。バッチ正規化とかドロップアウトとか訓練時と推論時で挙動が違うものが訓練モードになる。。
+        dual_net.train()
+
+        # バッチループ。epoch_time ってあるけど多分バッチの時間を計測してる。
+        epoch_time = time.time()
+        for i in range(0, len(value_data) - batch_size + 1, batch_size):
+            with torch.cuda.amp.autocast(enabled=True):
+                plane = torch.tensor(plane_data[i:i+batch_size]).to(device)
+                """盤面データのミニバッチのリスト。81*6*batch_size のテンソル。"""
+                policy = torch.tensor(policy_data[i:i+batch_size]).to(device)
+                value = torch.tensor(value_data[i:i+batch_size]).to(device)
+
+                policy_predict, value_predict = dual_net(plane, pram="sl")
+                # if torch.cuda.device_count() > 1:
+                #     policy_predict, value_predict = dual_net(plane)##################
+                #     # policy_predict, value_predict = dual_net.module.forward_for_sl(plane)
+                # else:
+                #     policy_predict, value_predict = dual_net.forward_for_sl(plane)
+                # # policy_predict, value_predict = dual_net.forward_for_sl(plane)###################def
+
+                # モデルの勾配を初期化
+                # たぶん、ミニバッチ学習で使うためにミニバッチ内の勾配を記録していて、前のミニバッチの勾配が残っているので、それを初期化している。
+                # ？with の上に移動する？
+                dual_net.zero_grad()
+
+                # ロスの計算
+                policy_loss = calculate_policy_loss(policy_predict, policy)
+                value_loss = calculate_value_loss(value_predict, value)
+
+                # 多分、policy_loss のが重要だから、value_loss に微小量の重みをかけてる 
+                loss = (policy_loss + SL_VALUE_WEIGHT * value_loss).mean()
+
+            scaler.scale(loss).backward()
+            # 重みの更新をしてる？
+            scaler.step(optimizer)
+            scaler.update()
+
+            train_loss["loss"] += loss.item()
+            train_loss["policy"] += policy_loss.mean().item()
+            train_loss["value"] += value_loss.mean().item()
+            iteration += 1
+
+        print_learning_process(train_loss, 0, npz_cnt, iteration, epoch_time)
+
+        npz_cnt += 1
+        # if True:################
+        if npz_cnt % 10 == 0:###############
+            dual_net_copy = copy.deepcopy(dual_net)######
+            torch.save(dual_net_copy.to("cpu"), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_{npz_cnt:0>3}.bin"))
+            # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
+
+            torch.save({
+                'epoch': 0,
+                'model_state_dict': dual_net.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'policy_loss': policy_loss,
+                'value_loss': value_loss,
+                }, os.path.join("model", f"checkpoint_{dt_now.strftime('%Y%m%d_%H%M%S')}_{npz_cnt:0>4}.bin"))
+        
+            print(f"🐾model and checkpoint {dt_now.strftime('%Y%m%d_%H%M%S')}_{npz_cnt:0>4}.bin saved.")###############
+        
+
+
+
+
+
 
 def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data", checkpoint_dir: str = None) -> None: # pylint: disable=R0914,R0915
     """教師あり学習を実行し、学習したモデルを保存する。
@@ -773,6 +962,7 @@ def train_on_gpu_ddp_worker2(rank, world, train_npz_paths, test_npz_paths, progr
 
             train_npz_path = os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")
 
+
             plane_data, policy_data, value_data = tmp_load_data_set(train_npz_path, rank)
 
             train_dataset = torch.utils.data.TensorDataset(plane_data, policy_data, value_data)
@@ -837,7 +1027,7 @@ def train_on_gpu_ddp_worker2(rank, world, train_npz_paths, test_npz_paths, progr
             if int(rank) == 0:
                 print_learning_process(train_loss, epoch, f"sl_data_{npz_cnt}.npz", iteration, epoch_time)
                 npz_cnt += 1
-                if npz_cnt % 10 == 0:
+                if npz_cnt % 2 == 0:###############
                     dual_net_copy = copy.deepcopy(dual_net)######
                     torch.save(dual_net_copy.to("cpu").module.state_dict(), os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_{npz_cnt:0>3}.bin"))
                     # save_model(dual_net_copy, os.path.join("model", f"sl-model_{dt_now.strftime('%Y%m%d_%H%M%S')}_Ep:{epoch:0>2}.bin"))######epoch毎に保存
@@ -849,6 +1039,8 @@ def train_on_gpu_ddp_worker2(rank, world, train_npz_paths, test_npz_paths, progr
                         'policy_loss': policy_loss,
                         'value_loss': value_loss,
                         }, os.path.join("model", f"checkpoint_{dt_now.strftime('%Y%m%d_%H%M%S')}_{npz_cnt:0>3}.bin"))
+                
+                    print(f"🐾model and checkpoint {dt_now.strftime('%Y%m%d_%H%M%S')}_{npz_cnt:0>3}.bin saved.")###############
             
             
             npz_cnt += 1

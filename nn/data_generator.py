@@ -53,7 +53,12 @@ def _save_data(save_file_path: str, input_data: np.ndarray, policy_data: np.ndar
     }
 
     # killed って出るときはメモリ足りてない
-    np.savez_compressed(save_file_path, **save_data)
+    try:
+        np.savez_compressed(save_file_path, **save_data)
+        print(f"Saved data to {save_file_path}")  # 保存の確認
+    except Exception as e:
+        print(f"Error saving data to {save_file_path}: {e}")  # エラーの確認
+        raise
 
 
 
@@ -74,7 +79,7 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
     print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_data start")####################
     print(f"    BATCH_SIZE: {BATCH_SIZE}")
     print(f"    DATA_SET_SIZE: {DATA_SET_SIZE}")
-    kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
+    kifu_num = len(glob.glob(os.path.join(program_dir, kifu_dir, "*.sgf")))######
     print(f"    kifu_num: {kifu_num}")#############
 
 
@@ -102,7 +107,7 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
 
     # dbg = 0####################
     # 局のループ
-    for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
+    for kifu_path in sorted(glob.glob(os.path.join(program_dir, kifu_dir, "*.sgf"))):
         # dbg += 1####################
         # if not dbg % 100:####################
         #     print(sys.getsizeof(value_data) / 1024 /1024, len(value_data), kifu_path)###################
@@ -207,7 +212,7 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
 #     print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_data start")####################
 #     print(f"    BATCH_SIZE: {BATCH_SIZE}")
 #     print(f"    DATA_SET_SIZE: {DATA_SET_SIZE}")
-#     kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
+#     kifu_num = len(glob.glob(os.path.join(program_dir, kifu_dir, "*.sgf")))######
 #     print(f"    kifu_num: {kifu_num}")#############
 
 
@@ -235,7 +240,7 @@ def generate_supervised_learning_data(program_dir: str=None, kifu_dir: str=None,
 
 #     dbg = 0####################
 #     # 局のループ
-#     for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
+#     for kifu_path in sorted(glob.glob(os.path.join(program_dir, kifu_dir, "*.sgf"))):
 #         dbg += 1####################
 #         if not dbg % 100:####################
 #             print(sys.getsizeof(value_data) / 1024 /1024, len(value_data), kifu_path)###################
@@ -314,8 +319,8 @@ def generate_reinforcement_learning_data(program_dir: str, kifu_dir_list: List[s
 
     kifu_list = []
     for kifu_dir in kifu_dir_list:
-        # kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*", "*.sgf"))) # natukazeの棋譜のフォルダ形式に合うようにしたもの
-        kifu_list.extend(glob.glob(os.path.join(kifu_dir, "*.sgf")))
+        # kifu_list.extend(glob.glob(os.path.join(program_dir, kifu_dir, "*", "*.sgf"))) # natukazeの棋譜のフォルダ形式に合うようにしたもの
+        kifu_list.extend(glob.glob(os.path.join(program_dir, kifu_dir, "*.sgf")))
     random.shuffle(kifu_list)
 
     for kifu_path in kifu_list:
@@ -451,15 +456,19 @@ def generate_supervised_learning_worker(program_dir: str, kifu_list: list, board
     if n_batches > 0:
         _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
 
+
+
 # pylint: disable=R0914
-def generate_supervised_learning_data2(program_dir: str, kifu_dir: str, num_worker: int, board_size: int) -> None:
+def generate_supervised_learning_data_endless(save_npz_dir: str, program_dir: str=None, kifu_dir: str=None, board_size: int=9, opt: str="") -> None:
     """教師あり学習のデータを生成して保存する。
 
     Args:
         program_dir (str): プログラムのホームディレクトリのパス。
         kifu_dir (str): SGFファイルを格納しているディレクトリのパス。{kifu_dir}/*.sgf。* は 1 始まり。
         board_size (int, optional): 碁盤のサイズ. Defaults to 9.
+        save_npz_dir (str): 保存先ディレクトリのパス。
     """
+    assert save_npz_dir is not None, "save_npz_dir is None."
     assert kifu_dir is not None, "kifu_dir is None."
     assert program_dir is not None, "program_dir is None."
 
@@ -467,7 +476,7 @@ def generate_supervised_learning_data2(program_dir: str, kifu_dir: str, num_work
     print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_data start")####################
     print(f"    BATCH_SIZE: {BATCH_SIZE}")
     print(f"    DATA_SET_SIZE: {DATA_SET_SIZE}")
-    kifu_num = len(glob.glob(os.path.join(kifu_dir, "*.sgf")))######
+    kifu_num = len(glob.glob(os.path.join(program_dir, kifu_dir, "*.sgf")))######
     print(f"    kifu_num: {kifu_num}")#############
 
 
@@ -482,63 +491,84 @@ def generate_supervised_learning_data2(program_dir: str, kifu_dir: str, num_work
     """moveのデータ。目的変数（ターゲットデータ）たち。"""
 
     value_data = []
-    """勝敗のデータ。目的変数？たち。？これが 0 のとき学習しない？"""
+    """勝敗のデータ。目的変数？たち。"""
 
     kifu_counter = 1
     """npzファイルに書き込む棋譜データの個数を数えておく。npzにも書き込む。"""
 
-    data_counter = 0
-    """f"data/sl_data_{data_counter}"""
+    # save_npz_dir にある sl_data_*.npz の最大値を取得して、次の番号をつける。
+    existing_files = glob.glob(os.path.join(program_dir, save_npz_dir, "sl_data_*.npz"))
+    if existing_files:
+        max_index = max([int(os.path.basename(f).split('_')[2].split('.')[0]) for f in existing_files])
+        data_counter = max_index + 1
+    else:
+        data_counter = 0
 
     cnt = 0###############
     """デバグ用。これまでの棋譜の総数"""
 
-
-
-    list_kifu_main = glob.glob(os.path.join(kifu_dir, "*.sgf"))
-
-    list_kifu_shuffled = random.sample(list_kifu_main, len(list_kifu_main))
-
-    # それぞれのワーカーに渡すパスのリストのリストの作成。
-    list_list_kifu_shuffled = [[]] * num_worker
-
-    # list_kifu_shuffled の先頭から順に num_div ずつに分割すればいい感じになる。
-    # num_div % DATA_SET_SIZE == 0 && num_worker - 1 <= len(list_kifu_shuffled) / num_div <= num_worker
-    num_div = -((-len(list_kifu_shuffled) // DATA_SET_SIZE) // num_worker) * DATA_SET_SIZE
-
-    for i in range(len(list_list_kifu_shuffled)):
-        list_list_kifu_shuffled[i] = list_kifu_shuffled[num_div * i : num_div * (i + 1)]
-
-
+    # dbg = 0####################
     # 局のループ
-    for kifu_path in sorted(glob.glob(os.path.join(kifu_dir, "*.sgf"))):
-        cnt += 1###############
+    for kifu_path in sorted(glob.glob(os.path.join(program_dir, kifu_dir, "*.sgf"))):
+        # dbg += 1####################
+        # if not dbg % 100:####################
+        #     print(sys.getsizeof(value_data) / 1024 /1024, len(value_data), kifu_path)###################
+        
+        bk_input_data = input_data.copy()
+        bk_policy_data = policy_data.copy()
+        bk_value_data = value_data.copy()
         board.clear()
         # ここで勝敗とかも取得してる
         sgf = SGFReader(kifu_path, board_size)
+        if sgf.size != board_size:
+            continue
         color = Stone.BLACK
         value_label = sgf.get_value_label()
         """勝ち負け。黒勝ちは2、白勝ちは0、持碁は1。"""
 
-        # 手のループ
-        for pos in sgf.get_moves():
-            # 対称形でかさ増し
-            for sym in range(8):
-                input_data.append(generate_input_planes(board, color, sym))
-                policy_data.append(generate_target_data(board, pos, sym))
-                value_data.append(value_label)
+        # タイムアウト時間を設定（秒）
+        timeout_seconds = 1
+        signal.signal(signal.SIGALRM, timeout_handler)
+        signal.alarm(timeout_seconds)
+        try:
+            # 手のループ
+            for pos in sgf.get_moves():
+                # 対称形でかさ増し
+                for sym in range(8):
+                    input_data.append(generate_input_planes(board, color, sym, opt))
+                    policy_data.append(generate_target_data(board, pos, sym))
+                    value_data.append(value_label)
 
-            # 手を一手進める
-            board.put_stone(pos, color)
-            color = Stone.get_opponent_color(color)
-            # Valueのラベルを入れ替える。
-            # input_data の局面の手番が勝者の場合は 2 にする。
-            value_label = 2 - value_label
+                # 手を一手進める
+                board.put_stone(pos, color)
+                color = Stone.get_opponent_color(color)
+                # Valueのラベルを入れ替える。
+                # input_data の局面の手番が勝者の場合は 2 にする。
+                value_label = 2 - value_label
+
+        except KeyboardInterrupt:
+            print("処理が中断されました。現在のスタックトレース:")
+            traceback.print_exc()
+            logging.info("データ生成が中断されました。")
+            raise
+        except TimeoutException as e:
+            print(e)
+            logging.error("処理がタイムアウトしました。")
+            logging.error(kifu_path)
+            # データを元に戻す
+            input_data = bk_input_data.copy()
+            policy_data = bk_policy_data.copy()
+            value_data = bk_value_data.copy()
+            continue
+        finally:
+            # アラームをリセット
+            signal.alarm(0)
+        
 
         # データセットのサイズを超えたら保存
         if len(value_data) >= DATA_SET_SIZE:
             # データを保存
-            _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data, policy_data, value_data, kifu_counter)
+            _save_data(os.path.join(program_dir, save_npz_dir, f"sl_data_{data_counter}"), input_data, policy_data, value_data, kifu_counter)
 
             # 保存したデータを削除
             input_data = input_data[DATA_SET_SIZE:]
@@ -547,6 +577,7 @@ def generate_supervised_learning_data2(program_dir: str, kifu_dir: str, num_work
 
             kifu_counter = 1
             data_counter += 1
+            # dbg = 0####################
 
 
             print(f"[{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] gen_sl_npz")#####################
@@ -556,12 +587,14 @@ def generate_supervised_learning_data2(program_dir: str, kifu_dir: str, num_work
 
 
         kifu_counter += 1
+        cnt += 1###############
 
 
     # 端数の出力。BATCH_SIZE で割り切れる数だけデータを保存する。他は捨てる。
     n_batches = len(value_data) // BATCH_SIZE
     if n_batches > 0:
-        _save_data(os.path.join(program_dir, "data", f"sl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
+        _save_data(os.path.join(program_dir, save_npz_dir, f"sl_data_{data_counter}"), input_data[0:n_batches*BATCH_SIZE], policy_data[0:n_batches*BATCH_SIZE], value_data[0:n_batches*BATCH_SIZE], kifu_counter)
+
 
 
 
@@ -590,7 +623,7 @@ def generate_supervised_learning_data_mt(program_dir: str=None, kifu_dir: str=No
     print(f"    DATA_SET_SIZE: {DATA_SET_SIZE}")
 
     # 棋譜ファイルのリストを取得
-    kifu_files = sorted(glob.glob(os.path.join(kifu_dir, "*.sgf")))
+    kifu_files = sorted(glob.glob(os.path.join(program_dir, kifu_dir, "*.sgf")))
     kifu_num = len(kifu_files)
     print(f"    kifu_num: {kifu_num}")
     
