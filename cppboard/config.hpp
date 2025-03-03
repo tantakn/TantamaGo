@@ -13,8 +13,8 @@ int expandCnt = 0;
 
 
 // constexpr int BOARDSIZE = 19;
-// constexpr int BOARDSIZE = 13;
-constexpr int BOARDSIZE = 9;
+constexpr int BOARDSIZE = 13;
+// constexpr int BOARDSIZE = 9;
 
 constexpr double komi = 7.0;
 
@@ -29,8 +29,8 @@ constexpr ll debugFlag = 1<<5;
 
 // const string tensorRTModelPath = "./19ro.onnx";
 // const string tensorRTModelPath = "./test19_2.onnx";
-// const string tensorRTModelPath = "./13_1_DualNet_256_24.onnx";
-const string tensorRTModelPath = "./q50k_DualNet_256_24.onnx";
+const string tensorRTModelPath = "./13_1_DualNet_256_24.onnx";
+// const string tensorRTModelPath = "./q50k_DualNet_256_24.onnx";
 // const string tensorRTModelPath = "./test9_2.onnx";
 
 

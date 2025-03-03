@@ -274,7 +274,7 @@ goBoard* goBoard::SucceedRoot(goBoard*& rootPtr, pair<char, char> move)
 tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
 {
     assert(childrens.size() == 0);
-    assert(!isEnded);
+    // assert(!isEnded);
 
 
     // ++numVisits;
@@ -288,6 +288,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
 
 
     tensorRT.infer(MakeInputPlane(), tmpPolicy, values);
+
 
 
 
@@ -1041,7 +1042,7 @@ int goBoard::IsIllegalMove(int y, int x, char color)
 
 vector<tuple<char, char, char>> goBoard::GenAllLegalMoves()
 {
-    assert(!isEnded);
+    // assert(!isEnded);
 
     vector<tuple<char, char, char>> legalMoves(0);
 
@@ -1200,41 +1201,45 @@ double goBoard::CountResult()
     /// TODO: 日本ルール用の暫定措置。どうにかしたい。白黒が隣り合っているところでラインを引いて地を数える？中国ルールで最後までプレイしてみる？
     if (1) {  ////////////////////
               // if (isJapaneseRule) {
-        double tmpBlackScore;
+
+        assert(this->ucts.size());
+        assert(this->values.size());
+
+        double tmpScore;
         if (values.size()) {
             if (values[0] > values[2] && values[0] > values[1]) {
-                tmpBlackScore = -1.0;
+                tmpScore = -1.0;
             }
             else if (values[1] > values[0] && values[1] > values[2]) {
-                tmpBlackScore = 0.0;
+                tmpScore = 0.0;
             }
             else {
-                tmpBlackScore = 1.0;
+                tmpScore = 1.0;
             }
 
             if (teban == 1) {
-                return tmpBlackScore;
+                return tmpScore;
             }
             else {
-                return tmpBlackScore * -1;
+                return tmpScore * -1;
             }
         }
         else if (parent->values.size()) {
             if (parent->values[0] > parent->values[2] && parent->values[0] > parent->values[1]) {
-                tmpBlackScore = -1.0;
+                tmpScore = -1.0;
             }
             else if (parent->values[1] > parent->values[0] && parent->values[1] > parent->values[2]) {
-                tmpBlackScore = 0.0;
+                tmpScore = 0.0;
             }
             else {
-                tmpBlackScore = 1.0;
+                tmpScore = 1.0;
             }
 
             if (teban == 1) {
-                return tmpBlackScore;
+                return tmpScore;
             }
             else {
-                return tmpBlackScore * -1;
+                return tmpScore * -1;
             }
         }
         else {
@@ -1837,8 +1842,11 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
             char color = ptr->teban;
 
             // もし終局（直前2手がパス）なら結果を leafRslt に入れてbreak
-            /// TODO: これ通ったら
+            /// TODO: これ通ったら rootPtr->isEnded == true だからなくても良い？
             if (ptr->isEnded) {
+                if (ptr->ucts.size() == 0) {
+                    ptr->ExpandNode(tensorRT);
+                }
                 double tmpRslt = ptr->CountResult();
                 if (tmpRslt == 0) {
                     leafRslt = make_tuple(color, 0.0, 1.0, 0.0);
@@ -1867,6 +1875,9 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
 
                 /// TODO: ここで終局判定する必要ある？
                 if (nextPtr->isEnded) {
+                    if (nextPtr->ucts.size() == 0) {
+                        nextPtr->ExpandNode(tensorRT);
+                    }
 #ifdef dbg_flag
                     ++endCnt;
 #endif
@@ -2108,8 +2119,8 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             cerr << "expandCnt: " << expandCnt << ", endCnt: " << endCnt << endl;
 #endif
             print();
-            rootPtr->PrintBoard(0b100);
-            print();
+            // rootPtr->PrintBoard(0b100);
+            // print();
             rootPtr->PrintBoard(1 << 29);
             print();
             // rootPtr->PrintBoard(1 << 26);  //////////////////
@@ -2349,8 +2360,11 @@ int PlayWithGpt()
     samplesCommon::Args args;
 
     args.runInInt8 = false;
-    args.runInFp16 = false;
-    args.runInBf16 = false;
+    args.runInFp16 = true;
+    args.runInBf16 = true;
+    // args.runInInt8 = false;
+    // args.runInFp16 = false;
+    // args.runInBf16 = false;
 
     TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
 
@@ -2371,7 +2385,7 @@ int PlayWithGpt()
     string output = "";
     // 標準入力を監視
     while (getline(cin, input)) {
-        output = Gpt(input, rootPtr, tensorRT, searchThread, thinkTime, false);
+        output = Gpt(input, rootPtr, tensorRT, searchThread, thinkTime, true);
         if (output == "exit") {
             output += "\n";
             cout << "=" << endl;
@@ -2391,8 +2405,8 @@ int GptSoket()
     int thinkTime = 10;
     cerr << "thinkTime << ";
     cin >> thinkTime;
-    cerr << "visit_Limit << ";
-    cin >> visit_Limit;
+    // cerr << "visit_Limit << ";
+    // cin >> visit_Limit;
     int port = 8000;
     cerr << "port << ";
     cin >> port;
@@ -2400,12 +2414,12 @@ int GptSoket()
 
     samplesCommon::Args args;
 
-    // args.runInInt8 = false;
-    // args.runInFp16 = true;
-    // args.runInBf16 = true;
     args.runInInt8 = false;
-    args.runInFp16 = false;
-    args.runInBf16 = false;
+    args.runInFp16 = true;
+    args.runInBf16 = true;
+    // args.runInInt8 = false;
+    // args.runInFp16 = false;
+    // args.runInBf16 = false;
 
     TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
 
@@ -2551,8 +2565,11 @@ int Test()
     samplesCommon::Args args;
 
     args.runInInt8 = false;
-    args.runInFp16 = false;
-    args.runInBf16 = false;
+    args.runInFp16 = true;
+    args.runInBf16 = true;
+    // args.runInInt8 = false;
+    // args.runInFp16 = false;
+    // args.runInBf16 = false;
 
     TensorRTOnnxIgo tensorRT(initializeSampleParams(args, tensorRTModelPath));
 
