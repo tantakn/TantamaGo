@@ -8,6 +8,7 @@
 
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
+/// @brief 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁
 vector<vector<char>> rawBoard = []()
 {
     vector<vector<char>> tmpBoard(BOARDSIZE + 2, vector<char>(BOARDSIZE + 2, 0b0));
@@ -20,6 +21,7 @@ vector<vector<char>> rawBoard = []()
     return tmpBoard;
 }();
 
+/// @brief 0は空点、-1は壁
 vector<vector<int>> rawIdBoard = []() 
 {
     vector<vector<int>> tmpIdBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0));
@@ -94,7 +96,7 @@ struct goBoard {
     /// @brief 推論の結果にsoftmaxを適用したもの、多分 [相手の手番の勝率（例：初期局面なら白の勝率）, 引き分けの確率, 現在の勝率]
     vector<float> values;
 
-    recursive_mutex uctsMutex;
+    mutex uctsMutex;
     // mutex uctsMutex;
 
     /// @brief <uct, この手の探索回数, この手の勝率の合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->ucts) みたく使う。
@@ -312,7 +314,7 @@ char ConvertInt(int n);
 
 
 
-string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime);
+string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime, bool ponder);
 
 void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT);
 

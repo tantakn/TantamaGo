@@ -1,0 +1,36 @@
+thinkTime << port << "build end"
+"thread start"
+"server start"
+recv data: name
+send data: =TantamaGo
+recv data: name
+send data: =TantamaGo
+recv data: protocol_version
+send data: =2
+recv data: version
+send data: =0.1
+recv data: list_commands
+send data: =list_commands
+name
+boardsize
+clear_board
+komi
+play
+genmove
+quit
+showboard
+
+recv data: name
+send data: =TantamaGo
+recv data: protocol_version
+send data: =2
+recv data: gogui-analyze_commands
+send data: unknown_command
+recv data: boardsize 9
+send data: =
+recv data: clear_board
+send data: =
+recv data: komi 7
+send data: =
+recv data: lz-genmove_analyze b
+send data: unknown_command

@@ -1,0 +1,154 @@
+thinkTime << visit_Limit << port << "build end"
+"thread start"
+"server start"
+recv data: name
+send data: =TantamaGo
+recv data: name
+send data: =TantamaGo
+recv data: protocol_version
+send data: =2
+recv data: version
+send data: =0.1
+recv data: list_commands
+send data: =list_commands
+name
+boardsize
+clear_board
+komi
+play
+genmove
+quit
+showboard
+
+recv data: name
+send data: =TantamaGo
+recv data: protocol_version
+send data: =2
+recv data: boardsize 9
+send data: =
+recv data: clear_board
+send data: =
+recv data: komi 7
+send data: =
+recv data: play b E5
+
+
+--------------------
+rootPtr: 0x55abb871d390, teban: 1, moveCnt: 0
+
+探索後勝率*1000 の表示。ucts.size(): 82, visit: 82
+endCnt: 0, depth: 5
+   0    0    0    0    0    0    0    0    0 
+   0    1    0    0    0    0    0    2    0 
+   0    0   10   26    8   25   11    0    0 
+   0    0   24  100  109   92   19    0    0 
+   0    0    8  108  477  116    6    0    0 
+   0    0   22   97  112   95   25    0    0 
+   0    0   10   22    8   21   12    0    0 
+   0    2    0    0    0    0    0    3    0 
+   0    0    0    0    0    0    0    0    0 
+pass: -499
+"maxWinRate:", 0.47744905948638916, [5,5]
+"infervalues:", [0.5222739577293396,0.0005538786645047367,0.4771721065044403]
+
+previousMove: -1 -1 2
+moveCnt: 0, teban: 1
+    A B C D E F G H J
+ 1  ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
+ 2  ├ + + + + + + + ┤
+ 3  ├ + + + + + + + ┤
+ 4  ├ + + + + + + + ┤
+ 5  ├ + + + + + + + ┤
+ 6  ├ + + + + + + + ┤
+ 7  ├ + + + + + + + ┤
+ 8  ├ + + + + + + + ┤
+ 9  └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
+
+send data: =
+recv data: genmove w
+
+--------------------
+rootPtr: 0x55ac4cf95c60, teban: 2, moveCnt: 1
+
+ -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1 
+ -1   0   0   0   0   0   0   0   0   0  -1 
+ -1   0   0   0   0   0   0   0   0   0  -1 
+ -1   0   0   0   0   0   0   0   0   0  -1 
+ -1   0   0   0   0   0   0   0   0   0  -1 
+ -1   0   0   0   0   2   0   0   0   0  -1 
+ -1   0   0   0   0   0   0   0   0   0  -1 
+ -1   0   0   0   0   0   0   0   0   0  -1 
+ -1   0   0   0   0   0   0   0   0   0  -1 
+ -1   0   0   0   0   0   0   0   0   0  -1 
+ -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1 
+
+
+uct値*100 を表示 ucts.size(): 81, visit: 81
+   0    0    0    0    0    0    0    0    0 
+   0   72    0    0  104   37    0    0    0 
+   0    0  644  671  851  666  642    0    0 
+   0    0  674  480  560  518  663    0    0 
+   0  125  851  569 ####  568  850  118    0 
+   0   19  675  508  568  509  667    0    0 
+   0    0  642  672  849  662  644    0    0 
+   0   32    0   19  120   30   60    0    0 
+   0    0    0    0    0    0    0    0    0 
+pass: -176
+ans: 2 [3, 5], uct: 8.51974, visit: 1, winrate:0.480116
+
+visitの表示。ucts.size(): 81, visit: 81
+   1    1    1    1    1    1    1    1    1 
+   1    1    1    1    1    1    1    1    1 
+   1    1    1    1    1    1    1    1    1 
+   1    1    1    1    1    1    1    1    1 
+   1    1    1    1 ####    1    1    1    1 
+   1    1    1    1    1    1    1    1    1 
+   1    1    1    1    1    1    1    1    1 
+   1    1    1    1    1    1    1    1    1 
+   1    1    1    1    1    1    1    1    1 
+pass:    1
+
+"policys勝率*1000 policys.size():", 81
+   0    0    0    0    0    0    0    0    0 
+   0    0    0    0    0    0    0    0    0 
+   0    0 5400 5669 7471 5615 5378    0    0 
+   0    0 5700 3756 4560 4135 5582    0    0 
+   0  208 7469 4645 #### 4636 7456  134    0 
+   0    0 5707 4038 4640 4044 5631    0    0 
+   0    0 5374 5674 7451 5581 5401    0    0 
+   0    0    0    0  157    0    0    0    0 
+   0    0    0    0    0    0    0    0    0 
+"pass:", -2815
+"values:", [0.5196257829666138,0.0005158892599865794,0.4798583388328552]
+
+探索後勝率*1000 の表示。ucts.size(): 81, visit: 81
+endCnt: 0, depth: 8
+   0    0    0    0    0    0    0    0    0 
+   0    0    0    0    0    0    0    0    0 
+   0    0   60   79  480   75   59    0    0 
+   0    0   81   11   26   17   72    0    0 
+   0    0  479   28 ####   28  472    0    0 
+   0    0   82   15   28   15   76    0    0 
+   0    0   58   79  470   72   60    0    0 
+   0    0    0    0    0    0    0    0    0 
+   0    0    0    0    0    0    0    0    0 
+pass: -499
+"maxWinRate:", 0.4801162779331207, [3,5]
+"infervalues:", [0.5196257829666138,0.0005158892599865794,0.4798583388328552]
+
+previousMove: 5 5 1
+moveCnt: 1, teban: 2
+    A B C D E F G H J
+ 1  ┌ ┬ ┬ ┬ ┬ ┬ ┬ ┬ ┐
+ 2  ├ + + + + + + + ┤
+ 3  ├ + + + + + + + ┤
+ 4  ├ + + + + + + + ┤
+ 5  ├ + + + ● + + + ┤
+ 6  ├ + + + + + + + ┤
+ 7  ├ + + + + + + + ┤
+ 8  ├ + + + + + + + ┤
+ 9  └ ┴ ┴ ┴ ┴ ┴ ┴ ┴ ┘
+
+send data: =E3
+recv data: quit
+send data: =
