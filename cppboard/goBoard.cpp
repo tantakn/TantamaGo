@@ -275,9 +275,11 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
     assert(!isEnded);
 
 
-    ++numVisits;
+    // ++numVisits;
 
     vector<tuple<char, char, char>> legalMoves = GenAllLegalMoves();
+
+    numVisits = legalMoves.size();
 
     /// 推論の結果を一時保存する配列。tmpPolicy[BOARDSIZE * BOARDSIZE] はパス。
     vector<float> tmpPolicy(BOARDSIZE * BOARDSIZE + 1, 0.0);
@@ -308,7 +310,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
             else {
                 tmpUct = x + sqrt(2 * log(policys.size()));
             }
-            lock_guard<recursive_mutex> lock(uctsMutex);
+            lock_guard<mutex> lock(uctsMutex);
             ucts.insert(make_tuple(tmpUct, 1, x, move));
         }
 
@@ -345,6 +347,31 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
             x = exp(x) / bunbo;
         }
 
+        // tmppolicyにsoftmax
+        map<std::pair<char, char>, float> tmpPolicys;
+        bunbo = 0.0;
+        for (auto [move, x] : policys) {
+            bunbo += exp(x - maxPolicy);
+        }
+
+        float maxPolicy2 = 0.0;
+        for (auto [move, x] : policys) {
+            tmpPolicys[move] = exp(x - maxPolicy) / bunbo;
+            chmax(maxPolicy2, tmpPolicys[move]);
+        }
+
+
+        // tmpPolicys の最大が values[2] + values[1] * 0.5 になるように調整
+        for (auto [move, x] : tmpPolicys) {
+            tmpPolicys[move] = (values[2] + values[1] * 0.5) * x / maxPolicy2;
+            // policys[move] = values[2] * x / maxPolicy2;
+            if (move == make_pair(char(0), char(0))) {
+                tmpPolicys[move] -= 0.5;
+            }
+        }
+        // policyにsoftmaxここまで
+
+
         // // policyにsoftmax
         // bunbo = 0.0;
         // for (auto [move, x] : policys) {
@@ -377,8 +404,9 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
             else {
                 tmpUct = x + sqrt(2 * log(policys.size()));
             }
-            lock_guard<recursive_mutex> lock(uctsMutex);
-            ucts.insert(make_tuple(tmpUct, 1, x, move));
+            lock_guard<mutex> lock(uctsMutex);
+            // ucts.insert(make_tuple(tmpUct, 1, x, move));
+            ucts.insert(make_tuple(tmpUct, 1, tmpPolicys[move], move));
         }
 
         if (debugFlag & 1 << 31) {
@@ -406,7 +434,7 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
     inputWinValue = inputWinValue + inputDrawValue * 0.5;
 
 
-    lock_guard<recursive_mutex> lock(uctsMutex);
+    lock_guard<mutex> lock(uctsMutex);
 
     set<tuple<double, int, float, pair<char, char>>> tmpUcts;
 
@@ -454,7 +482,7 @@ pair<char, char> goBoard::GetBestMove()
 {
     assert(childrens.size() > 0);
 
-    lock_guard<recursive_mutex> lock(uctsMutex);
+    lock_guard<mutex> lock(uctsMutex);
 
 
     double maxVisit = -INF;
@@ -656,7 +684,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // uctの表示
     if (bit & 1 << 29) {
-        lock_guard<recursive_mutex> lock(uctsMutex);
+        lock_guard<mutex> lock(uctsMutex);
 
         cerr << "uct値*100 を表示 ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, -1000000));
@@ -715,7 +743,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // visitの表示
     if (bit & 1 << 28) {
-        lock_guard<recursive_mutex> lock(uctsMutex);
+        lock_guard<mutex> lock(uctsMutex);
 
         cerr << "visitの表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<int>> tmp(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, -1000000));
@@ -750,7 +778,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // 勝率の表示
     if (bit & 1 << 27) {
-        lock_guard<recursive_mutex> lock(uctsMutex);
+        lock_guard<mutex> lock(uctsMutex);
 
         cerr << "探索後勝率*1000 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
 #ifdef dbg_flag
@@ -798,7 +826,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // ペナルティの表示
     if (bit & 1 << 25) {
-        lock_guard<recursive_mutex> lock(uctsMutex);
+        lock_guard<mutex> lock(uctsMutex);
 
         cerr << "ペナルティ*100 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
@@ -1718,64 +1746,80 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
     // ptr0 -> ... -> if !ptr3->children.count(nextMove) -> PutStone -> ExpandNode -> ptr2 の ucts を更新 -> ... -> ptr0 の ucts を更新。 という流れを繰り返す。
     // ExpandNode で 合法手に対して ucts.insert される。
     // PutStone の手が連続2回目のpassのとき isEnded = true になる。
-    auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
-    {
-
-#ifdef dbg_flag
-        g_node_cnt++;
-#endif
-        int color = ptr->teban;
-
-        if (ptr->isEnded) {
-            double rslt = ptr->CountResult();
-            if (rslt == 0) {
-                return make_tuple(color, 0.0, 1.0, 0.0);
-            }
-            if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
-                return make_tuple(color, 0.0, 0.0, 1.0);
-            }
-            return make_tuple(color, 1.0, 0.0, 0.0);
-        }
-
-        lock_guard<recursive_mutex> lock(ptr->uctsMutex);
-
-        assert(ptr->ucts.size());
-
-        pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
 
 
-        if (!ptr->childrens.count(nextMove)) {
-            goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+//     auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
+//     {
 
-            int nextColor = nextPtr->teban;
+// #ifdef dbg_flag
+//         g_node_cnt++;
+// #endif
+//         int color = ptr->teban;
 
-            if (nextPtr->isEnded) {
-#ifdef dbg_flag
-                ++endCnt;
-#endif
-                double rslt = nextPtr->CountResult();
-                if (rslt == 0) {
-                    return make_tuple(nextColor, 0.0, 1.0, 0.0);
-                }
-                /// TODO: 正しいか確認
-                if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
-                    return make_tuple(nextColor, 0.0, 0.0, 1.0);
-                }
-                return make_tuple(nextColor, 1.0, 0.0, 0.0);
-            }
+//         if (ptr->isEnded) {
+//             double rslt = ptr->CountResult();
+//             if (rslt == 0) {
+//                 return make_tuple(color, 0.0, 1.0, 0.0);
+//             }
+//             if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
+//                 return make_tuple(color, 0.0, 0.0, 1.0);
+//             }
+//             return make_tuple(color, 1.0, 0.0, 0.0);
+//         }
 
-            return nextPtr->ExpandNode(tensorRT);
-        }
+//         lock_guard<mutex> lock(ptr->uctsMutex);
 
+//         assert(ptr->ucts.size());
 
-        tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
-
-        ptr->UpdateUcts(returnData, nextMove);
-
-        return returnData;
-    };
+//         pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
 
 
+//         if (!ptr->childrens.count(nextMove)) {
+//             goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+
+//             int nextColor = nextPtr->teban;
+
+//             if (nextPtr->isEnded) {
+// #ifdef dbg_flag
+//                 ++endCnt;
+// #endif
+//                 double rslt = nextPtr->CountResult();
+//                 if (rslt == 0) {
+//                     return make_tuple(nextColor, 0.0, 1.0, 0.0);
+//                 }
+//                 /// TODO: 正しいか確認
+//                 if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
+//                     return make_tuple(nextColor, 0.0, 0.0, 1.0);
+//                 }
+//                 return make_tuple(nextColor, 1.0, 0.0, 0.0);
+//             }
+
+//             return nextPtr->ExpandNode(tensorRT);
+//         }
+
+
+//         tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
+
+//         ptr->UpdateUcts(returnData, nextMove);
+
+//         return returnData;
+//     };
+
+
+//     while (running.load()) {
+//         if (rootPtr->isEnded) {
+//             break;
+//         }
+//         if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
+//             sleep(0.1);
+//         }
+//         saiki(saiki, rootPtr);
+//     }
+
+//     return;
+
+
+    // 再帰なしバージョン。leaf（ExpandNode で作ったノード・isEndedのノード）ではuctの更新はしない。
     while (running.load()) {
         if (rootPtr->isEnded) {
             break;
@@ -1783,13 +1827,88 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
         if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
             sleep(0.1);
         }
-        saiki(saiki, rootPtr);
+
+        // 潜る探索ループ
+        goBoard* ptr = rootPtr;
+        tuple<int, float, float, float> leafRslt;
+        while (true) {
+            char color = ptr->teban;
+
+            // もし終局（直前2手がパス）なら結果を leafRslt に入れてbreak
+            /// TODO: これ通ったら
+            if (ptr->isEnded) {
+                double tmpRslt = ptr->CountResult();
+                if (tmpRslt == 0) {
+                    leafRslt = make_tuple(color, 0.0, 1.0, 0.0);
+                    break;
+                }
+                if ((color == 1 && tmpRslt > 0) || (color == 2 && tmpRslt < 0)) {
+                    leafRslt = make_tuple(color, 0.0, 0.0, 1.0);
+                    break;
+                }
+                leafRslt = make_tuple(color, 1.0, 0.0, 0.0);
+                break;
+            }
+
+            lock_guard<mutex> lock(ptr->uctsMutex);
+
+            assert(ptr->ucts.size());
+
+            // uct が最大の手を取得
+            pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
+
+            // その手が未展開なら展開して結果を leafRslt に入れてbreak
+            if (!ptr->childrens.count(nextMove)) {
+                goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
+
+                int nextColor = nextPtr->teban;
+
+                /// TODO: ここで終局判定する必要ある？
+                if (nextPtr->isEnded) {
+#ifdef dbg_flag
+                    ++endCnt;
+#endif
+                    double tmpRslt = nextPtr->CountResult();
+                    if (tmpRslt == 0) {
+                        leafRslt = make_tuple(nextColor, 0.0, 1.0, 0.0);
+                    }
+                    /// TODO: 正しいか確認
+                    else if ((nextColor == 1 && tmpRslt > 0) || (nextColor == 2 && tmpRslt < 0)) {
+                        leafRslt = make_tuple(nextColor, 0.0, 0.0, 1.0);
+                    }
+                    else {
+                        leafRslt = make_tuple(nextColor, 1.0, 0.0, 0.0);
+                    }
+                    break;
+                }
+
+                leafRslt = nextPtr->ExpandNode(tensorRT);
+                break;
+            }
+
+
+            ptr = ptr->childrens[nextMove];
+        }
+
+        // 浮かんでいく探索ループ
+        pair<char, char> nextMove = ptr->previousMove;
+        while (true) {
+            if (ptr->isRoot) {
+                break;
+            }
+
+            // lock_guard<mutex> lock(ptr->uctsMutex);
+
+            ptr->UpdateUcts(leafRslt, nextMove);
+            nextMove = ptr->previousMove;
+            ptr = ptr->parent;
+        }
     }
 
     return;
 }
 
-string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime = 1, bool ponder = true)
+string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime = 5, bool ponder = true)
 {
     // cerr << "Gpt input: " << input << endl;  /////////////////////
 
@@ -2209,6 +2328,14 @@ END2:;
 
 int PlayWithGpt()
 {
+    int thinkTime = 10;
+    // cout << "thinkTime << ";
+    // cin >> thinkTime;
+    int visit_Limit = 100000;
+    // cout << "visit_Limit << ";
+    // cin >> visit_Limit;
+
+
     samplesCommon::Args args;
 
     args.runInInt8 = false;
@@ -2234,7 +2361,7 @@ int PlayWithGpt()
     string output = "";
     // 標準入力を監視
     while (getline(cin, input)) {
-        output = Gpt(input, rootPtr, tensorRT, searchThread);
+        output = Gpt(input, rootPtr, tensorRT, searchThread, thinkTime, false);
         cout << output << endl;
         if (output == "exit") {
             break;
