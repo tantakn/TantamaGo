@@ -95,6 +95,7 @@ class GtpClient_socket: # pylint: disable=R0902,R0903
             self.time_manager = TimeManager(mode=mode, constant_visits=visits)
         if mode is TimeControl.CONSTANT_TIME:
             self.time_manager = TimeManager(mode=mode, constant_time=const_time)
+            print_err("constant_time: ", const_time)
         if mode is TimeControl.TIME_CONTROL:
             self.time_manager = TimeManager(mode=mode, remaining_time=time)
 
