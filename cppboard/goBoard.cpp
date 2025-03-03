@@ -1748,75 +1748,75 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
     // PutStone の手が連続2回目のpassのとき isEnded = true になる。
 
 
-//     auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
-//     {
+    //     auto saiki = [tensorRT](auto self, goBoard* ptr) -> tuple<int, float, float, float>
+    //     {
 
-// #ifdef dbg_flag
-//         g_node_cnt++;
-// #endif
-//         int color = ptr->teban;
+    // #ifdef dbg_flag
+    //         g_node_cnt++;
+    // #endif
+    //         int color = ptr->teban;
 
-//         if (ptr->isEnded) {
-//             double rslt = ptr->CountResult();
-//             if (rslt == 0) {
-//                 return make_tuple(color, 0.0, 1.0, 0.0);
-//             }
-//             if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
-//                 return make_tuple(color, 0.0, 0.0, 1.0);
-//             }
-//             return make_tuple(color, 1.0, 0.0, 0.0);
-//         }
+    //         if (ptr->isEnded) {
+    //             double rslt = ptr->CountResult();
+    //             if (rslt == 0) {
+    //                 return make_tuple(color, 0.0, 1.0, 0.0);
+    //             }
+    //             if ((color == 1 && rslt > 0) || (color == 2 && rslt < 0)) {
+    //                 return make_tuple(color, 0.0, 0.0, 1.0);
+    //             }
+    //             return make_tuple(color, 1.0, 0.0, 0.0);
+    //         }
 
-//         lock_guard<mutex> lock(ptr->uctsMutex);
+    //         lock_guard<mutex> lock(ptr->uctsMutex);
 
-//         assert(ptr->ucts.size());
+    //         assert(ptr->ucts.size());
 
-//         pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
-
-
-//         if (!ptr->childrens.count(nextMove)) {
-//             goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
-
-//             int nextColor = nextPtr->teban;
-
-//             if (nextPtr->isEnded) {
-// #ifdef dbg_flag
-//                 ++endCnt;
-// #endif
-//                 double rslt = nextPtr->CountResult();
-//                 if (rslt == 0) {
-//                     return make_tuple(nextColor, 0.0, 1.0, 0.0);
-//                 }
-//                 /// TODO: 正しいか確認
-//                 if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
-//                     return make_tuple(nextColor, 0.0, 0.0, 1.0);
-//                 }
-//                 return make_tuple(nextColor, 1.0, 0.0, 0.0);
-//             }
-
-//             return nextPtr->ExpandNode(tensorRT);
-//         }
+    //         pair<char, char> nextMove = get<3>(*rbegin(ptr->ucts));
 
 
-//         tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
+    //         if (!ptr->childrens.count(nextMove)) {
+    //             goBoard* nextPtr = ptr->PutStone(nextMove.first, nextMove.second, color);
 
-//         ptr->UpdateUcts(returnData, nextMove);
+    //             int nextColor = nextPtr->teban;
 
-//         return returnData;
-//     };
+    //             if (nextPtr->isEnded) {
+    // #ifdef dbg_flag
+    //                 ++endCnt;
+    // #endif
+    //                 double rslt = nextPtr->CountResult();
+    //                 if (rslt == 0) {
+    //                     return make_tuple(nextColor, 0.0, 1.0, 0.0);
+    //                 }
+    //                 /// TODO: 正しいか確認
+    //                 if ((nextColor == 1 && rslt > 0) || (nextColor == 2 && rslt < 0)) {
+    //                     return make_tuple(nextColor, 0.0, 0.0, 1.0);
+    //                 }
+    //                 return make_tuple(nextColor, 1.0, 0.0, 0.0);
+    //             }
+
+    //             return nextPtr->ExpandNode(tensorRT);
+    //         }
 
 
-//     while (running.load()) {
-//         if (rootPtr->isEnded) {
-//             break;
-//         }
-//         if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
-//             sleep(0.1);
-//         }
-//         saiki(saiki, rootPtr);
-//     }
+    //         tuple<int, float, float, float> returnData = self(self, ptr->childrens[nextMove]);
 
-//     return;
+    //         ptr->UpdateUcts(returnData, nextMove);
+
+    //         return returnData;
+    //     };
+
+
+    //     while (running.load()) {
+    //         if (rootPtr->isEnded) {
+    //             break;
+    //         }
+    //         if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
+    //             sleep(0.1);
+    //         }
+    //         saiki(saiki, rootPtr);
+    //     }
+
+    //     return;
 
 
     // 再帰なしバージョン。leaf（ExpandNode で作ったノード・isEndedのノード）ではuctの更新はしない。
@@ -1883,6 +1883,9 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                 }
 
                 leafRslt = nextPtr->ExpandNode(tensorRT);
+#ifdef dbg_flag
+                ++expandCnt;
+#endif
                 break;
             }
 
@@ -1893,13 +1896,12 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
         // 浮かんでいく探索ループ
         pair<char, char> nextMove = ptr->previousMove;
         while (true) {
+            ptr->UpdateUcts(leafRslt, nextMove);
+
             if (ptr->isRoot) {
                 break;
             }
 
-            // lock_guard<mutex> lock(ptr->uctsMutex);
-
-            ptr->UpdateUcts(leafRslt, nextMove);
             nextMove = ptr->previousMove;
             ptr = ptr->parent;
         }
@@ -2046,6 +2048,9 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             if (debugFlag & 1 << 5) {
                 cout << "\n--------------------\n"
                      << "rootPtr: " << rootPtr << ", teban: " << int(rootPtr->teban) << ", moveCnt: " << rootPtr->moveCnt << endl;  //////////////////////////
+#ifdef dbg_flag
+                cout << "expandCnt: " << expandCnt << ", endCnt: " << endCnt << endl;
+#endif
                 print();
                 // rootPtr->PrintBoard(1 << 29);
                 // print();
@@ -2097,6 +2102,9 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
         if (debugFlag & 1 << 5) {
             cout << "\n--------------------\n"
                  << "rootPtr: " << rootPtr << ", teban: " << int(rootPtr->teban) << ", moveCnt: " << rootPtr->moveCnt << endl;  //////////////////////////
+#ifdef dbg_flag
+            cout << "expandCnt: " << expandCnt << ", endCnt: " << endCnt << endl;
+#endif
             print();
             rootPtr->PrintBoard(0b100);
             print();

@@ -626,6 +626,42 @@ def train_on_gpu_ddp_worker(rank, world, train_npz_paths, test_npz_paths, progra
 
 
 
+def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data", chckpoint_dir: str = None) -> None: # pylint: disable=R0914,R0915
+
+    print(f"🐾train_on_gpu_ddp {dt_now}")###########
+    print(f"    [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
+    print("    torch.cuda.current_device: ", torch.cuda.current_device())
+    print("    torch.cuda.device_count: ", torch.cuda.device_count())
+    print("    torch.cuda.get_device_name(0): ", torch.cuda.get_device_name(0))
+    for i in range(torch.cuda.device_count()):
+        print(f"    torch.cuda.get_device_name({i}): ", torch.cuda.get_device_name(i))
+    # if torch.cuda.device_count() > 1:##########
+    #     print("    torch.cuda.get_device_name(1): ", torch.cuda.get_device_name(1))
+    for i in range(torch.cuda.device_count()):
+        print(f"    torch.cuda.get_device_capability({i}): ", torch.cuda.get_device_capability(i))
+    # print("    torch.cuda.get_device_capability(0): ", torch.cuda.get_device_capability(0))
+    # if torch.cuda.device_count() > 1:##########
+        # print("    torch.cuda.get_device_capability(1): ", torch.cuda.get_device_capability(1))
+    print("    torch.cuda.get_arch_list(): ", torch.cuda.get_arch_list())
+
+    # train_dataset, val_dataset = getMyDataset()
+
+    # 学習データと検証用データの分割
+    data_set = sorted(glob.glob(os.path.join(program_dir, npz_dir, "sl_data_*.npz")))
+    """sl_data_*.npz のファイルパスのリスト。"""
+    train_data_set, test_data_set = split_train_test_set(data_set, 0.8)
+    """sl_data_*.npz のファイルパスのリストを学習データと検証用データの分割したもの。"""
+
+    os.environ['MASTER_ADDR'] = 'localhost'
+    os.environ['MASTER_PORT'] = '50000'
+    os.environ['TORCH_DISTRIBUTED_DEBUG'] = 'DETAIL'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
+    # os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
+
+    torch.multiprocessing.spawn(train_on_gpu_ddp_worker, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir, chckpoint_dir), nprocs = torch.cuda.device_count(), join = True)
+
+
+
 
 def train_on_gpu_ddp_worker2(rank, world, train_npz_paths, test_npz_paths, program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data", checkpoint_dir: str = None) -> None: # pylint: disable=R0914,R0915
     """教師あり学習を実行し、学習したモデルを保存する。
@@ -729,9 +765,15 @@ def train_on_gpu_ddp_worker2(rank, world, train_npz_paths, test_npz_paths, progr
         while True:
         # for data_index, train_npz_path in enumerate(train_npz_paths):
 
+            sleep_cnt = 0
+            sleep_time = time.time()
+            while not os.path.isfile(os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")):
+                time.sleep(1)
+                sleep_cnt += 1
+                if time.time() - sleep_time > 3600:
+                    break
 
-            if os.path.isfile(os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")):
-                train_npz_path = os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")
+            train_npz_path = os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")
 
             plane_data, policy_data, value_data = tmp_load_data_set(train_npz_path, rank)
 
@@ -895,7 +937,9 @@ def train_on_gpu_ddp_worker2(rank, world, train_npz_paths, test_npz_paths, progr
 
 
 
-def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data", chckpoint_dir: str = None) -> None: # pylint: disable=R0914,R0915
+
+
+def train_on_gpu_ddp2(program_dir: str, board_size: int, batch_size: int, epochs: int, network_name: str, npz_dir: str = "data", chckpoint_dir: str = None) -> None: # pylint: disable=R0914,R0915
 
     print(f"🐾train_on_gpu_ddp {dt_now}")###########
     print(f"    [{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}] device")#############
@@ -927,11 +971,7 @@ def train_on_gpu_ddp(program_dir: str, board_size: int, batch_size: int, epochs:
     os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
     # os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
 
-    torch.multiprocessing.spawn(train_on_gpu_ddp_worker, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir, chckpoint_dir), nprocs = torch.cuda.device_count(), join = True)
-
-
-
-
+    torch.multiprocessing.spawn(train_on_gpu_ddp_worker2, args=(torch.cuda.device_count(), train_data_set, test_data_set, program_dir, board_size, BATCH_SIZE, EPOCHS, network_name, npz_dir, chckpoint_dir), nprocs = torch.cuda.device_count(), join = True)
 
 
 

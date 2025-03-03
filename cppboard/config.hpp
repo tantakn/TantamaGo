@@ -8,6 +8,7 @@
 ll g_node_cnt = 0;
 int endCnt = 0;
 int deepestMoveCnt = 0;
+int expandCnt = 0;
 #endif
 
 

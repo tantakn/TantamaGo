@@ -24,13 +24,17 @@ epoch 0, data-1 : loss = 3.384733, time = 420.3 [s].
 
 チェックポイントから学習するとき
 python3 train.py --size 13 --use-ddp true --npz-dir data --net DualNet_256_24 --checkpoint-dir model/checkpoint_20250227_033544_Ep:00.bin
+
+npz 作りながら学習するとき
+python3 train.py --size 9 --kifu-dir /home/tantakn/code/TantamaGo/SgfFile/GoQuest_9x9_49893games/sgf
+python3 train.py --size 9 --npz-dir data --net DualNet_256_24 --endless True
 """
 import glob
 import os
 import click
 from learning_param import BATCH_SIZE, EPOCHS
 from board.constant import BOARD_SIZE
-from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, train_with_gumbel_alphazero_on_cpu,  train_on_gpu_ddp
+from nn.learn import train_on_cpu, train_on_gpu, train_with_gumbel_alphazero_on_gpu, train_with_gumbel_alphazero_on_cpu,  train_on_gpu_ddp, train_on_gpu_ddp2
 from nn.data_generator import generate_supervised_learning_data, generate_reinforcement_learning_data, generate_supervised_learning_data_mt
 
 import threading, time, datetime
@@ -53,7 +57,9 @@ import resource
 @click.option('--use-gpu', type=click.BOOL, default=True, \
     help="学習時にGPUを使用するフラグ。指定がなければGPUを使用するものとする。")
 @click.option('--use-ddp', 'ddp', type=click.BOOL, default=False, \
-    help="ddp。")#############
+    help="ddp")#############
+@click.option('--endless', 'endless', type=click.BOOL, default=False, \
+    help="endless")#############
 @click.option('--rl', type=click.BOOL, default=False, \
     help="強化学習実行フラグ。教師あり学習を実行するときにはfalseを指定する。")
 @click.option('--window-size', type=click.INT, default=300000, \
@@ -70,7 +76,7 @@ import resource
     help="rl のパイプラインの開始日時。")
 @click.option('--input-opt', 'input_opt', type=click.STRING, default="", \
     help="input_planes のオプション。")
-def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, checkpoint_dir: str, ddp: bool, rl_num: int, rl_datetime: str, input_opt: str): # pylint: disable=C0103
+def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: int, network_name: str, npz_dir: str, checkpoint_dir: str, ddp: bool, endless: bool, rl_num: int, rl_datetime: str, input_opt: str): # pylint: disable=C0103
     """教師あり学習、または強化学習のデータ生成と学習を実行する。
 
     Args:
@@ -129,8 +135,8 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             generate_reinforcement_learning_data(program_dir=program_dir, kifu_dir_list=kifu_dir_list, board_size=size, input_opt=input_opt)
         else:
             # こっちの kifu_dir は kifu_dir/*.sgf
-            generate_supervised_learning_data_mt(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
-            # generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
+            # generate_supervised_learning_data_mt(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
+            generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
             # generate_supervised_learning_data(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size)
 
     if npz_dir is not None:###############
@@ -140,6 +146,8 @@ def train_main(kifu_dir: str, size: int, use_gpu: bool, rl: bool, window_size: i
             else:
                 train_with_gumbel_alphazero_on_cpu(program_dir=program_dir, board_size=size, batch_size=BATCH_SIZE)
         else:
+            if endless:
+                train_on_gpu_ddp2(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir, chckpoint_dir=checkpoint_dir)
             if use_gpu and ddp:
                 train_on_gpu_ddp(program_dir=program_dir,board_size=size,  batch_size=BATCH_SIZE, epochs=EPOCHS, network_name=network_name, npz_dir=npz_dir, chckpoint_dir=checkpoint_dir)
             elif use_gpu:
