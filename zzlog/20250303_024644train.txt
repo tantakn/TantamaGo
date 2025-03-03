@@ -1,0 +1,36 @@
+🐾train_main
+    EPOCHS: 1
+    BATCH_SIZE: 256
+    kifu_dir: /home0/y2024/u2424004/igo/TantamaGo/SgfFile/ttmmpp
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet_256_24
+    npz_dir: data
+    checkpoint_dir: None
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+[20250303_024647] gen_sl_data start
+    BATCH_SIZE: 256
+    DATA_SET_SIZE: 256000
+[20250303_024647] monitoring
+cpu: 2.5% [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0] 
+mem: 8.7% 
+TITAN RTX, 0, 0 %, 16 MiB, 15.51 W 
+TITAN RTX, 1, 0 %, 6 MiB, 1.45 W 
+
+[20250303_024657] monitoring
+cpu: 1.7% [2.6, 2.2, 1.9, 1.3, 0.9, 1.5, 1.0, 2.3, 2.6, 1.2, 1.5, 0.6, 0.6, 1.0, 1.2, 4.1] 
+mem: 8.7% 
+TITAN RTX, 0, 0 %, 16 MiB, 15.54 W 
+TITAN RTX, 1, 0 %, 6 MiB, 1.37 W 
+
+[20250303_025158] monitoring
+cpu: 1.1% [3.2, 1.4, 1.1, 0.8, 0.8, 1.0, 0.8, 1.8, 0.9, 0.7, 0.8, 0.9, 0.8, 0.8, 0.8, 0.9] 
+mem: 8.8% 
+TITAN RTX, 0, 0 %, 16 MiB, 15.41 W 
+TITAN RTX, 1, 0 %, 6 MiB, 1.54 W 
+
