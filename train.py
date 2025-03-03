@@ -28,6 +28,9 @@ python3 train.py --size 13 --use-ddp true --npz-dir data --net DualNet_256_24 --
 npz 作りながら学習するとき
 python3 train.py --size 9 --kifu-dir /home/tantakn/code/TantamaGo/SgfFile/GoQuest_9x9_49893games/sgf --endless True
 python3 train.py --size 9 --npz-dir data --net DualNet_256_24 --endless True
+
+python3 train.py --kifu-dir /home/tantakn/code/TantamaGo/SgfFile/GoQuest_9x9_49893games/sgf --size 9 --endless true --save-npz-dir data
+python3 train.py --npz-dir data --net DualNet_256_24 --endless True --size 9
 """
 import glob
 import os
