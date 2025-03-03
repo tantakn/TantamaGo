@@ -96,7 +96,7 @@ struct goBoard {
     /// @brief 推論の結果にsoftmaxを適用したもの、多分 [相手の手番の勝率（例：初期局面なら白の勝率）, 引き分けの確率, 現在の勝率]
     vector<float> values;
 
-    recursive_mutex uctsMutex;
+    mutex uctsMutex;
     // mutex uctsMutex;
 
     /// @brief <uct, この手の探索回数, この手の勝率の合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->ucts) みたく使う。

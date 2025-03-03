@@ -310,7 +310,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
             else {
                 tmpUct = x + sqrt(2 * log(policys.size()));
             }
-            lock_guard<recursive_mutex> lock(uctsMutex);
+            lock_guard<mutex> lock(uctsMutex);
             ucts.insert(make_tuple(tmpUct, 1, x, move));
         }
 
@@ -404,7 +404,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
             else {
                 tmpUct = x + sqrt(2 * log(policys.size()));
             }
-            lock_guard<recursive_mutex> lock(uctsMutex);
+            lock_guard<mutex> lock(uctsMutex);
             // ucts.insert(make_tuple(tmpUct, 1, x, move));
             ucts.insert(make_tuple(tmpUct, 1, tmpPolicys[move], move));
         }
@@ -434,7 +434,7 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
     inputWinValue = inputWinValue + inputDrawValue * 0.5;
 
 
-    lock_guard<recursive_mutex> lock(uctsMutex);
+    lock_guard<mutex> lock(uctsMutex);
 
     set<tuple<double, int, float, pair<char, char>>> tmpUcts;
 
@@ -482,7 +482,7 @@ pair<char, char> goBoard::GetBestMove()
 {
     assert(childrens.size() > 0);
 
-    lock_guard<recursive_mutex> lock(uctsMutex);
+    lock_guard<mutex> lock(uctsMutex);
 
 
     double maxVisit = -INF;
@@ -684,7 +684,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // uctの表示
     if (bit & 1 << 29) {
-        lock_guard<recursive_mutex> lock(uctsMutex);
+        lock_guard<mutex> lock(uctsMutex);
 
         cerr << "uct値*100 を表示 ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, -1000000));
@@ -743,7 +743,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // visitの表示
     if (bit & 1 << 28) {
-        lock_guard<recursive_mutex> lock(uctsMutex);
+        lock_guard<mutex> lock(uctsMutex);
 
         cerr << "visitの表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<int>> tmp(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, -1000000));
@@ -778,7 +778,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // 勝率の表示
     if (bit & 1 << 27) {
-        lock_guard<recursive_mutex> lock(uctsMutex);
+        lock_guard<mutex> lock(uctsMutex);
 
         cerr << "探索後勝率*1000 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
 #ifdef dbg_flag
@@ -826,7 +826,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // ペナルティの表示
     if (bit & 1 << 25) {
-        lock_guard<recursive_mutex> lock(uctsMutex);
+        lock_guard<mutex> lock(uctsMutex);
 
         cerr << "ペナルティ*100 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
         vector<vector<double>> tmp(BOARDSIZE + 2, vector<double>(BOARDSIZE + 2, 0));
@@ -1767,7 +1767,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
 //             return make_tuple(color, 1.0, 0.0, 0.0);
 //         }
 
-//         lock_guard<recursive_mutex> lock(ptr->uctsMutex);
+//         lock_guard<mutex> lock(ptr->uctsMutex);
 
 //         assert(ptr->ucts.size());
 
@@ -1850,7 +1850,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                 break;
             }
 
-            lock_guard<recursive_mutex> lock(ptr->uctsMutex);
+            lock_guard<mutex> lock(ptr->uctsMutex);
 
             assert(ptr->ucts.size());
 
@@ -1897,7 +1897,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                 break;
             }
 
-            lock_guard<recursive_mutex> lock(ptr->uctsMutex);
+            // lock_guard<mutex> lock(ptr->uctsMutex);
 
             ptr->UpdateUcts(leafRslt, nextMove);
             nextMove = ptr->previousMove;
