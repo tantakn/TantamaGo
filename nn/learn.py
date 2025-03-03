@@ -954,12 +954,10 @@ def train_on_gpu_ddp_worker2(rank, world, train_npz_paths, test_npz_paths, progr
         while True:
         # for data_index, train_npz_path in enumerate(train_npz_paths):
 
-            sleep_cnt = 0
-            sleep_time = time.time()
+            sleep_start_time = time.time()
             while not os.path.isfile(os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")):
-                time.sleep(1)
-                sleep_cnt += 1
-                if time.time() - sleep_time > 3600:
+                time.sleep(60)
+                if time.time() - sleep_start_time > 3600 * 48:
                     break
 
             train_npz_path = os.path.join(program_dir, npz_dir, f"sl_data_{npz_cnt}.npz")
