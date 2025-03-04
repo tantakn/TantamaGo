@@ -1000,6 +1000,16 @@ void goBoard::ApplyString(int y, int x)
 
     if (board[y][x] == 0) return;
 
+    vector<int> tmp(4, 0);
+
+    int tmpIdx = 0;
+    for (auto next : directions) {
+        char nx = x + next.first;
+        char ny = y + next.second;
+
+        
+    }
+
     ++stringIdCnt;
 
     char color = board[y][x];
