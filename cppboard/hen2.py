@@ -9,6 +9,12 @@ import sys
 sys.path.append('../')
 from nn.network import DualNet
 from nn.network import DualNet_256_24
+from torch.nn.parallel import DataParallel
+from torch.serialization import add_safe_globals
+
+# DataParallelクラスを安全なクラスとして明示的に登録
+add_safe_globals([DataParallel])
+
 
 model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250303_225555_370.bin"
 # model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250227_033544_Ep00_13_1.bin"
@@ -35,32 +41,84 @@ BATCH_SIZE = 1
 
 
 
-
-
 with torch.no_grad():
     # デバイスを CUDA（GPU）に設定
     device = torch.device("cuda")
-    # モデルをロードし、GPU に移動
+    
+    # モデルを一度だけインスタンス化する
     network = DualNet_256_24(device, BOARD_SIZE)
-    # network = DualNet(device, BOARD_SIZE)
     network.to(device)
 
-    network.load_state_dict(torch.load(model_path))
-    # DataParallelで保存されたモデルのstate_dictを修正
-    from collections import OrderedDict
-    new_state_dict = OrderedDict()
-    for k, v in network.items():
-        if k.startswith('module.'):
-            name = k[7:] # module.を取り除く
-            new_state_dict[name] = v
-        else:
-            new_state_dict[k] = v
+    # DataParallelで保存されたモデルを適切にロードする
+    try:
+        # weights_only=Trueを使用して、DataParallelを許可リストに追加した上で安全にロード
+        state_dict = torch.load(model_path, map_location='cpu', weights_only=True)
         
-    network.load_state_dict(new_state_dict)
-    # network.load_state_dict(torch.load(model_path))
+        # 以下は既存のコードと同じ
+        if isinstance(state_dict, torch.nn.parallel.DataParallel):
+            state_dict = state_dict.module.state_dict()
+        elif not isinstance(state_dict, dict):
+            print(f"警告: 予期しないモデル型 {type(state_dict)}")
+            if hasattr(state_dict, 'state_dict'):
+                state_dict = state_dict.state_dict()
+        
+        network.load_state_dict(state_dict)
+        print("モデルを正常にロードしました")
+    except Exception as e:
+        print(f"モデルのロード中にエラーが発生しました: {e}")
+        # 代替方法: セキュリティリスクを受け入れる場合はweights_only=Falseを試す
+        try:
+            state_dict = torch.load(model_path, map_location='cpu', weights_only=False)
+            if isinstance(state_dict, torch.nn.parallel.DataParallel):
+                state_dict = state_dict.module.state_dict()
+            elif not isinstance(state_dict, dict):
+                if hasattr(state_dict, 'state_dict'):
+                    state_dict = state_dict.state_dict()
+            network.load_state_dict(state_dict)
+            print("代替方法でモデルを正常にロードしました")
+        except Exception as e2:
+            print(f"代替方法でもモデルのロード中にエラーが発生しました: {e2}")
+            raise
 
-    network.eval()
-    torch.set_grad_enabled(False)
+
+# with torch.no_grad():
+#     # デバイスを CUDA（GPU）に設定
+#     device = torch.device("cuda")
+#     # モデルをロードし、GPU に移動
+#     network = DualNet_256_24(device, BOARD_SIZE)
+#     # network = DualNet(device, BOARD_SIZE)
+#     network.to(device)
+
+#     network.load_state_dict(torch.load(model_path))
+#     # DataParallelで保存されたモデルのstate_dictを修正
+#     state_dict = torch.load(model_path)
+#     if isinstance(state_dict, torch.nn.parallel.DataParallel):
+#         state_dict = state_dict.module.state_dict()
+
+#     network = DualNet_256_24(device, BOARD_SIZE)
+#     # network = DualNet(device, BOARD_SIZE)
+#     network.to(device)
+
+#     # DataParallelで保存されたモデルのstate_dictを修正
+#     state_dict = torch.load(model_path, map_location='cpu')  # まずCPUにロード
+#     if isinstance(state_dict, torch.nn.parallel.DataParallel):
+#         state_dict = state_dict.module.state_dict()
+#     network.load_state_dict(state_dict)
+#     # # DataParallelで保存されたモデルのstate_dictを修正
+#     # from collections import OrderedDict
+#     # new_state_dict = OrderedDict()
+#     # for k, v in network.items():
+#     #     if k.startswith('module.'):
+#     #         name = k[7:] # module.を取り除く
+#     #         new_state_dict[name] = v
+#     #     else:
+#     #         new_state_dict[k] = v
+        
+#     # network.load_state_dict(new_state_dict)
+#     # network.load_state_dict(torch.load(model_path))
+
+#     network.eval()
+#     torch.set_grad_enabled(False)
 
 #     # 入力データを GPU に移動
 #     x = torch.ones((BATCH_SIZE, 6, 9, 9)).to(device)
