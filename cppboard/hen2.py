@@ -34,23 +34,6 @@ BATCH_SIZE = 1
 
 
 
-if checkpoint_dir is not None:
-    checkpoint = torch.load(checkpoint_dir)
-    state_dict = checkpoint['model_state_dict']
-    
-    # DataParallelで保存されたモデルのstate_dictを修正
-    from collections import OrderedDict
-    new_state_dict = OrderedDict()
-    for k, v in state_dict.items():
-        if k.startswith('module.'):
-            name = k[7:] # module.を取り除く
-            new_state_dict[name] = v
-        else:
-            new_state_dict[k] = v
-    
-    dual_net.load_state_dict(new_state_dict)
-    policy_loss = checkpoint['policy_loss']
-    value_loss = checkpoint['value_loss']
 
 
 
