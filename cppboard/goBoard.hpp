@@ -277,7 +277,7 @@ struct goBoard {
      * 
      * @return double 黒地 - 白地 - コミ
      */
-    double CountResult();
+    double CountResult(bool dbg);
 
 
     bool TestPipe();

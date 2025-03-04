@@ -872,6 +872,11 @@ void goBoard::PrintBoard(ll bit = 0b1)
         cerr << "pass: " << setw(4) << setfill(' ') << IsIllegalMove(0, 0, teban) << endl;
     }
 
+    // // countResultの表示
+    // if (bit & 1 << 24) {
+    //     CountResult(true);
+    // }
+
 
     cerr << resetiosflags(std::ios::floatfield);  // 浮動小数点の書式をリセット
     cerr << resetiosflags(std::ios::showpoint);   // showpoint をリセット
@@ -1007,7 +1012,7 @@ int goBoard::IsIllegalMove(int y, int x, char color)
 
     // 何故か動かない
     bool isFillEye = true;
-    char tmpId = -2;
+    int tmpId = -2;
     for (auto dir : directions) {
         int nx = x + dir.first;
         int ny = y + dir.second;
@@ -1060,7 +1065,7 @@ vector<tuple<char, char, char>> goBoard::GenAllLegalMoves()
 }
 
 
-bool goBoard::ApplyString(int y, int x)
+void goBoard::ApplyString(int y, int x)
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE);
 
@@ -1196,12 +1201,11 @@ tuple<char, char, char> goBoard::GenRandomMove()
     return {0, 0, 0};
 };
 
-double goBoard::CountResult()
+double goBoard::CountResult(bool dbg = false)
 {
     /// TODO: 日本ルール用の暫定措置。どうにかしたい。白黒が隣り合っているところでラインを引いて地を数える？中国ルールで最後までプレイしてみる？
-    if (1) {  ////////////////////
-              // if (isJapaneseRule) {
-
+    // if (1) {  ////////////////////
+    if (isJapaneseRule) {
         assert(this->ucts.size());
         assert(this->values.size());
 
@@ -1255,71 +1259,85 @@ double goBoard::CountResult()
     int blackScore = 0;
     int whiteScore = 0;
 
+    // this->PrintBoard(0b1);
+
     auto saiki1 = [](auto self, vector<vector<char>>& tmpChecked, char y, char x) -> int
     {
         if (tmpChecked[y][x] == 0) {
-            tmpChecked[y][x] == 1;
+            tmpChecked[y][x] = 1;
 
             char tmpColor;
             for (auto next : directions) {
                 char nx = x + next.first;
                 char ny = y + next.second;
 
-                if (saiki(tmpChecked, ny, nx)) {
+                if (self(self, tmpChecked, ny, nx)) {
                     return 1;
                 }
             }
         }
-        else if (tmpChecked[y][x] == 1 || tmpChecked[y][x] == 3) {
-            return 0;
+        else if (tmpChecked[y][x] == 2) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     };
 
     auto saiki2 = [](auto self, vector<vector<char>>& tmpChecked, char y, char x) -> int
     {
         if (tmpChecked[y][x] == 0) {
-            tmpChecked[y][x] == 2;
+            tmpChecked[y][x] = 2;
 
             char tmpColor;
             for (auto next : directions) {
                 char nx = x + next.first;
                 char ny = y + next.second;
 
-                if (saiki(tmpChecked, ny, nx)) {
+                if (self(self, tmpChecked, ny, nx)) {
                     return 1;
                 }
             }
         }
-        else if (tmpChecked[y][x] == 2 || tmpChecked[y][x] == 3) {
-            return 0;
+        else if (tmpChecked[y][x] == 1) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     };
 
     vector<vector<char>> tmpBoard = this->board;
-    rep (i, 1, BOARDSIZE) {
-        rep (j, 1, BOARDSIZE) {
+    rep (i, 1, BOARDSIZE + 1) {
+        rep (j, 1, BOARDSIZE + 1) {
             if (tmpBoard[i][j] == 0) {
-                vector<vector<char>> tmpChecked = this->board;
-                if (!saiki1(tmpChecked, i, j)) {
+                vector<vector<char>> tmpChecked = tmpBoard;
+                if (!saiki1(saiki1, tmpChecked, i, j)) {
                     tmpBoard = tmpChecked;
                 }
                 else {
-                    tmpChecked = this->board;
-                    if (!saiki2(tmpChecked, i, j)) {
+                    tmpChecked = tmpBoard;
+                    if (!saiki2(saiki2, tmpChecked, i, j)) {
                         tmpBoard = tmpChecked;
                     }
                 }
             }
-            if (tmpBoard == 1) {
+            if (tmpBoard[i][j] == 1) {
                 ++blackScore;
             }
-            else if (tmpBoard == 2) {
+            else if (tmpBoard[i][j] == 2) {
                 ++whiteScore;
             }
+        }
+    }
+
+    if (dbg) {//////////////////////////
+        cerr << "blackScore: " << blackScore << ", whiteScore: " << whiteScore << ", score: " << blackScore - whiteScore - komi << endl;  ///////////////
+
+        // print tmpBoard
+        rep (i, 1, BOARDSIZE + 1) {
+            rep (j, 1, BOARDSIZE + 1) {
+                cerr << (int)tmpBoard[i][j] << " " << flush;
+            }
+            cerr << endl;
         }
     }
 
@@ -2232,6 +2250,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             rootPtr->ExpandNode(tensorRT);
         }
         if (rootPtr->isEnded) {  ////////////????
+            rootPtr->CountResult(true);//////////////////
             goto GOTO_GPT_SEND;
         }
 
