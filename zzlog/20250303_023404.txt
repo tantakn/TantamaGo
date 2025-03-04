@@ -1,0 +1,35 @@
+🐾train_main
+    EPOCHS: 1
+    BATCH_SIZE: 256
+    kifu_dir: DualNet_256_24
+    size: 9
+    use_gpu: True
+    rl: False
+    window_size: 300000
+    network_name: DualNet_256_24
+    npz_dir: data
+    checkpoint_dir: None
+    ddp: True
+    rl_num: -1
+    rl_datetime: 
+    input_opt: 
+[20250303_023405] gen_sl_data_mt start (threads: 10)
+    BATCH_SIZE: 256
+    DATA_SET_SIZE: 256000
+    kifu_num: 0
+Traceback (most recent call last):
+  File "train.py", line 153, in <module>
+    train_main() # pylint: disable=E1120
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/data/student/u2424004/igo/TantamaGo/env/lib/python3.7/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "train.py", line 132, in train_main
+    generate_supervised_learning_data_mt(program_dir=program_dir, kifu_dir=kifu_dir, board_size=size, opt=input_opt)
+  File "/data/student/u2424004/igo/TantamaGo/nn/data_generator.py", line 725, in generate_supervised_learning_data_mt
+    for i in range(0, len(kifu_files), batch_size):
+ValueError: range() arg 3 must not be zero

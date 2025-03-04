@@ -1,0 +1,5 @@
+thinkTime << visit_Limit << port << "build end"
+"thread start"
+"server start"
+recv data: name
+send data: =TantamaGo

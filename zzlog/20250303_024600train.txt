@@ -1,0 +1,4 @@
+Usage: train.py [OPTIONS]
+Try 'train.py --help' for help.
+
+Error: Invalid value for '--use-ddp': 'ture' is not a valid boolean.

@@ -177,7 +177,10 @@ class MCTSTree: # pylint: disable=R0902
         if len(analysis_query) > 0 and interval == 0:
             root = self.node[self.current_root]
             mode = analysis_query.get("mode", "lz")
-            sys.stdout.write(root.get_analysis(board, mode, self.get_pv_lists))
+            if mode == "lz":#######################
+                sys.stderr.write(root.get_analysis(board, mode, self.get_pv_lists))
+            else:
+                sys.stdout.write(root.get_analysis(board, mode, self.get_pv_lists))
             sys.stdout.flush()
 
 
@@ -277,16 +280,16 @@ class MCTSTree: # pylint: disable=R0902
                 policy_dict[pos] = policy[i]
             policy_dict[PASS] = policy[board.get_board_size() ** 2]
             if use_logit:
-                policy_dict[PASS] -= 0.5
+                policy_dict[PASS] -= 0.5 # !?
             policy_data.append(policy_dict)
 
         for policy, value_dist, path, node_index in zip(policy_data, \
             value_data, self.batch_queue.path, self.batch_queue.node_index):
             self.node[node_index].update_policy(policy)
-            self.node[node_index].set_raw_value(value_dist[1] * 0.5 + value_dist[2])
+            self.node[node_index].set_raw_value(value_dist[1] * 0.5 + value_dist[2]) # !?
 
             if path:
-                value = value_dist[0] + value_dist[1] * 0.5
+                value = value_dist[0] + value_dist[1] * 0.5 # !?
 
                 reverse_path = list(reversed(path))
                 leaf = reverse_path[0]

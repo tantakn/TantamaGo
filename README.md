@@ -129,4 +129,4 @@ TamaGo version 0.7.0 supports cgos-analyze, cgos-genmove_analyze commands. When 
 ![cgos-analyze-pv](img/cgos-analyze-pv.png)
 
 # License
-You can use TamaGo under [Apache License 2.0](LICENSE).
+You can use TantamaGo under [Apache License 2.0](LICENSE).

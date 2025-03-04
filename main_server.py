@@ -1,5 +1,6 @@
 # (env) (base) u2424004@g14:~/igo/TantamaGo$ python3 main_server.py --password ****
-
+# (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo/cppboard$ /home/tantakn/code/TantamaGo/envGo/bin/python /home/tantakn/code/TantamaGo/main_server.py --use-gpu True --visits 1 --input-time 2000
+# (envGo) tantakn@DESKTOP-C96CIQ7:~/code/TantamaGo$ python3 main_server.py --use-gpu True --port 8000 --visits 10000 --input-time 100
 
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -7,24 +8,59 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import socket, json, click, time
 from cryptography.fernet import Fernet
+from gtp.client import GtpClient
 from gtp.client_socket import GtpClient_socket
 from mcts.time_manager import TimeControl
 from mcts.constant import NN_BATCH_SIZE, MCTS_TREE_SIZE
+from board.constant import BOARD_SIZE
 
 
+# default_model_path = os.path.join("model_def", "sl-model_20250227_033544_Ep00_13_1.bin")
 default_model_path = os.path.join("model_def", "sl-model_q50k_DualNet.bin")
+
 
 
 @click.command()
 @click.option('--password', type=click.STRING, help="パスワード。")
-# @click.option('--ip', type=click.STRING, help="ip", default="0.0.0.0")
-@click.option('--ip', type=click.STRING, help="ip", default="")
-@click.option('--port', type=click.INT, help="port", default=51111)
-def InetServer(password: str, ip: str="", port: int=51111):
+@click.option('--ip', type=click.STRING, help="ip", default="0.0.0.0")
+@click.option('--port', type=click.INT, help="port", default=8001)
+@click.option('--size', type=click.IntRange(2, BOARD_SIZE), default=BOARD_SIZE, \
+    help=f"碁盤のサイズを指定。デフォルトは{BOARD_SIZE}。")
+@click.option('--superko', type=click.BOOL, default=False, help="超劫の有効化フラグ。デフォルトはFalse。")
+@click.option('--model', type=click.STRING, default=default_model_path, \
+    help=f"使用するニューラルネットワークのモデルパスを指定する。プログラムのホームディレクトリの相対パスで指定。\
+    デフォルトは{default_model_path}。")
+@click.option('--use-gpu', type=click.BOOL, default=False, \
+    help="ニューラルネットワークの計算にGPUを使用するフラグ。デフォルトはFalse。")
+@click.option('--policy-move', type=click.BOOL, default=False, \
+    help="Policyの分布に従った着手生成処理フラグ。デフォルトはFalse。")
+@click.option('--sequential-halving', type=click.BOOL, default=False, \
+    help="Gumbel AlphaZeroの探索手法で着手生成するフラグ。デフォルトはFalse。")
+@click.option('--komi', type=click.FLOAT, default=7.0, \
+    help="コミの値の設定。デフォルトは7.0。")
+@click.option('--visits', type=click.IntRange(min=1), default=1000, \
+    help="1手あたりの探索回数の指定。デフォルトは1000。\
+    --const-timeオプション、または--timeオプションが指定された時は無視する。")
+@click.option('--const-time', type=click.FLOAT, \
+    help="1手あたりの探索時間の指定。--timeオプションが指定された時は無視する。")
+@click.option('--input-time', type=click.FLOAT, \
+    help="持ち時間の指定。")
+@click.option('--batch-size', type=click.IntRange(min=1), default=NN_BATCH_SIZE, \
+    help=f"探索時のミニバッチサイズ。デフォルトはNN_BATCH_SIZE = {NN_BATCH_SIZE}。")
+@click.option('--tree-size', type=click.IntRange(min=1), default=MCTS_TREE_SIZE, \
+    help=f"探索木を構成するノードの最大数。デフォルトはMCTS_TREE_SIZE = {MCTS_TREE_SIZE}。")
+@click.option('--cgos-mode', type=click.BOOL, default=False, \
+    help="全ての石を打ち上げるまでパスしないモード設定。デフォルトはFalse。")
+@click.option('--net', type=click.STRING, default="DualNet", \
+    help="--model のネットワーク。デフォルトは DualNet。DualNet_256_24 とかを指定する。")
+def InetServer(password: str, ip: str, port: int, size: int, superko: bool, model:str, use_gpu: bool, sequential_halving: bool, \
+    policy_move: bool, komi: float, visits: int, const_time: float, input_time: float, \
+    batch_size: int, tree_size: int, cgos_mode: bool, net: str):
     print("serverip: ", socket.gethostbyname(socket.gethostname()))
 
-    if ip == "":
-        ip = socket.gethostbyname(socket.gethostname())
+    # if ip == "":
+    #     ip = socket.gethostbyname(socket.gethostname())
+
 
 
     # key = password
@@ -43,7 +79,18 @@ def InetServer(password: str, ip: str="", port: int=51111):
     client_socket, addr = server_socket.accept()
     print('クライアントと接続しました。')
 
-    is_gtp = False
+    mode = TimeControl.CONSTANT_PLAYOUT
+    if const_time is not None:
+        mode = TimeControl.CONSTANT_TIME
+    if time is not None:
+        mode = TimeControl.TIME_CONTROL
+    
+    client = GtpClient_socket(BOARD_SIZE, True, default_model_path, use_gpu, policy_move, \
+        sequential_halving, komi, mode, visits, const_time, input_time, batch_size, tree_size, \
+        cgos_mode, net)
+
+    is_gtp = True
+    # is_gtp = False
     try:
         while True:
             data = b''
@@ -100,15 +147,25 @@ def InetServer(password: str, ip: str="", port: int=51111):
 
                 mode = TimeControl.CONSTANT_PLAYOUT
 
-                if data["const_time"] is not None:
+                if const_time is not None:
                     mode = TimeControl.CONSTANT_TIME
-                if data["time"] is not None:
+                if input_time is not None:
                     mode = TimeControl.TIME_CONTROL
 
+                # if data["const_time"] is not None:
+                #     mode = TimeControl.CONSTANT_TIME
+                # if data["time"] is not None:
+                #     mode = TimeControl.TIME_CONTROL
+
                 program_dir = os.path.dirname(__file__)
+                # client = GtpClient(data["size"], data["superko"], os.path.join(program_dir, data["model"]), data["use_gpu"], data["policy_move"], \
+                # client = GtpClient(data["size"], data["superko"], os.path.join(program_dir, data["model"]), data["use_gpu"], data["policy_move"], \
                 client = GtpClient_socket(data["size"], data["superko"], os.path.join(program_dir, data["model"]), data["use_gpu"], data["policy_move"], \
-                    data["sequential_halving"], data["komi"], mode, data["visits"], data["const_time"], data["time"], data["batch_size"], data["tree_size"], \
+                    data["sequential_halving"], data["komi"], mode, visit, const_time, input_time, data["batch_size"], data["tree_size"], \
                     data["cgos_mode"], data["net"])
+                # client = GtpClient_socket(data["size"], data["superko"], os.path.join(program_dir, data["model"]), data["use_gpu"], data["policy_move"], \
+                #     data["sequential_halving"], data["komi"], mode, data["visits"], data["const_time"], data["time"], data["batch_size"], data["tree_size"], \
+                #     data["cgos_mode"], data["net"])
 
                 is_gtp = True
 
@@ -120,11 +177,25 @@ def InetServer(password: str, ip: str="", port: int=51111):
                 data = data.decode()
                 print(f'復号した受信データ「「\n{data}\n」」\n')#######
                 if data == "exit" or data == "quit":
+                    output = "= \n"
+                    print(f"送信データ「「\n{output}\n」」\n")
+                    output = output.encode()
+                    # output = f.encrypt(output)
+                    client_socket.send(output)
+                    print(f"暗号化した送信データ「「\n{output}\n」」\n")
                     break
 
                 output = client.run(data)
                 if output is None:
                     output = "= \n"
+                if output == "quit":
+                    output = "= \n"
+                    print(f"送信データ「「\n{output}\n」」\n")
+                    output = output.encode()
+                    # output = f.encrypt(output)
+                    client_socket.send(output)
+                    print(f"暗号化した送信データ「「\n{output}\n」」\n")
+                    sys.exit(0)
                 print(f"送信データ「「\n{output}\n」」\n")
                 output = output.encode()
                 # output = f.encrypt(output)

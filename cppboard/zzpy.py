@@ -4,37 +4,62 @@ import numpy as np
 from onnxruntime.datasets import get_example
 from onnx import mapping
 
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+import json
 
-# onnx_model_path = "./test9_2.onnx"
-onnx_model_path = "./test19_2.onnx"
-# onnx_model_path = "./test2.onnx"
-# onnx_model_path = "TantamaGo/cppboard/test4.onnx"
+secret = json.load(open("/home/tantakn/code/TantamaGo/cppboard/gitignor_it.json"))
 
-npz_path = "../backup/data_Q50000/sl_data_0.npz"
-# npz_path = "../backup/kgs-19-2019-04/sl_data_0.npz"
+print(secret["ip_desk_ubuntu"])
 
-print("onnx_model_path:", onnx_model_path)
-model = onnx.load(onnx_model_path)
-onnx.checker.check_model(model)
+import socket
+# ソケットを作成
+# client_socketというソケットオブジェクトを作成しています。
+# socket.AF_INETはIPv4アドレスファミリを指定します。
+# socket.SOCK_STREAMはTCPプロトコル（ストリームベースの通信）を指定します。
+# これにより、IPv4のTCPソケットが生成されます。
+client_socket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# # モデルのグラフの表示
-# print(onnx.helper.printable_graph(model.graph))
 
-# インプットの形式の表示
-print("Inputs:")
-for input in model.graph.input:
-    tensor_type = input.type.tensor_type
-    elem_type = tensor_type.elem_type
-    type_str = mapping.TENSOR_TYPE_TO_NP_TYPE.get(elem_type, "Unknown")
-    print(f"{input.name} - {tensor_type.shape} - {type_str}")
+# サーバーに接続
+# 接続先は'localhost'（自分自身のマシン）で、ポート番号は8000です。
+# サーバー側でserver_socket.accept()が実行され、接続待ちの状態である必要があります。
+client_socket1.connect((secret["ip_desk_ubuntu"], int(secret["port"])))
+client_socket2.connect((secret["ip_desk_ubuntu"], secret["port2"]))
 
-# アウトプットの形式の表示
-print("Outputs:")
-for output in model.graph.output:
-    tensor_type = output.type.tensor_type
-    elem_type = tensor_type.elem_type
-    type_str = mapping.TENSOR_TYPE_TO_NP_TYPE.get(elem_type, "Unknown")
-    print(f"{output.name} - {tensor_type.shape} - {type_str}")
+
+
+# # onnx_model_path = "./test9_2.onnx"
+# onnx_model_path = "./test19_2.onnx"
+# # onnx_model_path = "./test2.onnx"
+# # onnx_model_path = "TantamaGo/cppboard/test4.onnx"
+
+# npz_path = "../backup/data_Q50000/sl_data_0.npz"
+# # npz_path = "../backup/kgs-19-2019-04/sl_data_0.npz"
+
+# print("onnx_model_path:", onnx_model_path)
+# model = onnx.load(onnx_model_path)
+# onnx.checker.check_model(model)
+
+# # # モデルのグラフの表示
+# # print(onnx.helper.printable_graph(model.graph))
+
+# # インプットの形式の表示
+# print("Inputs:")
+# for input in model.graph.input:
+#     tensor_type = input.type.tensor_type
+#     elem_type = tensor_type.elem_type
+#     type_str = mapping.TENSOR_TYPE_TO_NP_TYPE.get(elem_type, "Unknown")
+#     print(f"{input.name} - {tensor_type.shape} - {type_str}")
+
+# # アウトプットの形式の表示
+# print("Outputs:")
+# for output in model.graph.output:
+#     tensor_type = output.type.tensor_type
+#     elem_type = tensor_type.elem_type
+#     type_str = mapping.TENSOR_TYPE_TO_NP_TYPE.get(elem_type, "Unknown")
+#     print(f"{output.name} - {tensor_type.shape} - {type_str}")
 
 
 # # -----推論の実行-----
