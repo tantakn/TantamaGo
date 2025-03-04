@@ -61,7 +61,21 @@ with torch.no_grad():
     network = DualNet_256_24(device, BOARD_SIZE)
     # network = DualNet(device, BOARD_SIZE)
     network.to(device)
+
     network.load_state_dict(torch.load(model_path))
+    # DataParallelで保存されたモデルのstate_dictを修正
+    from collections import OrderedDict
+    new_state_dict = OrderedDict()
+    for k, v in network.items():
+        if k.startswith('module.'):
+            name = k[7:] # module.を取り除く
+            new_state_dict[name] = v
+        else:
+            new_state_dict[k] = v
+        
+    network.load_state_dict(new_state_dict)
+    # network.load_state_dict(torch.load(model_path))
+
     network.eval()
     torch.set_grad_enabled(False)
 
