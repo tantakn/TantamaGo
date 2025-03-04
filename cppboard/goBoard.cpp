@@ -1005,36 +1005,36 @@ int goBoard::IsIllegalMove(int y, int x, char color)
     // 終局のために、2眼以上ある石の目を埋める手に良い手が無いと仮定して、その手を禁止とする。
     // とりあえず、四方を同じ連が囲っている場合に眼として、その眼を埋める手を禁止とする。
 
-    // // 何故か動かない
-    // bool isFillEye = true;
-    // char tmpId = -2;
-    // for (auto dir : directions) {
-    //     int nx = x + dir.first;
-    //     int ny = y + dir.second;
+    // 何故か動かない
+    bool isFillEye = true;
+    char tmpId = -2;
+    for (auto dir : directions) {
+        int nx = x + dir.first;
+        int ny = y + dir.second;
 
-    //     if (board[ny][nx] == 0) {
-    //         isFillEye = false;
-    //         break;
-    //     }
+        if (board[ny][nx] == 0) {
+            isFillEye = false;
+            break;
+        }
 
-    //     if (board[ny][nx] == 3) {
-    //         continue;
-    //     }
+        if (board[ny][nx] == 3) {
+            continue;
+        }
 
-    //     if (tmpId == -2) {
-    //         tmpId = idBoard[ny][nx];
-    //         continue;
-    //     }
+        if (tmpId == -2) {
+            tmpId = idBoard[ny][nx];
+            continue;
+        }
 
-    //     if (tmpId != idBoard[ny][nx]) {
-    //         isFillEye = false;
-    //         break;
-    //     }
-    // }
+        if (tmpId != idBoard[ny][nx]) {
+            isFillEye = false;
+            break;
+        }
+    }
 
-    // if (isFillEye) {
-    //     return 4;
-    // }
+    if (isFillEye) {
+        return 4;
+    }
 
     return 0;
 };
@@ -1060,7 +1060,7 @@ vector<tuple<char, char, char>> goBoard::GenAllLegalMoves()
 }
 
 
-void goBoard::ApplyString(int y, int x)
+bool goBoard::ApplyString(int y, int x)
 {
     assert(x >= 1 && x <= BOARDSIZE && y >= 1 && y <= BOARDSIZE);
 
@@ -1254,6 +1254,76 @@ double goBoard::CountResult()
 
     int blackScore = 0;
     int whiteScore = 0;
+
+    auto saiki1 = [](auto self, vector<vector<char>>& tmpChecked, char y, char x) -> int
+    {
+        if (tmpChecked[y][x] == 0) {
+            tmpChecked[y][x] == 1;
+
+            char tmpColor;
+            for (auto next : directions) {
+                char nx = x + next.first;
+                char ny = y + next.second;
+
+                if (saiki(tmpChecked, ny, nx)) {
+                    return 1;
+                }
+            }
+        }
+        else if (tmpChecked[y][x] == 1 || tmpChecked[y][x] == 3) {
+            return 0;
+        }
+
+        return 1;
+    };
+
+    auto saiki2 = [](auto self, vector<vector<char>>& tmpChecked, char y, char x) -> int
+    {
+        if (tmpChecked[y][x] == 0) {
+            tmpChecked[y][x] == 2;
+
+            char tmpColor;
+            for (auto next : directions) {
+                char nx = x + next.first;
+                char ny = y + next.second;
+
+                if (saiki(tmpChecked, ny, nx)) {
+                    return 1;
+                }
+            }
+        }
+        else if (tmpChecked[y][x] == 2 || tmpChecked[y][x] == 3) {
+            return 0;
+        }
+
+        return 1;
+    };
+
+    vector<vector<char>> tmpBoard = this->board;
+    rep (i, 1, BOARDSIZE) {
+        rep (j, 1, BOARDSIZE) {
+            if (tmpBoard[i][j] == 0) {
+                vector<vector<char>> tmpChecked = this->board;
+                if (!saiki1(tmpChecked, i, j)) {
+                    tmpBoard = tmpChecked;
+                }
+                else {
+                    tmpChecked = this->board;
+                    if (!saiki2(tmpChecked, i, j)) {
+                        tmpBoard = tmpChecked;
+                    }
+                }
+            }
+            if (tmpBoard == 1) {
+                ++blackScore;
+            }
+            else if (tmpBoard == 2) {
+                ++whiteScore;
+            }
+        }
+    }
+
+    return blackScore - whiteScore - komi;
 
 
     // vector<vector<char>> count_board = rawBoard;
