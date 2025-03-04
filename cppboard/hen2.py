@@ -10,7 +10,8 @@ sys.path.append('../')
 from nn.network import DualNet
 from nn.network import DualNet_256_24
 
-model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250227_033544_Ep00_13_1.bin"
+model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250303_225555_370.bin"
+# model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250227_033544_Ep00_13_1.bin"
 # model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_q50k_DualNet_256_24.bin"
 # model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250125_025418.bin"
 # model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250110_031407_19.bin"
@@ -19,17 +20,39 @@ model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250227_033544_Ep
 # model_path = "../model_def/sl-model_default.bin"
 
 # dummy_npz_path = "../backup/kgs-19-2019-04/sl_data_0.npz"
-dummy_npz_path = "/home/tantakn/code/TantamaGo/backup/13_2_0.npz"
-# dummy_npz_path = "../backup/data_Q50000/sl_data_0.npz"
+# dummy_npz_path = "/home/tantakn/code/TantamaGo/backup/13_2_0.npz"
+dummy_npz_path = "../backup/data_Q50000/sl_data_0.npz"
 # dummy_npz_path = "../data/sl_data_0.npz"
 
-save_onnx_path = "./13_1_DualNet_256_24.onnx"
+save_onnx_path = "./9_20250303_225555_370_DualNet_256_24.onnx"
 
-BOARD_SIZE = 13
-# BOARD_SIZE = 9
+# BOARD_SIZE = 13
+BOARD_SIZE = 9
 # BOARD_SIZE = 19
 
 BATCH_SIZE = 1
+
+
+
+if checkpoint_dir is not None:
+    checkpoint = torch.load(checkpoint_dir)
+    state_dict = checkpoint['model_state_dict']
+    
+    # DataParallelで保存されたモデルのstate_dictを修正
+    from collections import OrderedDict
+    new_state_dict = OrderedDict()
+    for k, v in state_dict.items():
+        if k.startswith('module.'):
+            name = k[7:] # module.を取り除く
+            new_state_dict[name] = v
+        else:
+            new_state_dict[k] = v
+    
+    dual_net.load_state_dict(new_state_dict)
+    policy_loss = checkpoint['policy_loss']
+    value_loss = checkpoint['value_loss']
+
+
 
 with torch.no_grad():
     # デバイスを CUDA（GPU）に設定
