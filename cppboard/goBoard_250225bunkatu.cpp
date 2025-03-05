@@ -1007,7 +1007,7 @@ void goBoard::ApplyString(int y, int x)
         char nx = x + next.first;
         char ny = y + next.second;
 
-        
+        /////
     }
 
     ++stringIdCnt;
