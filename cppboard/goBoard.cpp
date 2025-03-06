@@ -2198,7 +2198,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
         }
 
-        sleep(thinkTime);  ///////////////
+        sleep(thinkTime);  ////////////////
 
         if (debugFlag & 1 << 5) {
             cerr << "\n--------------------\n"
