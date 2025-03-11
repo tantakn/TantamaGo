@@ -208,9 +208,13 @@ struct goBoard {
      *
      * @param y
      * @param x
+     * @param board 現在の盤面。空ならthis->boardを使う。
      * @return int
      */
-    int CountLiberties(int y, int x);
+    int CountLiberties(int y, int x, vector<vector<char>> board);
+
+
+    bool IsBestMoveCrucial();
 
 
     /**

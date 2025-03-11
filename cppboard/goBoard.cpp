@@ -631,7 +631,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // 推論の結果。softmax後。
     if (bit & 1 << 31) {
-        print("policys勝率*1000 policys.size():", policys.size());
+        cerr << "policys勝率*1000 policys.size():" << policys.size() << endl;
         vector<vector<float>> tmp(BOARDSIZE + 2, vector<float>(BOARDSIZE + 2, -1000000));
         for (auto [move, x] : policys) {
             // print(move, x);
@@ -783,7 +783,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
     if (bit & 1 << 27) {
         lock_guard<mutex> lock(uctsMutex);
 
-        cerr << "探索後勝率*1000 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+        cerr << "探索後勝率*1000 の表示。" << endl << "ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
 #ifdef dbg_flag
         cerr << "endCnt: " << endCnt << ", depth: " << deepestMoveCnt - this->moveCnt << endl;
 #endif
@@ -894,13 +894,17 @@ string goBoard::ToJson()
     return j.dump();
 }
 
-int goBoard::CountLiberties(int y, int x)
+int goBoard::CountLiberties(int y, int x, vector<vector<char>> board = {})
 {
     assert(x >= 0 && x <= BOARDSIZE + 1 && y >= 0 && y <= BOARDSIZE + 1);
 
+    if (board.empty()) {
+        board = this->board;
+    }
+
     if (board[y][x] == 0) {
         return -1;
-    };
+    }
 
     if (x == 0 || x == BOARDSIZE + 1 || y == 0 || y == BOARDSIZE + 1) {
         return INF;
@@ -939,7 +943,18 @@ int goBoard::CountLiberties(int y, int x)
             }
         }
     }
+
     return cnt;
+};
+
+bool goBoard::IsBestMoveCrucial()
+{
+    /// TODO: ロックする場所やタイミングの見直し。
+    lock_guard<mutex> lock(uctsMutex);
+
+    assert(this->ucts.size());
+
+    // expand -> uct最大の手をputstone -> 置いた石周りのlib数を数える -> lib数が1から増える、または1になる場合は -> crucialならすぐにexpand の方がいい？
 };
 
 int goBoard::IsIllegalMove(int y, int x, char color)
@@ -1010,12 +1025,12 @@ int goBoard::IsIllegalMove(int y, int x, char color)
     // 終局のために、2眼以上ある石の目を埋める手に良い手が無いと仮定して、その手を禁止とする。
     // とりあえず、四方を同じ連が囲っている場合に眼として、その眼を埋める手を禁止とする。
 
-    // 何故か動かない
+    /// TODO:無い方がいい気がする
     bool isFillEye = true;
     int tmpId = -2;
     for (auto dir : directions) {
-        int nx = x + dir.first;
-        int ny = y + dir.second;
+        int nx = x + (int)dir.first;
+        int ny = y + (int)dir.second;
 
         if (board[ny][nx] == 0) {
             isFillEye = false;
@@ -1831,9 +1846,6 @@ double dfs(goBoard* ptr)
 // ループを制御するためのフラグ
 std::atomic<bool> running(true);
 
-// とりあえずグローバル
-int visit_Limit = 100000;
-
 void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
 {
     // (PutStone or new) -> (ExpandNode) -> (PutStone) ...
@@ -1905,7 +1917,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
     //         if (rootPtr->isEnded) {
     //             break;
     //         }
-    //         if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
+    //         if (rootPtr->numVisits > visitMax) {
     //             sleep(0.1);
     //         }
     //         saiki(saiki, rootPtr);
@@ -1919,7 +1931,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
         if (rootPtr->isEnded) {
             break;
         }
-        if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
+        if (rootPtr->numVisits > visitMax) {
             sleep(0.1);
         }
 
@@ -1930,7 +1942,6 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
             char color = ptr->teban;
 
             // もし終局（直前2手がパス）なら結果を leafRslt に入れてbreak
-            /// TODO: これ通ったら rootPtr->isEnded == true だからなくても良い？
             if (ptr->isEnded) {
                 if (ptr->ucts.size() == 0) {
                     ptr->ExpandNode(tensorRT);
@@ -1961,7 +1972,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
 
                 int nextColor = nextPtr->teban;
 
-                /// TODO: ここで終局判定する必要ある？
+                // 葉ノードがisendeedのとき、valueでなく勝敗で評価を行う。
                 if (nextPtr->isEnded) {
                     if (nextPtr->ucts.size() == 0) {
                         nextPtr->ExpandNode(tensorRT);
@@ -1973,7 +1984,6 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                     if (tmpRslt == 0) {
                         leafRslt = make_tuple(nextColor, 0.0, 1.0, 0.0);
                     }
-                    /// TODO: 正しいか確認
                     else if ((nextColor == 1 && tmpRslt > 0) || (nextColor == 2 && tmpRslt < 0)) {
                         leafRslt = make_tuple(nextColor, 0.0, 0.0, 1.0);
                     }
@@ -2441,9 +2451,9 @@ int PlayWithGpt()
     int thinkTime = 10;
     // cerr << "thinkTime << ";
     // cin >> thinkTime;
-    int visit_Limit = 100000;
-    // cerr << "visit_Limit << ";
-    // cin >> visit_Limit;
+    int visitMax = 100000;
+    // cerr << "visitMax << ";
+    // cin >> visitMax;
 
 
     samplesCommon::Args args;
@@ -2494,8 +2504,8 @@ int GptSoket()
     int thinkTime = 10;
     cerr << "thinkTime << ";
     cin >> thinkTime;
-    // cerr << "visit_Limit << ";
-    // cin >> visit_Limit;
+    // cerr << "visitMax << ";
+    // cin >> visitMax;
     int port = 8000;
     cerr << "port << ";
     cin >> port;
@@ -2705,9 +2715,9 @@ int main(int argc, char* argv[])
 
     // Test();
 
-    PlayWithGpt();
+    // PlayWithGpt();
 
-    // GptSoket();
+    GptSoket();
 
     return 0;
 }
