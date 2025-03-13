@@ -6,33 +6,7 @@
 
 
 
-const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
-/// @brief 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁
-vector<vector<char>> rawBoard = []()
-{
-    vector<vector<char>> tmpBoard(BOARDSIZE + 2, vector<char>(BOARDSIZE + 2, 0b0));
-    rep (i, BOARDSIZE + 2) {
-        rawBoard[0][i] = 0b11;
-        rawBoard[BOARDSIZE + 1][i] = 0b11;
-        rawBoard[i][0] = 0b11;
-        rawBoard[i][BOARDSIZE + 1] = 0b11;
-    }
-    return tmpBoard;
-}();
-
-/// @brief 0は空点、-1は壁
-vector<vector<int>> rawIdBoard = []() 
-{
-    vector<vector<int>> tmpIdBoard(BOARDSIZE + 2, vector<int>(BOARDSIZE + 2, 0));
-    rep (i, BOARDSIZE + 2) {
-        rawIdBoard[0][i] = -1;
-        rawIdBoard[BOARDSIZE + 1][i] = -1;
-        rawIdBoard[i][0] = -1;
-        rawIdBoard[i][BOARDSIZE + 1] = -1;
-    }
-    return tmpIdBoard;
-}();
 
 
 /**
@@ -60,6 +34,10 @@ struct goBoard {
     bool isRoot;
 
 
+    // /// @brief ExpandNode() されたかどうか
+    // bool isNotExpanded = true;
+
+
     /// @brief 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁。壁を含み、要素数 (BOARDSIZE + 2) * (BOARDSIZE + 2)。つまり、端は board[BOARDSIZE + 1][BOARDSIZE + 1]。
     vector<vector<char>> board;
 
@@ -84,6 +62,8 @@ struct goBoard {
     /// TODO: = nullptr でいい？
     goBoard *parent;
 
+
+    mutex childrensMutex;
 
     /// @brief 子盤面
     map<pair<char, char>, goBoard *> childrens;
@@ -144,16 +124,16 @@ struct goBoard {
      * 
      * @return tuple<int, float, float, float> color、colorが負ける確率、引き分けの確率、colortが勝つ確率
      */
-    tuple<int, float, float, float> ExpandNode();
+    tuple<int, float, float, float> ExpandNode(pair<vector<float>, vector<float>> input);
 
 
-    /**
-     * @brief 
-     * 
-     * @param tensorRT 
-     * @return tuple<int, float, float, float> color、colortが勝つ確率、引き分けの確率、colorが負ける確率
-     */
-    tuple<int, float, float, float> ExpandNode(TensorRTOnnxIgo tensorRT);
+    // /**
+    //  * @brief 
+    //  * 
+    //  * @param tensorRT 
+    //  * @return tuple<int, float, float, float> color、colortが勝つ確率、引き分けの確率、colorが負ける確率
+    //  */
+    // tuple<int, float, float, float> ExpandNode(TensorRTOnnxIgo tensorRT);
 
 
     /**
@@ -305,21 +285,21 @@ struct goBoard {
 
 
 
-/// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、char型の文字をint型の数字に変換する
-/// @param s 
-/// @return 変換後の数値
-int ConvertChar(char s);
+// /// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、char型の文字をint型の数字に変換する
+// /// @param s 
+// /// @return 変換後の数値
+// int ConvertChar(char s);
 
 
-/// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、int型の数字をchar型の文字に変換する
-/// @param n 
-/// @return 変換後の文字
-char ConvertInt(int n);
+// /// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、int型の数字をchar型の文字に変換する
+// /// @param n 
+// /// @return 変換後の文字
+// char ConvertInt(int n);
 
 
 
-string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime, bool ponder);
+// string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime, bool ponder);
 
-void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT);
+// void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT);
 
 

@@ -60,6 +60,10 @@ struct goBoard {
     bool isRoot;
 
 
+    // /// @brief ExpandNode() されたかどうか
+    // bool isNotExpanded = true;
+
+
     /// @brief 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁。壁を含み、要素数 (BOARDSIZE + 2) * (BOARDSIZE + 2)。つまり、端は board[BOARDSIZE + 1][BOARDSIZE + 1]。
     vector<vector<char>> board;
 
@@ -144,7 +148,7 @@ struct goBoard {
      * 
      * @return tuple<int, float, float, float> color、colorが負ける確率、引き分けの確率、colortが勝つ確率
      */
-    tuple<int, float, float, float> ExpandNode();
+    tuple<int, float, float, float> ExpandNode(pair<vector<float>, vector<float>> input);
 
 
     /**
