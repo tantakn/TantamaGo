@@ -1255,6 +1255,31 @@ double goBoard::CountResult()
     int blackScore = 0;
     int whiteScore = 0;
 
+    auto saiki = [](auto self, vector<vector<char>> tmpBoard, char color, char y, char x) -> char
+    {
+        if (tmpBoard[y][x] == 1) {
+            return 1;
+        }
+        else if (tmpBoard[y][x] == 2) {
+            return 2;
+        }
+        else if (tmpBoard[y][x] == 3) {
+            return 0;
+        }
+
+        for (auto next : directio)
+
+    };
+
+    vector<vector<char>> tmpBoard = this->board;
+    rep (i, 1, BOARDSIZE) {
+        rep (j, 1, BOARDSIZE) {
+            if (tmpBoard[i][j] == 0) {
+
+            }
+        }
+    }
+
 
     // vector<vector<char>> count_board = rawBoard;
     // vector<vector<char>> visited_board = rawBoard;
