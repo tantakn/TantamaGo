@@ -12,42 +12,47 @@ from nn.network import DualNet_256_24
 from torch.nn.parallel import DataParallel
 from torch.serialization import add_safe_globals
 
-# DataParallelクラスを安全なクラスとして明示的に登録
-add_safe_globals([DataParallel])
 
 
-model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250304_005752_240.bin"
-# model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250303_225555_370.bin"
-# model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250227_033544_Ep00_13_1.bin"
+save_onnx_path = "./9_rl-model_default.onnx"
+
+BOARD_SIZE = 9
+dummy_npz_path = "../backup/data_Q50000/sl_data_0.npz"
 # model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_q50k_DualNet_256_24.bin"
-# model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250125_025418.bin"
-# model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250110_031407_19.bin"
-# model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20241020_214243_Ep:14.bin"
+model_path = "../model_def/rl-model_default.bin"
 # model_path = "/home0/y2024/u2424004/igo/TantamaGo/model_def/sl-model_default.bin"
-# model_path = "../model_def/sl-model_default.bin"
+# model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250304_005752_240.bin"
 
-# dummy_npz_path = "../backup/kgs-19-2019-04/sl_data_0.npz"
-dummy_npz_path = "/home/tantakn/code/TantamaGo/backup/13_2_0.npz"
-# dummy_npz_path = "../backup/data_Q50000/sl_data_0.npz"
-# dummy_npz_path = "../data/sl_data_0.npz"
+# BOARD_SIZE = 13
+# dummy_npz_path = "/home/tantakn/code/TantamaGo/backup/13_2_0.npz"
+# # model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250227_033544_Ep00_13_1.bin"
 
-save_onnx_path = "./13_20250304_005752_240_DualNet_256_24.onnx"
-
-BOARD_SIZE = 13
-# BOARD_SIZE = 9
 # BOARD_SIZE = 19
+# dummy_npz_path = "../backup/kgs-19-2019-04/sl_data_0.npz"
+# model_path = "/home/tantakn/code/TantamaGo/model_def/sl-model_20250110_031407_19.bin"
+
+
+
+# model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250303_225555_370.bin"
+# model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20250125_025418.bin"
+# model_path = "/home/tantakn/code/TantamaGo/model/sl-model_20241020_214243_Ep:14.bin"
+
+
 
 BATCH_SIZE = 1
 
 
 
+# DataParallelクラスを安全なクラスとして明示的に登録
+add_safe_globals([DataParallel])
 
 with torch.no_grad():
     # デバイスを CUDA（GPU）に設定
     device = torch.device("cuda")
     
     # モデルを一度だけインスタンス化する
-    network = DualNet_256_24(device, BOARD_SIZE)
+    network = DualNet(device, BOARD_SIZE)
+    # network = DualNet_256_24(device, BOARD_SIZE)
     network.to(device)
 
     # DataParallelで保存されたモデルを適切にロードする

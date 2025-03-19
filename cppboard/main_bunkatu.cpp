@@ -142,6 +142,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+mt19937 mtt(random_device{}());
 
 
 
@@ -497,7 +498,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                     break;
                 }
 
-                nextPtr->ExpandNode(Infer(tensorRT, nextPtr));
+                leafRslt = nextPtr->ExpandNode(Infer(tensorRT, nextPtr));
                 // nextPtr->ExpandNode(tensorRT);
 #ifdef dbg_flag
                 ++expandCnt;
@@ -996,7 +997,11 @@ int PlayWithGpt()
     string output = "";
     // 標準入力を監視
     while (getline(cin, input)) {
-        output = Gpt(input, rootPtr, tensorRT, searchThread, thinkTime, true);
+        float tmpThinkTime = thinkTime;
+        if (varietyMode) {
+            tmpThinkTime *= 0.7 + (mtt() % 4) / 10.0;
+        }
+        output = Gpt(input, rootPtr, tensorRT, searchThread, tmpThinkTime, true);
         if (output == "exit") {
             output += "\n";
             cout << "=" << endl;
@@ -1021,6 +1026,15 @@ int GptSoket()
     int port = 8000;
     cerr << "port << ";
     cin >> port;
+
+    cerr << "BOARDSIZE: " << BOARDSIZE << endl;
+    cerr << "tensorRTModelPath: " << tensorRTModelPath << endl;
+    cerr << "komi: " << komi << endl;
+    cerr << "isJapaneseRule: " << isJapaneseRule << endl;
+    cerr << "thinkTime: " << thinkTime << endl;
+    cerr << "varietyMode: " << varietyMode << endl;
+    cerr << "visitMax: " << visitMax << endl;
+
 
 
     samplesCommon::Args args;
@@ -1108,7 +1122,11 @@ int GptSoket()
 
         cerr << "recv data: " << buf << endl;  /////////////////////
 
-        output = Gpt(buf, rootPtr, tensorRT, searchThread, thinkTime, false);
+        float tmpThinkTime = thinkTime;
+        if (varietyMode) {
+            tmpThinkTime *= 0.7 + (mtt() % 4) / 10.0;
+        }
+        output = Gpt(buf, rootPtr, tensorRT, searchThread, tmpThinkTime, false);
 
 
         // if (input.substr(0, 4) == "genm" || input.substr(0, 4) == "play") {

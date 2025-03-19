@@ -14,6 +14,8 @@
 
 constexpr int BOARDSIZE = 9;
 const string tensorRTModelPath = "./9_20250303_225555_370_DualNet_256_24.onnx";
+// const string tensorRTModelPath = "./9_sl-model_default.onnx";
+// const string tensorRTModelPath = "./9_rl-model_default.onnx";
 // const string tensorRTModelPath = "./q50k_DualNet_256_24.onnx";
 // const string tensorRTModelPath = "./test9_2.onnx";
 
@@ -51,7 +53,9 @@ const float PUCB_SECOND_TERM_WEIGHT = 1.0;
 
 constexpr bool IS_PUCT = true;
 
-constexpr int visitMax = 10000000;
+constexpr int visitMax = 10000;
+
+constexpr bool varietyMode = true;
 
 
 const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};

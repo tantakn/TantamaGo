@@ -280,6 +280,7 @@ struct goBoard {
     goBoard(vector<vector<char>> inputBoard, char inputTeban);
 
 
+    /// @brief デストラクタ。
     ~goBoard();
 };
 

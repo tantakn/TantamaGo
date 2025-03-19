@@ -6,7 +6,7 @@
 
 #include "config_bunkatu.hpp"
 
-
+#define dbg_flag////////////////////
 #ifdef dbg_flag
 ll g_node_cnt = 0;
 int endCnt = 0;

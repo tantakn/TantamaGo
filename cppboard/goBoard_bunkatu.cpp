@@ -125,27 +125,16 @@
 
 
 
-// #ifndef tensorRTigo_cpp_INCLUDED
-// #include "./tensorRTigo.cpp"
-// #define tensorRTigo_cpp_INCLUDED
-// #endif
-
 #ifndef goBoard_hpp_INCLUDED
 #include "goBoard_bunkatu.hpp"
 #define goBoard_hpp_INCLUDED
 #endif
 
-// ソケット通信用
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 
 mt19937 mt(random_device{}());
 
-// goBoard* rootPtr = nullptr; //rootPtrグローバル廃止
+
 
 goBoard::goBoard()
     : board(rawBoard), idBoard(rawIdBoard), teban(1), parent(nullptr), isRoot(true), moveCnt(0)
@@ -243,7 +232,7 @@ goBoard::~goBoard()
         delete p;
     }
 
-    if (!isRoot) {
+    if (!this->isRoot) {
         parent->childrens.erase(previousMove);
     }
 }
@@ -254,13 +243,17 @@ goBoard* goBoard::SucceedRoot(goBoard*& rootPtr, pair<char, char> move)
     assert(rootPtr == this);
     // assert(this->childrens.count(move));
 
+    childrensMutex.lock();
+
     if (!childrens.count(move)) {
         PutStone(move.first, move.second, teban);
     }
 
-
     goBoard* tmp = this->childrens[move];
     this->childrens.erase(move);
+
+    childrensMutex.unlock();
+
     tmp->parent = nullptr;
     tmp->isRoot = true;
     rootPtr = tmp;
@@ -481,9 +474,9 @@ bool goBoard::UpdateUcts(tuple<int, float, float, float> input, pair<char, char>
 
 pair<char, char> goBoard::GetBestMove()
 {
-    assert(childrens.size() > 0);
-
     lock_guard<mutex> lock(uctsMutex);
+
+    assert(ucts.size() > 0);
 
 
     double maxVisit = -INF;
@@ -669,6 +662,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // childの有無
     if (bit & 1 << 30) {
+        lock_guard<mutex> lock(childrensMutex);
         print("childrens.size():", childrens.size());
         rep (i, 1, BOARDSIZE + 1) {
             rep (j, 1, BOARDSIZE + 1) {
@@ -1177,8 +1171,6 @@ goBoard* goBoard::PutStone(int y, int x, char color)
 
     goBoard* p = new goBoard(*this, y, x, color);
     childrens[make_pair(y, x)] = p;
-
-    if (debugFlag & 0b10) p->PrintBoard();
 
     return p;
 };
