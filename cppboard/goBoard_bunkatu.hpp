@@ -6,11 +6,7 @@
 
 
 
-const vector<pair<char, char>> directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
-extern vector<vector<char>> rawBoard;
-
-extern vector<vector<int>> rawIdBoard;
 
 
 /**
@@ -38,6 +34,10 @@ struct goBoard {
     bool isRoot;
 
 
+    // /// @brief ExpandNode() されたかどうか
+    // bool isNotExpanded = true;
+
+
     /// @brief 0b00: 空点, 0b01: 黒, 0b10: 白, 0b11: 壁。壁を含み、要素数 (BOARDSIZE + 2) * (BOARDSIZE + 2)。つまり、端は board[BOARDSIZE + 1][BOARDSIZE + 1]。
     vector<vector<char>> board;
 
@@ -63,6 +63,8 @@ struct goBoard {
     goBoard *parent;
 
 
+    mutex childrensMutex;
+
     /// @brief 子盤面
     map<pair<char, char>, goBoard *> childrens;
 
@@ -74,7 +76,7 @@ struct goBoard {
     /// @brief 推論の結果にsoftmaxを適用したもの、多分 [相手の手番の勝率（例：初期局面なら白の勝率）, 引き分けの確率, 現在の勝率]
     vector<float> values;
 
-    recursive_mutex uctsMutex;
+    mutex uctsMutex;
     // mutex uctsMutex;
 
     /// @brief <uct, この手の探索回数, この手の勝率の合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->ucts) みたく使う。
@@ -85,12 +87,9 @@ struct goBoard {
     // set<tuple<double, int, int, pair<char, char>>> ucts;
 
 
-    const float PUCT_C_BASE = 20403.9803;
-    const float PUCT_C_INIT = 0.70598003;
-
-
-    /// @brief <puct, この手の探索回数, この手の勝率の合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->pucts) みたく使う。
-    /// puct = (log((1 + この手の探索回数 + PUCT_C_BASE) / PUCT_C_BASE) + PUCT_C_INIT) * この手の勝率の合計 / この手の探索回数 + sqrt(2 * log(現局面の総探索回数) / この手の探索回数)
+    /// @brief <puct, この手の探索回数, この手のvalueの合計, 着手>。着手は piar<0, 0> でパス。rbegin(ptr->pucts) みたく使う。
+    /// 授業で教わった定義：Valueの平均値 + PUCT_C * sqrt(log(この手の探索回数)) / (1 + 現局面の総探索回数)
+    /// ネットで見つけた定義：puct = (log((1 + この手の探索回数 + PUCT_C_BASE) / PUCT_C_BASE) + PUCT_C_INIT) * この手の勝率の合計 / この手の探索回数 + sqrt(2 * log(現局面の総探索回数) / この手の探索回数)
     set<tuple<double, int, float, pair<char, char>>> pucts;
 
 
@@ -120,21 +119,21 @@ struct goBoard {
     goBoard* SucceedRoot(goBoard*& rootPtr, pair<char, char> move);
 
 
-    // /**　なにこれ
-    //  * @brief debugFlag & 1<<31 & 1<<29 で推論の結果を表示する。
-    //  * 
-    //  * @return tuple<int, float, float, float> color、colorが負ける確率、引き分けの確率、colortが勝つ確率
-    //  */
-    // tuple<int, float, float, float> ExpandNode();
-
-
     /**
-     * @brief 
+     * @brief debugFlag & 1<<31 & 1<<29 で推論の結果を表示する。
      * 
-     * @param tensorRT 
-     * @return tuple<int, float, float, float> color、colortが勝つ確率、引き分けの確率、colorが負ける確率
+     * @return tuple<int, float, float, float> color、colorが負ける確率、引き分けの確率、colortが勝つ確率
      */
     tuple<int, float, float, float> ExpandNode(pair<vector<float>, vector<float>> input);
+
+
+    // /**
+    //  * @brief 
+    //  * 
+    //  * @param tensorRT 
+    //  * @return tuple<int, float, float, float> color、colortが勝つ確率、引き分けの確率、colorが負ける確率
+    //  */
+    // tuple<int, float, float, float> ExpandNode(TensorRTOnnxIgo tensorRT);
 
 
     /**
@@ -189,9 +188,13 @@ struct goBoard {
      *
      * @param y
      * @param x
+     * @param board 現在の盤面。空ならthis->boardを使う。
      * @return int
      */
-    int CountLiberties(int y, int x);
+    int CountLiberties(int y, int x, vector<vector<char>> board);
+
+
+    bool IsBestMoveCrucial();
 
 
     /**
@@ -258,7 +261,7 @@ struct goBoard {
      * 
      * @return double 黒地 - 白地 - コミ
      */
-    double CountResult();
+    double CountResult(bool dbg);
 
 
     bool TestPipe();
@@ -277,26 +280,27 @@ struct goBoard {
     goBoard(vector<vector<char>> inputBoard, char inputTeban);
 
 
+    /// @brief デストラクタ。
     ~goBoard();
 };
 
 
 
-/// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、char型の文字をint型の数字に変換する
-/// @param s 
-/// @return 変換後の数値
-int ConvertChar(char s);
+// /// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、char型の文字をint型の数字に変換する
+// /// @param s 
+// /// @return 変換後の数値
+// int ConvertChar(char s);
 
 
-/// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、int型の数字をchar型の文字に変換する
-/// @param n 
-/// @return 変換後の文字
-char ConvertInt(int n);
+// /// @brief GPT では縦軸の値を英字の abcdefghjklmnopqrst (iがない) で表すため、int型の数字をchar型の文字に変換する
+// /// @param n 
+// /// @return 変換後の文字
+// char ConvertInt(int n);
 
 
 
-// string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, atomic<bool>& running, int thinkTime = 1, bool ponder = true);
+// string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thread& searchThread, int thinkTime, bool ponder);
 
-// void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT, atomic<bool>& running);
+// void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT);
 
 

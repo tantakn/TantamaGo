@@ -186,6 +186,7 @@ struct goBoard {
      *
      * @param y
      * @param x
+     * @return アタリの手またはアタリから逃げる手。
      */
     void ApplyString(int y, int x);
 

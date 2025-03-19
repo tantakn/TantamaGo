@@ -378,7 +378,8 @@ bool TensorRTOnnxIgo::infer(const std::vector<std::vector<std::vector<float>>> i
     for (int i = 0; i < outputValueSize; i++)
     {
         // cerr << "outputValue[" << i << "] = " << tmpOutputValue[i] << std::endl;
-        outputValue.push_back(tmpOutputValue[i]);
+        outputValue[i] = tmpOutputValue[i];
+        // outputValue.push_back(tmpOutputValue[i]);
     }
 
     return true;

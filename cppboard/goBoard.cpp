@@ -271,9 +271,160 @@ goBoard* goBoard::SucceedRoot(goBoard*& rootPtr, pair<char, char> move)
 }
 
 
+tuple<int, float, float, float> goBoard::ExpandNode(pair<vector<float>, vector<float>> input)
+{
+    assert(this->ucts.size() == 0);
+    assert(input.first.size() == BOARDSIZE * BOARDSIZE + 1);
+    assert(input.second.size() == 3 || !(cerr << "input.second.size(): " << input.second.size() << endl));
+    // assert(!isEnded);
+
+    // this->isNotExpanded = false;
+
+    vector<float> tmpPolicys = input.first;
+
+    this->values = input.second;
+
+    vector<tuple<char, char, char>> legalMoves = GenAllLegalMoves();
+
+    numVisits = legalMoves.size();
+
+
+
+    for (auto [y, x, t] : legalMoves) {
+        if (x == 0 && y == 0) {
+            float tmp = tmpPolicys[BOARDSIZE * BOARDSIZE];
+            policys[make_pair(y, x)] = tmp;
+            continue;
+        }
+        float tmp = tmpPolicys[(y - 1) * BOARDSIZE + x - 1];
+        policys[make_pair(y, x)] = tmp;
+    }
+
+
+
+    if (0) {  // softmaxなし
+        for (auto [move, x] : policys) {
+            float tmpUct;
+            if (IS_PUCT) {
+                tmpUct = x + PUCB_SECOND_TERM_WEIGHT * sqrt(log(policys.size())) / 2;
+            }
+            else {
+                tmpUct = x + sqrt(2 * log(policys.size()));
+            }
+            lock_guard<mutex> lock(uctsMutex);
+            ucts.insert(make_tuple(tmpUct, 1, x, move));
+        }
+
+        if (debugFlag & 1 << 31) {
+            PrintBoard(1 << 31);
+        }
+
+        return tie(teban, values[0], values[1], values[2]);
+    }
+    else {  // softmaxあり
+        // softmaxで使う変数
+        float maxPolicy = 0.0;
+
+        for (auto [y, x, t] : legalMoves) {
+            if (x == 0 && y == 0) {
+                float tmp = tmpPolicys[BOARDSIZE * BOARDSIZE];
+                policys[make_pair(y, x)] = tmp;
+                chmax(maxPolicy, tmp);
+                continue;
+            }
+            float tmp = tmpPolicys[(y - 1) * BOARDSIZE + x - 1];
+            policys[make_pair(y, x)] = tmp;
+            chmax(maxPolicy, tmp);
+        }
+
+
+        // valueにsoftmax
+        float bunbo = 0.0;
+        for (auto x : values) {
+            bunbo += exp(x);
+        }
+
+        for (auto& x : values) {
+            x = exp(x) / bunbo;
+        }
+
+        // tmppolicyにsoftmax
+        map<std::pair<char, char>, float> tmpPolicys;
+        bunbo = 0.0;
+        for (auto [move, x] : policys) {
+            bunbo += exp(x - maxPolicy);
+        }
+
+        float maxPolicy2 = 0.0;
+        for (auto [move, x] : policys) {
+            tmpPolicys[move] = exp(x - maxPolicy) / bunbo;
+            chmax(maxPolicy2, tmpPolicys[move]);
+        }
+
+
+        // tmpPolicys の最大が values[2] + values[1] * 0.5 になるように調整
+        for (auto [move, x] : tmpPolicys) {
+            tmpPolicys[move] = (values[2] + values[1] * 0.5) * x / maxPolicy2;
+            // policys[move] = values[2] * x / maxPolicy2;
+            if (move == make_pair(char(0), char(0))) {
+                tmpPolicys[move] -= 0.5;
+            }
+        }
+        // tmppolicyにsoftmaxここまで
+
+
+        // // policyにsoftmax
+        // bunbo = 0.0;
+        // for (auto [move, x] : policys) {
+        //     bunbo += exp(x - maxPolicy);
+        // }
+
+        // float maxPolicy2 = 0.0;
+        // for (auto [move, x] : policys) {
+        //     policys[move] = exp(x - maxPolicy) / bunbo;
+        //     chmax(maxPolicy2, policys[move]);
+        // }
+
+
+        // // policys の最大が values[2] + values[1] * 0.5 になるように調整
+        // for (auto [move, x] : policys) {
+        //     policys[move] = (values[2] + values[1] * 0.5) * x / maxPolicy2;
+        //     // policys[move] = values[2] * x / maxPolicy2;
+        //     if (move == make_pair(char(0), char(0))) {
+        //         policys[move] -= 0.5;
+        //     }
+        // }
+        // // policyにsoftmaxここまで
+
+
+        for (auto [move, x] : policys) {
+            float tmpUct;
+            if (IS_PUCT) {
+                tmpUct = x + PUCB_SECOND_TERM_WEIGHT * sqrt(log(policys.size())) / 2;
+            }
+            else {
+                tmpUct = x + sqrt(2 * log(policys.size()));
+            }
+            lock_guard<mutex> lock(uctsMutex);
+            // ucts.insert(make_tuple(tmpUct, 1, x, move));
+            ucts.insert(make_tuple(tmpUct, 1, tmpPolicys[move], move));
+        }
+
+        if (debugFlag & 1 << 31) {
+            PrintBoard(1 << 31);
+        }
+
+#ifdef dbg_flag
+        chmax(deepestMoveCnt, this->moveCnt);
+#endif
+
+        return tie(teban, values[0], values[1], values[2]);
+    }
+}
+
 tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
 {
-    assert(childrens.size() == 0);
+    assert(this->ucts.size() == 0);
     // assert(!isEnded);
 
 
@@ -323,7 +474,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
 
         return tie(teban, values[0], values[1], values[2]);
     }
-    else if (1) {  // softmaxあり
+    else {  // softmaxあり
         // softmaxで使う変数
         float maxPolicy = 0.0;
 
@@ -372,7 +523,7 @@ tuple<int, float, float, float> goBoard::ExpandNode(TensorRTOnnxIgo tensorRT)
                 tmpPolicys[move] -= 0.5;
             }
         }
-        // policyにsoftmaxここまで
+        // tmppolicyにsoftmaxここまで
 
 
         // // policyにsoftmax
@@ -631,7 +782,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
 
     // 推論の結果。softmax後。
     if (bit & 1 << 31) {
-        print("policys勝率*1000 policys.size():", policys.size());
+        cerr << "policys勝率*1000 policys.size():" << policys.size() << endl;
         vector<vector<float>> tmp(BOARDSIZE + 2, vector<float>(BOARDSIZE + 2, -1000000));
         for (auto [move, x] : policys) {
             // print(move, x);
@@ -783,7 +934,7 @@ void goBoard::PrintBoard(ll bit = 0b1)
     if (bit & 1 << 27) {
         lock_guard<mutex> lock(uctsMutex);
 
-        cerr << "探索後勝率*1000 の表示。ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
+        cerr << "探索後勝率*1000 の表示。" << endl << "ucts.size(): " << ucts.size() << ", visit: " << numVisits << endl;
 #ifdef dbg_flag
         cerr << "endCnt: " << endCnt << ", depth: " << deepestMoveCnt - this->moveCnt << endl;
 #endif
@@ -872,6 +1023,11 @@ void goBoard::PrintBoard(ll bit = 0b1)
         cerr << "pass: " << setw(4) << setfill(' ') << IsIllegalMove(0, 0, teban) << endl;
     }
 
+    // // countResultの表示
+    // if (bit & 1 << 24) {
+    //     CountResult(true);
+    // }
+
 
     cerr << resetiosflags(std::ios::floatfield);  // 浮動小数点の書式をリセット
     cerr << resetiosflags(std::ios::showpoint);   // showpoint をリセット
@@ -889,13 +1045,17 @@ string goBoard::ToJson()
     return j.dump();
 }
 
-int goBoard::CountLiberties(int y, int x)
+int goBoard::CountLiberties(int y, int x, vector<vector<char>> board = {})
 {
     assert(x >= 0 && x <= BOARDSIZE + 1 && y >= 0 && y <= BOARDSIZE + 1);
 
+    if (board.empty()) {
+        board = this->board;
+    }
+
     if (board[y][x] == 0) {
         return -1;
-    };
+    }
 
     if (x == 0 || x == BOARDSIZE + 1 || y == 0 || y == BOARDSIZE + 1) {
         return INF;
@@ -934,7 +1094,18 @@ int goBoard::CountLiberties(int y, int x)
             }
         }
     }
+
     return cnt;
+};
+
+bool goBoard::IsBestMoveCrucial()
+{
+    /// TODO: ロックする場所やタイミングの見直し。
+    lock_guard<mutex> lock(uctsMutex);
+
+    assert(this->ucts.size());
+
+    // expand -> uct最大の手をputstone -> 置いた石周りのlib数を数える -> lib数が1から増える、または1になる場合は -> crucialならすぐにexpand の方がいい？
 };
 
 int goBoard::IsIllegalMove(int y, int x, char color)
@@ -1005,36 +1176,36 @@ int goBoard::IsIllegalMove(int y, int x, char color)
     // 終局のために、2眼以上ある石の目を埋める手に良い手が無いと仮定して、その手を禁止とする。
     // とりあえず、四方を同じ連が囲っている場合に眼として、その眼を埋める手を禁止とする。
 
-    // // 何故か動かない
-    // bool isFillEye = true;
-    // char tmpId = -2;
-    // for (auto dir : directions) {
-    //     int nx = x + dir.first;
-    //     int ny = y + dir.second;
+    /// TODO:無い方がいい気がする
+    bool isFillEye = true;
+    int tmpId = -2;
+    for (auto dir : directions) {
+        int nx = x + (int)dir.first;
+        int ny = y + (int)dir.second;
 
-    //     if (board[ny][nx] == 0) {
-    //         isFillEye = false;
-    //         break;
-    //     }
+        if (board[ny][nx] == 0) {
+            isFillEye = false;
+            break;
+        }
 
-    //     if (board[ny][nx] == 3) {
-    //         continue;
-    //     }
+        if (board[ny][nx] == 3) {
+            continue;
+        }
 
-    //     if (tmpId == -2) {
-    //         tmpId = idBoard[ny][nx];
-    //         continue;
-    //     }
+        if (tmpId == -2) {
+            tmpId = idBoard[ny][nx];
+            continue;
+        }
 
-    //     if (tmpId != idBoard[ny][nx]) {
-    //         isFillEye = false;
-    //         break;
-    //     }
-    // }
+        if (tmpId != idBoard[ny][nx]) {
+            isFillEye = false;
+            break;
+        }
+    }
 
-    // if (isFillEye) {
-    //     return 4;
-    // }
+    if (isFillEye) {
+        return 4;
+    }
 
     return 0;
 };
@@ -1196,12 +1367,11 @@ tuple<char, char, char> goBoard::GenRandomMove()
     return {0, 0, 0};
 };
 
-double goBoard::CountResult()
+double goBoard::CountResult(bool dbg = false)
 {
     /// TODO: 日本ルール用の暫定措置。どうにかしたい。白黒が隣り合っているところでラインを引いて地を数える？中国ルールで最後までプレイしてみる？
-    if (1) {  ////////////////////
-              // if (isJapaneseRule) {
-
+    // if (1) {  ////////////////////
+    if (isJapaneseRule) {
         assert(this->ucts.size());
         assert(this->values.size());
 
@@ -1255,30 +1425,89 @@ double goBoard::CountResult()
     int blackScore = 0;
     int whiteScore = 0;
 
-    auto saiki = [](auto self, vector<vector<char>> tmpBoard, char color, char y, char x) -> char
+    // this->PrintBoard(0b1);
+
+    auto saiki1 = [](auto self, vector<vector<char>>& tmpChecked, char y, char x) -> int
     {
-        if (tmpBoard[y][x] == 1) {
+        if (tmpChecked[y][x] == 0) {
+            tmpChecked[y][x] = 1;
+
+            char tmpColor;
+            for (auto next : directions) {
+                char nx = x + next.first;
+                char ny = y + next.second;
+
+                if (self(self, tmpChecked, ny, nx)) {
+                    return 1;
+                }
+            }
+        }
+        else if (tmpChecked[y][x] == 2) {
             return 1;
         }
-        else if (tmpBoard[y][x] == 2) {
-            return 2;
+
+        return 0;
+    };
+
+    auto saiki2 = [](auto self, vector<vector<char>>& tmpChecked, char y, char x) -> int
+    {
+        if (tmpChecked[y][x] == 0) {
+            tmpChecked[y][x] = 2;
+
+            char tmpColor;
+            for (auto next : directions) {
+                char nx = x + next.first;
+                char ny = y + next.second;
+
+                if (self(self, tmpChecked, ny, nx)) {
+                    return 1;
+                }
+            }
         }
-        else if (tmpBoard[y][x] == 3) {
-            return 0;
+        else if (tmpChecked[y][x] == 1) {
+            return 1;
         }
 
-        for (auto next : directio)
-
+        return 0;
     };
 
     vector<vector<char>> tmpBoard = this->board;
-    rep (i, 1, BOARDSIZE) {
-        rep (j, 1, BOARDSIZE) {
+    rep (i, 1, BOARDSIZE + 1) {
+        rep (j, 1, BOARDSIZE + 1) {
             if (tmpBoard[i][j] == 0) {
-
+                vector<vector<char>> tmpChecked = tmpBoard;
+                if (!saiki1(saiki1, tmpChecked, i, j)) {
+                    tmpBoard = tmpChecked;
+                }
+                else {
+                    tmpChecked = tmpBoard;
+                    if (!saiki2(saiki2, tmpChecked, i, j)) {
+                        tmpBoard = tmpChecked;
+                    }
+                }
+            }
+            if (tmpBoard[i][j] == 1) {
+                ++blackScore;
+            }
+            else if (tmpBoard[i][j] == 2) {
+                ++whiteScore;
             }
         }
     }
+
+    if (dbg) {//////////////////////////
+        cerr << "blackScore: " << blackScore << ", whiteScore: " << whiteScore << ", score: " << blackScore - whiteScore - komi << endl;  ///////////////
+
+        // print tmpBoard
+        rep (i, 1, BOARDSIZE + 1) {
+            rep (j, 1, BOARDSIZE + 1) {
+                cerr << (int)tmpBoard[i][j] << " " << flush;
+            }
+            cerr << endl;
+        }
+    }
+
+    return blackScore - whiteScore - komi;
 
 
     // vector<vector<char>> count_board = rawBoard;
@@ -1764,12 +1993,21 @@ double dfs(goBoard* ptr)
 
 
 
+pair<vector<float>, vector<float>> Infer(TensorRTOnnxIgo& tensorRT, goBoard* ptr)
+{
+    vector<float> tmpPolicys(BOARDSIZE * BOARDSIZE + 1, 0);
+
+    vector<float> tmpValues(3, 0);
+
+    tensorRT.infer(ptr->MakeInputPlane(), tmpPolicys, tmpValues);
+
+    return {tmpPolicys, tmpValues};
+}
+
+
 
 // ループを制御するためのフラグ
 std::atomic<bool> running(true);
-
-// とりあえずグローバル
-int visit_Limit = 100000;
 
 void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
 {
@@ -1842,7 +2080,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
     //         if (rootPtr->isEnded) {
     //             break;
     //         }
-    //         if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
+    //         if (rootPtr->numVisits > visitMax) {
     //             sleep(0.1);
     //         }
     //         saiki(saiki, rootPtr);
@@ -1856,7 +2094,7 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
         if (rootPtr->isEnded) {
             break;
         }
-        if (rootPtr->numVisits > visitMax || rootPtr->numVisits > visit_Limit) {
+        if (rootPtr->numVisits > visitMax) {
             sleep(0.1);
         }
 
@@ -1867,10 +2105,10 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
             char color = ptr->teban;
 
             // もし終局（直前2手がパス）なら結果を leafRslt に入れてbreak
-            /// TODO: これ通ったら rootPtr->isEnded == true だからなくても良い？
             if (ptr->isEnded) {
                 if (ptr->ucts.size() == 0) {
-                    ptr->ExpandNode(tensorRT);
+                    ptr->ExpandNode(Infer(tensorRT, ptr));
+                    // ptr->ExpandNode(tensorRT);
                 }
                 double tmpRslt = ptr->CountResult();
                 if (tmpRslt == 0) {
@@ -1898,10 +2136,11 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
 
                 int nextColor = nextPtr->teban;
 
-                /// TODO: ここで終局判定する必要ある？
+                // 葉ノードがisendeedのとき、valueでなく勝敗で評価を行う。
                 if (nextPtr->isEnded) {
                     if (nextPtr->ucts.size() == 0) {
-                        nextPtr->ExpandNode(tensorRT);
+                        nextPtr->ExpandNode(Infer(tensorRT, ptr));
+                        // ptr->ExpandNode(tensorRT);
                     }
 #ifdef dbg_flag
                     ++endCnt;
@@ -1910,7 +2149,6 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                     if (tmpRslt == 0) {
                         leafRslt = make_tuple(nextColor, 0.0, 1.0, 0.0);
                     }
-                    /// TODO: 正しいか確認
                     else if ((nextColor == 1 && tmpRslt > 0) || (nextColor == 2 && tmpRslt < 0)) {
                         leafRslt = make_tuple(nextColor, 0.0, 0.0, 1.0);
                     }
@@ -1920,7 +2158,8 @@ void SearchLoop(goBoard* rootPtr, TensorRTOnnxIgo& tensorRT)
                     break;
                 }
 
-                leafRslt = nextPtr->ExpandNode(tensorRT);
+                nextPtr->ExpandNode(Infer(tensorRT, nextPtr));
+                // nextPtr->ExpandNode(tensorRT);
 #ifdef dbg_flag
                 ++expandCnt;
 #endif
@@ -1991,7 +2230,8 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
         delete rootPtr;
         rootPtr = nullptr;
         rootPtr = new goBoard();
-        rootPtr->ExpandNode(tensorRT);
+        rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+        // rootPtr->ExpandNode(tensorRT);
 
         if (ponder) {
             running.store(true);
@@ -2104,12 +2344,14 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
                 print();
             }
 
-            if (rootPtr->childrens.size() == 0) {
-                rootPtr->ExpandNode(tensorRT);
+            if (rootPtr->ucts.size() == 0) {
+                rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+                // rootPtr->ExpandNode(tensorRT);
             }
             rootPtr = rootPtr->SucceedRoot(rootPtr, {y, x});
-            if (rootPtr->childrens.size() == 0 && !rootPtr->isEnded) {
-                rootPtr->ExpandNode(tensorRT);
+            if (rootPtr->ucts.size() == 0 && !rootPtr->isEnded) {
+                rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+                // rootPtr->ExpandNode(tensorRT);
             }
             if (rootPtr->isEnded) {
                 goto GOTO_GPT_SEND;
@@ -2135,7 +2377,7 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             searchThread = thread(SearchLoop, rootPtr, ref(tensorRT));
         }
 
-        sleep(thinkTime);  ///////////////
+        sleep(thinkTime);  ////////////////
 
         if (debugFlag & 1 << 5) {
             cerr << "\n--------------------\n"
@@ -2179,14 +2421,17 @@ string Gpt(const string input, goBoard*& rootPtr, TensorRTOnnxIgo& tensorRT, thr
             output += to_string(move.first);
         }
 
-        if (rootPtr->childrens.size() == 0) {
-            rootPtr->ExpandNode(tensorRT);
+        if (rootPtr->ucts.size() == 0) {
+            rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+            // rootPtr->ExpandNode(tensorRT);
         }
         rootPtr = rootPtr->SucceedRoot(rootPtr, move);
-        if (rootPtr->childrens.size() == 0 && !rootPtr->isEnded) {
-            rootPtr->ExpandNode(tensorRT);
+        if (rootPtr->ucts.size() == 0 && !rootPtr->isEnded) {
+            rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+            // rootPtr->ExpandNode(tensorRT);
         }
         if (rootPtr->isEnded) {  ////////////????
+            rootPtr->CountResult(true);//////////////////
             goto GOTO_GPT_SEND;
         }
 
@@ -2264,7 +2509,8 @@ int suiron(int n)
     goBoard* rootPtr = nullptr;
     rootPtr = new goBoard();
 
-    rootPtr->ExpandNode(tensorRT);
+    rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+    // rootPtr->ExpandNode(tensorRT);
 
 
     int saikiCnt = 0;
@@ -2322,12 +2568,14 @@ END:;
     cerr << "input x: ";
     cin >> x;
 
-    if (rootPtr->childrens.size() == 0) {
-        rootPtr->ExpandNode(tensorRT);
+    if (rootPtr->ucts.size() == 0) {
+        rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+        // rootPtr->ExpandNode(tensorRT);
     }
     rootPtr = rootPtr->SucceedRoot(rootPtr, {y, x});
-    if (rootPtr->childrens.size() == 0 && !rootPtr->isEnded) {
-        rootPtr->ExpandNode(tensorRT);
+    if (rootPtr->ucts.size() == 0 && !rootPtr->isEnded) {
+        rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+        // rootPtr->ExpandNode(tensorRT);
     }
 
     tmp = rootPtr;
@@ -2377,9 +2625,9 @@ int PlayWithGpt()
     int thinkTime = 10;
     // cerr << "thinkTime << ";
     // cin >> thinkTime;
-    int visit_Limit = 100000;
-    // cerr << "visit_Limit << ";
-    // cin >> visit_Limit;
+    int visitMax = 100000;
+    // cerr << "visitMax << ";
+    // cin >> visitMax;
 
 
     samplesCommon::Args args;
@@ -2399,7 +2647,8 @@ int PlayWithGpt()
     goBoard* rootPtr = nullptr;
     rootPtr = new goBoard();
 
-    rootPtr->ExpandNode(tensorRT);
+    rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+    // rootPtr->ExpandNode(tensorRT);
 
     int saikiCnt = 0;
 
@@ -2430,8 +2679,8 @@ int GptSoket()
     int thinkTime = 10;
     cerr << "thinkTime << ";
     cin >> thinkTime;
-    // cerr << "visit_Limit << ";
-    // cin >> visit_Limit;
+    // cerr << "visitMax << ";
+    // cin >> visitMax;
     int port = 8000;
     cerr << "port << ";
     cin >> port;
@@ -2456,7 +2705,8 @@ int GptSoket()
     goBoard* rootPtr = nullptr;
     rootPtr = new goBoard();
 
-    rootPtr->ExpandNode(tensorRT);
+    rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+    // rootPtr->ExpandNode(tensorRT);
 
     int saikiCnt = 0;
 
@@ -2608,7 +2858,8 @@ int Test()
     rootPtr = new goBoard(v, teban);
 
     rootPtr->PrintBoard(0b1);
-    rootPtr->ExpandNode(tensorRT);
+    rootPtr->ExpandNode(Infer(tensorRT, rootPtr));
+    // rootPtr->ExpandNode(tensorRT);
     int saikiCnt = 0;
 
     // 探索用のスレッドを開始
@@ -2641,9 +2892,9 @@ int main(int argc, char* argv[])
 
     // Test();
 
-    PlayWithGpt();
+    // PlayWithGpt();
 
-    // GptSoket();
+    GptSoket();
 
     return 0;
 }
